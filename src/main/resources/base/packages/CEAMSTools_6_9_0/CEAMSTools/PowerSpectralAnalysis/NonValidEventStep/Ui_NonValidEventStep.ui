@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NonValidEventStep</class>
+ <widget class="QWidget" name="NonValidEventStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>837</width>
+    <height>667</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string>font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Roboto</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>PSG Files</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListView" name="file_listview">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>Roboto</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Events</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeView" name="event_treeview">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::NoDragDrop</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QCheckBox" name="select_all_checkBox">
+         <property name="text">
+          <string>Select All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="search_lineEdit">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>Event group search</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="reset_all_files_pushButton">
+         <property name="text">
+          <string>Reset all files</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="reset_excl_event_checkBox">
+       <property name="text">
+        <string>Reset the signal of excluded events </string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../scinodes_poc/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>file_listview</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>NonValidEventStep</receiver>
+   <slot>on_file_selected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_all_checkBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>NonValidEventStep</receiver>
+   <slot>on_select_all_groups()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>164</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reset_all_files_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NonValidEventStep</receiver>
+   <slot>on_reset_all_files()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>541</x>
+     <y>404</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_lineEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>NonValidEventStep</receiver>
+   <slot>search_pattern_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>526</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_file_selected()</slot>
+  <slot>on_event_selected()</slot>
+  <slot>on_select_all_groups()</slot>
+  <slot>on_apply_to_all_files()</slot>
+  <slot>on_reset_all_files()</slot>
+  <slot>search_pattern_slot()</slot>
+ </slots>
+</ui>

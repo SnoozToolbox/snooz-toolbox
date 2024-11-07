@@ -1,0 +1,77 @@
+{
+    "item_name": "SleepStageEvents",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepStageEvents",
+        "name": "SleepStageEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Sleep Stage Events",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "epoch_len": {
+                "name": "epoch_len",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages": {
+                "name": "stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "merge_events": {
+                "name": "merge_events",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_event_name": {
+                "name": "new_event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "exclude_nremp": {
+                "name": "exclude_nremp",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "exclude_remp": {
+                "name": "exclude_remp",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "in_cycle": {
+                "name": "in_cycle",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "sleep_stage_events": {
+                "name": "sleep_stage_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SleepStageEvents"
+    }
+}

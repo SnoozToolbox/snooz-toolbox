@@ -1,0 +1,59 @@
+title Context: StepsWidget
+
+participant ToolManager
+participant StepsWidget
+participant Ui_StepsWidget
+participant SidebarStep
+participant CustomStepView
+participant ContextManager
+participant ContentManager
+participant PubSubManager
+participant NodePortGraphicsItem
+participant ProcessGraphicsScene
+participant ProcessManager
+participant ProcessWorker
+
+note over ToolManager, ProcessManager:A tool is being loaded after the user clicks on it in the menu.
+ToolManager->StepsWidget:StepsWidget(description_file)
+StepsWidget->ContextManager:ContextManager()
+StepsWidget<--ContextManager:_context_manager
+StepsWidget->Ui_StepsWidget:setupUI()
+note over StepsWidget:For each steps defined\nin the tool description\nfile, create a SidebarStep.
+StepsWidget->SidebarStep:SidebarStep()
+SidebarStep->CustomStepView:CustomStepView()
+SidebarStep<--CustomStepView:custom_step_view
+StepsWidget<--SidebarStep:sidebar_step
+note over StepsWidget:For each steps created, load their settings.
+StepsWidget->CustomStepView:load_settings()
+CustomStepView->PubSubManager:publish(node_identifier, ping)
+PubSubManager->NodePortGraphicsItem:on_topic_update(ping)
+NodePortGraphicsItem->CustomStepView:on_topic_response(value)
+
+ToolManager<--StepsWidget:steps_widget
+ToolManager->ContentManager:load_tool_content(steps_widget)
+
+
+note over ToolManager, ProcessManager:User clicks Save Workspace
+StepsWidget->CustomStepView:on_apply_settings()
+note over CustomStepView:Updates the value of all nodes input
+CustomStepView->PubSubManager:publish(node_identifier, value)
+PubSubManager->NodePortGraphicsItem:on_topic_update(value)
+StepsWidget->ProcessManager:save_scene_to_file(filepath)
+ProcessManager->ProcessGraphicsScene:serialize()
+ProcessManager<--ProcessGraphicsScene:scene_graph_json
+ProcessManager->ProcessManager:save scene_graph_json to filepath
+
+
+note over ToolManager, ProcessManager:User clicks Run
+StepsWidget->CustomStepView:on_validate_settings()
+StepsWidget<--CustomStepView:return is_valid
+StepsWidget->CustomStepView:on_apply_settings()
+note over CustomStepView:Updates the value of all nodes input
+CustomStepView->PubSubManager:publish(node_identifier, value)
+PubSubManager->NodePortGraphicsItem:on_topic_update(value)
+StepsWidget->ProcessManager:run_current_process()
+ProcessManager->ProcessGraphicsScene:serialize()
+ProcessManager<--ProcessGraphicsScene:graph_json
+ProcessManager->ProcessWorker:ProcessWorker(graph_json)
+ProcessManager<--ProcessWorker:process_worker
+ProcessManager->ProcessWorker:Run()

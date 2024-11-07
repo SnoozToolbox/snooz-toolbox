@@ -1,0 +1,9 @@
+{
+    "mac_bundle_identifier": "com.ceams.snooz",
+    "hidden_imports": ["sklearn.utils._typedefs", 
+        "sklearn.utils._heap", 
+        "sklearn.utils._sorting",
+        "sklearn.utils._vector_sentinel",
+        "cmath",
+        "seaborn"]
+}

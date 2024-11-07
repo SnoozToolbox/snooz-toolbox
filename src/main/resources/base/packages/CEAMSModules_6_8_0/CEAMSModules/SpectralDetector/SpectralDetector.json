@@ -1,0 +1,131 @@
+{
+    "item_name": "SpectralDetector",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SpectralDetector",
+        "name": "SpectralDetector",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Spectral Detector",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "psds": {
+                "name": "psds",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "low_freq": {
+                "name": "low_freq",
+                "value": "0.5",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "high_freq": {
+                "name": "high_freq",
+                "value": "30",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rel_freq": {
+                "name": "rel_freq",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "bsl_low_freq": {
+                "name": "bsl_low_freq",
+                "value": "0.5",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "bsl_high_freq": {
+                "name": "bsl_high_freq",
+                "value": "30",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_val": {
+                "name": "threshold_val",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_unit": {
+                "name": "threshold_unit",
+                "value": "fixed",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_behavior": {
+                "name": "threshold_behavior",
+                "value": "Above",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "baseline_win_len": {
+                "name": "baseline_win_len",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "art_events": {
+                "name": "art_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel_dbg": {
+                "name": "channel_dbg",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_activity": {
+                "name": "win_activity",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_bsl": {
+                "name": "win_bsl",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SpectralDetector"
+    }
+}

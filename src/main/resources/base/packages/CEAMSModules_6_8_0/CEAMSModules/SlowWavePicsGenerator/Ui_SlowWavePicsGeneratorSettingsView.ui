@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SlowWavePicsGeneratorSettingsView</class>
+ <widget class="QWidget" name="SlowWavePicsGeneratorSettingsView">
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="files_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="files_label">
+       <property name="text">
+        <string>files</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="files_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="file_group_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="file_group_label">
+       <property name="text">
+        <string>file_group</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="file_group_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="sw_char_folder_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="sw_char_folder_label">
+       <property name="text">
+        <string>sw_char_folder</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="sw_char_folder_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="pics_param_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="pics_param_label">
+       <property name="text">
+        <string>pics_param</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="pics_param_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+<include location="../../../../scinodes_poc/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections/>
+ </ui>

@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="sw_images">
+    <file>SW_all_2cat_1chan_70.png</file>
+    <file>mean_std_2cat_70.png</file>
+    <file>SW_mean_2_chans_70.png</file>
+  </qresource>
+</RCC>

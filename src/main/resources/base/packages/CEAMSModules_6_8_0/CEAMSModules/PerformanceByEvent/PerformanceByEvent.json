@@ -1,0 +1,70 @@
+{
+    "item_name": "PerformanceByEvent",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "PerformanceByEvent",
+        "name": "PerformanceByEvent",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Performance By Event",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events1": {
+                "name": "events1",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event1_name": {
+                "name": "event1_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events2": {
+                "name": "events2",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event2_name": {
+                "name": "event2_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel1_name": {
+                "name": "channel1_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel2_name": {
+                "name": "channel2_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "jaccord_thresh": {
+                "name": "jaccord_thresh",
+                "value": "0.2",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.PerformanceByEvent"
+    }
+}

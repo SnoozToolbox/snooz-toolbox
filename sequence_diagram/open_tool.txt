@@ -1,0 +1,43 @@
+title Context: User click on a tool in the menu and another tool was already loaded.
+
+#MenuEndpointHandler: Responsible for adding PackageItem to the main menu and activating them when the user clicks on it.
+#PackageManager:Responsible for activating the packages that are dependencies of the activated tool.
+#ToolPackageItem:Holds the description JSON file that describe a tool (steps, nodes, parameters).
+#PubSubManager: \n.
+#NavigationManager: Responsible for setting the visibility of the buttons in the left panel (Home, Process, Tool, App)
+
+participant MenuEndpointHandler
+participant PackageManager
+participant ToolPackageItem
+participant PubSubManager
+participant ToolManager
+participant ProcessManager
+participant ContentManager
+participant NavigationManager
+
+note over MenuEndpointHandler,NavigationManager:MenuEndpointHandler: Responsible for adding PackageItem to the main menu and activating them when the user clicks on it.\nPackageManager:Responsible for activating the packages that are dependencies of the activated tool.\nToolPackageItem:Holds the description JSON file that describe a tool (steps, nodes, parameters).\nPubSubManager:Allows the PackageItem and the managers to communicate indirectly through a publisher/subscriber pattern.\nToolManager: Handles the creation of the tool UI (StepsWidget).\nProcessManager: Handles the creation of the process diagram.\nContentManager: Responsible for showing the tool and process UI, also responsible for checking if the current work of the user needs saving or not.\nNavigationManager: Responsible for setting the visibility of the buttons in the left panel (Home, Process, Tool, App).
+
+
+MenuEndpointHandler->PackageManager:get_package_item()
+MenuEndpointHandler<--PackageManager:package_item
+MenuEndpointHandler->ToolPackageItem:package_item.activate()
+ToolPackageItem->PubSubManager:publish\n(tool_activation_request)
+PubSubManager->ToolManager:subscriber.on_topic_update\n(tool_activation_request)
+ToolManager->ProcessManager:process_activation_request()
+ProcessManager->ContentManager:ask_permission_to_load_process()
+ContentManager->ToolManager:ask_unsaved()
+ContentManager<--ToolManager:nothing_to_save
+ProcessManager->ContentManager:unload_process_content()
+ProcessManager->ContentManager:unload_tool_content()
+ProcessManager->ProcessManager:open item_description_file:data
+ProcessManager->PackageManager:check_missing_package(data["dependencies"])
+ProcessManager<--PackageManager:missing_packages
+ProcessManager->PackageManager:activate_package()\nNote: load all packages containing the modules used in this process.
+ProcessManager->ProcessManager:load_content_from_file():process_view
+ProcessManager->ContentManager:load_process_content(process_view)
+ToolManager->PackageManager:activate_package()\nNote: load the package containing the current tool.
+ToolManager->ToolManager:load_content():steps_widget\n
+ToolManager->ContentManager:load_tool_content(steps_widget)
+ToolManager->NavigationManager:show_tool_button()
+
+

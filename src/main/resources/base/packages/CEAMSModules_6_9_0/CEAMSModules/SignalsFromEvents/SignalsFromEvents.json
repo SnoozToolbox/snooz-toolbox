@@ -1,0 +1,59 @@
+{
+    "item_name": "SignalsFromEvents",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SignalsFromEvents",
+        "name": "SignalsFromEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Signals From Events",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events_names": {
+                "name": "events_names",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "create": {
+                "name": "create",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "signals_from_events": {
+                "name": "signals_from_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "epochs_to_process": {
+                "name": "epochs_to_process",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SignalsFromEvents"
+    }
+}

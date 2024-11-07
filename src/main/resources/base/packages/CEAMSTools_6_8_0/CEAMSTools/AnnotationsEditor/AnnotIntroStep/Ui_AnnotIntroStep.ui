@@ -1,0 +1,91 @@
+<ui version="4.0">
+ <class>AnnotIntroStep</class>
+ <widget class="QWidget" name="AnnotIntroStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>814</width>
+    <height>735</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string />
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt "Roboto";</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Roboto</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600;"&gt;Annotations Editor&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="plainTextEdit">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="plainText">
+        <string>This tool allows you to delete or edit annotations in batches. Useful for making annotations across a cohort more concise. 
+At runtime the annotations in the original files will be overwritten if you ask any change via this tool.
+Make a copy of your annotations files (.tsv, .STS or .ent).
+
+1 - Input Files : 
+   Start by opening your PSG files (.edf, .eeg or .sts). 
+    - The .tsv file is also needed for the EDF format. 
+    - The .sig file is also needed for Stellate format. 
+    - The whole NATUS subject folder is also needed for the .eeg format.
+
+2 - Remove or edit : 
+   To remove annotations : uncheck the group/name annotation you want to remove.
+   To rename annotations : directly edit the label in the "Group-Name" column.
+
+   To modify annotations for a single recording :
+    - Select the recording in the "PSG Files" view you want to modify.
+    - Edit or uncheck the annotation in the "Events from selection" view.
+
+   To modify annotations for the cohort :
+    - Edit or uncheck the annotation in the "Events from cohort" view.
+
+   Press "Refresh" to update the "Events from cohort" view.
+    - It allows to merge edited groups with the same label.
+    - It allows to sort the annotations based on the new label.
+
+   Press "Back to original labels" to undo any annotation changes you've made since opening the files.
+
+   Press "Export" to display all the changes that will be applied at the runtime.
+    - The first table shows the annotation to rename.
+    - The second table shows the annotations to remove.
+    - The tables can be downloaded as TSV.</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../scinodes_poc/src/main/python/ui/themes/themes.qrc" />
+ </resources>
+ <connections />
+</ui>

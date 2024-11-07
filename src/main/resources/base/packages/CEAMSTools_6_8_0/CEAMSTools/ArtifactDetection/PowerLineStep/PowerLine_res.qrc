@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="powerline">
+    <file>powerLine_marked.png</file>
+  </qresource>
+</RCC>

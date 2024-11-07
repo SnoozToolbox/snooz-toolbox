@@ -1,0 +1,650 @@
+{
+    "item_name": "SleepCycleExport",
+    "item_type": "tool",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "tool_params": {
+        "tool_label": "Sleep Cycle Export",
+        "tool_category": "2-Processing",
+        "asset_directory": "",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Cycle Delimiter",
+                "description": "",
+                "custom_step_name": "SleepCycleDoc",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Select and open your PSG files with the extension .edf, .eeg or .sts.\n\n- The .tsv (tab separated values) file is needed for the EDF format.\n\n- The whole NATUS subject folder is needed for the .eeg format.\n\n-The .sig file is needed for the Stellate format.",
+                "module_id": "04840c4b-cc36-4e0f-ba47-474807dec329",
+                "show_index": true
+            },
+            {
+                "name": "Cycle Definition",
+                "description": "Define your sleep cycle.",
+                "module_id": "4ae3d940-e282-414a-a1a7-c71f0a7acc98",
+                "show_index": true
+            },
+            {
+                "name": "Output Files",
+                "description": "Define where the files will be saved.",
+                "custom_step_name": "OutputFileStep",
+                "show_index": true
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "6.9.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "6.9.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "PSGReader",
+                "name": "PSGReader",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSGReader",
+                "module_category": "Files I/O",
+                "module_options": {
+                    "alias": {
+                        "value": "",
+                        "tooltip": "List of aliases separated by a semicolon(;) character"
+                    },
+                    "file_selection_only": {
+                        "value": "1",
+                        "tooltip": "Set it to 1 if you only need to select a file and not its montages and channels."
+                    }
+                },
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "alias": {
+                        "name": "alias",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": [
+                                "label"
+                            ],
+                            "3e328e95-66a6-412e-b2ce-6029008e0119": [
+                                "input"
+                            ],
+                            "a980fb33-ba82-404c-8bfb-81c492652a71": [
+                                "input"
+                            ]
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": [
+                                "events_in"
+                            ]
+                        }
+                    },
+                    "subject_info": {
+                        "name": "subject_info",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.PSGReader",
+                "identifier": "04840c4b-cc36-4e0f-ba47-474807dec329",
+                "pos_x": -765.0408163265308,
+                "pos_y": -223.26303854875283,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "SleepCyclesDelimiter",
+                "name": "SleepCyclesDelimiter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Sleep Cycles Delimiter",
+                "module_category": "Hypnogram Analysis",
+                "module_options": {},
+                "inputs": {
+                    "events_in": {
+                        "name": "events_in",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "04840c4b-cc36-4e0f-ba47-474807dec329": "sleep_stages"
+                        }
+                    },
+                    "parameters": {
+                        "name": "parameters",
+                        "value": "{'defined_option': 'Minimum Criteria', 'Include_SOREMP': '1', 'Include_last_incompl': '1', 'dur_ends_REMP': '15', 'NREM_min_len_first': '0.5', 'NREM_min_len_mid_last': '0.5', 'NREM_min_len_val_last': '0', 'REM_min_len_first': '0.5', 'REM_min_len_mid': '0.5', 'REM_min_len_last': '0.5', 'mv_end_REMP': '0', 'sleep_stages': 'N1, N2, N3, N4, R', 'details': '<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\\np, li { white-space: pre-wrap; }\\n</style></head><body style=\" font-family:\\'Roboto\\'; font-size:12pt font-weight:400; font-style:normal;\">\\n<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Adjust options based on minimum criteria.<br />These criteria are generally used in the clinic.</p></body></html>', 'Include_all_incompl': '1'}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "label": {
+                        "name": "label",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "04840c4b-cc36-4e0f-ba47-474807dec329": "filename"
+                        }
+                    }
+                },
+                "outputs": {
+                    "events_out": {
+                        "name": "events_out",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "115835a0-de20-4d6b-b139-945d9d8c548d": [
+                                "sleep_stages"
+                            ],
+                            "e04ccc6f-14ce-4a5a-9390-cad0a29df718": [
+                                "events"
+                            ]
+                        }
+                    },
+                    "parameters_cycle": {
+                        "name": "parameters_cycle",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sleep_cycles_epoch": {
+                        "name": "sleep_cycles_epoch",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "115835a0-de20-4d6b-b139-945d9d8c548d": [
+                                "sleep_cycles"
+                            ]
+                        }
+                    },
+                    "REM_period_epoch": {
+                        "name": "REM_period_epoch",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "cycle_labelled": {
+                        "name": "cycle_labelled",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "02f542c6-5adf-4b31-9bc7-0761d3d1889d": [
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.SleepCyclesDelimiter",
+                "identifier": "4ae3d940-e282-414a-a1a7-c71f0a7acc98",
+                "pos_x": -204.20408163265301,
+                "pos_y": -156.0453514739229,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Hypnogram",
+                "name": "Hypnogram",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Hypnogram",
+                "module_category": "Hypnogram Analysis",
+                "module_options": {},
+                "inputs": {
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": "events_out"
+                        }
+                    },
+                    "sleep_cycles": {
+                        "name": "sleep_cycles",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": "sleep_cycles_epoch"
+                        }
+                    },
+                    "epoch_len_sec": {
+                        "name": "epoch_len_sec",
+                        "value": "30",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "fig_name": {
+                        "name": "fig_name",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "f4c46d53-3228-4ff1-bef6-f2252442f3db": "output"
+                        }
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.Hypnogram",
+                "identifier": "115835a0-de20-4d6b-b139-945d9d8c548d",
+                "pos_x": 195.0793650793651,
+                "pos_y": 42.013605442176924,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "TsvWriter",
+                "name": "TsvWriter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Tsv Writer",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "d4525793-91f1-4cf8-a659-f05b698a7f31": "constant"
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": "cycle_labelled"
+                        }
+                    },
+                    "EDF_annot": {
+                        "name": "EDF_annot",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "time_elapsed": {
+                        "name": "time_elapsed",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "append_data": {
+                        "name": "append_data",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "add_index": {
+                        "name": "add_index",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.TsvWriter",
+                "identifier": "02f542c6-5adf-4b31-9bc7-0761d3d1889d",
+                "pos_x": 395.26303854875283,
+                "pos_y": -116.92290249433111,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "02f542c6-5adf-4b31-9bc7-0761d3d1889d": [
+                                "filename"
+                            ],
+                            "f4c46d53-3228-4ff1-bef6-f2252442f3db": [
+                                "input"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "d4525793-91f1-4cf8-a659-f05b698a7f31",
+                "pos_x": -318.0,
+                "pos_y": 26.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "TsvWriter",
+                "name": "TsvWriter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Tsv Writer",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "3e328e95-66a6-412e-b2ce-6029008e0119": "output"
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4ae3d940-e282-414a-a1a7-c71f0a7acc98": "events_out"
+                        }
+                    },
+                    "EDF_annot": {
+                        "name": "EDF_annot",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "time_elapsed": {
+                        "name": "time_elapsed",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "append_data": {
+                        "name": "append_data",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "add_index": {
+                        "name": "add_index",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.TsvWriter",
+                "identifier": "e04ccc6f-14ce-4a5a-9390-cad0a29df718",
+                "pos_x": 401.0544217687074,
+                "pos_y": -314.97732426303855,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "StringManip",
+                "name": "StringManip",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "String Manip",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "input": {
+                        "name": "input",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "04840c4b-cc36-4e0f-ba47-474807dec329": "filename"
+                        }
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": "_stage_cycle.tsv",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "filename_rm": {
+                        "name": "filename_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "path_rm": {
+                        "name": "path_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_ext_rm": {
+                        "name": "file_ext_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output": {
+                        "name": "output",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e04ccc6f-14ce-4a5a-9390-cad0a29df718": [
+                                "filename"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.StringManip",
+                "identifier": "3e328e95-66a6-412e-b2ce-6029008e0119",
+                "pos_x": -204.98866213151925,
+                "pos_y": -319.2743764172336,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "StringManip",
+                "name": "StringManip",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "String Manip",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "input": {
+                        "name": "input",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "04840c4b-cc36-4e0f-ba47-474807dec329": "filename"
+                        }
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "_",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "filename_rm": {
+                        "name": "filename_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "path_rm": {
+                        "name": "path_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_ext_rm": {
+                        "name": "file_ext_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output": {
+                        "name": "output",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "f4c46d53-3228-4ff1-bef6-f2252442f3db": [
+                                "suffix"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.StringManip",
+                "identifier": "a980fb33-ba82-404c-8bfb-81c492652a71",
+                "pos_x": -445.35147392290247,
+                "pos_y": 206.80272108843536,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "StringManip",
+                "name": "StringManip",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "String Manip",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "input": {
+                        "name": "input",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "d4525793-91f1-4cf8-a659-f05b698a7f31": "constant"
+                        }
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "a980fb33-ba82-404c-8bfb-81c492652a71": "output"
+                        }
+                    },
+                    "filename_rm": {
+                        "name": "filename_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "path_rm": {
+                        "name": "path_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_ext_rm": {
+                        "name": "file_ext_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output": {
+                        "name": "output",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "115835a0-de20-4d6b-b139-945d9d8c548d": [
+                                "fig_name"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.StringManip",
+                "identifier": "f4c46d53-3228-4ff1-bef6-f2252442f3db",
+                "pos_x": -64.39909297052154,
+                "pos_y": 178.68480725623579,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

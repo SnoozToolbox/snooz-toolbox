@@ -1,0 +1,400 @@
+{
+    "item_name": "EDFbrowserConverter",
+    "item_type": "tool",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "Karine Lacourse",
+    "item_description": "\"To convert the EDFbrowser .txt accessory files to Snooz accessory tsv file.\"",
+    "tool_params": {
+        "tool_label": "EDFbrowser Converter",
+        "tool_category": "1-Preprocessing",
+        "asset_directory": "",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "EDFbrowser converter",
+                "description": "Documentation of the EDFbrowser accessory file converter.",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Add the files to convert.\n\nDefine the column index of each annotation feature (description label, onset, duration).",
+                "custom_step_name": "InputFilesStep",
+                "show_index": true
+            },
+            {
+                "name": "Stage Annotation Selection",
+                "description": "Select the annotations that correspond to the sleep stages.",
+                "custom_step_name": "StadeSelection",
+                "show_index": true
+            },
+            {
+                "name": "Artifact Selection",
+                "description": "Select the annotations that correspond to the artifacts.",
+                "custom_step_name": "ArtifactSelection",
+                "show_index": true
+            },
+            {
+                "name": "Event Group Definition",
+                "description": "Define the remaining event groups.",
+                "custom_step_name": "GroupDefinition",
+                "show_index": true
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "6.9.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "6.9.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "CsvReaderMaster",
+                "name": "CsvReaderMaster",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Csv Reader Master",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": [],
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_separator": {
+                        "name": "file_separator",
+                        "value": "\\t",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "group_col_i": {
+                        "name": "group_col_i",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "name_col_i": {
+                        "name": "name_col_i",
+                        "value": "3",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "onset_col_i": {
+                        "name": "onset_col_i",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "duration_col_i": {
+                        "name": "duration_col_i",
+                        "value": "2",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "channels_col_i": {
+                        "name": "channels_col_i",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sample_rate": {
+                        "name": "sample_rate",
+                        "value": "256",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "input_as_time": {
+                        "name": "input_as_time",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "event_center": {
+                        "name": "event_center",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "fixed_dur": {
+                        "name": "fixed_dur",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "personnalized_header": {
+                        "name": "personnalized_header",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e1dad260-bd59-4ada-8a08-22b801d4f232": [
+                                "input"
+                            ],
+                            "a42e544f-13dc-4148-93fe-6493e383c417": [
+                                "key"
+                            ]
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "10392b44-72d1-4b62-8b40-fabee69390ab": [
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.CsvReaderMaster",
+                "identifier": "663cd8ee-9ca5-4956-9a4f-82561c6adadf",
+                "pos_x": -403.0,
+                "pos_y": -192.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "StringManip",
+                "name": "StringManip",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "String Manip",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "input": {
+                        "name": "input",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "663cd8ee-9ca5-4956-9a4f-82561c6adadf": "filename"
+                        }
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": ".tsv",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "filename_rm": {
+                        "name": "filename_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "path_rm": {
+                        "name": "path_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_ext_rm": {
+                        "name": "file_ext_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output": {
+                        "name": "output",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "fa2f7c08-44c0-430d-aa5b-8229f4473bfa": [
+                                "filename"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.StringManip",
+                "identifier": "e1dad260-bd59-4ada-8a08-22b801d4f232",
+                "pos_x": 150.0,
+                "pos_y": -429.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Dictionary",
+                "name": "Dictionary",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Dictionary",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "key": {
+                        "name": "key",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "663cd8ee-9ca5-4956-9a4f-82561c6adadf": "filename"
+                        }
+                    },
+                    "dictionary": {
+                        "name": "dictionary",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "value": {
+                        "name": "value",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "10392b44-72d1-4b62-8b40-fabee69390ab": [
+                                "groups"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Dictionary",
+                "identifier": "a42e544f-13dc-4148-93fe-6493e383c417",
+                "pos_x": -28.0,
+                "pos_y": -110.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "DefineEventGroup",
+                "name": "DefineEventGroup",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Define Event Group",
+                "module_category": "Events Utilities",
+                "module_options": {},
+                "inputs": {
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "663cd8ee-9ca5-4956-9a4f-82561c6adadf": "events"
+                        }
+                    },
+                    "groups": {
+                        "name": "groups",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "a42e544f-13dc-4148-93fe-6493e383c417": "value"
+                        }
+                    }
+                },
+                "outputs": {
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "fa2f7c08-44c0-430d-aa5b-8229f4473bfa": [
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.DefineEventGroup",
+                "identifier": "10392b44-72d1-4b62-8b40-fabee69390ab",
+                "pos_x": 315.0,
+                "pos_y": -177.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "TsvWriter",
+                "name": "TsvWriter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Tsv Writer",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e1dad260-bd59-4ada-8a08-22b801d4f232": "output"
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "10392b44-72d1-4b62-8b40-fabee69390ab": "events"
+                        }
+                    },
+                    "EDF_annot": {
+                        "name": "EDF_annot",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "time_elapsed": {
+                        "name": "time_elapsed",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "append_data": {
+                        "name": "append_data",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "add_index": {
+                        "name": "add_index",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.TsvWriter",
+                "identifier": "fa2f7c08-44c0-430d-aa5b-8229f4473bfa",
+                "pos_x": 560.0,
+                "pos_y": -177.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

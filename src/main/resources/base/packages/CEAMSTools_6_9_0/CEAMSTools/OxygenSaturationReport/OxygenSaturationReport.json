@@ -1,0 +1,1158 @@
+{
+    "item_name": "OxygenSaturationReport",
+    "item_type": "tool",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "To generate oxygen saturation report.",
+    "tool_params": {
+        "tool_label": "Oxygen Saturation Report",
+        "tool_category": "2-Processing",
+        "asset_directory": "",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Oxygen saturation",
+                "description": "",
+                "custom_step_name": "IntroStep",
+                "show_index": false,
+                "configs": {
+                    "label": "Common settings:",
+                    "list": [
+                        {
+                            "name": "Sleep Cycles",
+                            "description": "",
+                            "module_id": "7be2ebd0-cb84-4af3-bfd9-cf5c537f0bec"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Input Files",
+                "description": "<p>Add your files, select .edf, .sts or .eeg files.</p><p>European Data Format : .edf and .tsv are mandatory.</p><p>Stellate : .sig and .sts files are mandatory.</p><p>NATUS : the whole NATUS subject folder is mandatory.</p><p>Select the montage and the oxygen channel (i.e. SpO2, OSAT).</p><p>",
+                "custom_step_name": "InputFiles",
+                "show_index": true
+            },
+            {
+                "name": "Non valid sections",
+                "description": "Selection of the non valid sections for the oxygen channel.\n\nCheck the invalid sections annotation for each file or apply the first selection to all files.\n\nInvalid sections must be annotated in the accessory file before running this tool.",
+                "custom_step_name": "NonValidAnnot",
+                "show_index": true
+            },
+            {
+                "name": "Detection Settings",
+                "description": "Define the settings for the oxygen desaturation.",
+                "custom_step_name": "DetectionSettings",
+                "show_index": true
+            },
+            {
+                "name": "Output Files",
+                "description": "To define the output file.",
+                "custom_step_name": "OutputFiles",
+                "show_index": true,
+                "configs": {
+                    "label": "Optional settings:",
+                    "list": [
+                        {
+                            "name": "Hours and Cycles",
+                            "description": "Define the maximum number of hours and cycles to report.",
+                            "custom_step_name": "HoursCyclesStep"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "6.9.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "6.9.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "PSGReader",
+                "name": "PSGReader",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSGReader",
+                "module_category": "Files I/O",
+                "module_options": {
+                    "alias": {
+                        "value": null,
+                        "tooltip": "List of aliases separated by a semicolon(;) character"
+                    },
+                    "file_selection_only": {
+                        "value": "0",
+                        "tooltip": "Set it to 1 if you only need to select a file and not its montages and channels."
+                    }
+                },
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "alias": {
+                        "name": "alias",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4315a1ce-77dd-4140-91e6-ecb4c87e77d4": [
+                                "key"
+                            ],
+                            "9ec59960-6e97-429e-8614-5049b2827909": [
+                                "key"
+                            ],
+                            "35ade33a-576d-40b5-ad36-9c1e994d08e7": [
+                                "key"
+                            ],
+                            "de5c0d66-bd34-418a-acf7-4941cbbf8937": [
+                                "key"
+                            ],
+                            "50e3c4d1-30fc-4cdc-8b49-8054397e330d": [
+                                "constant"
+                            ]
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "3ee4e912-770c-4540-818c-32bef8909f31": [
+                                "signals"
+                            ]
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c32afe09-cb9c-4273-83ca-2bc43b58fea3": [
+                                "constant"
+                            ]
+                        }
+                    },
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "7be2ebd0-cb84-4af3-bfd9-cf5c537f0bec": [
+                                "events_in"
+                            ]
+                        }
+                    },
+                    "subject_info": {
+                        "name": "subject_info",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "7ea8283f-9d21-4d9e-aa9e-86632377b432": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.PSGReader",
+                "identifier": "c7d4e030-fb0b-4070-b17c-ddb3eaac0583",
+                "pos_x": -268.0,
+                "pos_y": 201.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Dictionary",
+                "name": "Dictionary",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Dictionary",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "key": {
+                        "name": "key",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "filename"
+                        }
+                    },
+                    "dictionary": {
+                        "name": "dictionary",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "value": {
+                        "name": "value",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "239a3721-76e0-4e31-969c-6f8f337365a9": [
+                                "artefact_group"
+                            ],
+                            "fb8e7847-4cdd-4098-ade6-a15f44d5fa13": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Dictionary",
+                "identifier": "4315a1ce-77dd-4140-91e6-ecb4c87e77d4",
+                "pos_x": 285.0,
+                "pos_y": -261.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Dictionary",
+                "name": "Dictionary",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Dictionary",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "key": {
+                        "name": "key",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "filename"
+                        }
+                    },
+                    "dictionary": {
+                        "name": "dictionary",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "value": {
+                        "name": "value",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "239a3721-76e0-4e31-969c-6f8f337365a9": [
+                                "artefact_name"
+                            ],
+                            "40b19792-eccb-43be-9be3-174c1ccad172": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Dictionary",
+                "identifier": "9ec59960-6e97-429e-8614-5049b2827909",
+                "pos_x": 283.0,
+                "pos_y": -141.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Dictionary",
+                "name": "Dictionary",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Dictionary",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "key": {
+                        "name": "key",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "filename"
+                        }
+                    },
+                    "dictionary": {
+                        "name": "dictionary",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "value": {
+                        "name": "value",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "83fae52a-807e-4e9d-bbba-ee1f97760206": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Dictionary",
+                "identifier": "35ade33a-576d-40b5-ad36-9c1e994d08e7",
+                "pos_x": 282.0,
+                "pos_y": -22.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Dictionary",
+                "name": "Dictionary",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Dictionary",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "key": {
+                        "name": "key",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "filename"
+                        }
+                    },
+                    "dictionary": {
+                        "name": "dictionary",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "value": {
+                        "name": "value",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4742d28c-2d91-4a66-b67b-987b8377f730": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Dictionary",
+                "identifier": "de5c0d66-bd34-418a-acf7-4941cbbf8937",
+                "pos_x": 286.0,
+                "pos_y": 99.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "SleepCyclesDelimiter",
+                "name": "SleepCyclesDelimiter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Sleep Cycles Delimiter",
+                "module_category": "Hypnogram Analysis",
+                "module_options": {},
+                "inputs": {
+                    "events_in": {
+                        "name": "events_in",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "sleep_stages"
+                        }
+                    },
+                    "parameters": {
+                        "name": "parameters",
+                        "value": "{'defined_option': 'Minimum Criteria', 'Include_SOREMP': '1', 'Include_last_incompl': '1', 'Include_all_incompl': '1', 'dur_ends_REMP': '15', 'NREM_min_len_first': '0.0', 'NREM_min_len_mid_last': '0.0', 'NREM_min_len_val_last': '0.0', 'REM_min_len_first': '0', 'REM_min_len_mid': '0', 'REM_min_len_last': '0', 'mv_end_REMP': '0', 'sleep_stages': 'N1, N2, N3, R', 'details': '<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\\np, li { white-space: pre-wrap; }\\n</style></head><body style=\" font-family:\\'MS Shell Dlg 2\\'; font-size:12pt; font-weight:400; font-style:normal;\">\\n<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Adjust options based on minimum criteria.<br />These criteria are generally used in the clinic.</p></body></html>'}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "label": {
+                        "name": "label",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "events_out": {
+                        "name": "events_out",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "stages_cycles"
+                            ]
+                        }
+                    },
+                    "parameters_cycle": {
+                        "name": "parameters_cycle",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "parameters_cycle"
+                            ]
+                        }
+                    },
+                    "sleep_cycles_epoch": {
+                        "name": "sleep_cycles_epoch",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "REM_period_epoch": {
+                        "name": "REM_period_epoch",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "cycle_labelled": {
+                        "name": "cycle_labelled",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.SleepCyclesDelimiter",
+                "identifier": "7be2ebd0-cb84-4af3-bfd9-cf5c537f0bec",
+                "pos_x": 92.0,
+                "pos_y": 694.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "OxygenDesatDetector",
+                "name": "OxygenDesatDetector",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Oxygen Desaturation Detector",
+                "module_category": "Detectors",
+                "module_options": {},
+                "inputs": {
+                    "artifact_group": {
+                        "name": "artifact_group",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "fb8e7847-4cdd-4098-ade6-a15f44d5fa13": "constant"
+                        }
+                    },
+                    "artifact_name": {
+                        "name": "artifact_name",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "40b19792-eccb-43be-9be3-174c1ccad172": "constant"
+                        }
+                    },
+                    "arousal_group": {
+                        "name": "arousal_group",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "83fae52a-807e-4e9d-bbba-ee1f97760206": "constant"
+                        }
+                    },
+                    "arousal_name": {
+                        "name": "arousal_name",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4742d28c-2d91-4a66-b67b-987b8377f730": "constant"
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "239a3721-76e0-4e31-969c-6f8f337365a9": "signals"
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c32afe09-cb9c-4273-83ca-2bc43b58fea3": "constant"
+                        }
+                    },
+                    "stages_cycles": {
+                        "name": "stages_cycles",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "7be2ebd0-cb84-4af3-bfd9-cf5c537f0bec": "events_out"
+                        }
+                    },
+                    "subject_info": {
+                        "name": "subject_info",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "7ea8283f-9d21-4d9e-aa9e-86632377b432": "constant"
+                        }
+                    },
+                    "parameters_oxy": {
+                        "name": "parameters_oxy",
+                        "value": "{'desaturation_drop_percent': 3, 'max_slope_drop_sec': 20, 'min_hold_drop_sec': 5}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "parameters_cycle": {
+                        "name": "parameters_cycle",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "7be2ebd0-cb84-4af3-bfd9-cf5c537f0bec": "parameters_cycle"
+                        }
+                    },            
+                    "report_constants": {
+                        "name": "report_constants",
+                        "value": {},
+                        "connections": {},
+                        "sub_plugs": {}
+                    },
+                    "cohort_filename": {
+                        "name": "cohort_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "picture_dir": {
+                        "name": "picture_dir",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "desat_events": {
+                        "name": "desat_events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "b432f441-e705-432b-a772-6be62bb4216a": [
+                                "new_events"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.OxygenDesatDetector",
+                "identifier": "88a51ed5-da37-457f-8e32-221b0a600195",
+                "pos_x": 947.0,
+                "pos_y": 453.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "ResetSignalArtefact",
+                "name": "ResetSignalArtefact",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Reset Signal Artefact",
+                "module_category": "Signal Processing",
+                "module_options": {},
+                "inputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "149782b2-d651-4238-8b02-1a3e318be0bc": "signals"
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c32afe09-cb9c-4273-83ca-2bc43b58fea3": "constant"
+                        }
+                    },
+                    "artefact_group": {
+                        "name": "artefact_group",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4315a1ce-77dd-4140-91e6-ecb4c87e77d4": "value"
+                        }
+                    },
+                    "artefact_name": {
+                        "name": "artefact_name",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "9ec59960-6e97-429e-8614-5049b2827909": "value"
+                        }
+                    },
+                    "signal_values": {
+                        "name": "signal_values",
+                        "value": "NaN",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "signals"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.ResetSignalArtefact",
+                "identifier": "239a3721-76e0-4e31-969c-6f8f337365a9",
+                "pos_x": 529.0,
+                "pos_y": 344.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "4315a1ce-77dd-4140-91e6-ecb4c87e77d4": "value"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "artifact_group"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "fb8e7847-4cdd-4098-ade6-a15f44d5fa13",
+                "pos_x": 523.0,
+                "pos_y": -260.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "9ec59960-6e97-429e-8614-5049b2827909": "value"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "artifact_name"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "40b19792-eccb-43be-9be3-174c1ccad172",
+                "pos_x": 523.0,
+                "pos_y": -139.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "35ade33a-576d-40b5-ad36-9c1e994d08e7": "value"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "arousal_group"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "83fae52a-807e-4e9d-bbba-ee1f97760206",
+                "pos_x": 528.0,
+                "pos_y": -20.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "de5c0d66-bd34-418a-acf7-4941cbbf8937": "value"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "arousal_name"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "4742d28c-2d91-4a66-b67b-987b8377f730",
+                "pos_x": 528.0,
+                "pos_y": 98.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Resample",
+                "name": "Resample",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Resample",
+                "module_category": "Signal Processing",
+                "module_options": {},
+                "inputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "3ee4e912-770c-4540-818c-32bef8909f31": "signals"
+                        }
+                    },
+                    "sample_rate": {
+                        "name": "sample_rate",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "upsample": {
+                        "name": "upsample",
+                        "value": "False",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "239a3721-76e0-4e31-969c-6f8f337365a9": [
+                                "signals"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Resample",
+                "identifier": "149782b2-d651-4238-8b02-1a3e318be0bc",
+                "pos_x": 288.0,
+                "pos_y": 203.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "FilterSignal",
+                "name": "FilterSignal",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Filter Signal",
+                "module_category": "Signal Processing",
+                "module_options": {},
+                "inputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "signals"
+                        }
+                    },
+                    "type": {
+                        "name": "type",
+                        "value": "lowpass",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "IR_family": {
+                        "name": "IR_family",
+                        "value": "IIR",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "use_std_order": {
+                        "name": "use_std_order",
+                        "value": "False",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "order": {
+                        "name": "order",
+                        "value": "6",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "cutoff": {
+                        "name": "cutoff",
+                        "value": "0.4",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "window": {
+                        "name": "window",
+                        "value": "hamming",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "149782b2-d651-4238-8b02-1a3e318be0bc": [
+                                "signals"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.FilterSignal",
+                "identifier": "3ee4e912-770c-4540-818c-32bef8909f31",
+                "pos_x": 92.0,
+                "pos_y": 191.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "events"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "239a3721-76e0-4e31-969c-6f8f337365a9": [
+                                "events"
+                            ],
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "events"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "c32afe09-cb9c-4273-83ca-2bc43b58fea3",
+                "pos_x": 90.0,
+                "pos_y": 377.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "subject_info"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": [
+                                "subject_info"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "7ea8283f-9d21-4d9e-aa9e-86632377b432",
+                "pos_x": 88.0,
+                "pos_y": 478.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "PSGWriter",
+                "name": "PSGWriter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSGWriter",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "input_filename": {
+                        "name": "input_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "cf6a4cf1-5ee7-49d5-919e-e1825a94e7ce": "constant"
+                        }
+                    },
+                    "output_filename": {
+                        "name": "output_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "cf6a4cf1-5ee7-49d5-919e-e1825a94e7ce": "constant"
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "new_events": {
+                        "name": "new_events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "88a51ed5-da37-457f-8e32-221b0a600195": "desat_events"
+                        }
+                    },
+                    "events_to_remove": {
+                        "name": "events_to_remove",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "overwrite_events": {
+                        "name": "overwrite_events",
+                        "value": true,
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "overwrite_signals": {
+                        "name": "overwrite_signals",
+                        "value": false,
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.PSGWriter",
+                "identifier": "b432f441-e705-432b-a772-6be62bb4216a",
+                "pos_x": 1302.0,
+                "pos_y": 419.0,
+                "activation_state": "bypass",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "c7d4e030-fb0b-4070-b17c-ddb3eaac0583": "filename"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "cf6a4cf1-5ee7-49d5-919e-e1825a94e7ce": [
+                                "constant"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "50e3c4d1-30fc-4cdc-8b49-8054397e330d",
+                "pos_x": 291.0,
+                "pos_y": -402.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "Constant",
+                "name": "Constant",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Constant",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "50e3c4d1-30fc-4cdc-8b49-8054397e330d": "constant"
+                        }
+                    }
+                },
+                "outputs": {
+                    "constant": {
+                        "name": "constant",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "b432f441-e705-432b-a772-6be62bb4216a": [
+                                "input_filename",
+                                "output_filename"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.Constant",
+                "identifier": "cf6a4cf1-5ee7-49d5-919e-e1825a94e7ce",
+                "pos_x": 740.0,
+                "pos_y": -403.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

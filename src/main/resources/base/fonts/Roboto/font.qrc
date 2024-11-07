@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Roboto_font">
+    <file>Roboto-Regular.ttf</file>
+  </qresource>
+</RCC>

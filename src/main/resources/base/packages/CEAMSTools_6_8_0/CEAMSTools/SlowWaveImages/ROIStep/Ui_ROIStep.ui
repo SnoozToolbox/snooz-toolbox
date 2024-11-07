@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ROIStep</class>
+ <widget class="QWidget" name="ROIStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cohort Channel List&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="chan_cohort_listWidget"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton_rem_ROI">
+         <property name="text">
+          <string>Remove ROI</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="add_ROI_pushButton">
+         <property name="text">
+          <string>Add ROI</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>215</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../scinodes_poc/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>add_ROI_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ROIStep</receiver>
+   <slot>add_ROI_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_rem_ROI</sender>
+   <signal>clicked()</signal>
+   <receiver>ROIStep</receiver>
+   <slot>rem_ROI_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>add_ROI_slot()</slot>
+  <slot>rem_ROI_slot()</slot>
+ </slots>
+</ui>

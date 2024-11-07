@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="ceams_logo">
+    <file>ceams_logo.png</file>
+  </qresource>
+</RCC>

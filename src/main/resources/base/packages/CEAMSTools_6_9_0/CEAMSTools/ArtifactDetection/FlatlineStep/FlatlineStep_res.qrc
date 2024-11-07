@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="flatline">
+    <file>flatlined.png</file>
+  </qresource>
+</RCC>

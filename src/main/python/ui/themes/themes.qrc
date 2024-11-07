@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="themes">
+    <file>light/icons/home_icon.png</file>
+    <file>light/icons/task_icon.png</file>
+    <file>light/icons/app_icon.png</file>
+    <file>light/icons/schema_icon.png</file>
+    <file>light/icons/settings_icon.png</file>
+    <file alias="settings_wheel_icon">light/icons/settings_wheel_icon.png</file>
+    <file>light/stylesheet.qss</file>
+    <file>Roboto-Regular.ttf</file>
+  </qresource>
+</RCC>

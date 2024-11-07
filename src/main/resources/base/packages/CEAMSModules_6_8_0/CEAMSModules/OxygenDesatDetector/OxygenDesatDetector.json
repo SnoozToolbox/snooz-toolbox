@@ -1,0 +1,101 @@
+{
+    "item_name": "OxygenDesatDetector",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "OxygenDesatDetector",
+        "name": "OxygenDesatDetector",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Oxygen Desaturation Detector",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "artifact_group": {
+                "name": "artifact_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_name": {
+                "name": "artifact_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "arousal_group": {
+                "name": "arousal_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "arousal_name": {
+                "name": "arousal_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_cycles": {
+                "name": "stages_cycles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "parameters_oxy": {
+                "name": "parameters_oxy",
+                "value": "{'desaturation_drop_percent': 3, 'max_slope_drop_sec': 120, 'min_hold_drop_sec': 10}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "parameters_cycle": {
+                "name": "parameters_cycle",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "cohort_filename": {
+                "name": "cohort_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "picture_dir": {
+                "name": "picture_dir",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "desat_events": {
+                "name": "desat_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.OxygenDesatDetector"
+    }
+}

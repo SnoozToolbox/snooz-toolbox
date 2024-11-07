@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Snooz_logo">
+    <file>Snooz_logo.png</file>
+  </qresource>
+</RCC>

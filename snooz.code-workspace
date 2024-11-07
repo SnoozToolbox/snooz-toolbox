@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.analysis.extraPaths": ["./src/main/python/"],
+		"editor.rulers": [80],
+		"python.terminal.activateEnvironment": true,
+		"qtForPython.rcc.liveExecution.enabled": false,
+		"qtForPython.uic.liveExecution.enabled": false,
+		"qtForPython.qmlls.enabled": false,
+		"qtForPython.uic.options": [
+			"-o",
+			"${resourceDirname}${pathSeparator}${resourceBasenameNoExtension}.py"
+		],
+	}
+}

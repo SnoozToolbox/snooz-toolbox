@@ -1,0 +1,46 @@
+{
+    "item_name": "SleepBouts",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepBouts",
+        "name": "SleepBouts",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Sleep Bouts",
+        "module_category": "Hypnogram Analysis",
+        "module_options": {},
+        "inputs": {
+            "input_filename": {
+                "name": "input_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_filename": {
+                "name": "output_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "export_in_seconds": {
+                "name": "export_in_seconds",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.SleepBouts"
+    }
+}

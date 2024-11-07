@@ -1,0 +1,95 @@
+{
+    "item_name": "EventSleepReport",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EventSleepReport",
+        "name": "EventSleepReport",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Event Sleep Report",
+        "module_category": "Events Analysis",
+        "module_options": {},
+        "inputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "record_info": {
+                "name": "record_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events_report_criteria": {
+                "name": "events_report_criteria",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "nominal_values": {
+                "name": "nominal_values",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "html_report": {
+                "name": "html_report",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "html_report_config": {
+                "name": "html_report_config",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "csv_report": {
+                "name": "csv_report",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "save_events_report": {
+                "name": "save_events_report",
+                "value": false,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_prefix": {
+                "name": "output_prefix",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_directory": {
+                "name": "output_directory",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "report_events": {
+                "name": "report_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EventSleepReport"
+    }
+}

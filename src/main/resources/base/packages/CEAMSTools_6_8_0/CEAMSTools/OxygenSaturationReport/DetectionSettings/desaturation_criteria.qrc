@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="desat_critera">
+    <file>oxy_desaturation_small.png</file>
+  </qresource>
+</RCC>

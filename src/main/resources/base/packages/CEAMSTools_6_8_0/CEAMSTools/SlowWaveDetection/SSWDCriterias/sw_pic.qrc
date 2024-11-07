@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="sw_pic">
+    <file>phase_slow_wave_small.jpg</file>
+  </qresource>
+</RCC>
