@@ -1,8 +1,8 @@
 # Read me to create the Snooz installer
 
 ## Update your python environment for FBS pro
-### Download FBS Pro
-    https://drive.google.com/file/d/1U_W8x-fiWi13Y_TlVHNeQ8SQAnFnbKcd/view?usp=sharing
+### Download FBS Pro, you need to buy the pro version from https://build-system.fman.io/pro
+
 ### Activate the virtual environment
     Windows
 	$ call path_to_env\snooz_310_env\Scripts\activate.bat

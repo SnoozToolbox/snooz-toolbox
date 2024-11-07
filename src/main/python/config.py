@@ -49,4 +49,4 @@ settings.packages = "packages"
 settings.skip_beta_disclaimer = "skip_beta_disclaimer"
 settings.activated_package_items = "activated_package_items"
 
-DOCUMENTATION_URL = "https://snooz-toolbox-documentation.readthedocs.io/index.html"
+DOCUMENTATION_URL = "https://snooz-toolbox-documentation.readthedocs.io"

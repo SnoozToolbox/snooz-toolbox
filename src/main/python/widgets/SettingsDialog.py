@@ -53,7 +53,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
             return
         
         try:
-            package_version = self._managers.package_manager.register_package(package_path)
+            package_version = self._managers.package_manager.register_package(package_path, is_native=False)
             if package_version is None:
                 return
             package_version.register_hooks()
@@ -68,13 +68,14 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         # Update the UI and user settings if the package was loaded successfully
         self._add_package_to_package_ui(package_version, None)
         self._settings_manager.append_setting(settings.packages, package_path)
+        
     
     def plugins_on_remove(self):
         for selected_item in self.packages_treewidget.selectedItems():
             self.packages_treewidget.removeItemWidget(selected_item, 1)
             package_name = selected_item.text(0)
             package_version_number = selected_item.text(1)
-            package_path = selected_item.text(2)
+            package_path = selected_item.text(3)
 
             # Remove from package manager
             self._managers.package_manager.unregister_package(package_name, package_version_number)
@@ -108,8 +109,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
             self._settings_manager.set_setting(settings.packages, [])
             self._settings_manager.set_setting(settings.skip_beta_disclaimer, None)
             self._settings_manager.set_setting(settings.recent_files, [])
-            self._settings_manager.set_setting(settings.recent_files, [])
-            self._settings_manager.set_setting(settings.activated_package_items, None)
+            #self._settings_manager.set_setting(settings.activated_package_items, None)
+            self._settings_manager.set_setting(settings.activated_package_items, [])
 
             # Update the current packages
             # TODO Need to properly handle the case when a tool or module is in used when we 

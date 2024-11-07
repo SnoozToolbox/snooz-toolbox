@@ -89,35 +89,37 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
         next_label_index = 1
         
-        for idx, step in enumerate(self._process_description['tool_params']['steps']):
-            sidebar_step = SidebarStep(self, step, self._process_description)
-            
-            if 'show_index' not in step or \
-                'show_index' in step and step['show_index']:
-                step_name = f"{next_label_index} - {step['name']}"
-                next_label_index = next_label_index + 1
+        # Verofy if there is 'tool_params' as a key in the description file
+        if "tool_params" in self._process_description:
+            for idx, step in enumerate(self._process_description['tool_params']['steps']):
+                sidebar_step = SidebarStep(self, step, self._process_description)
+                
+                if 'show_index' not in step or \
+                    'show_index' in step and step['show_index']:
+                    step_name = f"{next_label_index} - {step['name']}"
+                    next_label_index = next_label_index + 1
+                else:
+                    step_name = f"{step['name']}"
+
+                self.steps_toolbox.addItem(sidebar_step, step_name)
+
+            # Hide all tab's tab
+            for i in range(self.steps_tabwidget.count()):
+                self.steps_tabwidget.setTabVisible(i, False)
+
+            # Show the feedback button if necessary
+            if "feedback" in self._process_description or True:
+                self.feedback_pushButton.setVisible(True)
             else:
-                step_name = f"{step['name']}"
+                self.feedback_pushButton.setVisible(False)
 
-            self.steps_toolbox.addItem(sidebar_step, step_name)
+            # Once everything is in place, load_settings for all pages
+            self._load_all_settings()
+            self.steps_tabwidget.setCurrentIndex(0)
 
-        # Hide all tab's tab
-        for i in range(self.steps_tabwidget.count()):
-            self.steps_tabwidget.setTabVisible(i, False)
-
-        # Show the feedback button if necessary
-        if "feedback" in self._process_description or True:
-            self.feedback_pushButton.setVisible(True)
-        else:
-            self.feedback_pushButton.setVisible(False)
-
-        # Once everything is in place, load_settings for all pages
-        self._load_all_settings()
-        self.steps_tabwidget.setCurrentIndex(0)
-
-        # important to do it after everything to avoid triggering it when
-        # things are being setup.
-        self.steps_toolbox.currentChanged.connect(self.on_step_changed) 
+            # important to do it after everything to avoid triggering it when
+            # things are being setup.
+            self.steps_toolbox.currentChanged.connect(self.on_step_changed) 
 
     # Slots
     @QtCore.Slot()

@@ -97,11 +97,13 @@ class MenuEndpointHandler(EndpointHandler):
         hook_parameters = hook["parameters"]
         label = hook_parameters["menu_label"]
         full_label = label + " v" + hook["item_version"]
+        
+        if hook_parameters["menu_category"] not in self._categories:
+            return
         menu_category = self._categories[hook_parameters["menu_category"]]
 
         if label not in self._actions:
             return
-        
         action = self._actions[label]
 
         if action.text() == full_label:
@@ -111,6 +113,7 @@ class MenuEndpointHandler(EndpointHandler):
             if len(menu_category.actions()) == 0:
                 self._menu_bar.removeAction(menu_category.menuAction())
                 del self._categories[hook_parameters["menu_category"]]
+    
     
     def clear(self):
         # Remove all first level menu from menu_bar
