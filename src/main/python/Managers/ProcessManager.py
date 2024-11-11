@@ -402,14 +402,14 @@ class ProcessManager(Manager):
 
     # Private functions
     def _open_loading_dialog(self):
-        self._progress = QProgressDialog("Loading ...", None, 0, 1)
-        self._progress.setWindowModality(Qt.ApplicationModal)
-        self._progress.setMinimumDuration(0) # Settings a minimum time greater than 0 makes the UI update slower
+        self._progress = QMessageBox()
+        self._progress.setText("Loading ...\nPlease wait a moment.")
+        self._progress.setWindowTitle("Loading ... Please wait a moment.      ")
+        self._progress.setStandardButtons(QMessageBox.NoButton)
         self._progress.show()
 
     def _close_loading_dialog(self):
         if self._progress is not None:
-            self._progress.setValue(1)
             self._progress.close()
             self._progress = None
 

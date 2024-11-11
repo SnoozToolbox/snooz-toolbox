@@ -3,8 +3,8 @@
 See the file LICENCE for full license details.
 """
 import json
-
 from qtpy import QtCore
+from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QMessageBox, QFileDialog
 
 from Managers.Manager import Manager
@@ -117,9 +117,25 @@ class ToolManager(Manager):
         self._managers.navigation_manager.hide_tool_button()
     
     def _load_content(self, description, tool_filepath=None):
+        self._open_loading_dialog()
         self._step_widget = StepsWidget(self._managers, description, self._activation_params, tool_filepath)
         self._managers.content_manager.load_tool_content(self._step_widget)
         self._is_loaded = True
 
         self._managers.navigation_manager.show_tool_button()
+        self._close_loading_dialog()
         return True
+
+
+    # Private functions
+    def _open_loading_dialog(self):
+        self._progress = QMessageBox()
+        self._progress.setText("Loading ...\nPlease wait a moment.")
+        self._progress.setWindowTitle("Loading ... Please wait a moment.      ")
+        self._progress.setStandardButtons(QMessageBox.NoButton)
+        self._progress.show()
+
+    def _close_loading_dialog(self):
+        if self._progress is not None:
+            self._progress.close()
+            self._progress = None
