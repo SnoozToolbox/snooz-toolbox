@@ -74,15 +74,26 @@ class LunaFile:
                     f"EdfReader event name are corrupted.")
             else:
                 # Really important to avoid self._annotations.loc[:]['name']
-                #   They data may be not modified
+                #   The data may be not modified
                 self._annotations.loc[:,'name'] = name 
-                # Convert the string of channels into a channel list
-                self._annotations['channels'] = (self._annotations['channels'].apply(literal_eval))
+                # Snooz supports an event occurring on multiple channels
+                #   convert the string of channels list into a python list
+                #   if the string does not include a list, we create it for compatibility.
+                self._annotations['channels'] = (self._annotations['channels'].apply(lambda x: self.convert_to_list(x)))
         else:
             self._filename = luna_tsv_filename
 
+
+    def convert_to_list(self, x):
+        try:
+            return literal_eval(x)
+        except:
+            return [x]
+
+
     def clear_events(self):
         self._annotations = pd.DataFrame()
+
 
     def add_event(self, name, group, start_sec, duration_sec, channels):
         current_df = manage_events.create_event_dataframe([[group, name, start_sec, duration_sec, channels]])
@@ -93,11 +104,13 @@ class LunaFile:
         self._annotations = pd.concat([self._annotations, new_events_df], ignore_index=True)
         self._annotations.sort_values(by=['start_sec'], inplace=True)
 
+
     def remove_events_by_group(self, group_name):
         if len(self._annotations) == 0:
             return
         # Filter out all annotation that has a name equal to the group_name
         self._annotations = self._annotations[self._annotations.group != group_name]
+
 
     def remove_events_by_name(self, event_name, group_name):
         # Remove out all events that has a event name equal to the event_name and 
@@ -107,6 +120,7 @@ class LunaFile:
             return
         self._annotations = self._annotations[~((self._annotations.name == event_name) &
             (self._annotations.group == group_name))]
+
 
     def get_sleep_stages(self):
         return self._annotations[self._annotations['group'] == commons.sleep_stages_group]

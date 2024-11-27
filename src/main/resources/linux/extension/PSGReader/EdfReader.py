@@ -74,12 +74,20 @@ class LunaFile:
                     f"EdfReader event name are corrupted.")
             else:
                 # Really important to avoid self._annotations.loc[:]['name']
-                #   They data may be not modified
+                #   The data may be not modified
                 self._annotations.loc[:,'name'] = name 
-                # Convert the string of channels into a channel list
-                self._annotations['channels'] = (self._annotations['channels'].apply(literal_eval))
+                # Snooz supports an event occurring on multiple channels
+                #   convert the string of channels list into a python list
+                #   if the string does not include a list, we create it for compatibility.
+                self._annotations['channels'] = (self._annotations['channels'].apply(lambda x: self.convert_to_list(x)))
         else:
             self._filename = luna_tsv_filename
+
+    def convert_to_list(self, x):
+        try:
+            return literal_eval(x)
+        except:
+            return [x]
 
     def clear_events(self):
         self._annotations = pd.DataFrame()
