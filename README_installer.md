@@ -1,8 +1,21 @@
 # Read me to create the Snooz installer
 
-## Update your python environment for FBS pro
-### Download FBS Pro, you need to buy the pro version from https://build-system.fman.io/pro
+## On windows 
 
+Install NSIS (full installation) : https://sourceforge.net/projects/nsis/
+
+Install windows-10-sdk : https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/
+
+Add the paths in the variable environments PATH:
+- C:\Program Files (x86)\NSIS\Bin
+- C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\
+
+Reboot
+
+
+## Update your python environment for FBS pro
+### Download FBS Pro
+    https://drive.google.com/file/d/1U_W8x-fiWi13Y_TlVHNeQ8SQAnFnbKcd/view?usp=sharing
 ### Activate the virtual environment
     Windows
 	$ call path_to_env\snooz_310_env\Scripts\activate.bat
@@ -12,11 +25,11 @@
 	(snooz_310_env) $ pip3 install path_to_fbs_pro\fbs_pro-0.9.8.tar.gz
 
 ## Update the snooz version in base.json
-    Edit /scinodes_poc/src/build/settings/base.json
+    Edit /snooz-toolbox-ceams/src/build/settings/base.json
     and update the version i.e. "version": "1.2.0",
 
 ## Update your Snooz config to set "is_dev" to False
-    Open scinodes_poc/src/main/python/config.py
+    Open snooz-toolbox-ceams/src/main/python/config.py
     set is_dev=False
     -> the set is_dev=False should not be pushed on the repository.  
 
