@@ -1,0 +1,41 @@
+{
+    "item_name": "MutualInfo",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "MutualInfo",
+        "name": "MutualInfo",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Mutual Info",
+        "module_category": "Statistics",
+        "module_options": {},
+        "inputs": {
+            "signals1": {
+                "name": "signals1",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals2": {
+                "name": "signals2",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "mutual_info": {
+                "name": "mutual_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.MutualInfo"
+    }
+}

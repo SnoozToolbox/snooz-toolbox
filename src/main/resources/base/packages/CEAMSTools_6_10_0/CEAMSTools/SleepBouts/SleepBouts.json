@@ -1,0 +1,176 @@
+{
+    "item_name": "SleepBouts",
+    "item_type": "tool",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "tool_params": {
+        "tool_label": "Sleep Bouts",
+        "tool_category": "2-Processing",
+        "asset_directory": "assets",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Sleep Bouts",
+                "description": "Sleep bouts are continuous period of sleep.",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Select the input file to analyze.",
+                "module_id": "0a402e3d-7266-40fa-b439-6a42a9fbfe2f"
+            },
+            {
+                "name": "Output File",
+                "description": "Select the output file. If it already exist, results will be added at the end of it.",
+                "module_id": "19cc8da0-b11c-4b4a-8b35-dfeaa01e0a5f"
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "6.9.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "6.9.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "PSGReader",
+                "name": "PSGReader",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSG Reader",
+                "module_category": "",
+                "module_options": {
+                    "alias": {
+                        "value": "",
+                        "tooltip": "List of aliases separated by a semicolon(;) character"
+                    },
+                    "file_selection_only": {
+                        "value": "1",
+                        "tooltip": "Set it to 1 if you only need to select a file and not its montages and channels."
+                    }
+                },
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "alias": {
+                        "name": "alias",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "19cc8da0-b11c-4b4a-8b35-dfeaa01e0a5f": [
+                                "input_filename"
+                            ]
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "19cc8da0-b11c-4b4a-8b35-dfeaa01e0a5f": [
+                                "sleep_stages"
+                            ]
+                        }
+                    },
+                    "subject_info": {
+                        "name": "subject_info",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.PSGReader",
+                "identifier": "0a402e3d-7266-40fa-b439-6a42a9fbfe2f",
+                "pos_x": -238.0,
+                "pos_y": -131.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            },
+            {
+                "cls": "SleepBouts",
+                "name": "SleepBouts",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "SleepBouts",
+                "module_category": "",
+                "module_options": null,
+                "inputs": {
+                    "input_filename": {
+                        "name": "input_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "0a402e3d-7266-40fa-b439-6a42a9fbfe2f": "filename"
+                        }
+                    },
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "0a402e3d-7266-40fa-b439-6a42a9fbfe2f": "sleep_stages"
+                        }
+                    },
+                    "output_filename": {
+                        "name": "output_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "export_in_seconds": {
+                        "name": "export_in_seconds",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.SleepBouts",
+                "identifier": "19cc8da0-b11c-4b4a-8b35-dfeaa01e0a5f",
+                "pos_x": 63.0,
+                "pos_y": -51.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

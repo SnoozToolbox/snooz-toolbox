@@ -1,0 +1,19 @@
+# Last line of Ui_MuscularStep must be
+from . import high_freq_noise_res
+
+# background scinode
+50 50 50
+
+
+Fixed threshold (mode and STD)
+The power is log10 transformed to make the data more normally distributed. The histogram (nbins=50) of the power of all selected channels is often skewed right.  
+Therefore, the threshold is based on the mode and the standard deviation (STD), but std is calculated only on data equal to or less than the mode.
+An artifact is possibly identified when the log10(power) > (mode+threshold*STD)
+
+Adaptive threshold (baseline)
+An adaptive threshold is computed from a baseline window (BSL) of 30 s around the segment to evaluate.  A segment with a power x times the median power of the baseline is possibly an artifact. The adaptive threshold may be too sensitive when the EEG recording does not include much high frequency noise. 
+
+Power ratio threshold (relative power)
+High frequency bursts can be masked (thus non-disturbing) by a strong low frequency signal. An artifact is possibly identified when the relative power (25-64 Hz)/(1-64 Hz) > threshold.
+
+A segment whose power exceeds the 3 thresholds is considered an artifact.

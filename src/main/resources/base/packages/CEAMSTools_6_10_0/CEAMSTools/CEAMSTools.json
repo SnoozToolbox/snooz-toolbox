@@ -1,0 +1,332 @@
+{
+    "package_name": "CEAMSTools",
+    "package_version": "6.10.0",
+    "package_author": "",
+    "package_url": "",
+    "package_description": "",
+    "package_api_version": "1.0.0",
+    "items": [
+        {
+            "item_name": "ConvertDOMINO",
+            "item_type": "tool",
+            "item_version": "0.5.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from DOMINOScreen"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ConvertEDFbrowser",
+            "item_type": "tool",
+            "item_version": "0.8.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from EDFbrowser"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ConvertXMLCompumedics",
+            "item_type": "tool",
+            "item_version": "0.7.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from XML"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportEDFPlusAnnotations",
+            "item_type": "tool",
+            "item_version": "0.4.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Annotations from EDF+"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportTextAnnotations",
+            "item_type": "tool",
+            "item_version": "0.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Annotations from Text"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportSleepStagesVector",
+            "item_type": "tool",
+            "item_version": "0.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Sleep Stages Text Vector"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "EditAnnotations",
+            "item_type": "tool",
+            "item_version": "0.3.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Edit Annotations"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ExtractAnnotation",
+            "item_type": "tool",
+            "item_version": "0.7.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Extract Annotations"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "DetectArtifacts",
+            "item_type": "tool",
+            "item_version": "0.19.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Detect Artifacts"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveClassification",
+            "item_type": "tool",
+            "item_version": "0.10.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Slow Wave classification"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepReport",
+            "item_type": "tool",
+            "item_version": "0.10.2",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Sleep Report"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveDetection",
+            "item_type": "tool",
+            "item_version": "0.19.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Slow Wave detection"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SpindleDetectionA7",
+            "item_type": "tool",
+            "item_version": "0.0.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Spindle Detection A7"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SpindleDetectionMartin",
+            "item_type": "tool",
+            "item_version": "1.9.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Spindle Detection Martin"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepBouts",
+            "item_type": "tool",
+            "item_version": "0.9.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Sleep Bouts"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepCycleExport",
+            "item_type": "tool",
+            "item_version": "0.9.2",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Sleep Cycle Export"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "PowerSpectralAnalysis",
+            "item_type": "tool",
+            "item_version": "0.19.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Power Spectral Analysis (PSA)"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "PSACohortReview",
+            "item_type": "tool",
+            "item_version": "0.11.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "PSA Cohort Review"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "CompareEventsFromPSG",
+            "item_type": "tool",
+            "item_version": "0.11.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Compare Events from PSG"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "DetectionsCohortReview",
+            "item_type": "tool",
+            "item_version": "0.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Detections Cohort Review"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "OxygenSaturationReport",
+            "item_type": "tool",
+            "item_version": "0.3.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Oxygen Saturation Report"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveImages",
+            "item_type": "tool",
+            "item_version": "0.1.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Slow Wave Images"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "RenameFiles",
+            "item_type": "tool",
+            "item_version": "0.0.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Rename Files"
+                    }
+                }
+            ]
+        }
+    ]
+}
