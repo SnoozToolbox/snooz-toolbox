@@ -239,12 +239,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QApplication.setFont(font)
         return font
 
-    # Obsolete
-    def _openUrl(self):
-        """ Open the release notes """
-        # Specify the URL you want to open
-        url = QUrl(u"https://f004.backblazeb2.com/file/snooz-release/release.html")
-        QDesktopServices.openUrl(url)
 
     def _display_disclaimer(self):
         """ Display the beta version disclaimer """
