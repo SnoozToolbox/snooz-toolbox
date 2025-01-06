@@ -55,7 +55,7 @@ class PackageManager(Manager):
         activated_package_items = self._managers.settings_manager.get_setting(settings.activated_package_items, None)
 
         # If it's the first time the app is launched, activate all items from all latest version of the packages
-        if isinstance(activated_package_items, dict) and len(activated_package_items) == 0:
+        if isinstance(activated_package_items, list) and len(activated_package_items) == 0:
             self.activate_latest_packages()
         elif activated_package_items is None:
             self.activate_latest_packages()
@@ -239,11 +239,13 @@ class PackageManager(Manager):
             for package_version in package_versions_to_remove:
                 self.unregister_package(package.name, package_version.version)
 
-            if len(package.package_versions) == 0:
-                package_to_remove.append(package)
+            # if len(package.package_versions) == 0:
+            #     package_to_remove.append(package)
 
-        for package in package_to_remove:
-            self._packages.remove(package)
+        ## the package has been removed in self.unregister_package
+        # for package in package_to_remove:
+        #     self._packages.remove(package)
+        
 
     def unregister_package(self, package_name, package_version_number):
         """ Unregister a package.

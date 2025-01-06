@@ -14,8 +14,8 @@ Reboot
 
 
 ## Update your python environment for FBS pro
-### Download FBS Pro
-    https://drive.google.com/file/d/1U_W8x-fiWi13Y_TlVHNeQ8SQAnFnbKcd/view?usp=sharing
+    Purchase, register, and download FBS Pro from the official website.
+    If you need more information or assistance, contact us at snooztoolbox.cnmtl@ssss.gouv.qc.ca.
 ### Activate the virtual environment
     Windows
 	$ call path_to_env\snooz_310_env\Scripts\activate.bat
@@ -27,6 +27,20 @@ Reboot
 ## Update the snooz version in base.json
     Edit /snooz-toolbox-ceams/src/build/settings/base.json
     and update the version i.e. "version": "1.2.0",
+
+## Remove any __pycache__ folders and .pyc/.pyo files from the packages
+### Open a git bash terminal on Windows or a regular terminal on Linux and macOS
+    cd snooz-package-ceams
+    find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
+
+## Release a ceams-package if needed
+### In the vscode terminal
+    (snooz_310_env) $cd snooz-package-ceams
+    (snooz_310_env) $python .\main_utils.py
+    (snooz_310_env) $6- Create a release package
+    Move the packages into snooz-toolbox-ceams/src/main/resources/
+
+## Push your modifications
 
 ## Update your Snooz config to set "is_dev" to False
     Open snooz-toolbox-ceams/src/main/python/config.py

@@ -124,6 +124,7 @@ class ProcessManager(Manager):
                 missing_package_dialog = MissingPackagesDialog(missing_packages, 
                                                                self._managers.package_manager)
                 missing_package_dialog.exec_()
+                self._close_loading_dialog()
                 return False
 
             success = self.load_dependencies_from_description(data)

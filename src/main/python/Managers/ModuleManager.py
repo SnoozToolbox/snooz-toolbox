@@ -97,18 +97,20 @@ class ModuleManager(Manager):
         pn = hook["package_name"]
         pv = hook["package_version"]
         
-        package_versions = self._packages[pn]
-        for package_version in package_versions:
-            if package_version["package_version"] == pv:
-                for module in package_version["modules"]:
-                    if module["module_name"] == mn and module["module_version"] == mv:
-                        package_version["modules"].remove(module)
-                
-                if len(package_version["modules"]) == 0:
-                    package_versions.remove(package_version)
-        
-        if len(package_versions) == 0:
-            del self._packages[pn]
+        if pn in self._packages:
+            package_versions = self._packages[pn]
+            for package_version in package_versions:
+                if package_version["package_version"] == pv:
+                    for module in package_version["modules"]:
+                        if module["module_name"] == mn and module["module_version"] == mv:
+                            package_version["modules"].remove(module)
+                    
+                    if len(package_version["modules"]) == 0:
+                        package_versions.remove(package_version)
+            
+            if len(package_versions) == 0:
+                del self._packages[pn]
+
 
     def get_package_modules(self, package_name:str, package_version_number:str):
         """ Get the modules of a package.

@@ -28,7 +28,7 @@ dist/
 .idea/
 
 # VSCode
-.VSCode/settings.json
+.vscode/settings.json
 
 # Unit test reports
 TEST*.xml
