@@ -114,7 +114,7 @@ class InputFiles(BaseStepView, Ui_InputFiles, QtWidgets.QWidget):
             None, 
             'Open .tsv files', 
             None, 
-            '.tsv (*.tsv, *.TSV)')
+            '.tsv files (*.tsv, *.TSV)')
         self._files = files
         if files != '':
             self.tableWidget_char_files.setRowCount(len(self._files))
@@ -148,7 +148,7 @@ class InputFiles(BaseStepView, Ui_InputFiles, QtWidgets.QWidget):
             None, 
             'Open .tsv files', 
             None, 
-            '.tsv (*.tsv, *.TSV)')
+            '.tsv files (*.tsv, *.TSV)')
         self._stages_files = files
         if files != '':
             self.tableWidget_stage_files.setRowCount(len(self._stages_files))

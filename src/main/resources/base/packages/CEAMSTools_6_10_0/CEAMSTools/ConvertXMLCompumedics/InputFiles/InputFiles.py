@@ -84,7 +84,7 @@ class InputFiles(BaseStepView, Ui_InputFiles, QtWidgets.QWidget):
             None, 
             'Open .XML files', 
             None, 
-            '.XML (*.xml, *.XML)')
+            '.XML files (*.xml, *.XML)')
         self._files = files
         if files != '':
             self.fill_file_table()

@@ -65,7 +65,8 @@ class EdfXmlReaderMasterSettingsView(BaseSettingsView, Ui_EdfXmlReaderMasterSett
             None, 
             'Open .XML files', 
             None, 
-            '.XML (*.xml)')
+            'XML Files (*.xml *.XML)'  # Ensures both uppercase and lowercase are included
+        )
         if files != '':
             self.filename_lineedit.setText(str(files))
 
