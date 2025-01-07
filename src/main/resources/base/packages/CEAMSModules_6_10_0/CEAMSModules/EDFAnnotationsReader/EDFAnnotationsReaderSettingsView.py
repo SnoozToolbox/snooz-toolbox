@@ -97,7 +97,7 @@ class EDFAnnotationsReaderSettingsView(BaseSettingsView, Ui_EDFAnnotationsReader
             None, 
             'Open .edf files', 
             None, 
-            '.EDF files (*.edf, *.EDF)')
+            '.EDF files (*.edf *.EDF)')
         if files != '':
             self._annot_files = files
             self.fill_annot_table()
@@ -108,7 +108,7 @@ class EDFAnnotationsReaderSettingsView(BaseSettingsView, Ui_EDFAnnotationsReader
             None, 
             'Open .edf files', 
             None, 
-            '.EDF files (*.edf, *.EDF)')
+            '.EDF files (*.edf *.EDF)')
         if files != '':
             self._psg_files = files
             self.fill_psg_table()

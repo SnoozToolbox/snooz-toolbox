@@ -119,7 +119,7 @@ class RenameFileListSettingsView(BaseSettingsView, Ui_RenameFileListSettingsView
 
     def choose_slot(self):
         # open a file dialog with many selections of extensions such as .xml, .tsv, .txt, .edf
-        file_filter = 'All Files (*);; TSV Files (*.tsv, *.TSV);;Text Files (*.txt, *.TXT);;CSV Files (*.csv, *.CSV);;XML Files (*.xml, *.XML);;EDF Files (*.edf, *.EDF);;'
+        file_filter = 'All Files (*);; TSV Files (*.tsv *.TSV);;Text Files (*.txt *.TXT);;CSV Files (*.csv *.CSV);;XML Files (*.xml *.XML);;EDF Files (*.edf *.EDF);;'
         files, _ = QtWidgets.QFileDialog.getOpenFileNames(
             None, 
             'Open files, select the right extension', 

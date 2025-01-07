@@ -92,7 +92,7 @@ class SleepStagesImporterSettingsView(BaseSettingsView, Ui_SleepStagesImporterSe
             None, 
             'Open text files', 
             None, 
-            'CSV Files (*.csv, *.CSV);;Text Files (*.txt, *.TXT);;TSV Files (*.tsv, *.TSV);;All Files (*)')
+            'CSV Files (*.csv *.CSV);;Text Files (*.txt *.TXT);;TSV Files (*.tsv *.TSV);;All Files (*)')
         self._files = files
         if files != '':
             self.fill_table_files()
