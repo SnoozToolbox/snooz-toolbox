@@ -391,43 +391,6 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
 
     def on_channel_search_changed(self, search_pattern):
         self.update_channels_filter()
-    
-
-    def on_add_folders(self):
-        file_dialog = QtWidgets.QFileDialog()
-        file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        #file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
-        file_view = file_dialog.findChild(QtWidgets.QListView, 'listView')
-
-        if file_view:
-            file_view.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
-        f_tree_view = file_dialog.findChild(QtWidgets.QTreeView)
-        if f_tree_view:
-            f_tree_view.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
-
-        if file_dialog.exec():
-            folders = file_dialog.selectedFiles()
-
-            for folder in folders:
-                filenames = self._psg_reader_manager.find_psg_within_folder(folder)
-
-                for filename in filenames:
-                    matches = self.files_model.findItems(os.path.basename(filename),QtCore.Qt.MatchExactly)
-                    if len(matches) == 0:
-                        if filename is not None:
-                            success = self.load_file_info(filename) # self._psg_reader_manager is used
-
-                            if success:
-                                # tree item : parent=file, child=group and count, child=name and count
-                                item = self.create_file_item_count(filename) # The file is read
-                                self.files_model.setColumnCount(2)
-                                self.files_model.appendRow(item)    
-                        else:
-                            #TODO Log empty folders
-                            # Couldnt find PSG file in folder:{folder}
-                            pass
-            # Update the context to notify that the files model has been updated
-            self._context_manager[self.context_files_view] = self
 
 
     def on_channel_search_changed(self, search_pattern):
@@ -437,8 +400,9 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
     def on_add_folders(self):
         file_dialog = QtWidgets.QFileDialog()
         file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly)
-        if not sys.platform.startswith("darwin"):
-            file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
+        # The native dialog does not support multiple folders selection in windows and macOS
+            # Natus needs the option to select multiple folders
+        file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
         file_view = file_dialog.findChild(QtWidgets.QListView, 'listView')
 
         if file_view:

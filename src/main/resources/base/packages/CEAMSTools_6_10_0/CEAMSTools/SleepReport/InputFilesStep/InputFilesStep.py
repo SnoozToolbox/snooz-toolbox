@@ -232,10 +232,9 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
         file_dialog.setFileMode(QtWidgets.QFileDialog.DirectoryOnly) # Allows the user to select only directories (folders).
         # The non native QFileDialog supports only local files.
             # So it is better to use the native dialog instead to see athena
-        # The native dialog does not support multiple folders selection in windows
+        # The native dialog does not support multiple folders selection in windows and macOS
             # Natus needs the option to select multiple folders
-        if not sys.platform.startswith("darwin"):
-            file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
+        file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
         file_view = file_dialog.findChild(QtWidgets.QListView, 'listView')
 
         if file_view:
