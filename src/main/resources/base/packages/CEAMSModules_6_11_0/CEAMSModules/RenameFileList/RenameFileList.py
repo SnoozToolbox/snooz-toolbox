@@ -143,19 +143,27 @@ class RenameFileList(SciNode):
         # For each file in ori_file_list_to_ren check if it exists
         for file in ori_file_list_to_ren:
             if not os.path.exists(file):
-                raise NodeRuntimeException(self.identifier, "files", \
+                raise NodeRuntimeException(self.identifier, "file_list", \
                     f"The file {file} does not exist.")
             else:
                 if keep_original_file:
-                    # Copy the original file to the new name
-                    shutil.copy(file, ren_file_list[ori_file_list_to_ren.index(file)])
-                    # Log message for the Logs tab
-                    self._log_manager.log(self.identifier, f"{file} copied to {ren_file_list[ori_file_list_to_ren.index(file)]}.")
+                    try:
+                        # Copy the original file to the new name
+                        shutil.copy(file, ren_file_list[ori_file_list_to_ren.index(file)])
+                        # Log message for the Logs tab
+                        self._log_manager.log(self.identifier, f"{file} copied to {ren_file_list[ori_file_list_to_ren.index(file)]}.")
+                    except Exception:
+                        raise NodeRuntimeException(self.identifier, "file_list", \
+                            f"The file {file} could not be copied to {ren_file_list[ori_file_list_to_ren.index(file)]}.")
                 else:
-                    # Rename the file
-                    os.rename(file, ren_file_list[ori_file_list_to_ren.index(file)])
-                    # Log message for the Logs tab
-                    self._log_manager.log(self.identifier, f"{file} renamed to {ren_file_list[ori_file_list_to_ren.index(file)]}.")
+                    try:
+                        # Rename the file
+                        os.rename(file, ren_file_list[ori_file_list_to_ren.index(file)])
+                        # Log message for the Logs tab
+                        self._log_manager.log(self.identifier, f"{file} renamed to {ren_file_list[ori_file_list_to_ren.index(file)]}.")
+                    except Exception:
+                        raise NodeRuntimeException(self.identifier, "file_list", \
+                            f"The file {file} could not be renamed to {ren_file_list[ori_file_list_to_ren.index(file)]}. Check if it already exists.")                    
 
         # Write to the cache to use the data in the resultTab
         cache = {}
