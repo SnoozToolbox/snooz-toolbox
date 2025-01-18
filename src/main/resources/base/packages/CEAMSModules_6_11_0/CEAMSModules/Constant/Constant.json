@@ -1,0 +1,35 @@
+{
+    "item_name": "Constant",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "Constant",
+        "name": "Constant",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Constant",
+        "module_category": "Parameters",
+        "module_options": {},
+        "inputs": {
+            "constant": {
+                "name": "constant",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "constant": {
+                "name": "constant",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.Constant"
+    }
+}

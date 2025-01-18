@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StftResultsView</class>
+ <widget class="QWidget" name="StftResultsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>668</width>
+    <height>105</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="time_label">
+         <property name="text">
+          <string>Time elapsed (HH:MM:SS)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="time_lineEdit">
+         <property name="text">
+          <string>00:00:00</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="previous_pb">
+         <property name="text">
+          <string>&lt;&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="next_pb">
+         <property name="text">
+          <string>&gt;&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="length_label">
+         <property name="text">
+          <string>Window length</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="length_lineEdit">
+         <property name="text">
+          <string>30</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="log_cb">
+         <property name="text">
+          <string>Show log scale</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="zoom_cb">
+         <property name="text">
+          <string>Show &lt;30 Hz</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>98</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="file_label">
+         <property name="text">
+          <string>To load another STFT file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="filename_lineEdit">
+         <property name="text">
+          <string>filename</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="choose_pb">
+         <property name="text">
+          <string>Choose</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="result_layout"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>choose_pb</sender>
+   <signal>clicked()</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_choose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>671</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>next_pb</sender>
+   <signal>clicked()</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_next()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>437</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>previous_pb</sender>
+   <signal>clicked()</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_previous()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>time_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_time_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>length_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_time_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>631</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zoom_cb</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_plot_cb()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>log_cb</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>StftResultsView</receiver>
+   <slot>on_plot_cb()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_choose()</slot>
+  <slot>on_previous()</slot>
+  <slot>on_next()</slot>
+  <slot>on_time_changed()</slot>
+  <slot>on_plot_cb()</slot>
+ </slots>
+</ui>

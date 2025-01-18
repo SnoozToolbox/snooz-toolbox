@@ -1,0 +1,41 @@
+{
+    "item_name": "WindowsToSamples",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "WindowsToSamples",
+        "name": "WindowsToSamples",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Windows To Samples",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "signals_windows": {
+                "name": "signals_windows",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_step_sec": {
+                "name": "win_step_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "samples_values": {
+                "name": "samples_values",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.WindowsToSamples"
+    }
+}

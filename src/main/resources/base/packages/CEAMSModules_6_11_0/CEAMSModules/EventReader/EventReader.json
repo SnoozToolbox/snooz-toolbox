@@ -1,0 +1,137 @@
+{
+    "item_name": "EventReader",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EventReader",
+        "name": "EventReader",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Event Reader",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "delimiter": {
+                "name": "delimiter",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "nrows_header": {
+                "name": "nrows_header",
+                "value": 1,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "encoding": {
+                "name": "encoding",
+                "value": "utf_8",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "group_col_i": {
+                "name": "group_col_i",
+                "value": 1,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "group_def": {
+                "name": "group_def",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "name_col_i": {
+                "name": "name_col_i",
+                "value": 2,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "name_def": {
+                "name": "name_def",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "onset_col_i": {
+                "name": "onset_col_i",
+                "value": 3,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "duration_col_i": {
+                "name": "duration_col_i",
+                "value": 4,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channels_col_i": {
+                "name": "channels_col_i",
+                "value": 5,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sample_rate": {
+                "name": "sample_rate",
+                "value": "256",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "input_as_time": {
+                "name": "input_as_time",
+                "value": "seconds",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_center": {
+                "name": "event_center",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "dur_disable": {
+                "name": "dur_disable",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "fixed_dur": {
+                "name": "fixed_dur",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "personalized_header": {
+                "name": "personalized_header",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EventReader"
+    }
+}

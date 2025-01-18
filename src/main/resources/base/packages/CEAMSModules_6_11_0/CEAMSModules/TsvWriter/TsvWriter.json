@@ -1,0 +1,58 @@
+{
+    "item_name": "TsvWriter",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "TsvWriter",
+        "name": "TsvWriter",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Tsv Writer",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "EDF_annot": {
+                "name": "EDF_annot",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "time_elapsed": {
+                "name": "time_elapsed",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "append_data": {
+                "name": "append_data",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "add_index": {
+                "name": "add_index",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.TsvWriter"
+    }
+}
