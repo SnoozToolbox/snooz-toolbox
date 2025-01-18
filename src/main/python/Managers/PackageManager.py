@@ -245,7 +245,6 @@ class PackageManager(Manager):
         ## the package has been removed in self.unregister_package
         # for package in package_to_remove:
         #     self._packages.remove(package)
-        
 
     def unregister_package(self, package_name, package_version_number):
         """ Unregister a package.
