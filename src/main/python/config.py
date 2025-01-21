@@ -3,7 +3,7 @@
 See the file LICENCE for full license details.
 """
 from qtpy import QtGui, QtCore
-is_dev = False
+is_dev = True
 
 """ Global constants """
 LISTBOX_MIMETYPE = "application/x-item"
