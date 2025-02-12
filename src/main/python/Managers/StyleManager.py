@@ -1,5 +1,5 @@
 """
-@ CIUSSS DU NORD-DE-L'ILE-DE-MONTREAL – 2024
+@ Valorisation Recherche HSCM, Societe en Commandite – 2024
 See the file LICENCE for full license details.
 """
 DEBUG = False

@@ -142,7 +142,7 @@ class Ui_AboutDialog(object):
         AboutDialog.setWindowTitle(QCoreApplication.translate("AboutDialog", u"About Snooz", None))
         self.snooz_label.setText("")
         self.label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Snooz Toolbox</span> is a Python 3.10 software for analyzing sleep recordings (Polysomnography).<br/>It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.</p><p>Snooz is built using a cross-platform graphical interface framework called PyQt, <br/>making it compatible with Windows, Linux, and Mac computers.<br/></p></body></html>", None))
-        self.label_3.setText(QCoreApplication.translate("AboutDialog", u"@ CIUSSS DU NORD-DE-L'ILE-DE-MONTREAL - 2024", None))
+        self.label_3.setText(QCoreApplication.translate("AboutDialog", u"@ Valorisation Recherche HSCM, Societe en Commandite - 2024", None))
         self.snooz_version_label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The current version installed :<span style=\" font-weight:600;\"> beta-0.3.0</span></p></body></html>", None))
         self.label_released_version.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The latest version released :<span style=\" font-weight:600;\"> beta-0.3.0 </span><span style=\" font-family:'Roboto'; font-size:medium; color:#95a5a6;\">\u00a0(June 21, 2024)</span></p></body></html>", None))
         self.label_4.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Click here to download the latest installer </span></p></body></html>", None))
