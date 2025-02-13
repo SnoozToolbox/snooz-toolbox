@@ -90,7 +90,7 @@ class PackageManager(Manager):
         package = self.get_package(package_name)
         if package is None:
             self._managers.pub_sub_manager.publish(self, "show_error_message", f"activate_package: Package not found {package_name}")
-            return
+            return False
 
         package_version = package.get_package_version(package_version_number)
 
@@ -99,7 +99,8 @@ class PackageManager(Manager):
             self._add_to_sys_path(package_version.root_path)
         else:
             self._managers.pub_sub_manager.publish(self, "show_error_message", f"activate_package: Package version not found {package_name} {package_version_number}")
-            return
+            return False
+        return True
 
     def deactivate_all_package(self):
         """ Deactivate all packages. 
