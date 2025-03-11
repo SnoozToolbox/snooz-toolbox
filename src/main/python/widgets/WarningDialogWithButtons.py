@@ -23,9 +23,8 @@ class WarningDialogWithButtons():
         self.log_msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         self.log_msg.setDefaultButton(QtWidgets.QMessageBox.Ok)
         
-    def exec_(self) -> int:
-        """Execute the dialog and return the button clicked"""
-        return self.log_msg.exec_()
+        # Store the result when dialog is shown
+        self.result = self.log_msg.exec_()
 
     @staticmethod
     def show_warning(message: str) -> bool:
@@ -36,6 +35,11 @@ class WarningDialogWithButtons():
         Returns:
             bool: True if user clicked OK, False if user clicked Cancel
         """
-        dialog = WarningDialogWithButtons(message)
+        dialog = QtWidgets.QMessageBox()
+        dialog.setWindowTitle("Warning")
+        dialog.setText(message)
+        dialog.setIcon(QtWidgets.QMessageBox.Warning)
+        dialog.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        dialog.setDefaultButton(QtWidgets.QMessageBox.Ok)
         result = dialog.exec_()
         return result == QtWidgets.QMessageBox.Ok 
