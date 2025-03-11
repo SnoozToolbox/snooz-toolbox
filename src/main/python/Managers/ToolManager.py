@@ -1,5 +1,5 @@
 """
-@ CIUSSS DU NORD-DE-L'ILE-DE-MONTREAL – 2024
+@ Valorisation Recherche HSCM, Societe en Commandite – 2024
 See the file LICENCE for full license details.
 """
 import json
@@ -73,7 +73,12 @@ class ToolManager(Manager):
         if not filepath:
             return False
 
-        self.load_workspace_from_file(filepath)
+        try: 
+            self.load_workspace_from_file(filepath)
+        except Exception as e:
+            message = f"ToolManager could not load process: {e}"
+            self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+            return False
         return True
 
     def load_workspace_from_file(self, filepath):
@@ -118,9 +123,17 @@ class ToolManager(Manager):
     
     def _load_content(self, description, tool_filepath=None):
         self._open_loading_dialog()
-        self._step_widget = StepsWidget(self._managers, description, self._activation_params, tool_filepath)
-        self._managers.content_manager.load_tool_content(self._step_widget)
-        self._is_loaded = True
+
+        try :
+            self._step_widget = StepsWidget(self._managers, description, self._activation_params, tool_filepath)
+            self._managers.content_manager.load_tool_content(self._step_widget)
+            self._is_loaded = True
+
+        except Exception as e:
+            message = f"ToolManager could not load tool content: {e}"
+            self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+            self._close_loading_dialog()
+            return False
 
         self._managers.navigation_manager.show_tool_button()
         self._close_loading_dialog()

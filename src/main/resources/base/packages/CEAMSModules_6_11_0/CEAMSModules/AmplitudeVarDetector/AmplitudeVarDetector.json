@@ -1,0 +1,113 @@
+{
+    "item_name": "AmplitudeVarDetector",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "AmplitudeVarDetector",
+        "name": "AmplitudeVarDetector",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Amplitude Var Detector",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_len_sec": {
+                "name": "win_len_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_step_sec": {
+                "name": "win_step_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "pad_sec": {
+                "name": "pad_sec",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_val": {
+                "name": "threshold_val",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_unit": {
+                "name": "threshold_unit",
+                "value": "fixed",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_behavior": {
+                "name": "threshold_behavior",
+                "value": "Above",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "baseline_win_len": {
+                "name": "baseline_win_len",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "art_events": {
+                "name": "art_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel_dbg": {
+                "name": "channel_dbg",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "det_activity": {
+                "name": "det_activity",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "bsl_activity": {
+                "name": "bsl_activity",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.AmplitudeVarDetector"
+    }
+}

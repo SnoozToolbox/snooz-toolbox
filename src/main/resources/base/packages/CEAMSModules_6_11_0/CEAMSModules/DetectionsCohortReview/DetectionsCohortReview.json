@@ -1,0 +1,77 @@
+{
+    "item_name": "DetectionsCohortReview",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "DetectionsCohortReview",
+        "name": "DetectionsCohortReview",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Detections Cohort Review",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "filenames": {
+                "name": "filenames",
+                "value": "[]",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_chans_label": {
+                "name": "subject_chans_label",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "ROIs_cohort": {
+                "name": "ROIs_cohort",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "ROIs_subjects": {
+                "name": "ROIs_subjects",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "activity_label": {
+                "name": "activity_label",
+                "value": "Total",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "clean_flag": {
+                "name": "clean_flag",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "transposed_flag": {
+                "name": "transposed_flag",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_file": {
+                "name": "output_file",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "out_df": {
+                "name": "out_df",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.DetectionsCohortReview"
+    }
+}

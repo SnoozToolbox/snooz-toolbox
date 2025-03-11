@@ -1,0 +1,71 @@
+{
+    "item_name": "SleepCyclesDelimiter",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepCyclesDelimiter",
+        "name": "SleepCyclesDelimiter",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Sleep Cycles Delimiter",
+        "module_category": "Hypnogram Analysis",
+        "module_options": {},
+        "inputs": {
+            "events_in": {
+                "name": "events_in",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "parameters": {
+                "name": "parameters",
+                "value": "{'defined_option': 'Minimum Criteria', 'Include_SOREMP' : '1', 'Include_last_incompl' : '1', 'Include_all_incompl' : '1', 'dur_ends_REMP' : '15', 'NREM_min_len_first': '0', 'NREM_min_len_mid_last': '0', 'NREM_min_len_val_last': '0', 'REM_min_len_first': '0', 'REM_min_len_mid': '0', 'REM_min_len_last': '0', 'mv_end_REMP': '0', 'sleep_stages': 'N1, N2, N3, R', 'details': '<p>Adjust options based on minimum criteria.<br />These criteria are generally used in the clinic.</p>'}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "label": {
+                "name": "label",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events_out": {
+                "name": "events_out",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "parameters_cycle": {
+                "name": "parameters_cycle",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycles_epoch": {
+                "name": "sleep_cycles_epoch",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "REM_period_epoch": {
+                "name": "REM_period_epoch",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "cycle_labelled": {
+                "name": "cycle_labelled",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SleepCyclesDelimiter"
+    }
+}

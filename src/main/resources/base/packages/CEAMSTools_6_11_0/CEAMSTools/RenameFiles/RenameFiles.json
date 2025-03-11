@@ -1,0 +1,116 @@
+{
+    "item_name": "RenameFiles",
+    "item_type": "tool",
+    "item_api_version": "1.0.0",
+    "tool_params": {
+        "tool_label": "Rename Files",
+        "tool_category": "1-Preprocessing",
+        "tool_author": "C\u00c9AMS",
+        "tool_url": "",
+        "tool_description": "Renames files to match PSG recordings with their accessory files.",
+        "tool_version": "0.0.0",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Rename Files",
+                "description": "To rename a list of files to match PSG recordings with their accessory files.",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Select the files you want to rename and specify the renaming rules.",
+                "module_id": "98900a7a-d9aa-437a-964f-22b8da2ae1f0"
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "6.11.0",
+            "deleteable": false
+        },
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "6.11.0"
+        }
+    ],
+    "process_params": {
+        "process_label": "Rename Files",
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "RenameFileList",
+                "name": "RenameFileList",
+                "metadata": {},
+                "file_location": null,
+                "module": "CEAMSModules.RenameFileList",
+                "module_label": "Rename File List",
+                "module_category": "Files I/O",
+                "module_author": "",
+                "module_url": "",
+                "module_description": "",
+                "module_options": {},
+                "inputs": {
+                    "file_list": {
+                        "name": "file_list",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "ext_selection": {
+                        "name": "ext_selection",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "n_char_to_keep": {
+                        "name": "n_char_to_keep",
+                        "value": -1,
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "pattern_to_rem": {
+                        "name": "pattern_to_rem",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "keep_original_file": {
+                        "name": "keep_original_file",
+                        "value": 1,
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "ren_file_list": {
+                        "name": "ren_file_list",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "identifier": "98900a7a-d9aa-437a-964f-22b8da2ae1f0",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": 105.0,
+                "pos_y": 6.0
+            }
+        ]
+    }
+}

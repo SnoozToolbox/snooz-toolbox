@@ -1,0 +1,97 @@
+{
+    "item_name": "SpindlesDetails",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SpindlesDetails",
+        "name": "SpindlesDetails",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Spindles Details",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "recording_path": {
+                "name": "recording_path",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "spindle_events": {
+                "name": "spindle_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_cycles": {
+                "name": "stages_cycles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_events": {
+                "name": "artifact_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycle_param": {
+                "name": "sleep_cycle_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "spindle_gen_param": {
+                "name": "spindle_gen_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "spindle_sel_param": {
+                "name": "spindle_sel_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "report_constants": {
+                "name": "report_constants",
+                "value": {
+                    "N_HOURS": 9,
+                    "N_CYCLES": 6
+                },
+                "sub_plugs": {},
+                "connections": {}
+            },
+            "cohort_filename": {
+                "name": "cohort_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "export_spindles": {
+                "name": "export_spindles",
+                "value": "False",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.SpindlesDetails"
+    }
+}

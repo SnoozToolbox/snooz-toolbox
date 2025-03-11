@@ -1,0 +1,77 @@
+{
+    "item_name": "DiscardEvents",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "DiscardEvents",
+        "name": "DiscardEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Discard Events",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "min_len_sec": {
+                "name": "min_len_sec",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "max_len_sec": {
+                "name": "max_len_sec",
+                "value": "30",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artefact_free": {
+                "name": "artefact_free",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artefact_group": {
+                "name": "artefact_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artefact_name": {
+                "name": "artefact_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.DiscardEvents"
+    }
+}

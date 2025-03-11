@@ -1,0 +1,53 @@
+{
+    "item_name": "SleepStageRename",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepStageRename",
+        "name": "SleepStageRename",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Sleep Stage Rename",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events_in": {
+                "name": "events_in",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "group_lut": {
+                "name": "group_lut",
+                "value": "{'stage':'stage'}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "original_name": {
+                "name": "original_name",
+                "value": "{'wake': 'wake', 'N1': 'N1', 'N2': 'N2', 'N3': 'N3', 'N4': 'N4', 'R': 'R', 'movement': 'movement', 'tech': 'tech', 'unscored': 'unscored'}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_name": {
+                "name": "new_name",
+                "value": "{'wake': 'wake', 'N1': 'N1', 'N2': 'N2', 'N3': 'N3', 'N4': 'N4', 'R': 'R', 'movement': 'movement', 'tech': 'tech', 'unscored': 'unscored'}",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events_out": {
+                "name": "events_out",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SleepStageRename"
+    }
+}

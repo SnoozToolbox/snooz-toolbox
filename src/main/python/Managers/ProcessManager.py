@@ -1,5 +1,5 @@
 """
-@ CIUSSS DU NORD-DE-L'ILE-DE-MONTREAL – 2024
+@ Valorisation Recherche HSCM, Societe en Commandite – 2024
 See the file LICENCE for full license details.
 """
 import copy
@@ -187,7 +187,13 @@ class ProcessManager(Manager):
         self._managers.content_manager.unload_tool_content()
         
         with open(filepath, 'r') as f:
-            data = json.load(f)
+            try:
+                data = json.load(f)
+            except Exception as e:
+                message = f"ProcessManager could not load process: {e}"
+                self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+                self._close_loading_dialog()
+                return False
 
             success = self.load_dependencies_from_description(data)
             if not success:
@@ -204,6 +210,7 @@ class ProcessManager(Manager):
                 self._managers.content_manager.unload_tool_content()
                 self._close_loading_dialog()
                 return False
+                
             self._current_filepath = filepath
             self._load_from_package = False
             self._current_package_item = None
@@ -323,40 +330,52 @@ class ProcessManager(Manager):
         self._process_view.scene.data = copy.deepcopy(description)
         self._process_view.scene.data["process_params"]["nodes"] = []
 
-        # Add nodes to scenes
-        for node in description["process_params"]["nodes"]:
-            # Find the module item in its package
-            module_name = node["name"]
-            package_name = node["package"]["package_name"]
-            package_version = self._get_package_version(description, package_name)
+        try : 
+            # Add nodes to scenes
+            for node in description["process_params"]["nodes"]:
+                # Find the module item in its package
+                module_name = node["name"]
+                package_name = node["package"]["package_name"]
+                package_version = self._get_package_version(description, package_name)
 
-            module_item = self._managers.package_manager.get_package_item(package_name, package_version, module_name)
-            if module_item is None:
-                message = f"ProcessManager could not find module {module_name} in package {package_name}"
-                self._managers.pub_sub_manager.publish(self, "show_error_message", message)
-                return False
+                module_item = self._managers.package_manager.get_package_item(package_name, package_version, module_name)
+                if module_item is None:
+                    message = f"ProcessManager could not find module {module_name} in package {package_name}"
+                    self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+                    return False
+                
+                node["package"]["package_version"] = package_version
+                node["module_version"] = module_item.version
+                self._process_view.create_node(module_item, node)
             
-            node["package"]["package_version"] = package_version
-            node["module_version"] = module_item.version
-            self._process_view.create_node(module_item, node)
-        
-        self._process_view.connection_manager.update_connections()
-        self._process_view.scene.take_snapshot()
-        self._managers.content_manager.load_process_content(self._process_view)
+            self._process_view.connection_manager.update_connections()
+            self._process_view.scene.take_snapshot()
+            self._managers.content_manager.load_process_content(self._process_view)
 
-        filename = os.path.basename(filepath)
-        self._managers.pub_sub_manager.publish(self, "change_process_title", filename)
+            filename = os.path.basename(filepath)
+            self._managers.pub_sub_manager.publish(self, "change_process_title", filename)
 
-        self._is_loaded = True
-        self._managers.navigation_manager.show_process_button()
+            self._is_loaded = True
+            self._managers.navigation_manager.show_process_button()
+        except Exception as e:
+            message = f"ProcessManager could not load process: {e}"
+            self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+            return False
 
         return True
 
     def load_dependencies_from_description(self, description):
-        for package in description["dependencies"]:
-            package_name = package["package_name"]
-            package_version = package["package_version"]
-            self._managers.package_manager.activate_package(package_name, package_version)
+        try:
+            for package in description["dependencies"]:
+                package_name = package["package_name"]
+                package_version = package["package_version"]
+                success = self._managers.package_manager.activate_package(package_name, package_version)
+                if not success:
+                    return False
+        except Exception as e:
+            message = f"ProcessManager could not load dependencies: {e}"
+            self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+            return False
         return True
     
     def get_node_by_id(self, identifier):

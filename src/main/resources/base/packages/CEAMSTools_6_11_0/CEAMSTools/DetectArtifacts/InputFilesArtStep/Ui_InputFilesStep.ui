@@ -1,0 +1,19 @@
+<ui version="4.0">
+ <class>InputFilesStep</class>
+ <widget class="QWidget" name="InputFilesStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>730</width>
+    <height>590</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string />
+  </property>
+  <layout class="QHBoxLayout" name="verticalLayout" />
+ <property name="styleSheet"><string>font: 12pt "Roboto";</string></property></widget>
+ <resources><include location="../../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc" /></resources>
+ <connections />
+</ui>

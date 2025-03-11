@@ -1,0 +1,56 @@
+{   
+    "item_name": "SpindleDetectorA7",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"SpindleDetectorA7",
+        "name":"SpindleDetectorA7",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.SpindleDetectorA7",
+        "module_label": "Spindle Detector A7",
+        "module_category":"Detectors",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"thresholds": {
+                "name": "thresholds",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"artifact_events": {
+                "name": "artifact_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

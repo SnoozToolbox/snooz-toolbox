@@ -80,7 +80,7 @@ class ProcessWorker(QtCore.QObject):
         # WARNING
         # Enable garbage collection
          # The gc is disabled in the MainWindow
-         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 2.15.4, but not distributed)
+         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 5.15.4, but not distributed)
          # the bug makes Snooz closes on setPixmap (~25% of the time)
          # should remove any access to the garbage collector once Snooz uses PySide6        
         gc.enable()

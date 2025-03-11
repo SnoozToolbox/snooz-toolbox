@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="intro">
+    <file>classification_categories.png</file>
+    <file>classification_cycles.PNG</file>
+    <file>classification_hist-aic.png</file>
+    <file>classification_pies.png</file>
+    <file>classification_pies_table.png</file>
+    <file>classification_time.PNG</file>
+  </qresource>
+</RCC>

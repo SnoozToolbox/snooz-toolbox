@@ -1,5 +1,5 @@
 """
-@ CIUSSS DU NORD-DE-L'ILE-DE-MONTREAL – 2024
+@ Valorisation Recherche HSCM, Societe en Commandite – 2024
 See the file LICENCE for full license details.
 
     MainWindow of Snooz
@@ -67,7 +67,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # WARNING
         # Disable garbage collection
-         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 2.15.4, but not distributed)
+         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 5.15.4, but not distributed)
          # the bug makes Snooz closes on setPixmap (~25% of the time)
          # should remove any access to the garbage collector once Snooz uses PySide6
          # The gc is enabled at the run of the process

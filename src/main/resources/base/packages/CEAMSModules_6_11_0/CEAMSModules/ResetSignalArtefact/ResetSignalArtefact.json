@@ -1,0 +1,59 @@
+{
+    "item_name": "ResetSignalArtefact",
+    "item_type": "module",
+    "item_api_version": "1.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "ResetSignalArtefact",
+        "name": "ResetSignalArtefact",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Reset Signal Artefact",
+        "module_category": "Signal Processing",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artefact_group": {
+                "name": "artefact_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artefact_name": {
+                "name": "artefact_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signal_values": {
+                "name": "signal_values",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.ResetSignalArtefact"
+    }
+}

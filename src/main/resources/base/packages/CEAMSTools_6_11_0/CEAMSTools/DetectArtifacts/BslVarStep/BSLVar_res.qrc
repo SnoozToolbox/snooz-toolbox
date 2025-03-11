@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="BSLVar">
+    <file>BSLVar.png</file>
+  </qresource>
+</RCC>
