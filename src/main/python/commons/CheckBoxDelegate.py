@@ -59,7 +59,7 @@ class CheckBoxDelegate(QtWidgets.QItemDelegate):
         Change the data in the model and the state of the checkbox
         if the user presses the left mousebutton and this cell is editable. Otherwise do nothing.
         '''
-        if not int(index.flags() & QtCore.Qt.ItemIsEditable) > 0:
+        if not (index.flags() & QtCore.Qt.ItemIsEditable):
             return False
 
         if event.type() == QtCore.QEvent.MouseButtonRelease and event.button() == QtCore.Qt.LeftButton:

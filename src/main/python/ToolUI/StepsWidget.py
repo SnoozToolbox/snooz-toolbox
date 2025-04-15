@@ -113,6 +113,12 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             else:
                 self.feedback_pushButton.setVisible(False)
 
+            # Validate if the tool has a documentation url
+            if "item_url" not in self._process_description or not self._process_description["item_url"]:
+                self.documentation_pushButton.setVisible(False)
+            else:
+                self.documentation_pushButton.setVisible(True)
+
             # Once everything is in place, load_settings for all pages
             self._load_all_settings()
             self.steps_tabwidget.setCurrentIndex(0)
@@ -159,6 +165,13 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         
         url = QUrl(url_text, QUrl.TolerantMode)
         QDesktopServices.openUrl(url)
+
+    def documentation_pressed(self):
+        url_text = self._process_description["item_url"]
+        try:
+            QDesktopServices.openUrl(QUrl(url_text, QUrl.TolerantMode))
+        except Exception as e:
+            print(f"Error opening the item url: {e}")
 
     def _add_step_content(self, step_content, process_description, back_step_index=None, back_step_name=None):
         top_widget = QtWidgets.QWidget()

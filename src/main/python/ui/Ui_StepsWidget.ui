@@ -23,7 +23,7 @@
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="childrenCollapsible">
       <bool>false</bool>
@@ -86,7 +86,7 @@
             <x>0</x>
             <y>0</y>
             <width>353</width>
-            <height>491</height>
+            <height>493</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -149,7 +149,6 @@
             <font>
              <family>Roboto</family>
              <pointsize>12</pointsize>
-             <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
              <underline>false</underline>
@@ -232,9 +231,19 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="documentation_pushButton">
+            <property name="accessibleName">
+                <string>documentation_pushbutton</string>
+            </property>
+           <property name="text">
+            <string>Read more!</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -368,6 +377,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>documentation_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StepsWidget</receiver>
+   <slot>documentation_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>536</x>
+     <y>638</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>492</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_next()</slot>
@@ -377,5 +402,6 @@
   <slot>on_step_changed()</slot>
   <slot>feedback_pressed()</slot>
   <slot>save_clicked()</slot>
+  <slot>documentation_pressed()</slot>
  </slots>
 </ui>

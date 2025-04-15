@@ -16,13 +16,19 @@ import argparse
 import datetime
 import json
 import os
-os.environ['QT_API'] = 'pyside2'
+os.environ['QT_API'] = 'pyside6'
 import sys
 
 import config
-if not config.is_dev:
-    from fbs_runtime import PUBLIC_SETTINGS
-from fbs_runtime.application_context.PySide2 import ApplicationContext
+
+if config.is_fbs_available():
+    if not config.is_dev:
+        from fbs_runtime import PUBLIC_SETTINGS
+    from fbs_runtime.application_context.PySide6 import ApplicationContext
+else:
+    from runtime.application_context import ApplicationContext
+
+
 from MainWindow import MainWindow
 
 class AppContext(ApplicationContext):
@@ -47,7 +53,7 @@ def main():
     parser = argparse.ArgumentParser(description='Snooz')
     parser.add_argument("--f", help="The process description file in JSON format.")
     args = parser.parse_args()
-
+ 
     app = AppContext()
 
     if args.f is not None:

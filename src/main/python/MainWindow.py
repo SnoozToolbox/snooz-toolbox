@@ -7,7 +7,6 @@ See the file LICENCE for full license details.
     This is the main window of the software. It initializes and handles the 
     menus, the managers, the main view, etc.
 """
-import gc
 
 from qtpy import QtWidgets
 from qtpy import QtCore
@@ -64,14 +63,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._managers.pub_sub_manager.subscribe(self, "minimize")
         
         self._managers.navigation_manager.show_home()
-
-        # WARNING
-        # Disable garbage collection
-         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 5.15.4, but not distributed)
-         # the bug makes Snooz closes on setPixmap (~25% of the time)
-         # should remove any access to the garbage collector once Snooz uses PySide6
-         # The gc is enabled at the run of the process
-        gc.disable()
 
     # UI callbacks
     def preferences_clicked(self):

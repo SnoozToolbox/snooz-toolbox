@@ -3,15 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'Ui_AboutDialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.8.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QHBoxLayout,
+    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 import Snooz_logo_rc
 import themes_rc
 
@@ -25,7 +31,7 @@ class Ui_AboutDialog(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.snooz_label = QLabel(AboutDialog)
         self.snooz_label.setObjectName(u"snooz_label")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.snooz_label.sizePolicy().hasHeightForWidth())
@@ -33,11 +39,10 @@ class Ui_AboutDialog(object):
         self.snooz_label.setMinimumSize(QSize(0, 0))
         self.snooz_label.setMaximumSize(QSize(200, 100))
         font = QFont()
-        font.setFamily(u"Roboto")
+        font.setFamilies([u"Roboto"])
         font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
         self.snooz_label.setFont(font)
         self.snooz_label.setFrameShape(QFrame.NoFrame)
         self.snooz_label.setPixmap(QPixmap(u":/Snooz_logo/Snooz_logo.png"))
@@ -59,7 +64,7 @@ class Ui_AboutDialog(object):
 
         self.verticalLayout.addWidget(self.label_3)
 
-        self.verticalSpacer = QSpacerItem(20, 13, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer = QSpacerItem(20, 13, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -69,7 +74,7 @@ class Ui_AboutDialog(object):
 
         self.verticalLayout.addWidget(self.snooz_version_label)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 13, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer_3 = QSpacerItem(20, 13, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
 
@@ -78,7 +83,7 @@ class Ui_AboutDialog(object):
 
         self.verticalLayout.addWidget(self.label_released_version)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 13, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer_4 = QSpacerItem(20, 13, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
@@ -108,7 +113,7 @@ class Ui_AboutDialog(object):
 
         self.horizontalLayout.addWidget(self.pushButton_linux)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
@@ -125,7 +130,7 @@ class Ui_AboutDialog(object):
 
         self.verticalLayout.addWidget(self.label_5)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 119, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 119, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 

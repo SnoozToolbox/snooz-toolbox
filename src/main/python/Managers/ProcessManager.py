@@ -4,7 +4,6 @@ See the file LICENCE for full license details.
 """
 import copy
 import datetime as dt
-import gc
 import json
 import pandas as pd
 import os

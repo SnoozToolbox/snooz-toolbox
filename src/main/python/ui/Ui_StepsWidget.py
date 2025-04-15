@@ -3,15 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'Ui_StepsWidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.8.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QPushButton, QSizePolicy,
+    QSpacerItem, QSplitter, QTabWidget, QToolBox,
+    QVBoxLayout, QWidget)
 import themes_rc
 
 class Ui_StepsWidget(object):
@@ -24,7 +30,7 @@ class Ui_StepsWidget(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.splitter = QSplitter(StepsWidget)
         self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Horizontal)
+        self.splitter.setOrientation(Qt.Orientation.Horizontal)
         self.splitter.setChildrenCollapsible(False)
         self.layoutWidget = QWidget(self.splitter)
         self.layoutWidget.setObjectName(u"layoutWidget")
@@ -34,7 +40,7 @@ class Ui_StepsWidget(object):
         self.verticalLayout_4.setContentsMargins(9, 9, 9, 9)
         self.steps_toolbox = QToolBox(self.layoutWidget)
         self.steps_toolbox.setObjectName(u"steps_toolbox")
-        sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.steps_toolbox.sizePolicy().hasHeightForWidth())
@@ -46,7 +52,7 @@ class Ui_StepsWidget(object):
         self.widget = QWidget()
         self.widget.setObjectName(u"widget")
         self.widget.setEnabled(True)
-        self.widget.setGeometry(QRect(0, 0, 353, 491))
+        self.widget.setGeometry(QRect(0, 0, 353, 493))
         self.widget.setMinimumSize(QSize(353, 0))
         self.widget.setAutoFillBackground(True)
         self.widget.setStyleSheet(u"")
@@ -57,7 +63,7 @@ class Ui_StepsWidget(object):
         self.save_pushButton = QPushButton(self.layoutWidget)
         self.save_pushButton.setObjectName(u"save_pushButton")
         self.save_pushButton.setMaximumSize(QSize(16777215, 50))
-        self.save_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.save_pushButton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.verticalLayout_4.addWidget(self.save_pushButton)
 
@@ -68,15 +74,14 @@ class Ui_StepsWidget(object):
         self.run_pushbutton.setMinimumSize(QSize(0, 50))
         self.run_pushbutton.setMaximumSize(QSize(16777215, 50))
         font = QFont()
-        font.setFamily(u"Roboto")
+        font.setFamilies([u"Roboto"])
         font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
         font.setUnderline(False)
-        font.setWeight(50)
         font.setStrikeOut(False)
         self.run_pushbutton.setFont(font)
-        self.run_pushbutton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.run_pushbutton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.run_pushbutton.setStyleSheet(u"")
         self.run_pushbutton.setIconSize(QSize(32, 32))
 
@@ -94,7 +99,7 @@ class Ui_StepsWidget(object):
         self.verticalLayout.setContentsMargins(9, 9, 9, 9)
         self.steps_tabwidget = QTabWidget(self.layoutWidget1)
         self.steps_tabwidget.setObjectName(u"steps_tabwidget")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.steps_tabwidget.sizePolicy().hasHeightForWidth())
@@ -115,20 +120,25 @@ class Ui_StepsWidget(object):
 
         self.horizontalLayout.addWidget(self.feedback_pushButton)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.documentation_pushButton = QPushButton(self.layoutWidget1)
+        self.documentation_pushButton.setObjectName(u"documentation_pushButton")
+
+        self.horizontalLayout.addWidget(self.documentation_pushButton)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
         self.previous_pushbutton = QPushButton(self.layoutWidget1)
         self.previous_pushbutton.setObjectName(u"previous_pushbutton")
-        self.previous_pushbutton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.previous_pushbutton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.previous_pushbutton.setStyleSheet(u"")
 
         self.horizontalLayout.addWidget(self.previous_pushbutton)
 
         self.next_pushbutton = QPushButton(self.layoutWidget1)
         self.next_pushbutton.setObjectName(u"next_pushbutton")
-        self.next_pushbutton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.next_pushbutton.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.next_pushbutton.setStyleSheet(u"")
 
         self.horizontalLayout.addWidget(self.next_pushbutton)
@@ -147,6 +157,7 @@ class Ui_StepsWidget(object):
         self.run_pushbutton.clicked.connect(StepsWidget.run_clicked)
         self.feedback_pushButton.clicked.connect(StepsWidget.feedback_pressed)
         self.save_pushButton.clicked.connect(StepsWidget.save_clicked)
+        self.documentation_pushButton.clicked.connect(StepsWidget.documentation_pressed)
 
         self.steps_toolbox.setCurrentIndex(0)
         self.steps_toolbox.layout().setSpacing(7)
@@ -183,6 +194,10 @@ class Ui_StepsWidget(object):
         self.feedback_pushButton.setAccessibleName(QCoreApplication.translate("StepsWidget", u"feedback_pushbutton", None))
 #endif // QT_CONFIG(accessibility)
         self.feedback_pushButton.setText(QCoreApplication.translate("StepsWidget", u"Give us your feedback!", None))
+#if QT_CONFIG(accessibility)
+        self.documentation_pushButton.setAccessibleName(QCoreApplication.translate("StepsWidget", u"documentation_pushbutton", None))
+#endif // QT_CONFIG(accessibility)
+        self.documentation_pushButton.setText(QCoreApplication.translate("StepsWidget", u"Read more!", None))
 #if QT_CONFIG(accessibility)
         self.previous_pushbutton.setAccessibleName(QCoreApplication.translate("StepsWidget", u"previous_pushbutton", None))
 #endif // QT_CONFIG(accessibility)

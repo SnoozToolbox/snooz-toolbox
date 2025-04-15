@@ -176,10 +176,10 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         if is_native:
             package_name = package_name + " (pre-installed)"
             package_item = QtWidgets.QTreeWidgetItem([package_name, package_version_number, None, package_path])
-            package_item.setFlags(package_item.flags() | QtCore.Qt.ItemIsTristate | QtCore.Qt.ItemIsUserCheckable)
+            package_item.setFlags(package_item.flags() | QtCore.Qt.ItemIsAutoTristate | QtCore.Qt.ItemIsUserCheckable)
         else:
             package_item = QtWidgets.QTreeWidgetItem([package_name, package_version_number, None, package_path])
-            package_item.setFlags(package_item.flags() | QtCore.Qt.ItemIsTristate | QtCore.Qt.ItemIsUserCheckable)
+            package_item.setFlags(package_item.flags() | QtCore.Qt.ItemIsAutoTristate | QtCore.Qt.ItemIsUserCheckable)
 
         # Add each of its module as children.
         for item in package_version.items:
@@ -188,7 +188,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
             item_version = item.version
             
             module_item = QtWidgets.QTreeWidgetItem([item_name, item_version, item_type, None])
-            module_item.setFlags(module_item.flags() | QtCore.Qt.ItemIsTristate | QtCore.Qt.ItemIsUserCheckable)
+            module_item.setFlags(module_item.flags() | QtCore.Qt.ItemIsAutoTristate | QtCore.Qt.ItemIsUserCheckable)
 
             if activated_items is not None and item.name in activated_items:
                 module_item.setCheckState(0, QtCore.Qt.Checked)

@@ -214,6 +214,13 @@ class PackageManager(Manager):
                 self._managers.pub_sub_manager.publish(self, "show_error_message", message)
                 return None
 
+            # Validate if the package items has a valid api version.
+            valid_package = self._validate_package_api_version(package_description_file)
+            if not valid_package:
+                message = f"This package uses an outdated or unsupported API version. Please update it to match the current Snooz API version ({config.settings.active_api_version})."
+                self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+                return None
+
             package.load_package_version(package_path, is_native)
             
         except Exception as e:
@@ -371,7 +378,34 @@ class PackageManager(Manager):
                             for hook in package_item.hooks:
                                 self._managers.endpoint_manager.register_hook(hook)
 
+    def _validate_package_api_version(self, description_file_path):
+        """
+        Validates if the package API version in the description file matches with the active API version of Snooz.
 
+        Do note that the description file's path has already been validated prior to entering this method.
+
+        Parameters:
+        -----------
+        description_file_path : str
+            The absolute path to the package description file
+
+        Returns:
+        --------
+            bool: True if every versions matches, False if there is a mismatch.
+        """
+        # We already make sure the description file exists before going into this method.
+        with open(description_file_path, 'r') as f:
+            data = json.load(f)
+    
+            def check_integer(version) -> int:
+                version_parts = list(map(int, version.split(".")))
+                return version_parts[0]
+
+            current_version = check_integer(config.settings.active_api_version)
+            package_version = check_integer(data.get("package_api_version"))
+
+            return package_version >= current_version 
+                        
     def _add_to_sys_path(self, path):
         """ Add a path to the sys.path variable. 
         

@@ -99,7 +99,7 @@ class ToolManager(Manager):
 
             success = self._load_content(description, None)
             if not success:
-                message = f"ToolManager could load tool content"
+                message = f"ToolManager could not load tool content"
                 self._managers.pub_sub_manager.publish(self, "show_error_message", message)
                 self._managers.content_manager.unload_process_content()
                 self._managers.content_manager.unload_tool_content()

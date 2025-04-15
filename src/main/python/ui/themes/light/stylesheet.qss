@@ -169,6 +169,21 @@ QPushButton[accessibleName="feedback_pushbutton"]:hover:!pressed {
 	color: rgb(247, 250, 251);
 }
 
+QPushButton[accessibleName="documentation_pushbutton"] {
+   background-color: rgb(226, 235, 240);
+   border-radius: 10px;
+   padding-left:20px;
+   padding-right:20px;
+   padding-top:5px;
+   padding-bottom:5px;
+   border: 0px solid rgb(179, 179, 179);
+}
+
+QPushButton[accessibleName="documentation_pushbutton"]:hover:!pressed {
+   background-color: rgb(30, 129, 169);
+	color: rgb(247, 250, 251);
+}
+
 QPushButton[accessibleName="home_button"] {
    padding:5;
    qproperty-icon:url(":/themes/light/icons/home_icon.png");

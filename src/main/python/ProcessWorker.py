@@ -1,6 +1,5 @@
 import copy
 import datetime as dt
-import gc
 from qtpy import QtCore
 from qtpy.QtCore import QCoreApplication
 import time
@@ -76,14 +75,6 @@ class ProcessWorker(QtCore.QObject):
             node is done or until the worker received a stop command.
          """
         if DEBUG: print("Starting run()")
-
-        # WARNING
-        # Enable garbage collection
-         # The gc is disabled in the MainWindow
-         # to bypass a bug in PySide2 5.15.2 (apparently fixed in 5.15.4, but not distributed)
-         # the bug makes Snooz closes on setPixmap (~25% of the time)
-         # should remove any access to the garbage collector once Snooz uses PySide6        
-        gc.enable()
 
         self._managers.log_manager.clear()
         is_master_done = False

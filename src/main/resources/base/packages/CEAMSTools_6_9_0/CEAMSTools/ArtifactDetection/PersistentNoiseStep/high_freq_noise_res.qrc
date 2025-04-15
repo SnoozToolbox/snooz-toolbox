@@ -1,5 +1,0 @@
-<RCC>
-  <qresource prefix="high_freq_noise">
-    <file>persistent_noise.png</file>
-  </qresource>
-</RCC>

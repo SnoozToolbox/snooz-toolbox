@@ -3,6 +3,7 @@
 See the file LICENCE for full license details.
 """
 from qtpy import QtGui, QtCore
+import importlib.util
 is_dev = True
 
 """ Global constants """
@@ -48,5 +49,21 @@ settings.style = "style"
 settings.packages = "packages"
 settings.skip_beta_disclaimer = "skip_beta_disclaimer"
 settings.activated_package_items = "activated_package_items"
+settings.active_api_version = "2.0.0"
 
-DOCUMENTATION_URL = "https://snooz-toolbox-documentation.readthedocs.io"
+DOCUMENTATION_URL = "https://snooz-toolbox-documentation.readthedocs.io/latest/"
+
+""" fbs pro validation """
+def is_fbs_available():
+    try:
+        spec = importlib.util.find_spec("fbs_runtime.application_context")
+        # Case where fbs is not installed at all
+        if spec is None:
+            return False
+        
+        # Case where fbs pro is installed
+        from fbs_runtime.application_context import PySide6
+        return True
+    except (ImportError, ModuleNotFoundError):
+        # Case where fbs is free tier
+        return False

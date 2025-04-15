@@ -1,5 +1,0 @@
-<RCC>
-  <qresource prefix="high_freq_noise">
-    <file>burst_noise.png</file>
-  </qresource>
-</RCC>

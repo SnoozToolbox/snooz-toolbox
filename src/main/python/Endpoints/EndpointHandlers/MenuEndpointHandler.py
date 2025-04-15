@@ -88,7 +88,7 @@ class MenuEndpointHandler(EndpointHandler):
         else:
             menu_category = self._categories[category]
 
-        action = QAction(full_label, self, triggered=(lambda hook=hook: self.on_action(hook)))
+        action = QAction(full_label, self, triggered=(lambda checked, hook=hook: self.on_action(hook)))
         menu_category.addAction(action)
         self._actions[label] = action 
 

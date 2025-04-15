@@ -56,7 +56,7 @@ class AppManager(Manager):
             try:
                 self._load_content(sender, message)
             except Exception as exc:
-                message = f"AppManager could load app content {exc}"
+                message = f"AppManager could not load app content. {exc}"
                 self._managers.pub_sub_manager.publish(self, "show_error_message", message)
                 self._managers.content_manager.unload_process_content()
                 self._managers.content_manager.unload_tool_content()

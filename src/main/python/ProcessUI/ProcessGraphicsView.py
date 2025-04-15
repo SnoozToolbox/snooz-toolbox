@@ -19,7 +19,6 @@ class ProcessGraphicsView(QtWidgets.QGraphicsView):
             QtGui.QPainter.Antialiasing
             | QtGui.QPainter.SmoothPixmapTransform
             | QtGui.QPainter.TextAntialiasing
-            | QtGui.QPainter.HighQualityAntialiasing
             | QtGui.QPainter.SmoothPixmapTransform
         )
 
