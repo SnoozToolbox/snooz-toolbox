@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Main",
-            "type": "python", // or debugpy for newer versions
+            "type": "debugpy", // or python for newer versions
             "request": "launch",
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/src/main/python/main.py",
@@ -14,7 +14,7 @@
         },
         {
             "name": "Main Console",
-            "type": "python", // or debugpy for newer versions
+            "type": "debugpy", // or python for newer versions
             "request": "launch",
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/src/main/python/main.py",
