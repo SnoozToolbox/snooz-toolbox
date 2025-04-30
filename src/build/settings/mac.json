@@ -4,7 +4,5 @@
         "sklearn.utils._heap", 
         "sklearn.utils._sorting",
         "sklearn.utils._vector_sentinel",
-        "cmath",
-        "seaborn",
-        "ica"]
+        "cmath"]
 }
