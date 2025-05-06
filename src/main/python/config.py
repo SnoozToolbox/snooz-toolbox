@@ -37,7 +37,37 @@ C.text_foreground_color_X = '#e1e3e5'
 
 font_size = 12
 
-app_settings = QtCore.QSettings("CEAMS", "Snooz")
+'''
+When configuring the application's settings under QSettings, it creates new folder (key) with said settings in the OS system.
+
+In Windows, open the Registry Editor, then: Computer>HKEY_CURRENT_USER>Software>CEAMS>Snooz
+
+In macOS, in a terminal, look under ~/Library/Preferences/, you can then inspect that directory and look for "ceams" with the following
+command: `ls | grep ceams`, you should then see a or multiple .plist files, those are the equivalent of the key folder in the Windows Registry.
+
+When the user downloads a new version of Snooz, It is preferable to create a new settings location for that version, as some old features
+may be deprecated with the new version of Snooz.
+
+For a developer, normally fbs (pro version) should not be installed on the environment. The developer will then be able to have a common settings folder
+no matter which version of Snooz he may be using.
+'''
+try:
+    from fbs_runtime import PUBLIC_SETTINGS
+    if not is_dev:
+        version = PUBLIC_SETTINGS["version"]
+        settings_key = f"Snooz_{version}"
+    else:
+        settings_key = f"Snooz"
+        version = 'dev'
+except ImportError:
+    settings_key = f"Snooz"
+    version = 'dev'
+
+app_settings = QtCore.QSettings("CEAMS", settings_key)
+
+if app_settings.value("app/version", "") == "":
+    app_settings.clear()
+    app_settings.setValue("app/version", version)
 
 class Settings:
     pass

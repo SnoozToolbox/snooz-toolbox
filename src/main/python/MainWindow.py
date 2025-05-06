@@ -167,6 +167,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Private functions
     def _init_themes(self):
         """ Init the themes """
+        QtWidgets.QApplication.setStyle("Fusion")
+
+        light_qt_palette = QtGui.QPalette()
+        light_qt_palette.setColor(QtGui.QPalette.Window, QtGui.QColor(255, 255, 255))
+        light_qt_palette.setColor(QtGui.QPalette.WindowText, QtCore.Qt.black)
+        light_qt_palette.setColor(QtGui.QPalette.Base, QtGui.QColor(245, 245, 245))
+        light_qt_palette.setColor(QtGui.QPalette.AlternateBase, QtGui.QColor(255, 255, 255))
+        light_qt_palette.setColor(QtGui.QPalette.ToolTipBase, QtCore.Qt.white)
+        light_qt_palette.setColor(QtGui.QPalette.ToolTipText, QtCore.Qt.black)
+        light_qt_palette.setColor(QtGui.QPalette.Text, QtCore.Qt.black)
+        light_qt_palette.setColor(QtGui.QPalette.Button, QtGui.QColor(240, 240, 240))
+        light_qt_palette.setColor(QtGui.QPalette.ButtonText, QtCore.Qt.black)
+        light_qt_palette.setColor(QtGui.QPalette.BrightText, QtCore.Qt.red)
+        light_qt_palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor(38, 79, 120))
+        light_qt_palette.setColor(QtGui.QPalette.HighlightedText, QtCore.Qt.white)
+
+        QtWidgets.QApplication.setPalette(light_qt_palette)
+
         light_style_name = "Light"
         light_palette = Palette()
         light_palette.grid_background = QtGui.QColor(247, 250, 251)
