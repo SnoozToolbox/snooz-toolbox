@@ -1,0 +1,47 @@
+{
+    "item_name": "AliasSignals",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "AliasSignals",
+        "name": "AliasSignals",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Alias Signals",
+        "module_category": "Parameters",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "alias": {
+                "name": "alias",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channels_name": {
+                "name": "channels_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.AliasSignals"
+    }
+}

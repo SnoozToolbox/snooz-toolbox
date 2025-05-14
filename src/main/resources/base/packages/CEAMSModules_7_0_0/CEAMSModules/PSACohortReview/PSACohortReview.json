@@ -1,0 +1,83 @@
+{
+    "item_name": "PSACohortReview",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "PSACohortReview",
+        "name": "PSACohortReview",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "PSA Cohort Review",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "filenames": {
+                "name": "filenames",
+                "value": "[]",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_chans_label": {
+                "name": "subject_chans_label",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "ROIs_cohort": {
+                "name": "ROIs_cohort",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "ROIs_subjects": {
+                "name": "ROIs_subjects",
+                "value": "{}",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "freq_band": {
+                "name": "freq_band",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "activity_label": {
+                "name": "activity_label",
+                "value": "Total",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSA_clean_flag": {
+                "name": "PSA_clean_flag",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSA_transposed_flag": {
+                "name": "PSA_transposed_flag",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_dir": {
+                "name": "output_dir",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "out_df": {
+                "name": "out_df",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.PSACohortReview"
+    }
+}

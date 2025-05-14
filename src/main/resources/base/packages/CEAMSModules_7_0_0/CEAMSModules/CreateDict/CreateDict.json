@@ -1,0 +1,46 @@
+{   
+    "item_name": "CreateDict",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"CreateDict",
+        "name":"CreateDict",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.CreateDict",
+        "module_label": "Create Dictionary",
+        "module_category":"Parameters",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "Key": {
+                "name": "Key",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"Value": {
+                "name": "Value",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "Dict": {
+                "name": "Dict",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"Value": {
+                "name": "Value",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

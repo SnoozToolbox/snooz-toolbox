@@ -1,0 +1,125 @@
+{
+    "item_name": "DetectionsCohortReview",
+    "item_type": "tool",
+    "item_api_version": "2.0.0",
+    "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/Detections_Cohort_Review.html#detections-cohort-review",
+    "item_author": "Karine Lacourse",
+    "item_description": "To clean and transpose the Spindle/Slow wave detector output.",
+    "tool_params": {
+        "tool_label": "Detections Cohort Review",
+        "tool_category": "3-Postprocessing",
+        "asset_directory": "",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Det. Cohort Review",
+                "description": "Description of the Detections Cohort Review",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "To add your 'Detailed events cohort report' files.\n\nThe channel label is editable by double-clicking on the name.",
+                "custom_step_name": "InputFiles",
+                "show_index": true
+            },
+            {
+                "name": "Output File",
+                "description": "To define the output file.",
+                "custom_step_name": "OutputFileStep",
+                "show_index": true
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "7.0.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "7.0.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "DetectionsCohortReview",
+                "name": "DetectionsCohortReview",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Detections Cohort Review",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "filenames": {
+                        "name": "filenames",
+                        "value": "[]",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "subject_chans_label": {
+                        "name": "subject_chans_label",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "ROIs_cohort": {
+                        "name": "ROIs_cohort",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "ROIs_subjects": {
+                        "name": "ROIs_subjects",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "activity_label": {
+                        "name": "activity_label",
+                        "value": "Total",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "clean_flag": {
+                        "name": "clean_flag",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "transposed_flag": {
+                        "name": "transposed_flag",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "output_file": {
+                        "name": "output_file",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "out_df": {
+                        "name": "out_df",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.DetectionsCohortReview",
+                "identifier": "52e946b1-c283-426c-a247-1731a9a549cb",
+                "pos_x": -296.0,
+                "pos_y": -193.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

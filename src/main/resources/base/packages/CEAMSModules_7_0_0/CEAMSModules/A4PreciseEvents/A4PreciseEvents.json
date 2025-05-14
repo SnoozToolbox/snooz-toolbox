@@ -1,0 +1,83 @@
+{
+    "item_name": "A4PreciseEvents",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "A4PreciseEvents",
+        "name": "A4PreciseEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "A4Precise Events",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_events": {
+                "name": "threshold_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_len_sec": {
+                "name": "win_len_sec",
+                "value": "0.25",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "len_adjust_sec": {
+                "name": "len_adjust_sec",
+                "value": "0.5",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "min_len_sec": {
+                "name": "min_len_sec",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "max_len_sec": {
+                "name": "max_len_sec",
+                "value": "5",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.A4PreciseEvents"
+    }
+}

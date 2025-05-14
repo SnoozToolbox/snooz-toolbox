@@ -1,0 +1,101 @@
+{
+    "item_name": "SleepReport",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepReport",
+        "name": "SleepReport",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Sleep Report",
+        "module_category": "Hypnogram Analysis",
+        "module_options": {},
+        "inputs": {
+            "input_filename": {
+                "name": "input_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycles": {
+                "name": "sleep_cycles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycles_params": {
+                "name": "sleep_cycles_params",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "record_info": {
+                "name": "record_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rem_periods": {
+                "name": "rem_periods",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "report_constants": {
+                "name": "report_constants",
+                "value": {},
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "html_report": {
+                "name": "html_report",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "html_report_config": {
+                "name": "html_report_config",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "csv_report": {
+                "name": "csv_report",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_prefix": {
+                "name": "output_prefix",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_directory": {
+                "name": "output_directory",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "report": {
+                "name": "report",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SleepReport"
+    }
+}

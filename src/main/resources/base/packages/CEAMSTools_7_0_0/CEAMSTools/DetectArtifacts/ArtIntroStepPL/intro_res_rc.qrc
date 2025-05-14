@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="intro">
+    <file>3b_persistent_noise.png</file>
+    <file>2_amplitude_v2.png</file>
+    <file>3_burst_noise_v2.png</file>
+    <file>4_powerLine_v2.png</file>
+    <file>5_BSLVar_v2.png</file>
+    <file>6_muscular_v2.png</file>
+  </qresource>
+</RCC>

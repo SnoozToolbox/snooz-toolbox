@@ -1,0 +1,89 @@
+{
+    "item_name": "EventCombine",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EventCombine",
+        "name": "EventCombine",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Event Combine",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events1": {
+                "name": "events1",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event1_name": {
+                "name": "event1_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events2": {
+                "name": "events2",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event2_name": {
+                "name": "event2_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel1_name": {
+                "name": "channel1_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel2_name": {
+                "name": "channel2_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "behavior": {
+                "name": "behavior",
+                "value": "union",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_event_group": {
+                "name": "new_event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_event_name": {
+                "name": "new_event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_event_chan": {
+                "name": "new_event_chan",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EventCombine"
+    }
+}

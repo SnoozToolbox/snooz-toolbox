@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="sleep_bout">
+    <file>sleep_bouts.png</file>
+  </qresource>
+</RCC>

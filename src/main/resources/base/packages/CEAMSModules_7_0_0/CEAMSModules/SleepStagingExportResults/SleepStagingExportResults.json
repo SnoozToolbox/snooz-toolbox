@@ -1,0 +1,51 @@
+{   
+    "item_name": "SleepStagingExportResults",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"SleepStagingExportResults",
+        "name":"SleepStagingExportResults",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.SleepStagingExportResults",
+        "module_label": "Sleep Staging Export Results",
+        "module_category":"Statistics",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "ResultsDataframe": {
+                "name": "ResultsDataframe",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"info": {
+                "name": "info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"SavedDestination": {
+                "name": "SavedDestination",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"Checkbox": {
+                "name": "Checkbox",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "ExportResults": {
+                "name": "ExportResults",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

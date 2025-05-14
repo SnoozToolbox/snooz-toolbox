@@ -1,0 +1,35 @@
+{
+    "item_name": "InvertSignals",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "InvertSignals",
+        "name": "InvertSignals",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.InvertSignals",
+        "module_label": "Invert Signals",
+        "module_category": "Signal Processing",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

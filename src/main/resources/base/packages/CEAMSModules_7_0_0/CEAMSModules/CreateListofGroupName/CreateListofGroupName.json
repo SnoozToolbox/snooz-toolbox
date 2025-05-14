@@ -1,0 +1,41 @@
+{   
+    "item_name": "CreateListofGroupName",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"CreateListofGroupName",
+        "name":"CreateListofGroupName",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.CreateListofGroupName",
+        "module_label": "Create List of Group Name",
+        "module_category":"Parameters",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"group": {
+                "name": "group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "group_name_list": {
+                "name": "group_name_list",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,88 @@
+{
+    "item_name": "PSAOnEvents",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "PSAOnEvents",
+        "name": "PSAOnEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "PSA on Events",
+        "module_category": "Statistics",
+        "module_options": {},
+        "inputs": {
+            "subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSD": {
+                "name": "PSD",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSA_event_group": {
+                "name": "PSA_event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSA_event_name": {
+                "name": "PSA_event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "mini_bandwidth": {
+                "name": "mini_bandwidth",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "first_freq": {
+                "name": "first_freq",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "last_freq": {
+                "name": "last_freq",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_group": {
+                "name": "artifact_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_name": {
+                "name": "artifact_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "PSA_out_filename": {
+                "name": "PSA_out_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.PSAOnEvents"
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "item_name": "PSGReader",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "PSGReader",
+        "name": "PSGReader",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "PSGReader",
+        "module_category": "Files I/O",
+        "module_options": {
+            "alias": {
+                "value": null,
+                "tooltip": "List of aliases separated by a semicolon(;) character"
+            },
+            "file_selection_only": {
+                "value": "0",
+                "tooltip": "Set it to 1 if you only need to select a file and not its montages and channels."
+            }
+        },
+        "inputs": {
+            "files": {
+                "name": "files",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "alias": {
+                "name": "alias",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.PSGReader"
+    }
+}

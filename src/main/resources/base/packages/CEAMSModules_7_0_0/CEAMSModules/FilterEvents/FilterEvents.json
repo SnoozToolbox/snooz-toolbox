@@ -1,0 +1,65 @@
+{
+    "item_name": "FilterEvents",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "FilterEvents",
+        "name": "FilterEvents",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Filter Events",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_selection": {
+                "name": "stages_selection",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "group_selection": {
+                "name": "group_selection",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "name_selection": {
+                "name": "name_selection",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events_selected": {
+                "name": "events_selected",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages_selected": {
+                "name": "sleep_stages_selected",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.FilterEvents"
+    }
+}

@@ -1,0 +1,131 @@
+{
+    "item_name": "SlowWaveDetector",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SlowWaveDetector",
+        "name": "SlowWaveDetector",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Slow Wave Detector",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "ssw_carrier",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "f_min": {
+                "name": "f_min",
+                "value": 0.16,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "f_max": {
+                "name": "f_max",
+                "value": 4,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "th_PaP": {
+                "name": "th_PaP",
+                "value": 75,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "th_Neg": {
+                "name": "th_Neg",
+                "value": 40,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "min_tNe": {
+                "name": "min_tNe",
+                "value": 125,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "max_tNe": {
+                "name": "max_tNe",
+                "value": 1500,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "min_tPo": {
+                "name": "min_tPo",
+                "value": 0,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "max_tPo": {
+                "name": "max_tPo",
+                "value": 1000,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "age_criterion": {
+                "name": "age_criterion",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "years": {
+                "name": "years",
+                "value": 0,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "months": {
+                "name": "months",
+                "value": 0,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sex_criterion": {
+                "name": "sex_criterion",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sex": {
+                "name": "sex",
+                "value": "Female",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events_details": {
+                "name": "events_details",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.SlowWaveDetector"
+    }
+}

@@ -1,0 +1,101 @@
+{
+    "item_name": "REMsDetectionYasa",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "REMsDetectionYasa",
+        "name": "REMsDetectionYasa",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.REMsDetectionYasa",
+        "module_label": "REMs Detection Yasa",
+        "module_category": "Detectors",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleepstages": {
+                "name": "sleepstages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "amplitude": {
+                "name": "amplitude",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "duration": {
+                "name": "duration",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "freq_rem": {
+                "name": "freq_rem",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "relative_prominence": {
+                "name": "relative_prominence",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "remove_outliers": {
+                "name": "remove_outliers",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rems_event_name": {
+                "name": "rems_event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rems_event_group": {
+                "name": "rems_event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "include": {
+                "name": "include",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "detectiondataframe": {
+                "name": "detectiondataframe",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}
