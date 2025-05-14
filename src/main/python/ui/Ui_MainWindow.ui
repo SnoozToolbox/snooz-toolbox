@@ -176,7 +176,7 @@
             <number>1</number>
            </property>
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -186,7 +186,7 @@
       <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -201,16 +201,16 @@
     <item>
      <widget class="QTabWidget" name="content_tabWidget">
       <property name="tabPosition">
-       <enum>QTabWidget::North</enum>
+       <enum>QTabWidget::TabPosition::North</enum>
       </property>
       <property name="tabShape">
-       <enum>QTabWidget::Rounded</enum>
+       <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
-       <enum>Qt::ElideNone</enum>
+       <enum>Qt::TextElideMode::ElideNone</enum>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -241,7 +241,7 @@
         <item>
          <widget class="QSplitter" name="splitter">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <property name="opaqueResize">
            <bool>true</bool>
@@ -364,7 +364,7 @@
      <x>0</x>
      <y>0</y>
      <width>819</width>
-     <height>24</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -403,9 +403,10 @@
     </property>
     <addaction name="actionLogs"/>
     <addaction name="separator"/>
-    <addaction name="actionAbout_Snooz"/>
-    <addaction name="separator"/>
+    <addaction name="actionData_Files"/>
     <addaction name="actionDocumentation"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Snooz"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDev_Tools"/>
@@ -482,7 +483,7 @@
   </action>
   <action name="actionAbout_Snooz">
    <property name="text">
-    <string>About Snooz</string>
+    <string>About</string>
    </property>
   </action>
   <action name="actionPreferences">
@@ -501,6 +502,11 @@
   <action name="actionDocumentation">
    <property name="text">
     <string>Documentation</string>
+   </property>
+  </action>
+  <action name="actionData_Files">
+   <property name="text">
+    <string>Data Files</string>
    </property>
   </action>
  </widget>
@@ -812,6 +818,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionData_Files</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>350</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>run_clicked()</slot>
@@ -832,5 +854,6 @@
   <slot>open_clicked()</slot>
   <slot>close_app_clicked()</slot>
   <slot>documentation_clicked()</slot>
+  <slot>data_clicked()</slot>
  </slots>
 </ui>

@@ -79,12 +79,6 @@ Reboot
         Update the latest version released : <b>beta-0.3.0</b>
         Update the 3 links to the installer
 
-## Update the release.html file
-Will be obsolete when all the user had downloaded and installed Snooz beta 1.0.0
-    Update the links for downloading
-    Update the version for each tool
-    Update the version of Snooz
-
 ## To run the installed app in debug mode 
 ### MAC
     Drag and drop technic
@@ -95,17 +89,6 @@ Will be obsolete when all the user had downloaded and installed Snooz beta 1.0.0
         Leave your Terminal window open while you use the application. Quit the application to return to regular Terminal operations.
     Command line
     $ /Applications/Snooz.app/Contents/MacOS/Snooz
-
-
-# Update release.html on backblazeb2
-Will be obsolete when all the user had downloaded and installed Snooz beta 1.0.0
-    The main loads the release notes from : https://f004.backblazeb2.com/file/snooz-release/release.html
-    Sign in to https://www.backblaze.com/
-    Drag and drop the release.html
-    The objective to have the release notes outside the repository :
-        to inform the user of a new Snooz release (the main loads the html from the web)
-        to provide an easy way yo download the new installer (the html provides a push button)
-    For now, the download links are from Karine's google drive.
 
 # Update the doc
     Update the links to download
