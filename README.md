@@ -1,3 +1,9 @@
+# Copyright
+Copyright (c) 2023-2025, Valorisation Recherche HSCM, Societe en Commandite
+
+# License
+GPL-3.0 license
+
 # Snooz developer guide
 ## What is this?
 
