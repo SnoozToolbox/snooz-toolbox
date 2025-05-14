@@ -1,7 +1,6 @@
 import copy
 import datetime as dt
-from qtpy import QtCore
-from qtpy.QtCore import QCoreApplication
+import gc
 import time
 
 from commons.NodeRuntimeException import NodeRuntimeException
@@ -9,6 +8,8 @@ from flowpipe import Graph
 from flowpipe.ActivationState import ActivationState
 from flowpipe.utilities import import_class 
 from Managers.LogManager import LogManager
+from qtpy import QtCore
+from qtpy.QtCore import QCoreApplication
 from widgets.WarningDialog import WarningDialog
 
 DEBUG = False
@@ -76,6 +77,10 @@ class ProcessWorker(QtCore.QObject):
          """
         if DEBUG: print("Starting run()")
 
+        # WARNING
+        # Enable garbage collection      
+        gc.enable()
+        
         self._managers.log_manager.clear()
         is_master_done = False
         try:
@@ -88,8 +93,8 @@ class ProcessWorker(QtCore.QObject):
             iteration = 0
             while not is_master_done and not self._should_stop:
                 iteration_start_time = time.time()
-                self._managers.log_manager.log("process", "Starting iteration")
-                graph, master_node = self._init_graph(self._graph_json)
+                self._managers.log_manager.log("process", "Starting iteration")              
+                graph, master_node = self._init_graph(self._graph_json)            
                 try:
                     if master_node is not None:
                         master_node.iteration_counter = iteration
@@ -146,6 +151,10 @@ class ProcessWorker(QtCore.QObject):
             else:
                 self.finished.emit(outputs, iteration_interruption)
             QCoreApplication.processEvents()
+        except RuntimeError as exc:
+            self._managers.log_manager.log("process", f"Fatal Error: {exc}")
+            self._managers.log_manager.log("error", f"This is a known error, please restart Snooz fix it.")
+            self.interrupted.emit([], iteration_interruption)
 
         except Exception as exc:
             if DEBUG: print(f"General Exception occured {exc}")

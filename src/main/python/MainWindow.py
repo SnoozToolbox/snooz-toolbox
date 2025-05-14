@@ -7,6 +7,7 @@ See the file LICENCE for full license details.
     This is the main window of the software. It initializes and handles the 
     menus, the managers, the main view, etc.
 """
+import gc
 
 from qtpy import QtWidgets
 from qtpy import QtCore
@@ -22,8 +23,9 @@ from Managers.EndpointManager import MenuEndpointHandler
 from Managers.EndpointManager import FileMenuEndpointHandler
 from Managers.StyleManager import Palette, Style
 from ConverterUtils import convert_package_to_v100
-from widgets.LogsDialog import LogsDialog
 from widgets.AboutDialog import AboutDialog
+from widgets.DataDialog import DataDialog
+from widgets.LogsDialog import LogsDialog
 from widgets.SettingsDialog import SettingsDialog
 from widgets.RecentWidget import RecentWidget
 
@@ -63,6 +65,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._managers.pub_sub_manager.subscribe(self, "minimize")
         
         self._managers.navigation_manager.show_home()
+
+        # WARNING
+        # Disabling garbage collector
+        # To prevent Snooz from crashing, we disable the garbage collector. This is because
+        # Snooz is most likely not thouroughly cleaning unused references, cause the memory
+        # to grow and at some point, leak, making the application crash.
+        gc.disable()
 
     # UI callbacks
     def preferences_clicked(self):
@@ -109,19 +118,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMessageBox.information(self, "Info", "Conversion done")
 
     def logs_clicked(self):
-        """ Logs button clicked, open the logs dialog """
-        about = LogsDialog(self._managers.log_manager)
-        about.exec_()
+        """ Logs menu item clicked, open the logs dialog """
+        logs = LogsDialog(self._managers.log_manager)
+        logs.exec_()
 
     def about_clicked(self):
-        """ About button clicked, open the about dialog """
+        """ About menu item clicked, open the about dialog """
         about = AboutDialog()
         about.exec_()
 
     def documentation_clicked(self):
-        """ Documentation button clicked, open the documentation """
+        """ Documentation menu item clicked, open the documentation """
         QDesktopServices.openUrl(QUrl(config.DOCUMENTATION_URL))
 
+    def data_clicked(self):
+        """ Data Files menu item clicked, open the data dialog"""
+        data_dialog = DataDialog()
+        data_dialog.exec_()
 
     def home_clicked(self):
         """ Home button clicked, open the home page """

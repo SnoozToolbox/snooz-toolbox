@@ -1,4 +1,5 @@
 from .AboutDialog import *
+from .DataDialog import *
 from .LogsDialog import *
 from .MissingPackagesDialog import *
 from .QCheckBoxLive import *
