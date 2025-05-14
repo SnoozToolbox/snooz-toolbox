@@ -10,4 +10,5 @@ from .RecentWidget import *
 from .SettingsDialog import *
 from .TableDialog import *
 from .WarningDialog import *
+from .WarningDialogWithButtons import *
 from .WebEnginePage import *
