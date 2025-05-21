@@ -15,6 +15,7 @@ import module_dependencies
 import argparse
 import datetime
 import json
+import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
 import sys
@@ -52,8 +53,8 @@ class AppContext(ApplicationContext):
 def main():
     parser = argparse.ArgumentParser(description='Snooz')
     parser.add_argument("--f", help="The process description file in JSON format.")
-    args = parser.parse_args()
- 
+    args, unknown = parser.parse_known_args()
+
     app = AppContext()
 
     if args.f is not None:
@@ -99,4 +100,5 @@ def executeConsole(filename):
         print("ERROR Could not find file:" + filename)
     
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     main()
