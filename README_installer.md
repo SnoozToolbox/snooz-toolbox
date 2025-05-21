@@ -53,6 +53,12 @@ Reboot
     (snooz_310_env)$ fbs clean
     (snooz_310_env)$ fbs freeze --debug
 
+## To solve the mne and YASA problem
+    - copy manually the mne package
+    (snooz_310_env)$ cp ..\snooz_310_env\Lib\site-packages\mne \target\Snooz\_internal\mne
+    (snooz_310_env)$ cp ..\snooz_310_env\Lib\site-packages\lazy_loader \target\Snooz\_internal\lazy_loader
+    (snooz_310_env)$ fbs installer
+
 ### To run Scinode and keep logs (usefull when exe does not work properly)
     windows
     (snooz_310_env)$ cmd /K target\Snooz\Snooz.exe

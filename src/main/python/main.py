@@ -4,13 +4,6 @@
 See the file LICENCE for full license details.
 """
 
-# Hack until I figure out how to properly setup FBS so it include them when freezing
-# in a way that is available to the external packages.
-# DONT REMOVE
-import widgets
-from Managers.Managers import Managers
-import module_dependencies
-# DONT REMOVE
 
 import argparse
 import datetime
@@ -18,7 +11,18 @@ import json
 import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
+os.environ["MNE_USE_LAZY_IMPORT"] = "0"
 import sys
+
+# Hack until I figure out how to properly setup FBS so it include them when freezing
+# in a way that is available to the external packages.
+# DONT REMOVE
+import widgets
+from Managers.Managers import Managers
+import module_dependencies
+import mne
+from mne import io, _fiff
+# DONT REMOVE
 
 import config
 
