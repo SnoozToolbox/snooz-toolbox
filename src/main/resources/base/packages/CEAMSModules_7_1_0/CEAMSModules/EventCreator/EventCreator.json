@@ -1,0 +1,71 @@
+{
+    "item_name": "EventCreator",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EventCreator",
+        "name": "EventCreator",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Event Creator",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "group_name": {
+                "name": "group_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "start_time": {
+                "name": "start_time",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "duration": {
+                "name": "duration",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channels": {
+                "name": "channels",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "interval": {
+                "name": "interval",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "count": {
+                "name": "count",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EventCreator"
+    }
+}

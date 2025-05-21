@@ -1,0 +1,46 @@
+{
+    "item_name": "Hypnogram",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "Hypnogram",
+        "name": "Hypnogram",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Hypnogram",
+        "module_category": "Hypnogram Analysis",
+        "module_options": {},
+        "inputs": {
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycles": {
+                "name": "sleep_cycles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "epoch_len_sec": {
+                "name": "epoch_len_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "fig_name": {
+                "name": "fig_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.Hypnogram"
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "item_name": "Stft",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "Stft",
+        "name": "Stft",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Stft",
+        "module_category": "Signal Processing",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_len_sec": {
+                "name": "win_len_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_step_sec": {
+                "name": "win_step_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "zeros_pad": {
+                "name": "zeros_pad",
+                "value": "False",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "window_name": {
+                "name": "window_name",
+                "value": "hann",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rm_mean": {
+                "name": "rm_mean",
+                "value": "True",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "norm": {
+                "name": "norm",
+                "value": "integrate",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "psd": {
+                "name": "psd",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.Stft"
+    }
+}

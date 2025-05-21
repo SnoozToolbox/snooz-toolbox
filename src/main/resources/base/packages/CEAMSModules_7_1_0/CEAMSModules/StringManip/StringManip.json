@@ -1,0 +1,65 @@
+{
+    "item_name": "StringManip",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "StringManip",
+        "name": "StringManip",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "String Manip",
+        "module_category": "Parameters",
+        "module_options": {},
+        "inputs": {
+            "input": {
+                "name": "input",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "prefix": {
+                "name": "prefix",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "suffix": {
+                "name": "suffix",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename_rm": {
+                "name": "filename_rm",
+                "value": "0",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "path_rm": {
+                "name": "path_rm",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "file_ext_rm": {
+                "name": "file_ext_rm",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "output": {
+                "name": "output",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.StringManip"
+    }
+}

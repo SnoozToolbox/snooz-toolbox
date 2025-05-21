@@ -1,0 +1,53 @@
+{
+    "item_name": "SleepStagesImporter",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SleepStagesImporter",
+        "name": "SleepStagesImporter",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.SleepStagesImporter",
+        "module_label": "Sleep Stages Importer",
+        "module_category": "Files I/O",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_files": {
+                "name": "stages_files",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "file_params": {
+                "name": "file_params",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

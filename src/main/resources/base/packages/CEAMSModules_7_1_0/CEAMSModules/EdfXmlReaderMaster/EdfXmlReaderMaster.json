@@ -1,0 +1,65 @@
+{
+    "item_name": "EdfXmlReaderMaster",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EdfXmlReaderMaster",
+        "name": "EdfXmlReaderMaster",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Edf Xml Reader Master",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "epoch_len": {
+                "name": "epoch_len",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_epoch": {
+                "name": "stages_epoch",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_df": {
+                "name": "stages_df",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EdfXmlReaderMaster"
+    }
+}

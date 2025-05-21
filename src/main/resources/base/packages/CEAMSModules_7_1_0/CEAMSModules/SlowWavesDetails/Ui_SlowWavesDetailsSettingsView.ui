@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SlowWavesDetailsSettingsView</class>
+ <widget class="QWidget" name="SlowWavesDetailsSettingsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="recording_path_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="recording_path_label">
+       <property name="text">
+        <string>recording_path</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="recording_path_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="subject_info_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="subject_info_label">
+       <property name="text">
+        <string>subject_info</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="subject_info_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="signals_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="signals_label">
+       <property name="text">
+        <string>signals</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="signals_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="sw_events_details_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="sw_events_details_label">
+       <property name="text">
+        <string>sw_events_details</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="sw_events_details_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="artifact_events_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="artifact_events_label">
+       <property name="text">
+        <string>artifact_events</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="artifact_events_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="sleep_cycle_param_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="sleep_cycle_param_label">
+       <property name="text">
+        <string>sleep_cycle_param</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="sleep_cycle_param_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="slow_wave_det_param_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="slow_wave_det_param_label">
+       <property name="text">
+        <string>slow_wave_det_param</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="slow_wave_det_param_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="cohort_filename_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="cohort_filename_label">
+       <property name="text">
+        <string>cohort_filename</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="cohort_filename_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="export_slow_wave_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="export_slow_wave_label">
+       <property name="text">
+        <string>export_slow_wave</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="export_slow_wave_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ </ui>

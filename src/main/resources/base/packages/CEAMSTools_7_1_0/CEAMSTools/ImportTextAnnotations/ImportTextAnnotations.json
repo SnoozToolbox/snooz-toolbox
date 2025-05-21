@@ -1,0 +1,420 @@
+{
+    "item_name": "ImportTextAnnotations",
+    "item_type": "tool",
+    "item_api_version": "2.0.0",
+    "tool_params": {
+        "tool_label": "Import Annotations from Text",
+        "tool_category": "1-Preprocessing",
+        "tool_author": "CEAMS",
+        "tool_url": "",
+        "tool_description": "To import annotations from a text file into the Snooz annotations file.",
+        "tool_version": "0.2.0",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Import Text Annotations",
+                "description": "Documentation of the text annotations importer.",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input PSG Files",
+                "description": "Select the PSG files to import the annotations.",
+                "module_id": "134e1371-8cd7-4362-bf33-92ce14d187c0"
+            },
+            {
+                "name": "Link PSG and Text file",
+                "description": "Define how to link the text file with the PSG file.",
+                "custom_step_name": "TextFileAssociation",
+                "show_index": true
+            },
+            {
+                "name": "Text File Format",
+                "description": "Define the Text file format.",
+                "custom_step_name": "TextFileDefinition",
+                "show_index": true
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "7.1.0",
+            "deleteable": false
+        },
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "7.1.0"
+        }
+    ],
+    "process_params": {
+        "process_label": "Import Text Annotations",
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "StringManip",
+                "name": "StringManip",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "String Manip",
+                "module_category": "Parameters",
+                "module_options": {},
+                "inputs": {
+                    "input": {
+                        "name": "input",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "134e1371-8cd7-4362-bf33-92ce14d187c0": "filename"
+                        }
+                    },
+                    "prefix": {
+                        "name": "prefix",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "suffix": {
+                        "name": "suffix",
+                        "value": ".tsv",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "filename_rm": {
+                        "name": "filename_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "path_rm": {
+                        "name": "path_rm",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_ext_rm": {
+                        "name": "file_ext_rm",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output": {
+                        "name": "output",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "f59cdbd1-091f-40a3-abeb-84769e05d078": [
+                                "filename"
+                            ]
+                        }
+                    }
+                },
+                "module": "CEAMSModules.StringManip",
+                "identifier": "351e5f9f-d4ee-4347-b554-230b558d2034",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": -434.0,
+                "pos_y": 6.0
+            },
+            {
+                "cls": "PSGWriter",
+                "name": "PSGWriter",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSGWriter",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "input_filename": {
+                        "name": "input_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "134e1371-8cd7-4362-bf33-92ce14d187c0": "filename"
+                        }
+                    },
+                    "output_filename": {
+                        "name": "output_filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "134e1371-8cd7-4362-bf33-92ce14d187c0": "filename"
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "134e1371-8cd7-4362-bf33-92ce14d187c0": "signals"
+                        }
+                    },
+                    "new_events": {
+                        "name": "new_events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "f59cdbd1-091f-40a3-abeb-84769e05d078": "events"
+                        }
+                    },
+                    "events_to_remove": {
+                        "name": "events_to_remove",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "overwrite_events": {
+                        "name": "overwrite_events",
+                        "value": "True",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "overwrite_signals": {
+                        "name": "overwrite_signals",
+                        "value": "False",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "module": "CEAMSModules.PSGWriter",
+                "identifier": "e3f39209-29a1-420a-b3bb-638c54cdd95d",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": 115.0,
+                "pos_y": -148.0
+            },
+            {
+                "cls": "EventReader",
+                "name": "EventReader",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Event Reader",
+                "module_category": "Files I/O",
+                "module_options": {},
+                "inputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "351e5f9f-d4ee-4347-b554-230b558d2034": "output"
+                        }
+                    },
+                    "delimiter": {
+                        "name": "delimiter",
+                        "value": "\\t",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "nrows_header": {
+                        "name": "nrows_header",
+                        "value": 0,
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "encoding": {
+                        "name": "encoding",
+                        "value": "utf-8",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "group_col_i": {
+                        "name": "group_col_i",
+                        "value": "1",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "group_def": {
+                        "name": "group_def",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "name_col_i": {
+                        "name": "name_col_i",
+                        "value": "2",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "name_def": {
+                        "name": "name_def",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "onset_col_i": {
+                        "name": "onset_col_i",
+                        "value": "3",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "duration_col_i": {
+                        "name": "duration_col_i",
+                        "value": "4",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "channels_col_i": {
+                        "name": "channels_col_i",
+                        "value": "5",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sample_rate": {
+                        "name": "sample_rate",
+                        "value": "256",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "input_as_time": {
+                        "name": "input_as_time",
+                        "value": "seconds",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "event_center": {
+                        "name": "event_center",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "dur_disable": {
+                        "name": "dur_disable",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "fixed_dur": {
+                        "name": "fixed_dur",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "personalized_header": {
+                        "name": "personalized_header",
+                        "value": "0",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e3f39209-29a1-420a-b3bb-638c54cdd95d": [
+                                "new_events"
+                            ]
+                        }
+                    },
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.EventReader",
+                "identifier": "f59cdbd1-091f-40a3-abeb-84769e05d078",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": -148.0,
+                "pos_y": 5.0
+            },
+            {
+                "cls": "PSGReader",
+                "name": "PSGReader",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "PSGReader",
+                "module_category": "Files I/O",
+                "module_options": {
+                    "alias": {
+                        "value": "",
+                        "tooltip": "List of aliases separated by a semicolon(;) character"
+                    },
+                    "file_selection_only": {
+                        "value": "1",
+                        "tooltip": "Set it to 1 if you only need to select a file and not its montages and channels."
+                    }
+                },
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "alias": {
+                        "name": "alias",
+                        "value": {},
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "filename": {
+                        "name": "filename",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e3f39209-29a1-420a-b3bb-638c54cdd95d": [
+                                "input_filename",
+                                "output_filename"
+                            ],
+                            "351e5f9f-d4ee-4347-b554-230b558d2034": [
+                                "input"
+                            ]
+                        }
+                    },
+                    "signals": {
+                        "name": "signals",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {
+                            "e3f39209-29a1-420a-b3bb-638c54cdd95d": [
+                                "signals"
+                            ]
+                        }
+                    },
+                    "events": {
+                        "name": "events",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sleep_stages": {
+                        "name": "sleep_stages",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "subject_info": {
+                        "name": "subject_info",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.PSGReader",
+                "identifier": "134e1371-8cd7-4362-bf33-92ce14d187c0",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": -722.0,
+                "pos_y": -137.0
+            }
+        ]
+    }
+}

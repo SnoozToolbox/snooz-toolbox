@@ -1,0 +1,23 @@
+<ui version="4.0">
+ <class>InputFileStep</class>
+ <widget class="QWidget" name="InputFileStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>730</width>
+    <height>590</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string />
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>25</number>
+   </property>
+  </layout>
+ <property name="styleSheet"><string>font: 10pt "Roboto-Regular";</string></property></widget>
+ <resources><include location="../../../../../scinodes_poc/src/main/python/ui/themes/themes.qrc" /></resources>
+ <connections />
+</ui>

@@ -1,0 +1,94 @@
+{
+    "item_name": "DetectionView",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "DetectionView",
+        "name": "DetectionView",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Detection View",
+        "module_category": "Detectors",
+        "module_options": {},
+        "inputs": {
+            "time_elapsed": {
+                "name": "time_elapsed",
+                "value": "00:00:00",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_len_show": {
+                "name": "win_len_show",
+                "value": "30",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "channel": {
+                "name": "channel",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_step_sec": {
+                "name": "win_step_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_activity": {
+                "name": "win_activity",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold": {
+                "name": "threshold",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "threshold_unit": {
+                "name": "threshold_unit",
+                "value": "fixed",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_bsl": {
+                "name": "win_bsl",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.DetectionView"
+    }
+}

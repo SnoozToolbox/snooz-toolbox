@@ -1,0 +1,65 @@
+{
+    "item_name": "SpindleDetectorSumo",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "SpindleDetectorSumo",
+        "name": "SpindleDetectorSumo",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.SpindleDetectorSumo",
+        "module_label": "Spindle Detector Sumo",
+        "module_category": "Detectors",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "original_signals": {
+                "name": "original_signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "cleaned_signals": {
+                "name": "cleaned_signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "norm_stat": {
+                "name": "norm_stat",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_group": {
+                "name": "event_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "event_name": {
+                "name": "event_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_events": {
+                "name": "artifact_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

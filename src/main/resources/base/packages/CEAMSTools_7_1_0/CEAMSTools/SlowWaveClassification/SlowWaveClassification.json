@@ -1,0 +1,165 @@
+{
+    "item_name": "SlowWaveClassification",
+    "item_type": "tool",
+    "item_api_version": "2.0.0",
+    "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/Slow_wave_classifier.html#slow-wave-classifier",
+    "item_author": "",
+    "item_description": "",
+    "tool_params": {
+        "tool_label": "Slow Wave classification",
+        "tool_category": "3-Postprocessing",
+        "asset_directory": "",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Slow Wave",
+                "description": "Slow Wave classification",
+                "custom_step_name": "SSWCIntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Select all the files that contain the slow wave characteristics you want to classify.",
+                "custom_step_name": "InputFiles"
+            },
+            {
+                "name": "Classification Criterias",
+                "description": "Select the criterias that will be used to classify sleep slow waves.\n\nFor an automatic classification, you can keep the parameters as they are. If you want to specify the number of categories, please uncheck the automatic classification option and change the number in the box for the number of categories desired.",
+                "module_id": "d59d94d1-11dc-4e06-9716-f749a3647843"
+            },
+            {
+                "name": "Output Files",
+                "description": "Select the output folder that will contain the classification data.",
+                "custom_step_name": "SSWCOutputFiles",
+                "configs": {
+                    "label": "Optional settings:",
+                    "list": [
+                        {
+                            "name": "Hours and Cycles",
+                            "description": "Define the maximum number of hours and cycles to report.",
+                            "custom_step_name": "HoursCyclesStep"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "7.0.0"
+        },
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "7.0.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "SlowWaveClassifier",
+                "name": "SlowWaveClassifier",
+                "metadata": {},
+                "file_location": "",
+                "module_label": "Slow Wave Classifier",
+                "module_category": "",
+                "module_options": null,
+                "inputs": {
+                    "sw_char_files": {
+                        "name": "sw_char_files",
+                        "value": "[]",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "sw_cohort_file": {
+                        "name": "sw_cohort_file",
+                        "value": "",
+                        "connections": {},
+                        "sub_plugs": {}
+                    },
+                    "stages_files": {
+                        "name": "sw_stages_files",
+                        "value": "[]",
+                        "connections": {},
+                        "sub_plugs": {}
+                    },
+                    "automatic_classification": {
+                        "name": "automatic_classification",
+                        "value": "True",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "num_categories": {
+                        "name": "num_categories",
+                        "value": "2",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "num_divisions": {
+                        "name": "num_divisions",
+                        "value": "2",
+                        "connections": {},
+                        "sub_plugs": {}
+                    },
+                    "report_constants": {
+                        "name": "report_constants",
+                        "value": {
+                            "N_HOURS": 9,
+                            "N_CYCLES": 6
+                        },
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "output_dir": {
+                        "name": "output_dir",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "categorized_data": {
+                        "name": "categorized_data",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "data_details": {
+                        "name": "data_details",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "distr_time": {
+                        "name": "distr_time",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "distr_cycle": {
+                        "name": "distr_cycle",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "distr_quarter": {
+                        "name": "distr_quarter",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "module": "CEAMSModules.SlowWaveClassifier",
+                "identifier": "d59d94d1-11dc-4e06-9716-f749a3647843",
+                "pos_x": -91.0,
+                "pos_y": -74.0,
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                }
+            }
+        ]
+    }
+}

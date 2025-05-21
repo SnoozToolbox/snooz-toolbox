@@ -1,0 +1,82 @@
+{   
+    "item_name": "YasaSleepStaging",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"YasaSleepStaging",
+        "name":"YasaSleepStaging",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.YasaSleepStaging",
+        "module_label": "Score Sleep Stages YASA",
+        "module_category":"Signal Processing",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"signals_EEG": {
+                "name": "signals_EEG",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"signals_EOG": {
+                "name": "signals_EOG",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"signals_EMG": {
+                "name": "signals_EMG",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"sleep_stages": {
+                "name": "sleep_stages",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"stage_group": {
+                "name": "stage_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "validation_on": {
+                "name": "validation_on",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "results": {
+                "name": "results",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"info": {
+                "name": "info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"new_events": {
+                "name": "new_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events_to_remove": {
+                "name": "events_to_remove",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

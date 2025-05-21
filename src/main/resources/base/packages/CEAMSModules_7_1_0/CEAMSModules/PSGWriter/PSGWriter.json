@@ -1,0 +1,64 @@
+{
+    "item_name": "PSGWriter",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "PSGWriter",
+        "name": "PSGWriter",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "PSGWriter",
+        "module_category": "Files I/O",
+        "module_options": {},
+        "inputs": {
+            "input_filename": {
+                "name": "input_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "output_filename": {
+                "name": "output_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "new_events": {
+                "name": "new_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events_to_remove": {
+                "name": "events_to_remove",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "overwrite_events": {
+                "name": "overwrite_events",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "overwrite_signals": {
+                "name": "overwrite_signals",
+                "value": false,
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.PSGWriter"
+    }
+}

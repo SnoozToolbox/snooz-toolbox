@@ -1,0 +1,71 @@
+{
+    "item_name": "FilterSignal",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "FilterSignal",
+        "name": "FilterSignal",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Filter Signal",
+        "module_category": "Signal Processing",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "type": {
+                "name": "type",
+                "value": "bandpass",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "IR_family": {
+                "name": "IR_family",
+                "value": "IIR",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "use_std_order": {
+                "name": "use_std_order",
+                "value": "False",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "order": {
+                "name": "order",
+                "value": "6",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "cutoff": {
+                "name": "cutoff",
+                "value": "0.3 64",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "window": {
+                "name": "window",
+                "value": "hamming",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.FilterSignal"
+    }
+}

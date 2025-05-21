@@ -1,0 +1,47 @@
+{
+    "item_name": "MovingRMS",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "CEAMS",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "MovingRMS",
+        "name": "MovingRMS",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Moving RMS",
+        "module_category": "Signal Processing",
+        "module_options": {},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_len_sec": {
+                "name": "win_len_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "win_step_sec": {
+                "name": "win_step_sec",
+                "value": "1",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "moving_RMS_values": {
+                "name": "moving_RMS_values",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.MovingRMS"
+    }
+}

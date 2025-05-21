@@ -1,0 +1,41 @@
+{
+    "item_name": "CreateTuple",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "CreateTuple",
+        "name": "CreateTuple",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.CreateTuple",
+        "module_label": "Create Tuple",
+        "module_category": "Parameters",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "Idx0": {
+                "name": "Idx0",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "Idx1": {
+                "name": "Idx1",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "Tuple": {
+                "name": "Tuple",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

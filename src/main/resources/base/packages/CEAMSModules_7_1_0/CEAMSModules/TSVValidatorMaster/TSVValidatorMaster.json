@@ -1,0 +1,42 @@
+{   
+    "item_name": "TSVValidatorMaster",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"TSVValidatorMaster",
+        "name":"TSVValidatorMaster",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.TSVValidatorMaster",
+        "module_label": "TSV Validator Master",
+        "module_category":"Files I/O",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "files": {
+                "name": "files",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "log_path": {
+                "name": "log_path",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "output_logs": {
+                "name": "output_logs",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

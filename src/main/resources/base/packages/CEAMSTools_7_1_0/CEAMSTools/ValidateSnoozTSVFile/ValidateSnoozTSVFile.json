@@ -1,0 +1,87 @@
+{
+    "item_name": "ValidateSnoozTSVFile",
+    "item_type": "tool",
+    "item_api_version": "2.0.0",
+    "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/ValidateSnoozTSVFile.html",
+    "tool_params": {
+        "tool_label": "Validate Snooz TSV File",
+        "tool_category": "1-Preprocessing",
+        "tool_author": "Mohammad Hasan Azad",
+        "tool_url": "",
+        "tool_description": "This tool validates the tsv annotation files to be compatible with Snooz format before utilizing it in other tools.",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "Validate Snooz TSV File",
+                "description": "This tool validates the tsv annotation files to be compatible with Snooz format before utilizing it in other tools.",
+                "custom_step_name": "DescriptionStep",
+                "show_index": false
+            },
+            {
+                "name": "Input/Output Files",
+                "description": "Select the annotation tsv files you want to validate.",
+                "custom_step_name": "InputoutputFilesStep"
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "7.0.0",
+            "deleteable": false
+        },
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "7.0.0",
+            "deleteable": false
+        }
+    ],
+    "process_params": {
+        "process_label": "TSV Validator",
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "TSVValidatorMaster",
+                "name": "TSVValidatorMaster",
+                "metadata": {},
+                "file_location": null,
+                "module": "CEAMSModules.TSVValidatorMaster",
+                "module_label": "TSV Validator Master",
+                "module_category": "Files I/O",
+                "module_author": "",
+                "module_url": "",
+                "module_description": "",
+                "module_options": {},
+                "inputs": {
+                    "files": {
+                        "name": "files",
+                        "value": [],
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "log_path": {
+                        "name": "log_path",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {
+                    "output_logs": {
+                        "name": "output_logs",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "identifier": "b54b5cc7-3364-475c-9500-366c601dc935",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": -136.0,
+                "pos_y": -85.0
+            }
+        ]
+    }
+}
