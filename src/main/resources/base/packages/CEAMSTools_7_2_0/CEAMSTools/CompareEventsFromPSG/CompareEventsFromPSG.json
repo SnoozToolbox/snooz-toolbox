@@ -46,12 +46,12 @@
     "dependencies": [
         {
             "package_name": "CEAMSTools",
-            "package_version": "7.1.0",
+            "package_version": "7.2.0",
             "deleteable": false
         },
         {
             "package_name": "CEAMSModules",
-            "package_version": "7.1.0"
+            "package_version": "7.2.0"
         }
     ],
     "process_params": {

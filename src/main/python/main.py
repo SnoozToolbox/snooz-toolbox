@@ -3,8 +3,6 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2023
 See the file LICENCE for full license details.
 """
-
-
 import argparse
 import datetime
 import json
@@ -12,6 +10,20 @@ import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
 import sys
+import platform
+
+def get_numba_cache_dir():
+    system = platform.system()
+    if system == "Windows":
+        return os.path.join(os.getenv("LOCALAPPDATA", os.path.expanduser("~")), "Snooz", "numba_cache")
+    elif system == "Darwin":  # macOS
+        return os.path.join(os.path.expanduser("~/Library/Application Support/Snooz/numba_cache"))
+    else:  # Linux and others
+        return os.path.join(os.path.expanduser("~/.cache/Snooz/numba_cache"))
+
+numba_cache_dir = get_numba_cache_dir()
+os.makedirs(numba_cache_dir, exist_ok=True)
+os.environ["NUMBA_CACHE_DIR"] = numba_cache_dir
 
 # Hack until I figure out how to properly setup FBS so it include them when freezing
 # in a way that is available to the external packages.
