@@ -1,6 +1,6 @@
 {
     "package_name": "CEAMSTools",
-    "package_version": "7.1.0",
+    "package_version": "7.2.0",
     "package_author": "",
     "package_url": "",
     "package_description": "",
@@ -366,20 +366,6 @@
                     "parameters": {
                         "menu_category": "1-Preprocessing",
                         "menu_label": "Validate Snooz TSV File"
-                    }
-                }
-            ]
-        },
-        {
-            "item_name": "DetectREMsYASA",
-            "item_type": "tool",
-            "item_version": "2.1.0",
-            "item_hooks": [
-                {
-                    "endpoint_name": "menu_endpoint",
-                    "parameters": {
-                        "menu_category": "1-Preprocessing",
-                        "menu_label": "Detect REMs-YASA"
                     }
                 }
             ]
