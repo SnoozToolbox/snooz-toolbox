@@ -6,9 +6,14 @@
     "extra_hooks_dir": "src/hooks",
 	"hidden_imports": ["antropy",
         "ica",
+        "lazy_loader",
         "lspopt",
         "lightgbm",
+        "matplotlib.backends.backend_pdf",
+        "matplotlib.backends.backend_qtagg",
         "mne",
+        "scipy.signal",
+        "scipy.fftpack",
         "seaborn",
         "sklearn.ensemble",
         "sklearn.calibration",
@@ -18,9 +23,6 @@
         "sklearn.utils._vector_sentinel",
         "sklearn.neighbors._partition_nodes",
         "sklearn.dummy",
-        "scipy.signal",
-        "scipy.fftpack",
-        "matplotlib.backends.backend_pdf",
-        "matplotlib.backends.backend_qtagg",
-        "yasa"]
+        "yasa",
+        "yasa.classifiers"]
 }

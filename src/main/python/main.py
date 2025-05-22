@@ -11,7 +11,6 @@ import json
 import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
-os.environ["MNE_USE_LAZY_IMPORT"] = "0"
 import sys
 
 # Hack until I figure out how to properly setup FBS so it include them when freezing

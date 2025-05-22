@@ -54,9 +54,25 @@ Reboot
     (snooz_310_env)$ fbs freeze --debug
 
 ## To solve the mne and YASA problem
-    - copy manually the mne package
-    (snooz_310_env)$ cp ..\snooz_310_env\Lib\site-packages\mne \target\Snooz\_internal\mne
-    (snooz_310_env)$ cp ..\snooz_310_env\Lib\site-packages\lazy_loader \target\Snooz\_internal\lazy_loader
+    - copy manually the mne, lazy_loader and yasa packages (from VScode terminal to have the pyi file and the classification )
+    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" -Recurse -Force -ErrorAction SilentlyContinue
+
+    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\mne" `
+            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" `
+            -Recurse -Force
+    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lazy_loader" `
+            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" `
+            -Recurse -Force
+    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lspopt" `
+            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" `
+            -Recurse -Force
+    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\yasa" `
+            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" `
+            -Recurse -Force
+
     (snooz_310_env)$ fbs installer
 
 ### To run Scinode and keep logs (usefull when exe does not work properly)
