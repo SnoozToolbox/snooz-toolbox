@@ -53,26 +53,57 @@ Reboot
     (snooz_310_env)$ fbs clean
     (snooz_310_env)$ fbs freeze --debug
 
-## To solve the mne and YASA problem
-    - copy manually the mne, lazy_loader and yasa packages (from VScode terminal to have the pyi file and the classification )
-    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" -Recurse -Force -ErrorAction SilentlyContinue
+## To solve the mne and YASA problem when creating the installer
+Please note that those path are not identical in your machines.
 
-    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\mne" `
-            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" `
-            -Recurse -Force
-    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lazy_loader" `
-            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" `
-            -Recurse -Force
-    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lspopt" `
-            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" `
-            -Recurse -Force
-    Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\yasa" `
-            -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" `
-            -Recurse -Force
+### Windows
 
+<details>
+Copy manually the mne, lazy_loader and yasa packages (from VScode terminal to have the pyi file and the classification )
+
+```
+Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" -Recurse -Force -ErrorAction SilentlyContinue
+
+Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\mne" `
+        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" `
+        -Recurse -Force
+Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lazy_loader" `
+        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" `
+        -Recurse -Force
+Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lspopt" `
+        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" `
+        -Recurse -Force
+Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\yasa" `
+        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" `
+        -Recurse -Force
+
+```
+</details>
+
+### macOS
+<details>
+
+Same strategy applied here, remove the dependencies
+
+```
+rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
+rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
+rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
+rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
+```
+Copy them back again
+
+```
+cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/mne /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/mne
+cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lazy_loader /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/lazy_loader
+cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lspopt /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/lspopt
+cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/yasa /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/yasa
+
+```
+</details>
     (snooz_310_env)$ fbs installer
 
 ### To run Scinode and keep logs (usefull when exe does not work properly)
