@@ -48,31 +48,25 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
         
         # For example, let's assume the file content has three lines we want to assign to variables
         lines = content.split('\n')
-        self.snooz_released_version = lines[0]
-        self.windows_link = lines[1]
-        self.MAC_link = lines[2]
-        self.linux_link = lines[3]
+        self.snooz_released_version = self._get_content(lines, 0)
+        self.windows_link = self._get_content(lines, 1)
+        self.MAC_link = self._get_content(lines, 2)
+        self.linux_link = self._get_content(lines, 3)
+        self.mac_arm_link = self._get_content(lines, 4)
+
         # Update push button activation
-        if self.windows_link == 'disabled\r':
-            self.pushButton_windows.setEnabled(False)
-        else:
-            self.pushButton_windows.setEnabled(True)
-        if self.MAC_link == 'disabled\r':
-            self.pushButton_mac.setEnabled(False)
-        else:
-            self.pushButton_mac.setEnabled(True)
-        if self.linux_link == 'disabled\r':
-            self.pushButton_linux.setEnabled(False)
-        else:
-            self.pushButton_linux.setEnabled(True)
+        self.pushButton_windows.setDisabled(self.windows_link=='disabled' or self.windows_link=="")
+        self.pushButton_mac_intel.setDisabled(self.MAC_link=='disabled' or self.MAC_link=="")
+        self.pushButton_linux.setDisabled(self.linux_link=='disabled' or self.linux_link=="")
+        self.pushButton_mac_arm.setDisabled(self.mac_arm_link=='disabled' or self.mac_arm_link=="")
+
         # Update label
         self.label_released_version.setText(str(self.snooz_released_version))
-
 
     # Called when the user clicks on the download windows button
     def download_windows_slot(self):
         # Specify the URL you want to open
-        if not self.windows_link == 'disabled\r':
+        if not self.windows_link == 'disabled':
             url = QUrl(self.windows_link)
             QDesktopServices.openUrl(url)
 
@@ -80,7 +74,7 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
     # Called when the user clicks on the download windows button
     def download_MAC_slot(self):
         # Specify the URL you want to open
-        if not self.MAC_link == 'disabled\r':
+        if not self.MAC_link == 'disabled':
             url = QUrl(self.MAC_link)
             QDesktopServices.openUrl(url)
 
@@ -88,6 +82,15 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
     # Called when the user clicks on the download windows button
     def download_Linux_slot(self):
         # Specify the URL you want to open
-        if not self.linux_link == 'disabled\r':
+        if not self.linux_link == 'disabled':
             url = QUrl(self.linux_link)
             QDesktopServices.openUrl(url)
+
+    def download_mac_arm_slot(self):
+        
+        if not self.mac_arm_link == 'disabled':
+            url = QUrl(self.mac_arm_link)
+            QDesktopServices.openUrl(url)
+
+    def _get_content(self, lines, index):
+        return lines[index] if len(lines) > index else ""

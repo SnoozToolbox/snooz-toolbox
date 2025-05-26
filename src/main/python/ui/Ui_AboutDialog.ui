@@ -41,13 +41,12 @@
       <font>
        <family>Roboto</family>
        <pointsize>12</pointsize>
-       <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
      <property name="text">
       <string/>
@@ -59,7 +58,7 @@
       <bool>true</bool>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -75,7 +74,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Snooz Toolbox&lt;/span&gt; is a Python 3.10 software for analyzing sleep recordings (Polysomnography).&lt;br/&gt;It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.&lt;/p&gt;&lt;p&gt;Snooz is built using a cross-platform graphical interface framework called PyQt, &lt;br/&gt;making it compatible with Windows, Linux, and Mac computers.&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -92,10 +91,10 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Policy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -111,7 +110,6 @@
       <font>
        <family>Roboto</family>
        <pointsize>12</pointsize>
-       <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -124,10 +122,10 @@
    <item>
     <spacer name="verticalSpacer_3">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Policy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -147,10 +145,10 @@
    <item>
     <spacer name="verticalSpacer_4">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Policy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -160,52 +158,39 @@
      </property>
     </spacer>
    </item>
-   <item>
+   <item alignment="Qt::AlignmentFlag::AlignBottom">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Click here to download the latest installer &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Click on the appropriate box to download the latest installer.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please check your operating system's architecture before proceeding.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="pushButton_windows">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(78, 134, 255);</string>
-       </property>
-       <property name="text">
-        <string>Download for Windows</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_mac">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pushButton_mac_intel">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(78, 134, 255);</string>
+        <string notr="true">QPushButton {
+background-color: rgb(78, 134, 255);
+}
+
+QPushButton:disabled {
+    background-color: rgb(160, 160, 160);
+    color: rgb(220, 220, 220);
+}</string>
        </property>
        <property name="text">
-        <string>Download for MAC</string>
+        <string>Download for MacOS (Intel Chip)</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_linux">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(78, 134, 255);</string>
-       </property>
-       <property name="text">
-        <string>Download for Linux</string>
-       </property>
-      </widget>
-     </item>
-     <item>
+     <item row="0" column="4">
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -214,6 +199,57 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton_windows">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: rgb(78, 134, 255);
+}
+
+QPushButton:disabled {
+    background-color: rgb(160, 160, 160);
+    color: rgb(220, 220, 220);
+}</string>
+       </property>
+       <property name="text">
+        <string>Download for Windows</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_mac_arm">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: rgb(78, 134, 255);
+}
+
+QPushButton:disabled {
+    background-color: rgb(160, 160, 160);
+    color: rgb(220, 220, 220);
+}</string>
+       </property>
+       <property name="text">
+        <string>Download for MacOS (M-Chip)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pushButton_linux">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+background-color: rgb(78, 134, 255);
+}
+
+QPushButton:disabled {
+    background-color: rgb(160, 160, 160);
+    color: rgb(220, 220, 220);
+}</string>
+       </property>
+       <property name="text">
+        <string>Download for Linux</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -235,7 +271,7 @@ of the CEAMS package in the settings by navigating to File &gt; Settings &gt; Pa
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -253,6 +289,38 @@ of the CEAMS package in the settings by navigating to File &gt; Settings &gt; Pa
  </resources>
  <connections>
   <connection>
+   <sender>pushButton_linux</sender>
+   <signal>clicked()</signal>
+   <receiver>AboutDialog</receiver>
+   <slot>download_Linux_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>420</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_mac_arm</sender>
+   <signal>clicked()</signal>
+   <receiver>AboutDialog</receiver>
+   <slot>download_mac_arm_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>558</x>
+     <y>399</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>439</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>pushButton_windows</sender>
    <signal>clicked()</signal>
    <receiver>AboutDialog</receiver>
@@ -269,7 +337,7 @@ of the CEAMS package in the settings by navigating to File &gt; Settings &gt; Pa
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_mac</sender>
+   <sender>pushButton_mac_intel</sender>
    <signal>clicked()</signal>
    <receiver>AboutDialog</receiver>
    <slot>download_MAC_slot()</slot>
@@ -284,26 +352,11 @@ of the CEAMS package in the settings by navigating to File &gt; Settings &gt; Pa
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>pushButton_linux</sender>
-   <signal>clicked()</signal>
-   <receiver>AboutDialog</receiver>
-   <slot>download_Linux_slot()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>290</x>
-     <y>285</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>420</x>
-     <y>227</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>download_windows_slot()</slot>
   <slot>download_MAC_slot()</slot>
   <slot>download_Linux_slot()</slot>
+  <slot>download_mac_arm_slot()</slot>
  </slots>
 </ui>
