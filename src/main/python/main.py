@@ -57,6 +57,11 @@ def main():
     parser.add_argument("--f", help="The process description file in JSON format.")
     args, unknown = parser.parse_known_args()
 
+    # Redirect stdout/stderr to avoid terminal messages from joblib, etc., in packaged mode
+    if not config.is_dev:
+        sys.stdout = open(os.devnull, 'w')
+        sys.stderr = open(os.devnull, 'w')
+
     app = AppContext()
 
     if args.f is not None:
