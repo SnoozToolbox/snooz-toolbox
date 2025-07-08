@@ -235,3 +235,99 @@ QPushButton[accessibleName="node_option_push_button"]:hover:!pressed {
    border: 2px solid rgb(30, 129, 169);
    border-radius: 3px;
 }
+
+
+/* ====== DISABLED STATE STYLES ====== */
+
+/* Disabled QPushButton */
+QPushButton:disabled {
+    background-color: rgb(230, 230, 230);  /* light gray background */
+    color: rgb(150, 150, 150);             /* dimmed text */
+    border: 1px solid rgb(200, 200, 200);  /* softer border */
+}
+
+/* Disabled QLineEdit */
+QLineEdit:disabled {
+    background-color: rgb(245, 245, 245);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+/* Disabled QComboBox */
+QComboBox:disabled {
+    background-color: rgb(245, 245, 245);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+/* Disabled QLabel */
+QLabel:disabled {
+    color: rgb(150, 150, 150);
+}
+
+/* Disabled QCheckBox */
+QCheckBox:disabled {
+    color: rgb(150, 150, 150);
+}
+
+QToolButton:disabled {
+    background-color: rgb(220, 220, 220);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(180, 180, 180);
+}
+
+QTextEdit:disabled {
+    background-color: rgb(245, 245, 245);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+QPlainTextEdit:disabled {
+    background-color: rgb(245, 245, 245);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+QRadioButton:disabled {
+    color: rgb(150, 150, 150);
+}
+
+QSpinBox:disabled {
+    background-color: rgb(240, 240, 240);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+QDoubleSpinBox:disabled {
+    background-color: rgb(240, 240, 240);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+QSlider:disabled {
+    background-color: rgb(230, 230, 230);
+}
+
+QProgressBar:disabled {
+    background-color: rgb(240, 240, 240);
+    color: rgb(150, 150, 150);
+    border: 1px solid rgb(200, 200, 200);
+}
+
+QGroupBox:disabled {
+    color: rgb(150, 150, 150);
+}
+
+QTabWidget::pane:disabled {
+    background-color: rgb(240, 240, 240);
+}
+
+QTableWidget:disabled {
+    background-color: rgb(240, 240, 240);
+    color: rgb(150, 150, 150);
+}
+
+QTreeWidget:disabled {
+    background-color: rgb(240, 240, 240);
+    color: rgb(150, 150, 150);
+}
