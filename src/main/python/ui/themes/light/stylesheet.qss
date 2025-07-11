@@ -243,21 +243,21 @@ QPushButton[accessibleName="node_option_push_button"]:hover:!pressed {
 QPushButton:disabled {
     background-color: rgb(230, 230, 230);  /* light gray background */
     color: rgb(150, 150, 150);             /* dimmed text */
-    border: 1px solid rgb(200, 200, 200);  /* softer border */
+    padding: 3px 10px;
 }
 
 /* Disabled QLineEdit */
 QLineEdit:disabled {
     background-color: rgb(245, 245, 245);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 2px 5px;
 }
 
 /* Disabled QComboBox */
 QComboBox:disabled {
     background-color: rgb(245, 245, 245);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 2px 5px;
 }
 
 /* Disabled QLabel */
@@ -273,19 +273,19 @@ QCheckBox:disabled {
 QToolButton:disabled {
     background-color: rgb(220, 220, 220);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(180, 180, 180);
+    padding: 4px;
 }
 
 QTextEdit:disabled {
     background-color: rgb(245, 245, 245);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 3px;
 }
 
 QPlainTextEdit:disabled {
     background-color: rgb(245, 245, 245);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 3px;
 }
 
 QRadioButton:disabled {
@@ -295,13 +295,13 @@ QRadioButton:disabled {
 QSpinBox:disabled {
     background-color: rgb(240, 240, 240);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 1px;
 }
 
 QDoubleSpinBox:disabled {
     background-color: rgb(240, 240, 240);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
+    padding: 1px;
 }
 
 QSlider:disabled {
@@ -311,7 +311,6 @@ QSlider:disabled {
 QProgressBar:disabled {
     background-color: rgb(240, 240, 240);
     color: rgb(150, 150, 150);
-    border: 1px solid rgb(200, 200, 200);
 }
 
 QGroupBox:disabled {
