@@ -104,6 +104,31 @@ cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/ya
 
 ```
 </details>
+
+### Linux
+<details>
+
+Same strategy applied for Linux also, remove the dependencies
+
+```
+rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
+rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
+rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
+rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
+
+```
+
+Copy them back again
+
+```
+cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/mne \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
+cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lazy_loader \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
+cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lspopt \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
+cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/yasa \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
+
+```
+</details>
+
     (snooz_310_env)$ fbs installer
 
 ### To run Scinode and keep logs (usefull when exe does not work properly)
