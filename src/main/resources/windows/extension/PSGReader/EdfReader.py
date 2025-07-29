@@ -63,8 +63,15 @@ class LunaFile:
             self._filename = luna_txt_filename
 
         if self._filename is not None:
+            with open(self._filename, 'r', encoding='utf_8') as f:
+                header_line = f.readline().strip()
+                header_cols = header_line.split('\t')
+            if "time elapsed(HH:MM:SS)" in header_cols:
+                usecols = [col for col in header_cols if col in self._df_label]
+            else:
+                usecols = self._df_label
             self._annotations = pd.read_csv(self._filename, header=0, encoding='utf_8', \
-                names=self._df_label,sep ='\t', converters={0:str, 1:str, 2:float, 3:float})
+                names=usecols, sep ='\t', usecols=range(len(self._df_label)), converters={0:str, 1:str, 2:float, 3:float})            
             # Strip @@chan if any
             ori_n_evt = len(self._annotations)
             name_data = np.hstack(self._annotations['name'].values).tolist()
@@ -153,7 +160,18 @@ class LunaFile:
                             event["name"] = event["name"]+"@@"+current_chan
                 event_name_all.append(event["name"])
             self._annotations["name"] = event_name_all
-            self._annotations.to_csv(self._filename, index=False, header=self._df_label, sep ='\t',encoding="utf_8")
+
+            time_elapsed_df = pd.DataFrame()
+            # Compute the time elapsed for each event
+            time_elapsed_df["HH"] = (np.floor(self._annotations['start_sec']/3600)).astype(int)
+            time_elapsed_df["MM"] = ( np.floor( (self._annotations['start_sec']-time_elapsed_df["HH"]*3600) / 60 )).astype(int)
+            time_elapsed_df["SS"] = self._annotations['start_sec']-time_elapsed_df["HH"]*3600 - time_elapsed_df["MM"]*60
+
+            # concatenate the time as HH:MM:SS and add it to the events dataframe
+            self._annotations['time elapsed(HH:MM:SS)'] = time_elapsed_df.HH.apply(str)\
+                    + ':' + time_elapsed_df.MM.apply(str) + ':' + time_elapsed_df.SS.apply(str)
+            
+            self._annotations.to_csv(self._filename, index=False, header=self._df_label + ['time elapsed (HH:MM:SS)'], sep ='\t',encoding="utf_8")
         
 
 class EdfReader:
