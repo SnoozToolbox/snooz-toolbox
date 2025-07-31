@@ -1,3 +1,22 @@
+/*
+ * QSS does not support variable declarations like in CSS (e.g., --my-color).
+ * For clarity and consistency, some commonly used colors are listed below
+ * to help developers maintain a coherent theme throughout the interface.
+ * 
+ * IMPORTANT: These values are for reference only — they cannot be reused
+ * as variables in QSS selectors.
+ *
+ * Example reference colors:
+ *   Left panel : Background color:    rgb(226, 235, 240) (light blue)
+ *   Tool : Background color:          rgb(252, 252, 252) (white)
+ *   Text color:                       rgb(51, 51, 51)    (black)
+ *   Menu color:                       rgb(51, 51, 51)    (black)
+ *   Menu text color :                 rgb(237, 237, 237) (white)
+ *   Menu Mouse over color:            rgb(30, 129, 169)  (blue)
+ *   Disable color :                   rgb(150, 150, 150) (gray)
+ */
+
+
 /* MENU COLORS */
 QHeaderView {
    font-size:9pt;
@@ -39,7 +58,7 @@ QWidget[accessibleName="task_main"] {
  /* QToolBox*/
  /*For some reason this one is necessary to make the next one work...*/
  QToolBox QScrollArea>QWidget>QWidget {
-   background-color:	rgb(255, 255, 255);
+   background-color:	rgb(252, 252, 252);
    padding:0;
    margin:0;
 }
@@ -236,6 +255,10 @@ QPushButton[accessibleName="node_option_push_button"]:hover:!pressed {
    border-radius: 3px;
 }
 
+QPlainTextEdit:enabled, QTextEdit:enabled {
+    background-color: rgb(252, 252, 252);
+    color: rgb(51, 51, 51);
+}
 
 /* ====== DISABLED STATE STYLES ====== */
 
@@ -367,3 +390,4 @@ QStatusBar:disabled {
     background-color: rgb(240, 240, 240);
     color: rgb(150, 150, 150);
 }
+
