@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDockWidget, QHBoxLayout, QHeaderView,
-    QLabel, QPushButton, QSizePolicy, QSpacerItem,
-    QSplitter, QTreeWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
+    QPushButton, QSizePolicy, QSpacerItem, QSplitter,
+    QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from ProcessUI.ModulesTreeWidget import ModulesTreeWidget
 
@@ -41,20 +41,15 @@ class Ui_ProcessView(object):
         self.process_view_verticalLayout.setObjectName(u"process_view_verticalLayout")
         self.process_view_verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.splitter.addWidget(self.layoutWidget)
-        self.dockWidget = QDockWidget(self.splitter)
-        self.dockWidget.setObjectName(u"dockWidget")
-        self.dockWidget.setFloating(False)
-        self.dockWidget.setFeatures(QDockWidget.NoDockWidgetFeatures)
-        self.dockWidget.setWindowTitle(u"")
-        self.dockWidgetContents = QWidget()
-        self.dockWidgetContents.setObjectName(u"dockWidgetContents")
-        self.verticalLayout_3 = QVBoxLayout(self.dockWidgetContents)
+        self.rightPanel = QWidget(self.splitter)
+        self.rightPanel.setObjectName(u"rightPanel")
+        self.verticalLayout_3 = QVBoxLayout(self.rightPanel)
         self.verticalLayout_3.setSpacing(7)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label = QLabel(self.dockWidgetContents)
+        self.label = QLabel(self.rightPanel)
         self.label.setObjectName(u"label")
 
         self.horizontalLayout_2.addWidget(self.label)
@@ -63,7 +58,7 @@ class Ui_ProcessView(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.library_options_pushButton = QPushButton(self.dockWidgetContents)
+        self.library_options_pushButton = QPushButton(self.rightPanel)
         self.library_options_pushButton.setObjectName(u"library_options_pushButton")
 
         self.horizontalLayout_2.addWidget(self.library_options_pushButton)
@@ -71,7 +66,7 @@ class Ui_ProcessView(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
 
-        self.module_treeWidget = ModulesTreeWidget(self.dockWidgetContents)
+        self.module_treeWidget = ModulesTreeWidget(self.rightPanel)
         __qtreewidgetitem = QTreeWidgetItem()
         __qtreewidgetitem.setText(0, u"Name");
         self.module_treeWidget.setHeaderItem(__qtreewidgetitem)
@@ -79,8 +74,7 @@ class Ui_ProcessView(object):
 
         self.verticalLayout_3.addWidget(self.module_treeWidget)
 
-        self.dockWidget.setWidget(self.dockWidgetContents)
-        self.splitter.addWidget(self.dockWidget)
+        self.splitter.addWidget(self.rightPanel)
 
         self.horizontalLayout.addWidget(self.splitter)
 
