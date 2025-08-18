@@ -7,6 +7,7 @@ import datetime as dt
 import json
 import pandas as pd
 import os
+import shiboken6
 import time
 
 from qtpy import QtCore
@@ -109,7 +110,8 @@ class ProcessManager(Manager):
         if not is_allowed:
             return False
         
-        self._open_loading_dialog()
+        # removed temporarily as there is a duplicate loading dialog in the ToolManager. 
+        # self._open_loading_dialog() 
         # Unload the content of any process or tool if needed, the content manager will
         # figure out if it's necessary or not.
         self._managers.content_manager.unload_process_content()
@@ -148,7 +150,8 @@ class ProcessManager(Manager):
             
             filename = os.path.basename(sender.item_description_file)
             self._managers.pub_sub_manager.publish(self, "change_process_title", filename)
-            self._close_loading_dialog()
+            # See comment above in same method.
+            # self._close_loading_dialog()
         return True
 
     def new_process(self):
@@ -314,19 +317,27 @@ class ProcessManager(Manager):
         if self._is_loaded:
             if self._process_view is not None:
                 self._process_view.unsubscribe_all_topics()
+                self._process_view.cleanup() # Added in an effort to have a more concise cleanup
             self._managers.pub_sub_manager.clear_temp_topics()
-
             self._unload_dependencies()
             self._current_package_item = None
-            self._process_view.deleteLater()
+            self._process_view._process_graphics_view.setScene(None)
+            if self._process_view._process_graphics_scene is not None:
+                if self._process_view._process_graphics_scene.items() is not None:
+                    for item in self._process_view._process_graphics_scene.items():
+                        self._process_view._process_graphics_scene.removeItem(item)
+                        shiboken6.delete(item)
+            self._process_view._process_graphics_view = None
+            self._process_view._process_graphics_scene = None
+            #self._process_view.deleteLater()
             self._process_view = None
             self._is_loaded = False
-
+        
             self._managers.navigation_manager.hide_process_button()
 
     def load_content_from_file(self, description, filepath):
         self._process_view = ProcessView(self._managers)
-        self._process_view.scene.data = copy.deepcopy(description)
+        # self._process_view.scene.data = copy.deepcopy(description) # To possibly remove, as the deepcopy idea was not retained.
         self._process_view.scene.data["process_params"]["nodes"] = []
 
         try : 

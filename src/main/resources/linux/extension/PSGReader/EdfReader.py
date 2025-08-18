@@ -91,29 +91,36 @@ class LunaFile:
         else:
             self._filename = luna_tsv_filename
 
+
     def convert_to_list(self, x):
         try:
             return literal_eval(x)
         except:
             return [x]
 
+
     def clear_events(self):
         self._annotations = pd.DataFrame()
 
+
     def add_event(self, name, group, start_sec, duration_sec, channels):
         current_df = manage_events.create_event_dataframe([[group, name, start_sec, duration_sec, channels]])
-        self._annotations = pd.concat([self._annotations, current_df], ignore_index=True)
+        if not current_df.empty and not current_df.isna().all().all():
+            self._annotations = pd.concat([self._annotations, current_df], ignore_index=True)
 
     def add_events(self, events):
         new_events_df = manage_events.create_event_dataframe(events)
-        self._annotations = pd.concat([self._annotations, new_events_df], ignore_index=True)
-        self._annotations.sort_values(by=['start_sec'], inplace=True)
+        if not new_events_df.empty and not new_events_df.isna().all().all():
+            self._annotations = pd.concat([self._annotations, new_events_df], ignore_index=True)
+            self._annotations.sort_values(by=['start_sec'], inplace=True)
+
 
     def remove_events_by_group(self, group_name):
         if len(self._annotations) == 0:
             return
         # Filter out all annotation that has a name equal to the group_name
         self._annotations = self._annotations[self._annotations.group != group_name]
+
 
     def remove_events_by_name(self, event_name, group_name):
         # Remove out all events that has a event name equal to the event_name and 
@@ -123,6 +130,7 @@ class LunaFile:
             return
         self._annotations = self._annotations[~((self._annotations.name == event_name) &
             (self._annotations.group == group_name))]
+
 
     def get_sleep_stages(self):
         return self._annotations[self._annotations['group'] == commons.sleep_stages_group]
@@ -167,6 +175,7 @@ class LunaFile:
             
             self._annotations.to_csv(self._filename, index=False, header=self._df_label + ['time elapsed (HH:MM:SS)'], sep ='\t',encoding="utf_8")
         
+
 class EdfReader:
     def __init__(self):
         self._luna_file = LunaFile()
@@ -175,14 +184,24 @@ class EdfReader:
 
     def open_file(self, filename):
         self._filename = filename
-        self._header = pyedflib.highlevel.read_edf_header(self._filename)
+        error = None
+        try : 
+            self._header = pyedflib.highlevel.read_edf_header(self._filename)
+        except Exception as e:
+            error = str(e)
+            return False, error
         
         is_compatible = EdfReader.is_file_compatible(self._filename)
         if not is_compatible:
-            return False
+            error = f"EDF File {self._filename} is not compatible with Snooz"
+            return False, error
 
         basename, _ = os.path.splitext(self._filename)
-        self._luna_file.open_file(basename)
+        try : 
+            self._luna_file.open_file(basename)
+        except:
+            error = f"Accessory File for {self._filename} is not compatible with Snooz"
+            return False, error
         
         return True
 
@@ -251,8 +270,8 @@ class EdfReader:
 
     def save_signals(self, signals):
         source_signals, source_signal_headers, header = pyedflib.highlevel.read_edf(self._filename, digital=True)
-
-        for signal in signals:
+        # For each signal in the modified list of signals to write in the edf
+        for signal in signals: # each signal needs to be the whole recording (not epoched)
             for index, signal_header in enumerate(source_signal_headers):
                 if signal_header['label'] == signal.channel:
                     physical_min = math.floor(signal.samples.min())
@@ -264,10 +283,8 @@ class EdfReader:
                         signal_header['digital_max'],
                         -limit,
                         limit)
-
                     source_signals[index] = digital_samples.astype(np.int32)
                     break
-
         pyedflib.highlevel.write_edf(self._filename, source_signals, source_signal_headers, header, digital=True)
 
     # Return a list of a class with the property name

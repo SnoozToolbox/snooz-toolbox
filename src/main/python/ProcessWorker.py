@@ -79,8 +79,8 @@ class ProcessWorker(QtCore.QObject):
 
         # WARNING
         # Enable garbage collection      
-        gc.enable()
-        
+        #gc.enable()
+
         self._managers.log_manager.clear()
         is_master_done = False
         try:
@@ -153,7 +153,7 @@ class ProcessWorker(QtCore.QObject):
             QCoreApplication.processEvents()
         except RuntimeError as exc:
             self._managers.log_manager.log("process", f"Fatal Error: {exc}")
-            self._managers.log_manager.log("error", f"This is a known error, please restart Snooz fix it.")
+            self._managers.log_manager.log("error", f"This is a known error, please restart to Snooz fix it.")
             self.interrupted.emit([], iteration_interruption)
 
         except Exception as exc:

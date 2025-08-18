@@ -112,11 +112,11 @@ class ContentManager(Manager):
             if child.widget():
                 child.widget().deleteLater()
         self._managers.process_manager.unload_content()
-
+        
         # Since the garbage collector is desabled in the MainWindow
         # we need to manually call the garbage collector
         #  calling the gc without input argument makes Snooz close    
-        gc.collect(1)
+        #gc.collect(1)
 
     def unload_tool_content(self):
         """ Unload the content in the tool tab. """
@@ -129,7 +129,7 @@ class ContentManager(Manager):
         # Since the garbage collector is desabled in the MainWindow
         # we need to manually call the garbage collector
         #  calling the gc without input argument makes Snooz close    
-        gc.collect(1)
+        #gc.collect(1)
       
     def unload_app_content(self):
         """ Unload the content in the app tab. """
@@ -142,4 +142,4 @@ class ContentManager(Manager):
         # Since the garbage collector is desabled in the MainWindow
         # we need to manually call the garbage collector
         #  calling the gc without input argument makes Snooz close    
-        gc.collect(1)
+        #gc.collect(1)

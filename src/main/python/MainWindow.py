@@ -47,6 +47,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Init all managers. Managers are the brain of the software. Most of the
         # responsibilities are in the managers. Look into each of them to learn more.
+        #gc.disable()
+        print("gc enabled: " + str(gc.isenabled()))
+        print("gc threshold: " + str(gc.get_threshold()))
         self._managers = Managers(self)
         self._managers.initialize()
 
@@ -71,7 +74,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # To prevent Snooz from crashing, we disable the garbage collector. This is because
         # Snooz is most likely not thouroughly cleaning unused references, cause the memory
         # to grow and at some point, leak, making the application crash.
-        gc.disable()
+        # gc.disable()
 
     # UI callbacks
     def preferences_clicked(self):
@@ -157,13 +160,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """ Process button clicked, open the process page """
         self._managers.navigation_manager.show_process()
 
-    def open_clicked(self):
-        """ Open button clicked, open a file.
+    # def open_clicked(self):
+    #     """ Open button clicked, open a file.
         
-        The file menu handler will open the file if there is an APP that is hooked to it.
-        """
-        handler = self._managers.endpoint_manager.get_handler(FileMenuEndpointHandler.ENDPOINT_NAME)
-        handler.open_file()
+    #     The file menu handler will open the file if there is an APP that is hooked to it.
+    #     """
+    #     handler = self._managers.endpoint_manager.get_handler(FileMenuEndpointHandler.ENDPOINT_NAME)
+    #     handler.open_file()
 
     def on_topic_update(self, topic, message, sender):
         if topic == "show_error_message":

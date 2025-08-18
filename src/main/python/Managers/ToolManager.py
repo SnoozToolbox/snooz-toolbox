@@ -53,6 +53,7 @@ class ToolManager(Manager):
                 self._managers.process_manager.graph_outputs.connect(self.process_finished)
                 
             success = self._load_content(sender.description, sender.item_path)
+            # does not unload
             if not success:
                 message = f"ToolManager could load tool content"
                 self._managers.pub_sub_manager.publish(self, "show_error_message", message)
@@ -115,14 +116,17 @@ class ToolManager(Manager):
             self._managers.process_manager.graph_outputs.disconnect(self.process_finished)
             self._activation_params = None
         
-        if self._step_widget is not None:
+        if self._step_widget:
             self._step_widget.unsubscribe_all_topics()
-            self._step_widget = None
+            self._step_widget.deleteLater()
+        self._step_widget = None
         
         self._managers.navigation_manager.hide_tool_button()
     
     def _load_content(self, description, tool_filepath=None):
-        self._open_loading_dialog()
+
+        # deactivating open_loading_dialog as currently it is being called in the ProcessManager (process_activation_request)
+        #self._open_loading_dialog()
 
         try :
             self._step_widget = StepsWidget(self._managers, description, self._activation_params, tool_filepath)
@@ -136,7 +140,7 @@ class ToolManager(Manager):
             return False
 
         self._managers.navigation_manager.show_tool_button()
-        self._close_loading_dialog()
+        #self._close_loading_dialog()
         return True
 
 

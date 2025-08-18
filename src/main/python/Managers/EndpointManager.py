@@ -51,6 +51,9 @@ class EndpointManager(Manager):
         self._register_handler(MenuEndpointHandler.ENDPOINT_NAME, MenuEndpointHandler(self._managers))
         self._register_handler(ModuleEndpointHandler.ENDPOINT_NAME, ModuleEndpointHandler(self._managers))
         self._register_handler(CustomEndpointHandler.ENDPOINT_NAME, CustomEndpointHandler(self._managers))
+
+        # Currently, the FileMenuEndointHandler only handles the 'File Open' item. Since we removed the item from the main window, there is now no
+        # need to keep this handler, if there is ever a need to add items under the FILE menu, this handler can be used again.
         self._register_handler(FileMenuEndpointHandler.ENDPOINT_NAME, FileMenuEndpointHandler(self._managers))
 
         self.get_handler(MenuEndpointHandler.ENDPOINT_NAME).set_menu_bar(self._main_window.menuBar)

@@ -10,7 +10,15 @@ import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
 os.environ["NUMBA_DISABLE_CACHE"] = "1"
+os.environ["QT_DEBUG_PLUGINS"] = "1"
+
 import sys
+import faulthandler
+faulthandler.enable(all_threads=True)
+
+import tqdm
+tqdm.tqdm.disable = True       
+tqdm.tqdm.monitor_interval = 0
 
 # Hack until I figure out how to properly setup FBS so it include them when freezing
 # in a way that is available to the external packages.
