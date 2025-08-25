@@ -135,3 +135,15 @@ class ProcessView(QtWidgets.QWidget, Ui_ProcessView):
 
                     conflicts.append(item.module_description["name"])
         return conflicts
+
+
+    def cleanup(self):
+        # Unsubscribe all node topics first
+        self.destroyed.disconnect()
+
+        for conn in getattr(self, "_connections", []):
+            conn._process_view = None
+            conn.source = None
+            conn.sink = None
+        self._process_graphics_scene.cleanup()
+        self._process_graphics_scene = None

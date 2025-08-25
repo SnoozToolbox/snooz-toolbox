@@ -187,6 +187,19 @@ class ProcessGraphicsScene(QtWidgets.QGraphicsScene):
                         "package_version": package_version}
                     self._data["dependencies"].append(package)
 
+
+    def cleanup(self):
+        if hasattr(self, "_connection_manager") and self._connection_manager:
+            self._connection_manager.clear()
+            self._connection_manager = None
+
+        try:
+            self.signal_drop.disconnect()
+        except TypeError:
+            pass
+            
+        self.clear()
+
     def _find_dependency(self, package_name):
         for dependency in self._data["dependencies"]:
             if dependency["package_name"] == package_name:

@@ -50,6 +50,9 @@ class ConnectionManager():
         """ TODO """
         self._connections.remove(connection)
         self._scene.removeItem(connection)
+        connection.setParentItem(None)
+        connection.source = None
+        connection.sink = None
 
     def clear(self):
         """ TODO """
@@ -126,8 +129,14 @@ class ConnectionManager():
     def cancel_dragging_new_connection(self):
         """ TODO """
         self.is_dragging_new_connection = False
-        self._scene.removeItem(self._dragging_connection)
-        self._dragging_connection = None
+        #self._scene.removeItem(self._dragging_connection)
+        #self._dragging_connection = None
+        if self._dragging_connection is not None:
+            self._scene.removeItem(self._dragging_connection)
+            self._dragging_connection.setParentItem(None)
+            self._dragging_connection.deleteLater()
+            self._dragging_connection = None
+        
 
     def complete_dragging_new_connection(self, 
         node_identifier, 

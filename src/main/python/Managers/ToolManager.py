@@ -115,10 +115,11 @@ class ToolManager(Manager):
             self._managers.process_manager.graph_outputs.disconnect(self.process_finished)
             self._activation_params = None
         
-        if self._step_widget is not None:
+        if self._step_widget:
             self._step_widget.unsubscribe_all_topics()
-            self._step_widget = None
-        
+            #self._step_widget = None
+            self._step_widget.deleteLater()
+        self._step_widget = None
         self._managers.navigation_manager.hide_tool_button()
     
     def _load_content(self, description, tool_filepath=None):
