@@ -31,6 +31,15 @@ class FileMenuEndpointHandler(EndpointHandler):
             del self._hooks[label]
 
     def open_file(self):
+        """
+        This method let's the user open a File from the application's menu.
+
+        NOTE
+
+        This method is currently unused.
+
+        There was confusion on the user side of things as the definition of 'File Open'
+        """
         if len(self._hooks) == 0:
             message = "No app registered to open a file"
             self._managers.pub_sub_manager.publish(self, "show_info_message", message)

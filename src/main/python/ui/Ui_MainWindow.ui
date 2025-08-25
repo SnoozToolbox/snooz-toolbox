@@ -371,7 +371,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen_File"/>
+    <!-- <addaction name="actionOpen_File"/> -->
     <addaction name="actionLoad_workspace"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
@@ -491,14 +491,14 @@
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionOpen_File">
+  <!-- <action name="actionOpen_File">
    <property name="text">
     <string>Open</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
-  </action>
+  </action> -->
   <action name="actionDocumentation">
    <property name="text">
     <string>Documentation</string>
@@ -770,7 +770,7 @@
     </hint>
    </hints>
   </connection>
-  <connection>
+  <!-- <connection>
    <sender>actionOpen_File</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -785,7 +785,7 @@
      <y>350</y>
     </hint>
    </hints>
-  </connection>
+  </connection> -->
   <connection>
    <sender>close_app_pushButton</sender>
    <signal>clicked()</signal>
@@ -851,7 +851,7 @@
   <slot>process_clicked()</slot>
   <slot>tool_clicked()</slot>
   <slot>home_clicked()</slot>
-  <slot>open_clicked()</slot>
+  <!-- <slot>open_clicked()</slot> -->
   <slot>close_app_clicked()</slot>
   <slot>documentation_clicked()</slot>
   <slot>data_clicked()</slot>

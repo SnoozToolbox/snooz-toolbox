@@ -157,13 +157,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """ Process button clicked, open the process page """
         self._managers.navigation_manager.show_process()
 
-    def open_clicked(self):
-        """ Open button clicked, open a file.
+    # def open_clicked(self):
+    #     """ Open button clicked, open a file.
         
-        The file menu handler will open the file if there is an APP that is hooked to it.
-        """
-        handler = self._managers.endpoint_manager.get_handler(FileMenuEndpointHandler.ENDPOINT_NAME)
-        handler.open_file()
+    #     The file menu handler will open the file if there is an APP that is hooked to it.
+    #     """
+    #     handler = self._managers.endpoint_manager.get_handler(FileMenuEndpointHandler.ENDPOINT_NAME)
+    #     handler.open_file()
 
     def on_topic_update(self, topic, message, sender):
         if topic == "show_error_message":
