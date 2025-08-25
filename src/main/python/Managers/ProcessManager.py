@@ -150,7 +150,7 @@ class ProcessManager(Manager):
             filename = os.path.basename(sender.item_description_file)
             self._managers.pub_sub_manager.publish(self, "change_process_title", filename)
             # See comment above in same method.
-            #self._close_loading_dialog()
+            # self._close_loading_dialog()
         return True
 
     def new_process(self):
@@ -323,11 +323,13 @@ class ProcessManager(Manager):
             self._process_view.deleteLater()
             self._process_view = None
             self._is_loaded = False
+        
             self._managers.navigation_manager.hide_process_button()
 
     def load_content_from_file(self, description, filepath):
         self._process_view = ProcessView(self._managers)
-        self._process_view.scene.data = copy.deepcopy(description)
+        # Really important to keep otherwise the save/load workspace does not work properly for tools.
+        self._process_view.scene.data = copy.deepcopy(description) # To possibly remove, as the deepcopy idea was not retained.
         self._process_view.scene.data["process_params"]["nodes"] = []
 
         try : 
