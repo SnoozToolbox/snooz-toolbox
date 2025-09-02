@@ -160,7 +160,11 @@ class LunaFile:
                             event["name"] = event["name"]+"@@"+current_chan
                 event_name_all.append(event["name"])
             self._annotations["name"] = event_name_all
-
+            # Replace all sleep stage 4 by sleep stage 3
+            if self._annotations is not None and 'name' in self._annotations.columns:
+                if (self._annotations['name'] == '4').any():
+                    self._annotations.loc[self._annotations['name'] == '4', 'name'] = '3'
+                    
             time_elapsed_df = pd.DataFrame()
             # Compute the time elapsed for each event
             time_elapsed_df["HH"] = (np.floor(self._annotations['start_sec']/3600)).astype(int)
