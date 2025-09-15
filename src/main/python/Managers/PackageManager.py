@@ -446,16 +446,40 @@ class PackageManager(Manager):
 
     def _reset_modules(self):
         """ Reset the modules.
-        
+       
         When we change package version, we need to remove all the modules that have been
-        loaded from memory. """
+        loaded from memory. However, we must be careful not to remove C++ extension modules
+        like PyTorch, as they cannot be safely reimported in the same Python process.
+        """
         if self._modules_reference is None:
             return
-        
+       
         modules = list(sys.modules)
         new_modules = [module for module in modules if module not in self._modules_reference]
+       
+        # List of C++ extension modules that should NOT be removed from sys.modules
+        # as they cannot be safely reimported
+        protected_modules = {
+            'torch', 'torch.nn', 'torch.optim', 'torch.utils', 'torch.cuda',
+            'torch.jit', 'torch.autograd', 'torch.distributions', 'torch.fft',
+            'torch.linalg', 'torch.sparse', 'torch.special', 'torch.futures',
+            'torchvision', 'torchaudio', 'torch._C', 'torch._dynamo',
+            'numpy', 'scipy', 'sklearn', 'cv2', 'tensorflow', 'keras'
+        }
+       
         for m in new_modules:
-            del sys.modules[m]
+            # Check if this module or any of its parent modules are protected
+            should_protect = False
+            for protected in protected_modules:
+                if m == protected or m.startswith(protected + '.'):
+                    should_protect = True
+                    break
+           
+            if not should_protect:
+                del sys.modules[m]
+            # else:
+            #     print(f"Protected module from reset: {m}")  # Debug info
+
 
     def _read_package_version(self, package_description_file):
         """ Read the package version.
