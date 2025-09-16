@@ -7,13 +7,13 @@ See the file LICENCE for full license details.
     This is the main window of the software. It initializes and handles the 
     menus, the managers, the main view, etc.
 """
-import gc
+import base64
 
 from qtpy import QtWidgets
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy.QtCore import QUrl
-from qtpy.QtGui import QDesktopServices
+from qtpy.QtGui import QDesktopServices, QPixmap
 
 import config
 from DisclaimerDialog import DisclaimerDialog
@@ -29,7 +29,8 @@ from widgets.LogsDialog import LogsDialog
 from widgets.SettingsDialog import SettingsDialog
 from widgets.RecentWidget import RecentWidget
 
-import Snooz_logo_rc
+#import Snooz_logo_rc replaced by base64 image
+from ui.assets.art_image_data import SNOOZ_LOGO_IMAGE_BASE64
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -227,7 +228,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         snooz_label.setSizePolicy(sizePolicy)
         snooz_label.setMinimumSize(QtCore.QSize(0, 0))
         snooz_label.setMaximumSize(QtCore.QSize(250, 125))
-        snooz_label.setPixmap(QtGui.QPixmap(u":/Snooz_logo/Snooz_logo.png"))
+        #snooz_label.setPixmap(QtGui.QPixmap(u":/Snooz_logo/Snooz_logo.png"))
+        # Load the embedded base64 image data into the QLabel
+        image_bytes = base64.b64decode(SNOOZ_LOGO_IMAGE_BASE64)
+        pixmap = QPixmap()
+        pixmap.loadFromData(image_bytes)
+        snooz_label.setPixmap(pixmap)
         snooz_label.setScaledContents(True)
         snooz_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         snooz_label.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -258,7 +264,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         font.setPointSize(config.font_size)
         QtWidgets.QApplication.setFont(font)
         return font
-
+    
 
     def _display_disclaimer(self):
         """ Display the beta version disclaimer """

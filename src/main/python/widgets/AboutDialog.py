@@ -2,13 +2,14 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2023
 See the file LICENCE for full license details.
 """
+import base64
 import certifi
 import platform
 import ssl
 import urllib.request
 from qtpy import QtWidgets
 from qtpy.QtCore import QUrl
-from qtpy.QtGui import QDesktopServices
+from qtpy.QtGui import QPixmap, QDesktopServices
 
 import config
 if not config.is_dev:
@@ -20,6 +21,8 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self._load_embedded_image()
+        
         self.url = 'https://f004.backblazeb2.com/file/snooz-release/about_notes.txt'
         
         # Developers who create the installer needs to use FBS pro.
@@ -62,6 +65,17 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
 
         # Update label
         self.label_released_version.setText(str(self.snooz_released_version))
+
+
+    def _load_embedded_image(self):
+        """Load the embedded base64 image data into snooz_label."""
+        from ui.assets.art_image_data import SNOOZ_LOGO_IMAGE_BASE64
+        
+        image_bytes = base64.b64decode(SNOOZ_LOGO_IMAGE_BASE64)
+        pixmap = QPixmap()
+        pixmap.loadFromData(image_bytes)
+        self.snooz_label.setPixmap(pixmap)
+
 
     # Called when the user clicks on the download windows button
     def download_windows_slot(self):

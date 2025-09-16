@@ -48,6 +48,7 @@ class ConnectionManager():
 
     def remove_connection(self, connection):
         """ TODO """
+        
         self._connections.remove(connection)
         self._scene.removeItem(connection)
         connection.setParentItem(None)

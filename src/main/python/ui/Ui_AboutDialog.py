@@ -18,7 +18,6 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
     QLabel, QPushButton, QSizePolicy, QSpacerItem,
     QVBoxLayout, QWidget)
-import Snooz_logo_rc
 import themes_rc
 
 class Ui_AboutDialog(object):
@@ -45,7 +44,6 @@ class Ui_AboutDialog(object):
         font.setItalic(False)
         self.snooz_label.setFont(font)
         self.snooz_label.setFrameShape(QFrame.Shape.NoFrame)
-        self.snooz_label.setPixmap(QPixmap(u":/Snooz_logo/Snooz_logo.png"))
         self.snooz_label.setScaledContents(True)
         self.snooz_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
 

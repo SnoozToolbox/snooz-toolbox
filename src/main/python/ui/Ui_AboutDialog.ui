@@ -51,9 +51,7 @@
      <property name="text">
       <string/>
      </property>
-     <property name="pixmap">
-      <pixmap resource="assets/Snooz_logo.qrc">:/Snooz_logo/Snooz_logo.png</pixmap>
-     </property>
+     <property name="text"><string/></property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
@@ -284,8 +282,7 @@ of the CEAMS package in the settings by navigating to File &gt; Settings &gt; Pa
   </layout>
  </widget>
  <resources>
-  <include location="assets/Snooz_logo.qrc"/>
-  <include location="themes/themes.qrc"/>
+    <include location="themes/themes.qrc"/>
  </resources>
  <connections>
   <connection>
