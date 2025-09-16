@@ -78,9 +78,9 @@ class ProcessWorker(QtCore.QObject):
         if DEBUG: print("Starting run()")
 
         # WARNING
-        # Enable garbage collection      
-        gc.enable()
-        
+        # ALWAYS ACTIVATED NOW : Enable garbage collection      
+        #gc.enable()
+
         self._managers.log_manager.clear()
         is_master_done = False
         try:

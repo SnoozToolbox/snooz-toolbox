@@ -47,12 +47,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Init all managers. Managers are the brain of the software. Most of the
         # responsibilities are in the managers. Look into each of them to learn more.
-        # WARNING
-        #   Disabling garbage collector
-        #   To prevent Snooz from crashing, we disable the garbage collector. This is because
-        #   Snooz is most likely not thouroughly cleaning unused references, cause the memory
-        #   to grow and at some point, leak, making the application crash.
-        gc.disable()
+        #gc.disable() not needed anymore, GARBAGE COLLECTOR ALWAYS ACTIVATED
         self._managers = Managers(self)
         self._managers.initialize()
 
@@ -72,7 +67,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self._managers.navigation_manager.show_home()
 
-
+        # WARNING
+        # Not needed anymore : GARBAGE COLLECTOR ALWAYS ACTIVATED
+        # gc.disable()
 
     # UI callbacks
     def preferences_clicked(self):

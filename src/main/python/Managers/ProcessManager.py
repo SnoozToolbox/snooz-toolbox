@@ -7,6 +7,7 @@ import datetime as dt
 import json
 import pandas as pd
 import os
+import shiboken6
 import time
 
 from qtpy import QtCore
@@ -320,7 +321,15 @@ class ProcessManager(Manager):
             self._managers.pub_sub_manager.clear_temp_topics()
             self._unload_dependencies()
             self._current_package_item = None
-            self._process_view.deleteLater()
+            self._process_view._process_graphics_view.setScene(None)
+            if self._process_view._process_graphics_scene is not None:
+                if self._process_view._process_graphics_scene.items() is not None:
+                    for item in self._process_view._process_graphics_scene.items():
+                        self._process_view._process_graphics_scene.removeItem(item)
+                        shiboken6.delete(item)
+            self._process_view._process_graphics_view = None
+            self._process_view._process_graphics_scene = None
+            #self._process_view.deleteLater()
             self._process_view = None
             self._is_loaded = False
         

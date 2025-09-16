@@ -117,7 +117,6 @@ class ToolManager(Manager):
         
         if self._step_widget:
             self._step_widget.unsubscribe_all_topics()
-            #self._step_widget = None
             self._step_widget.deleteLater()
         self._step_widget = None
         self._managers.navigation_manager.hide_tool_button()

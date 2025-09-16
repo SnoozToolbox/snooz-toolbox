@@ -187,7 +187,6 @@ class ProcessGraphicsScene(QtWidgets.QGraphicsScene):
                         "package_version": package_version}
                     self._data["dependencies"].append(package)
 
-
     def cleanup(self):
         if hasattr(self, "_connection_manager") and self._connection_manager:
             self._connection_manager.clear()
@@ -223,3 +222,4 @@ class ProcessGraphicsScene(QtWidgets.QGraphicsScene):
             if isinstance(item, SocketGraphicsItem):
                 return item
         return None
+    

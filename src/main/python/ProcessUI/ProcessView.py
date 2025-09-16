@@ -136,7 +136,6 @@ class ProcessView(QtWidgets.QWidget, Ui_ProcessView):
                     conflicts.append(item.module_description["name"])
         return conflicts
 
-
     def cleanup(self):
         # Unsubscribe all node topics first
         self.destroyed.disconnect()
