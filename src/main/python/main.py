@@ -9,7 +9,15 @@ import json
 import multiprocessing
 import os
 os.environ['QT_API'] = 'pyside6'
-os.environ["NUMBA_DISABLE_CACHE"] = "1"
+
+# Set NUMBA cache to user temp directory (works on Windows, macOS, Linux)
+import tempfile
+numba_cache_dir = os.path.join(tempfile.gettempdir(), 'snooz_numba_cache')
+os.makedirs(numba_cache_dir, exist_ok=True)
+os.environ["NUMBA_CACHE_DIR"] = numba_cache_dir
+# To desable numba cache
+# os.environ["NUMBA_DISABLE_CACHE"] = "1"
+
 import sys
 
 # Hack until I figure out how to properly setup FBS so it include them when freezing
