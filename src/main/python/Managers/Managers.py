@@ -7,6 +7,7 @@ from Managers.CacheManager import CacheManager
 from Managers.ContentManager import ContentManager
 from Managers.EndpointManager import EndpointManager
 from Managers.LogManager import LogManager
+from Managers.MemoryManager import MemoryManager
 from Managers.ModuleManager import ModuleManager
 from Managers.NavigationManager import NavigationManager
 from Managers.PackageManager import PackageManager
@@ -38,10 +39,12 @@ class Managers:
         self._cache_manager = CacheManager(self)
         self._settings_manager = SettingsManager(self)
         self._navigation_manager = NavigationManager(self, main_window)
+        self._memory_manager = MemoryManager(self)
 
     def initialize(self):
         """ Initialize all managers. """
         self._settings_manager.initialize()
+        self._memory_manager.initialize()
         self._app_manager.initialize()
         self._endpoint_manager.initialize()
         self._module_manager.initialize()
@@ -198,3 +201,14 @@ class Managers:
                 The navigation manager
         """
         return self._navigation_manager
+    
+    @property
+    def memory_manager(self) -> MemoryManager:
+        """ Get the memory manager.
+        
+        Returns
+        -------
+            MemoryManager
+                The memory manager
+        """
+        return self._memory_manager

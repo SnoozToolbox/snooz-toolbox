@@ -114,10 +114,10 @@ class ContentManager(Manager):
         self._managers.process_manager.unload_content()
         
         # GARBAGE COLLECTOR ALWAYS ACTIVATED :
-        # Since the garbage collector is desabled in the MainWindow
+        # Since the garbage collector is disabled in the MainWindow
         # we need to manually call the garbage collector
-        #  calling the gc without input argument makes Snooz close    
-        #gc.collect(1)
+        # Let the garbage collector work automatically for better performance
+        gc.collect(1)
 
     def unload_tool_content(self):
         """ Unload the content in the tool tab. """
@@ -128,10 +128,10 @@ class ContentManager(Manager):
         self._managers.tool_manager.unload_content()
     
         # GARBAGE COLLECTOR ALWAYS ACTIVATED :
-        # Since the garbage collector is desabled in the MainWindow
+        # Since the garbage collector is disabled in the MainWindow
         # we need to manually call the garbage collector
-        #  calling the gc without input argument makes Snooz close    
-        #gc.collect(1)
+        # Let the garbage collector work automatically for better performance
+        gc.collect(1)
       
     def unload_app_content(self):
         """ Unload the content in the app tab. """
@@ -142,7 +142,7 @@ class ContentManager(Manager):
         self._managers.app_manager.unload_content()
 
         # GARBAGE COLLECTOR ALWAYS ACTIVATED :
-        # Since the garbage collector is desabled in the MainWindow
+        # Since the garbage collector is disabled in the MainWindow
         # we need to manually call the garbage collector
-        #  calling the gc without input argument makes Snooz close    
-        #gc.collect(1)
+        # Let the garbage collector work automatically for better performance
+        gc.collect(1)

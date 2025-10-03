@@ -2,8 +2,10 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2024
 See the file LICENCE for full license details.
 """
+import gc
 import json
 import os
+import platform
 import sys
 
 from qtpy.QtWidgets import QMessageBox
@@ -458,16 +460,8 @@ class PackageManager(Manager):
         new_modules = [module for module in modules if module not in self._modules_reference]
        
         # List of C++ extension modules that should NOT be removed from sys.modules
-        # as they cannot be safely reimported
-        protected_modules = {
-            'torch', 'torch.nn', 'torch.optim', 'torch.utils', 'torch.cuda',
-            'torch.jit', 'torch.autograd', 'torch.distributions', 'torch.fft',
-            'torch.linalg', 'torch.sparse', 'torch.special', 'torch.futures',
-            'torchvision', 'torchaudio', 'torch._C', 'torch._dynamo',
-            'numpy', 'scipy', 'sklearn', 'cv2', 'tensorflow', 'keras',
-            'numba', 'numba.core', 'numba.typed', 'numba.types', 'numba.cuda',
-            'numba.experimental', 'numba.misc', 'numba.np', 'numba.cpython'
-        }
+        # during execution as they cannot be safely reimported
+        protected_modules = config.memory_config.PROTECTED_DURING_EXECUTION
        
         for m in new_modules:
             # Check if this module or any of its parent modules are protected
@@ -481,6 +475,200 @@ class PackageManager(Manager):
                 del sys.modules[m]
             # else:
             #     print(f"Protected module from reset: {m}")  # Debug info
+
+    def _force_memory_cleanup(self):
+        """
+        Force aggressive memory cleanup using cross-platform techniques.
+        
+        This method attempts to release virtual memory back to the OS using
+        platform-specific techniques that work on Windows, macOS, and Linux.
+        """
+        # First, do multiple aggressive garbage collection cycles
+        for _ in range(5):  # Increased from 3 to 5 for shutdown
+            gc.collect()
+        
+        # Platform-specific memory management
+        try:
+            if platform.system() == "Windows":
+                self._windows_memory_cleanup()
+            elif platform.system() == "Darwin":  # macOS
+                self._macos_memory_cleanup()
+            elif platform.system() == "Linux":
+                self._linux_memory_cleanup()
+        except Exception as e:
+            # Silent failure - memory cleanup is best effort
+            pass
+    
+    def _windows_memory_cleanup(self):
+        """Windows-specific memory cleanup using ctypes."""
+        try:
+            import ctypes
+            from ctypes import wintypes
+            
+            # Get current process handle
+            kernel32 = ctypes.windll.kernel32
+            current_process = kernel32.GetCurrentProcess()
+            
+            # More aggressive Windows cleanup for shutdown
+            # Empty working set - forces Windows to page out unused memory
+            kernel32.SetProcessWorkingSetSize(current_process, -1, -1)
+            kernel32.EmptyWorkingSet(current_process)
+            
+            # Additional aggressive cleanup for shutdown
+            # Try to trim the working set to minimum
+            kernel32.SetProcessWorkingSetSize(current_process, 0x100000, 0x200000)  # 1-2MB range
+            kernel32.EmptyWorkingSet(current_process)
+            
+        except Exception:
+            pass
+    
+    def _macos_memory_cleanup(self):
+        """macOS-specific memory cleanup."""
+        try:
+            import ctypes
+            import ctypes.util
+            
+            # Load libc
+            libc_path = ctypes.util.find_library("c")
+            if libc_path:
+                libc = ctypes.CDLL(libc_path)
+                
+                # Call malloc_zone_pressure_relief to release memory zones
+                if hasattr(libc, 'malloc_zone_pressure_relief'):
+                    libc.malloc_zone_pressure_relief(None, 0)
+                
+                # Also try malloc_zone_try_free_default
+                if hasattr(libc, 'malloc_zone_try_free_default'):
+                    libc.malloc_zone_try_free_default(None)
+                    
+        except Exception:
+            pass
+    
+    def _linux_memory_cleanup(self):
+        """Linux-specific memory cleanup."""
+        try:
+            import ctypes
+            import ctypes.util
+            
+            # Load libc
+            libc_path = ctypes.util.find_library("c")
+            if libc_path:
+                libc = ctypes.CDLL(libc_path)
+                
+                # Call malloc_trim to release unused heap memory back to OS
+                if hasattr(libc, 'malloc_trim'):
+                    libc.malloc_trim(0)
+                    
+        except Exception:
+            pass
+
+    def cleanup_for_shutdown(self):
+        """
+        Comprehensive cleanup method to call when shutting down Snooz.
+        
+        This method should be called when the application is closing to ensure
+        maximum memory is released back to the operating system.
+        Unlike normal cleanup, this removes ALL modules since we're shutting down.
+        """
+        # First deactivate all packages normally
+        self.deactivate_all_package()
+        
+        # For shutdown, clear ALL modules that were loaded after startup
+        self._cleanup_all_modules_for_shutdown()
+        
+        # Force aggressive memory cleanup
+        self._force_memory_cleanup()
+        
+        # Final garbage collection
+        gc.collect()
+    
+    # def _cleanup_safe_protected_modules(self):
+    #     """
+    #     Remove some protected modules that can be safely cleaned up on shutdown.
+        
+    #     This is more aggressive than _reset_modules but only targets modules
+    #     that are known to be safe for removal during application shutdown.
+    #     """
+    #     if self._modules_reference is None:
+    #         return
+            
+    #     modules = list(sys.modules.keys())
+    #     safe_to_remove = set()
+        
+    #     # Modules that are generally safe to remove during execution
+    #     # These are large but don't have C++ extensions that can't be reloaded
+    #     safe_patterns = config.memory_config.SAFE_TO_REMOVE_DURING_EXECUTION
+        
+    #     for module_name in modules:
+    #         if module_name not in self._modules_reference:
+    #             for pattern in safe_patterns:
+    #                 if module_name.startswith(pattern):
+    #                     safe_to_remove.add(module_name)
+    #                     break
+        
+    #     # Remove the safe modules
+    #     for module_name in safe_to_remove:
+    #         try:
+    #             if module_name in sys.modules:
+    #                 del sys.modules[module_name]
+    #         except Exception:
+    #             # Silent failure for safety
+    #             pass
+
+    def _cleanup_all_modules_for_shutdown(self):
+        """
+        Remove ALL modules loaded after startup when shutting down Snooz.
+        
+        This is the most aggressive cleanup - removes everything including
+        normally protected modules since we're shutting down the entire application.
+        No need to preserve anything for future use.
+        
+        IMPORTANT: At shutdown, ALL modules are targets for removal.
+        The PROTECTED_DURING_EXECUTION list is ignored here because
+        we don't need stability after shutdown - we want maximum memory cleanup.
+        """
+        if self._modules_reference is None:
+            return
+            
+        modules = list(sys.modules.keys())
+        modules_to_remove = []
+        
+        # Identify all modules loaded after Snooz startup
+        for module_name in modules:
+            if module_name not in self._modules_reference:
+                modules_to_remove.append(module_name)
+        
+        # Remove ALL modules (including previously protected ones)
+        removed_count = 0
+        for module_name in modules_to_remove:
+            try:
+                if module_name in sys.modules:
+                    del sys.modules[module_name]
+                    removed_count += 1
+            except Exception:
+                # Silent failure - some modules might be in use by Python internals
+                pass
+        
+        # Also try to remove some core modules that are safe to remove on shutdown
+        # These include ALL the normally protected modules since we're shutting down
+        additional_cleanup_patterns = [
+            'numpy', 'scipy', 'sklearn', 'pandas', 'matplotlib',
+            'torch', 'numba', 'cv2', 'PIL', 'h5py', 'netCDF4',
+            'mne', 'seaborn', 'plotly', 'bokeh', 'statsmodels'
+        ]
+        
+        for pattern in additional_cleanup_patterns:
+            modules_to_check = [name for name in sys.modules.keys() if name.startswith(pattern)]
+            for module_name in modules_to_check:
+                try:
+                    if module_name in sys.modules:
+                        del sys.modules[module_name]
+                        removed_count += 1
+                except Exception:
+                    # Silent failure
+                    pass
+        
+        print(f"Shutdown cleanup: Removed {removed_count} modules from memory")
 
 
     def _read_package_version(self, package_description_file):

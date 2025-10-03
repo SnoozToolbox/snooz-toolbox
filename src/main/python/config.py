@@ -97,3 +97,48 @@ def is_fbs_available():
     except (ImportError, ModuleNotFoundError):
         # Case where fbs is free tier
         return False
+
+# Memory management configuration
+class MemoryConfig:
+    """Memory management constants and configuration for Snooz application."""
+
+    # Modules that should be protected ONLY during execution (to prevent crashes)
+    # These are C++ extensions that cannot be safely reimported while running
+    # BUT they WILL be removed on shutdown for complete memory cleanup
+    PROTECTED_DURING_EXECUTION = {
+        'torch', 'torch.nn', 'torch.optim', 'torch.utils', 'torch.cuda',
+        'torch.jit', 'torch.autograd', 'torch.distributions', 'torch.fft',
+        'torch.linalg', 'torch.sparse', 'torch.special', 'torch.futures',
+        'torchvision', 'torchaudio', 'torch._C', 'torch._dynamo',
+        'numpy', 'scipy', 'sklearn', 'cv2', 'tensorflow', 'keras',
+        'numba', 'numba.core', 'numba.typed', 'numba.types', 'numba.cuda',
+        'numba.experimental', 'numba.misc', 'numba.np', 'numba.cpython'
+    }
+
+    # Modules that can be safely removed during execution (package changes, etc.)
+    # These are large modules without C++ extensions that cause crashes
+    SAFE_TO_REMOVE_DURING_EXECUTION = [
+        'numpy.random',
+        'numpy.lib',
+        'numpy.ma',
+        'numpy.matrixlib',
+        'numpy.polynomial',
+        'scipy.stats',
+        'scipy.signal',
+        'scipy.sparse',
+        'scipy.optimize',
+        'scipy.interpolate',
+        'sklearn.utils',
+        'sklearn.preprocessing',
+        'sklearn.metrics',
+        'matplotlib.pyplot',
+        'matplotlib.backends',
+        'pandas',
+        'seaborn',
+    ]
+
+    # On shutdown: ALL modules are removed for complete memory cleanup
+    # No exceptions - everything goes for maximum memory release
+
+# Global memory config instance
+memory_config = MemoryConfig()

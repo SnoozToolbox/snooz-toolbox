@@ -69,8 +69,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._managers.navigation_manager.show_home()
 
         # WARNING
-        # Not needed anymore : GARBAGE COLLECTOR ALWAYS ACTIVATED
+        # Not needed anymore: GARBAGE COLLECTOR ALWAYS ACTIVATED
         # gc.disable()
+
 
     # UI callbacks
     def preferences_clicked(self):
@@ -175,6 +176,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.showMinimized()
         elif topic == "maximize":
             self.showNormal()
+
+    def closeEvent(self, event):
+        """Handle application closing - ensure proper memory cleanup."""
+        try:
+            # Close any open apps first
+            if hasattr(self._managers, 'app_manager'):
+                self._managers.app_manager.close_app()
+
+            # Close any open tools
+            if hasattr(self._managers, 'tool_manager'):
+                self._managers.tool_manager.unload_content()
+
+            # Close any open processes
+            if hasattr(self._managers, 'process_manager'):
+                self._managers.process_manager.close_process()
+                
+            # Perform comprehensive memory cleanup
+            if hasattr(self._managers, 'package_manager'):
+                self._managers.package_manager.cleanup_for_shutdown()
+                
+        except Exception as e:
+            # Don't let cleanup errors prevent app closure
+            print(f"Warning: Error during cleanup: {e}")
+        
+        # Accept the close event
+        event.accept()
 
     # Private functions
     def _init_themes(self):
