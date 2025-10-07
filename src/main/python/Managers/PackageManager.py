@@ -582,38 +582,38 @@ class PackageManager(Manager):
         # Final garbage collection
         gc.collect()
     
-    # def _cleanup_safe_protected_modules(self):
-    #     """
-    #     Remove some protected modules that can be safely cleaned up on shutdown.
+    def _cleanup_safe_protected_modules(self):
+        """
+        Remove some protected modules that can be safely cleaned up on shutdown.
         
-    #     This is more aggressive than _reset_modules but only targets modules
-    #     that are known to be safe for removal during application shutdown.
-    #     """
-    #     if self._modules_reference is None:
-    #         return
+        This is more aggressive than _reset_modules but only targets modules
+        that are known to be safe for removal during application shutdown.
+        """
+        if self._modules_reference is None:
+            return
             
-    #     modules = list(sys.modules.keys())
-    #     safe_to_remove = set()
+        modules = list(sys.modules.keys())
+        safe_to_remove = set()
         
-    #     # Modules that are generally safe to remove during execution
-    #     # These are large but don't have C++ extensions that can't be reloaded
-    #     safe_patterns = config.memory_config.SAFE_TO_REMOVE_DURING_EXECUTION
+        # Modules that are generally safe to remove during execution
+        # These are large but don't have C++ extensions that can't be reloaded
+        safe_patterns = config.memory_config.SAFE_TO_REMOVE_DURING_EXECUTION
         
-    #     for module_name in modules:
-    #         if module_name not in self._modules_reference:
-    #             for pattern in safe_patterns:
-    #                 if module_name.startswith(pattern):
-    #                     safe_to_remove.add(module_name)
-    #                     break
+        for module_name in modules:
+            if module_name not in self._modules_reference:
+                for pattern in safe_patterns:
+                    if module_name.startswith(pattern):
+                        safe_to_remove.add(module_name)
+                        break
         
-    #     # Remove the safe modules
-    #     for module_name in safe_to_remove:
-    #         try:
-    #             if module_name in sys.modules:
-    #                 del sys.modules[module_name]
-    #         except Exception:
-    #             # Silent failure for safety
-    #             pass
+        # Remove the safe modules
+        for module_name in safe_to_remove:
+            try:
+                if module_name in sys.modules:
+                    del sys.modules[module_name]
+            except Exception:
+                # Silent failure for safety
+                pass
 
     def _cleanup_all_modules_for_shutdown(self):
         """

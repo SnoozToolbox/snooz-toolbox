@@ -114,6 +114,7 @@ class ProcessManager(Manager):
         # self._open_loading_dialog() 
         # Unload the content of any process or tool if needed, the content manager will
         # figure out if it's necessary or not.
+        self._managers.content_manager.unload_app_content()
         self._managers.content_manager.unload_process_content()
         self._managers.content_manager.unload_tool_content()
 

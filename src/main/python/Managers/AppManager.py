@@ -51,7 +51,8 @@ class AppManager(Manager):
             is_allowed = self._managers.content_manager.ask_permission_to_load_app()
             if not is_allowed:
                 return
-            
+            self._managers.content_manager.unload_process_content()
+            self._managers.content_manager.unload_tool_content()            
             self._managers.content_manager.unload_app_content()
             try:
                 self._load_content(sender, message)
