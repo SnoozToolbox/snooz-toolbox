@@ -65,7 +65,8 @@ class AppManager(Manager):
             
     def close_app(self):
         """ Close the app. """
-        self._app_view.close_app()
+        if self._app_view is not None:
+            self._app_view.close_app()
         self._managers.content_manager.unload_app_content()
 
     def get_custom_hooks(self, custom_endpoint_name):
