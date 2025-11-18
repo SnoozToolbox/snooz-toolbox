@@ -371,14 +371,15 @@ class PackageManager(Manager):
 
         for package_name, package_versions in activated_package_items.items():
             for package_version_number, package_items in package_versions.items():
-                for package_item_name in package_items:
-                    package = self.get_package(package_name)
-                    if package is not None:
-                        package_version = package.get_package_version(package_version_number)
-                        if package_version is not None:
-                            package_item = package_version.get_item(package_item_name)
-                            for hook in package_item.hooks:
-                                self._managers.endpoint_manager.register_hook(hook)
+                package = self.get_package(package_name)
+                if package is not None:
+                    package_version = package.get_package_version(package_version_number)
+                    if package_version is not None:
+                        # Get items in the order they appear in the JSON file
+                        for item in package_version.items:
+                            if item.name in package_items:
+                                for hook in item.hooks:
+                                    self._managers.endpoint_manager.register_hook(hook)
 
     def _validate_package_api_version(self, description_file_path):
         """
