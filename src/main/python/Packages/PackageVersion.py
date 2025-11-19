@@ -92,15 +92,18 @@ class PackageVersion(object):
             if "item_hooks" not in item:
                 raise Exception(f"Package description file is missing 'item_hooks' key. File:{self._filename}")
         
-        for item_json in self._description["items"]:
-            item_path = os.path.join(self.package_path, item_json["item_name"])
-            item = PackageItemFactory.create_item(self, item_json, 
-                                                  item_path, self._managers)
-            
-            for hook in item.hooks:
-                hook["item_version"] = item.version
-                hook["item_name"] = item.name
-                hook["package_name"] = self.name
-                hook["package_version"] = self.version
+        try:
+            for item_json in self._description["items"]:
+                item_path = os.path.join(self.package_path, item_json["item_name"])
+                item = PackageItemFactory.create_item(self, item_json, 
+                                                    item_path, self._managers)
+                
+                for hook in item.hooks:
+                    hook["item_version"] = item.version
+                    hook["item_name"] = item.name
+                    hook["package_name"] = self.name
+                    hook["package_version"] = self.version
 
-            self._items.append(item)
+                self._items.append(item)
+        except Exception as e:
+            raise Exception(f"Failed to create {self.name} package items {item.name} {e}")
