@@ -17,7 +17,7 @@ from pathlib import Path
 from PySide6.QtWidgets import QApplication
 
 from runtime import platform
-from runtime.platform import is_linux
+from runtime.platform import is_linux, is_arch, is_fedora, is_ubuntu
 
 
 class ApplicationContext:

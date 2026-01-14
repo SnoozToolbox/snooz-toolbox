@@ -44,7 +44,7 @@ def is_ubuntu():
     except FileNotFoundError:
         return False
 
-def is_arch_linux():
+def is_arch():
     try:
         return linux_distribution() in ('Arch Linux', 'Manjaro Linux')
     except FileNotFoundError:
