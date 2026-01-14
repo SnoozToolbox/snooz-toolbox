@@ -8,30 +8,32 @@ from flowpipe import Graph
 from flowpipe.ActivationState import ActivationState
 from flowpipe.utilities import import_class 
 from Managers.LogManager import LogManager
+
+import config
+
+# Import Qt modules - config.py provides stubs in headless mode
 from qtpy import QtCore
 from qtpy.QtCore import QCoreApplication
-from widgets.WarningDialog import WarningDialog
+
+# Import GUI components only if not in headless mode
+if not config.HEADLESS_MODE:
+    from widgets.WarningDialog import WarningDialog
+else:
+    # Stub for headless mode
+    class WarningDialog:
+        def __init__(self, *args, **kwargs):
+            pass
+
+# Set base class based on mode
+if not config.HEADLESS_MODE:
+    BaseClass = QtCore.QObject
+else:
+    BaseClass = object
 
 DEBUG = False
 
-class ProcessWorker(QtCore.QObject):
-    """
-        Worker objects runs the process inside a thread to avoid blocking the main
-        thread.
-    """
-    finished = QtCore.Signal(list, list)
-    interrupted = QtCore.Signal(list, list)
-    progression_update = QtCore.Signal(int, int)
-
-    def __init__(self, graph_json, deepcopy_outputs, managers, use_multithread=True):
-        """ Initialize member variables """
-        super(ProcessWorker, self).__init__()
-        self._managers = managers
-        self._deepcopy_outputs = deepcopy_outputs
-        self._should_stop = False
-        self._graph_json = graph_json
-        self._use_multithread = use_multithread
-
+# Common methods for both GUI and headless modes
+class ProcessWorkerMixin:
     def _init_graph(self, graph_json):
         graph = Graph()
         master_node = None
@@ -68,7 +70,6 @@ class ProcessWorker(QtCore.QObject):
 
         return graph, master_node
 
-    @QtCore.Slot()
     def run(self):
         """ Run the process
             The graph will be evaluated once if no master node has been found.
@@ -113,7 +114,10 @@ class ProcessWorker(QtCore.QObject):
                         })
                     else:
                         # Useful when the pipeline does not have a master node.
-                        WarningDialog(err.message) 
+                        if not config.HEADLESS_MODE:
+                            WarningDialog(err.message)
+                        else:
+                            print(f"ERROR: {err.message}")
                         raise err
                     
                 iteration += 1
@@ -129,7 +133,8 @@ class ProcessWorker(QtCore.QObject):
                     self.progression_update.emit(master_node.iteration_count, 
                                                     iteration)
                     # Update the UI (to make sure the event are not analyzed only after completion)
-                    QCoreApplication.processEvents()
+                    if not config.HEADLESS_MODE:
+                        QCoreApplication.processEvents()
 
                 eval_time = time.time() - iteration_start_time
                 feval_time = dt.timedelta(seconds=eval_time)
@@ -150,7 +155,8 @@ class ProcessWorker(QtCore.QObject):
                 self.interrupted.emit(outputs, iteration_interruption)
             else:
                 self.finished.emit(outputs, iteration_interruption)
-            QCoreApplication.processEvents()
+            if not config.HEADLESS_MODE:
+                QCoreApplication.processEvents()
         except RuntimeError as exc:
             self._managers.log_manager.log("process", f"Fatal Error: {exc}")
             self._managers.log_manager.log("error", f"This is a known error, please restart Snooz to fix it.")
@@ -164,3 +170,43 @@ class ProcessWorker(QtCore.QObject):
     def stop(self):
         """ Stop the worker from running iterating over the next graph """
         self._should_stop = True
+
+# Initialize signals as class attributes based on mode
+if not config.HEADLESS_MODE:
+    # In Qt mode, signals are class attributes
+    class ProcessWorker(BaseClass, ProcessWorkerMixin):
+        """
+            Worker objects runs the process inside a thread to avoid blocking the main
+            thread.
+        """
+        finished = QtCore.Signal(list, list)
+        interrupted = QtCore.Signal(list, list)
+        progression_update = QtCore.Signal(int, int)
+        
+        def __init__(self, graph_json, deepcopy_outputs, managers, use_multithread=True):
+            """ Initialize member variables """
+            super(ProcessWorker, self).__init__()
+            self._managers = managers
+            self._deepcopy_outputs = deepcopy_outputs
+            self._should_stop = False
+            self._graph_json = graph_json
+            self._use_multithread = use_multithread
+else:
+    # In headless mode, ProcessWorker doesn't inherit from QObject
+    class ProcessWorker(ProcessWorkerMixin):
+        """
+            Worker objects runs the process inside a thread to avoid blocking the main
+            thread.
+        """
+        
+        def __init__(self, graph_json, deepcopy_outputs, managers, use_multithread=True):
+            """ Initialize member variables """
+            # In headless mode, signals are StubBase instances from config.py
+            self.finished = QtCore.Signal()
+            self.interrupted = QtCore.Signal()
+            self.progression_update = QtCore.Signal()
+            self._managers = managers
+            self._deepcopy_outputs = deepcopy_outputs
+            self._should_stop = False
+            self._graph_json = graph_json
+            self._use_multithread = use_multithread

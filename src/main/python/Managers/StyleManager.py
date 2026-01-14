@@ -4,11 +4,21 @@ See the file LICENCE for full license details.
 """
 DEBUG = False
 import config
+
+# Import Qt modules - config.py provides stubs in headless mode via sys.modules
 from qtpy.QtCore import QFile, QTextStream
 from qtpy import QtGui
 
 from Managers.Manager import Manager
-import themes_rc
+
+# Import themes_rc conditionally since it's a Qt resource file
+# themes_rc is a Qt resource file that requires PySide6
+if not config.HEADLESS_MODE:
+    import themes_rc
+else:
+    # Stub module for headless mode
+    class themes_rc:
+        pass
 
 class Palette():
     def __init__(self):
@@ -23,6 +33,7 @@ class Palette():
         self.node_socket_border = QtGui.QColor(255, 255, 0)
         self.node_socket_background = QtGui.QColor(255, 255, 0)
 
+
 class Style():
     def __init__(self, name, palette, qss_filepath):
         self._name = name
@@ -30,6 +41,8 @@ class Style():
         self._qss_filepath = qss_filepath
 
     def activate(self):
+        if config.HEADLESS_MODE:
+            return  # Skip style activation in headless mode
         if self._qss_filepath is not None:
             file = QFile(self._qss_filepath)
             if file.open(QFile.ReadOnly | QFile.Text):
@@ -52,8 +65,9 @@ class StyleManager(Manager):
         self._default_style = None
         self._styles = {}
 
-        # Set Fusion as the base style for all others
-        config.app_context.app.setStyle("Fusion")
+        # Set Fusion as the base style for all others (only in GUI mode)
+        if not config.HEADLESS_MODE:
+            config.app_context.app.setStyle("Fusion")
 
     def initialize(self):
         pass

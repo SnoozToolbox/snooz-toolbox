@@ -7,26 +7,56 @@ import datetime as dt
 import json
 import pandas as pd
 import os
-import shiboken6
 import time
 
+import config
+
+# Import Qt and shiboken6 - config.py provides stubs in headless mode
+import shiboken6
 from qtpy import QtCore
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QMessageBox
 from qtpy.QtWidgets import QFileDialog
 from qtpy.QtWidgets import QProgressDialog
-
-import config
 from commons.NodeRuntimeException import NodeRuntimeException
 from flowpipe import Graph
 from flowpipe.ActivationState import ActivationState
 from flowpipe.utilities import import_class 
 from Managers.Manager import Manager
 from ProcessWorker import ProcessWorker
-from ProcessUI.ProcessView import ProcessView
-from ProcessUI.ProgressDialog import ProgressDialog
-from widgets.TableDialog import TableDialog
-from widgets.MissingPackagesDialog import MissingPackagesDialog
+
+# Import GUI components only if not in headless mode
+# These files contain real Qt code and cannot be imported in headless mode
+if not config.HEADLESS_MODE:
+    from ProcessUI.ProcessView import ProcessView
+    from ProcessUI.ProgressDialog import ProgressDialog
+    from widgets.TableDialog import TableDialog
+    from widgets.MissingPackagesDialog import MissingPackagesDialog
+else:
+    # Minimal stubs for headless mode - allow instantiation but do nothing
+    class ProcessView:
+        def __init__(self, *args, **kwargs):
+            pass
+        def __getattr__(self, name):
+            # Return a dummy callable for any attribute access
+            return lambda *args, **kwargs: None
+    class ProgressDialog:
+        def __init__(self, *args, **kwargs):
+            pass
+        def show(self):
+            pass
+        def close(self):
+            pass
+    class TableDialog:
+        def __init__(self, *args, **kwargs):
+            pass
+        def exec_(self):
+            pass
+    class MissingPackagesDialog:
+        def __init__(self, *args, **kwargs):
+            pass
+        def exec_(self):
+            pass
 
 class processState:
     LOADED_FROM_FILE = "loaded_from_file"
@@ -123,10 +153,16 @@ class ProcessManager(Manager):
 
             missing_packages = self._managers.package_manager.check_missing_packages(data["dependencies"])
             if len(missing_packages) > 0:
-                missing_package_dialog = MissingPackagesDialog(missing_packages, 
-                                                               self._managers.package_manager)
-                missing_package_dialog.exec_()
-                self._close_loading_dialog()
+                if config.HEADLESS_MODE:
+                    print("ERROR: Missing required packages:")
+                    for pkg in missing_packages:
+                        print(f"  - {pkg.get('package_name', 'Unknown')} (version: {pkg.get('package_version', 'Unknown')})")
+                    print("Please install missing packages before running the process.")
+                else:
+                    missing_package_dialog = MissingPackagesDialog(missing_packages, 
+                                                                   self._managers.package_manager)
+                    missing_package_dialog.exec_()
+                    self._close_loading_dialog()
                 return False
 
             success = self.load_dependencies_from_description(data)
@@ -412,25 +448,43 @@ class ProcessManager(Manager):
         self.worker.interrupted.connect(self.process_interrupted)
 
         # TODO Avoid showing the progress dialog when called from the console
-        self._progress_dialog = ProgressDialog()
-        self._progress_dialog.show()
-        self._managers.pub_sub_manager.publish(self, "minimize", None)
+        if not config.HEADLESS_MODE:
+            self._progress_dialog = ProgressDialog()
+            self._progress_dialog.show()
+            self._managers.pub_sub_manager.publish(self, "minimize", None)
+        else:
+            self._progress_dialog = None
  
         if self._use_multithread:
-            self.thread = QtCore.QThread()
-            self.worker.moveToThread(self.thread)
-            self.thread.started.connect(self.worker.run)
-            self.worker.finished.connect(self.thread.quit)
-            self.worker.finished.connect(self.worker.deleteLater)
-            self.worker.interrupted.connect(self.thread.quit)
-            self.worker.interrupted.connect(self.worker.deleteLater)
-            self.worker.interrupted.connect(self.process_interrupted)
-            self.thread.finished.connect(self.thread.deleteLater)
-            self.thread.start()
+            if not config.HEADLESS_MODE:
+                self.thread = QtCore.QThread()
+                self.worker.moveToThread(self.thread)
+                self.thread.started.connect(self.worker.run)
+                self.worker.finished.connect(self.thread.quit)
+                self.worker.finished.connect(self.worker.deleteLater)
+                self.worker.interrupted.connect(self.thread.quit)
+                self.worker.interrupted.connect(self.worker.deleteLater)
+                self.worker.interrupted.connect(self.process_interrupted)
+                self.thread.finished.connect(self.thread.deleteLater)
+                self.thread.start()
+            else:
+                # In headless mode, multithreading is not supported, run directly
+                self.worker.run()
         else:
             self.worker.run()
 
         self._managers.pub_sub_manager.publish(self, "maximize", None)
+
+    def run_console(self, graph_json):
+        """Execute process in console/headless mode without Qt dependencies."""
+        if len(graph_json["process_params"]["nodes"]) == 0:
+            print("Nothing to run.")
+            return
+
+        self.worker = ProcessWorker(graph_json, False, self._managers, self._use_multithread)
+        self.worker.run()
+
+        print("Process execution completed.")
 
     # Private functions
     def _open_loading_dialog(self):
@@ -454,11 +508,15 @@ class ProcessManager(Manager):
             columns = list(interruptions[0].keys())
             interruption_df = pd.DataFrame(interruptions, columns=columns)
             
-            interruption_dialog = TableDialog(interruption_df,
-                "WARNING!",
-                "The process could not be completed for these iterations:",
-                True)
-            interruption_dialog.exec_()
+            if config.HEADLESS_MODE:
+                print("WARNING: The process could not be completed for these iterations:")
+                print(interruption_df.to_string())
+            else:
+                interruption_dialog = TableDialog(interruption_df,
+                    "WARNING!",
+                    "The process could not be completed for these iterations:",
+                    True)
+                interruption_dialog.exec_()
 
     def _save_process(self):
         # We only allow to save over a package item if the user is in dev mode. We do not want regular

@@ -2,9 +2,108 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2023
 See the file LICENCE for full license details.
 """
-from qtpy import QtGui, QtCore
+import os
+import sys
 import importlib.util
+
 is_dev = True
+
+# Check if running in headless mode
+HEADLESS_MODE = os.environ.get('SNOOZ_HEADLESS', 'false').lower() == 'true'
+
+# In headless mode, create robust stub modules for Qt imports
+if HEADLESS_MODE:
+    import types
+    
+    # Create a proper stub base class that can be inherited from
+    class StubBase:
+        """Base stub class that can be used in inheritance and handles any attribute access."""
+        def __init__(self, *args, **kwargs):
+            pass
+        def __getattr__(self, name):
+            return StubBase()
+        def __call__(self, *args, **kwargs):
+            return StubBase()
+        def __getitem__(self, key):
+            return StubBase()
+        def __setitem__(self, key, value):
+            pass
+    
+    # Universal stub instance for when we need to return an instance (not a class)
+    UniversalStub = StubBase()
+    
+    # Create stub modules for all Qt-related imports
+    def create_stub_module(name):
+        stub = types.ModuleType(name)
+        
+        # Add __getattr__ to handle any attribute access (Python 3.7+)
+        def module_getattr(attr):
+            # If it's a known submodule, return a stub for it
+            submodules = ['QtCore', 'QtGui', 'QtWidgets', 'QtWebEngineWidgets']
+            if attr in submodules:
+                submod_name = f'{name}.{attr}' if '.' in name else f'{name}.{attr}'
+                if submod_name not in sys.modules:
+                    sys.modules[submod_name] = create_stub_module(submod_name)
+                return sys.modules[submod_name]
+            # Return the class itself (not an instance) so it can be used in inheritance
+            return StubBase
+        
+        stub.__getattr__ = module_getattr
+        
+        # Add common classes that are frequently imported
+        if 'QtCore' in name:
+            # QCoreApplication needs special methods
+            class QCoreApplicationStub(StubBase):
+                @staticmethod
+                def translate(context, text, disambig=None):
+                    return text
+                @staticmethod
+                def processEvents():
+                    pass
+            stub.QCoreApplication = QCoreApplicationStub
+            stub.QObject = StubBase
+            stub.Signal = StubBase
+            stub.Qt = StubBase
+            stub.QSettings = StubBase
+        
+        if 'QtWidgets' in name or 'QtWebEngineWidgets' in name:
+            stub.QApplication = StubBase
+            stub.QWebEngineView = StubBase
+            stub.QWebEnginePage = StubBase
+            stub.QWidget = StubBase
+        
+        if 'QtGui' in name:
+            stub.QColor = StubBase
+        
+        if name == 'shiboken6':
+            stub.delete = lambda obj: None
+        
+        return stub
+    
+    # Register stub modules before any imports
+    # Only register modules actually used in this project (PySide6, qtpy, shiboken6)
+    qt_parent_modules = ['PySide6', 'qtpy', 'shiboken6']
+    for mod_name in qt_parent_modules:
+        sys.modules[mod_name] = create_stub_module(mod_name)
+    
+    # Register submodules
+    qt_submodules = [
+        'PySide6.QtCore', 'PySide6.QtGui', 'PySide6.QtWidgets', 'PySide6.QtWebEngineWidgets',
+        'qtpy.QtCore', 'qtpy.QtGui', 'qtpy.QtWidgets', 'qtpy.QtWebEngineWidgets'
+    ]
+    for mod_name in qt_submodules:
+        sys.modules[mod_name] = create_stub_module(mod_name)
+    
+    # Create stub classes for use in this module
+    class QtGui:
+        QColor = StubBase
+    
+    class QtCore:
+        QObject = StubBase
+        QSettings = StubBase
+else:
+    # Import real Qt modules
+    from qtpy import QtGui, QtCore
 
 """ Global constants """
 LISTBOX_MIMETYPE = "application/x-item"
@@ -63,11 +162,25 @@ except ImportError:
     settings_key = f"Snooz"
     version = 'dev'
 
-app_settings = QtCore.QSettings("CEAMS", settings_key)
-
-if app_settings.value("app/version", "") == "":
-    app_settings.clear()
-    app_settings.setValue("app/version", version)
+if not HEADLESS_MODE:
+    app_settings = QtCore.QSettings("CEAMS", settings_key)
+    if app_settings.value("app/version", "") == "":
+        app_settings.clear()
+        app_settings.setValue("app/version", version)
+else:
+    # Use a simple dict-based settings for headless mode
+    class HeadlessSettings:
+        def __init__(self):
+            self._data = {}
+        def value(self, key, default=None):
+            return self._data.get(key, default)
+        def setValue(self, key, value):
+            self._data[key] = value
+        def clear(self):
+            self._data.clear()
+    app_settings = HeadlessSettings()
+    if app_settings.value("app/version", "") == "":
+        app_settings.setValue("app/version", version)
 
 class Settings:
     pass
