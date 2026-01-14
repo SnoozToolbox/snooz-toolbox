@@ -32,7 +32,6 @@ class YasaSleepStagingResultsView(Ui_YasaSleepStagingResultsView, QtWidgets.QWid
 
         # init UI
         self.setupUi(self)
-        self.setGeometry(100, 100, 1200, 800)  # Set the window size to 1200x800 pixels
         # Init figure
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
