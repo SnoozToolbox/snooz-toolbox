@@ -54,6 +54,7 @@ else:
 
 if not config.HEADLESS_MODE:
     from MainWindow import MainWindow
+    from window_geometry import calculate_window_geometry
 
 class AppContext(ApplicationContext):
     def run(self, filename=None):
@@ -67,7 +68,10 @@ class AppContext(ApplicationContext):
                 window.setWindowTitle("Snooz beta-" + version)
             else:
                 window.setWindowTitle("Snooz (DEV)")
-            window.resize(900, 700)
+            
+            if not config.HEADLESS_MODE:
+                # Calculate and apply window geometry based on screen resolution
+                calculate_window_geometry(window)
             window.show()
             return self.app.exec_() if self.app else None
         

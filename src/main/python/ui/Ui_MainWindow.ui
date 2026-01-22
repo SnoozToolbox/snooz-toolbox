@@ -207,7 +207,7 @@
        <enum>QTabWidget::TabShape::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::TextElideMode::ElideNone</enum>
@@ -247,7 +247,7 @@
            <bool>true</bool>
           </property>
           <property name="childrenCollapsible">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <widget class="QWidget" name="left_pane" native="true">
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -371,7 +371,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <!-- <addaction name="actionOpen_File"/> -->
     <addaction name="actionLoad_workspace"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
@@ -491,14 +490,6 @@
     <string>Settings</string>
    </property>
   </action>
-  <!-- <action name="actionOpen_File">
-   <property name="text">
-    <string>Open</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+O</string>
-   </property>
-  </action> -->
   <action name="actionDocumentation">
    <property name="text">
     <string>Documentation</string>
@@ -770,22 +761,6 @@
     </hint>
    </hints>
   </connection>
-  <!-- <connection>
-   <sender>actionOpen_File</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>open_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>413</x>
-     <y>350</y>
-    </hint>
-   </hints>
-  </connection> -->
   <connection>
    <sender>close_app_pushButton</sender>
    <signal>clicked()</signal>
@@ -851,7 +826,6 @@
   <slot>process_clicked()</slot>
   <slot>tool_clicked()</slot>
   <slot>home_clicked()</slot>
-  <!-- <slot>open_clicked()</slot> -->
   <slot>close_app_clicked()</slot>
   <slot>documentation_clicked()</slot>
   <slot>data_clicked()</slot>

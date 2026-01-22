@@ -26,7 +26,7 @@
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="childrenCollapsible">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -86,7 +86,7 @@
             <x>0</x>
             <y>0</y>
             <width>353</width>
-            <height>493</height>
+            <height>498</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -232,9 +232,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="documentation_pushButton">
-            <property name="accessibleName">
-                <string>documentation_pushbutton</string>
-            </property>
+           <property name="accessibleName">
+            <string>documentation_pushbutton</string>
+           </property>
            <property name="text">
             <string>Read more!</string>
            </property>

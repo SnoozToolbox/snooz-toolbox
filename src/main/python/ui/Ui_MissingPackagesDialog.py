@@ -23,7 +23,12 @@ class Ui_MissingPackagesDialog(object):
     def setupUi(self, MissingPackagesDialog):
         if not MissingPackagesDialog.objectName():
             MissingPackagesDialog.setObjectName(u"MissingPackagesDialog")
-        MissingPackagesDialog.resize(759, 715)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MissingPackagesDialog.sizePolicy().hasHeightForWidth())
+        MissingPackagesDialog.setSizePolicy(sizePolicy)
+        MissingPackagesDialog.setMinimumSize(QSize(600, 500))
         self.verticalLayout = QVBoxLayout(MissingPackagesDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout_2 = QVBoxLayout()

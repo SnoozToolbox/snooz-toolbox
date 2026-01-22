@@ -174,7 +174,7 @@ class Ui_MainWindow(object):
         self.splitter.setObjectName(u"splitter")
         self.splitter.setOrientation(Qt.Orientation.Horizontal)
         self.splitter.setOpaqueResize(True)
-        self.splitter.setChildrenCollapsible(False)
+        self.splitter.setChildrenCollapsible(True)
         self.left_pane = QWidget(self.splitter)
         self.left_pane.setObjectName(u"left_pane")
         self.verticalLayout_6 = QVBoxLayout(self.left_pane)
@@ -302,7 +302,7 @@ class Ui_MainWindow(object):
         self.actionDocumentation.triggered.connect(MainWindow.documentation_clicked)
         self.actionData_Files.triggered.connect(MainWindow.data_clicked)
 
-        self.content_tabWidget.setCurrentIndex(2)
+        self.content_tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

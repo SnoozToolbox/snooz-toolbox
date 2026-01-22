@@ -23,7 +23,12 @@ class Ui_ModuleSettingsDialog(object):
     def setupUi(self, ModuleSettingsDialog):
         if not ModuleSettingsDialog.objectName():
             ModuleSettingsDialog.setObjectName(u"ModuleSettingsDialog")
-        ModuleSettingsDialog.resize(759, 715)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(ModuleSettingsDialog.sizePolicy().hasHeightForWidth())
+        ModuleSettingsDialog.setSizePolicy(sizePolicy)
+        ModuleSettingsDialog.setMinimumSize(QSize(600, 500))
         self.verticalLayout = QVBoxLayout(ModuleSettingsDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout_2 = QVBoxLayout()

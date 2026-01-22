@@ -24,7 +24,7 @@ class Ui_AboutDialog(object):
     def setupUi(self, AboutDialog):
         if not AboutDialog.objectName():
             AboutDialog.setObjectName(u"AboutDialog")
-        AboutDialog.resize(879, 516)
+        AboutDialog.resize(700, 479)
         AboutDialog.setStyleSheet(u"font: 12pt \"Roboto\";")
         self.verticalLayout = QVBoxLayout(AboutDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
