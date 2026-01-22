@@ -71,8 +71,7 @@ class LunaFile:
             else:
                 usecols = self._df_label
             self._annotations = pd.read_csv(self._filename, header=0, encoding='utf_8', \
-                names=usecols, sep ='\t', usecols=range(len(self._df_label)), converters={0:str, 1:str, 2:float, 3:float}) 
-            
+                names=usecols, sep ='\t', usecols=range(len(self._df_label)), converters={0:str, 1:str, 2:float, 3:float})
             # Strip @@chan if any
             ori_n_evt = len(self._annotations)
             name_data = np.hstack(self._annotations['name'].values).tolist()
@@ -102,12 +101,14 @@ class LunaFile:
 
     def add_event(self, name, group, start_sec, duration_sec, channels):
         current_df = manage_events.create_event_dataframe([[group, name, start_sec, duration_sec, channels]])
-        self._annotations = pd.concat([self._annotations, current_df], ignore_index=True)
+        if not current_df.empty and not current_df.isna().all().all():
+            self._annotations = pd.concat([self._annotations, current_df], ignore_index=True)
 
     def add_events(self, events):
         new_events_df = manage_events.create_event_dataframe(events)
-        self._annotations = pd.concat([self._annotations, new_events_df], ignore_index=True)
-        self._annotations.sort_values(by=['start_sec'], inplace=True)
+        if not new_events_df.empty and not new_events_df.isna().all().all():
+            self._annotations = pd.concat([self._annotations, new_events_df], ignore_index=True)
+            self._annotations.sort_values(by=['start_sec'], inplace=True)
 
     def remove_events_by_group(self, group_name):
         if len(self._annotations) == 0:
@@ -171,7 +172,8 @@ class LunaFile:
                     + ':' + time_elapsed_df.MM.apply(str) + ':' + time_elapsed_df.SS.apply(str)
             
             self._annotations.to_csv(self._filename, index=False, header=self._df_label + ['time elapsed (HH:MM:SS)'], sep ='\t',encoding="utf_8")
-        
+
+
 class EdfReader:
     def __init__(self):
         self._luna_file = LunaFile()
@@ -180,14 +182,24 @@ class EdfReader:
 
     def open_file(self, filename):
         self._filename = filename
-        self._header = pyedflib.highlevel.read_edf_header(self._filename)
+        error = None
+        try : 
+            self._header = pyedflib.highlevel.read_edf_header(self._filename)
+        except Exception as e:
+            error = str(e)
+            return False, error
         
         is_compatible = EdfReader.is_file_compatible(self._filename)
         if not is_compatible:
-            return False
+            error = f"EDF File {self._filename} is not compatible with Snooz"
+            return False, error
 
         basename, _ = os.path.splitext(self._filename)
-        self._luna_file.open_file(basename)
+        try : 
+            self._luna_file.open_file(basename)
+        except:
+            error = f"Accessory File for {self._filename} is not compatible with Snooz"
+            return False, error
         
         return True
 
@@ -256,8 +268,8 @@ class EdfReader:
 
     def save_signals(self, signals):
         source_signals, source_signal_headers, header = pyedflib.highlevel.read_edf(self._filename, digital=True)
-
-        for signal in signals:
+        # For each signal in the modified list of signals to write in the edf
+        for signal in signals: # each signal needs to be the whole recording (not epoched)
             for index, signal_header in enumerate(source_signal_headers):
                 if signal_header['label'] == signal.channel:
                     physical_min = math.floor(signal.samples.min())
@@ -269,10 +281,8 @@ class EdfReader:
                         signal_header['digital_max'],
                         -limit,
                         limit)
-
                     source_signals[index] = digital_samples.astype(np.int32)
                     break
-
         pyedflib.highlevel.write_edf(self._filename, source_signals, source_signal_headers, header, digital=True)
 
     # Return a list of a class with the property name
