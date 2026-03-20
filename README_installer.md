@@ -4,11 +4,17 @@
 
 Install NSIS (full installation) : https://sourceforge.net/projects/nsis/
 
-Install windows-10-sdk : https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/
+Install windows-sdk : https://learn.microsoft.com/fr-ca/windows/apps/windows-sdk/downloads
+make sure to install the Windows Software Development Kit (SDK)
+
+Install Microsoft Visual C++ 2012 Redistributable Package : 
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+Use the 64 bit one (because that's the bitness of your current Python interpreter)
 
 Add the paths in the variable environments PATH:
 - C:\Program Files (x86)\NSIS\Bin
 - C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\
+* should be done automatically for the Windows Software Development Kit (SDK)
 
 Reboot
 
@@ -47,91 +53,21 @@ Reboot
     set is_dev=False
     -> the set is_dev=False should not be pushed on the repository.  
 
-## Create the installer (not needed for developers)
-    Open a terminal (windows command prompt or native terminal) in your scinode_poc repository
+## Create the executable (not needed for developers)
+    Open a terminal (windows command prompt or native terminal) in your snooz-toolbox or snooz-toolbox-ceams repository
     Activate your python environment snooz_310_env
     (snooz_310_env)$ fbs clean
     (snooz_310_env)$ fbs freeze --debug
 
-## To solve the mne and YASA problem when creating the installer
-Please note that those path are not identical in your machines.
+## Copy manually the missing packages : mne, lazy_loader, lspopt and yasa packages
+    Please update the paths in the script CookBook\copy_missing_packages_to_internal.py
+    Call the python script in VScode terminal
+    (snooz_310_env)$ python CookBook\copy_missing_packages_to_internal.py
 
-### Windows
-
-<details>
-Copy manually the mne, lazy_loader and yasa packages (from VScode terminal to have the pyi file and the classification )
-
-```
-Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" -Recurse -Force -ErrorAction SilentlyContinue
-
-Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\mne" `
-        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\mne" `
-        -Recurse -Force
-Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lazy_loader" `
-        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lazy_loader" `
-        -Recurse -Force
-Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\lspopt" `
-        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\lspopt" `
-        -Recurse -Force
-Copy-Item -Path "C:\Users\klacourse\Documents\snooz_workspace\snooz_310_env\Lib\site-packages\yasa" `
-        -Destination "C:\Users\klacourse\Documents\snooz_workspace\snooz-toolbox\target\Snooz\_internal\yasa" `
-        -Recurse -Force
-
-```
-</details>
-
-### macOS
-<details>
-
-Same strategy applied here, remove the dependencies
-
-```
-rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
-rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
-rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
-rm -rf /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
-```
-Copy them back again
-
-```
-cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/mne /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/mne
-cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lazy_loader /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/lazy_loader
-cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lspopt /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/lspopt
-cp -R /Users/frank/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/yasa /Users/frank/snooz_workspace/snooz-toolbox/target/Snooz.app/Contents/Frameworks/yasa
-
-```
-</details>
-
-### Linux
-<details>
-
-Same strategy applied for Linux also, remove the dependencies
-
-```
-rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
-rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
-rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
-rm -rf /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
-
-```
-
-Copy them back again
-
-```
-cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/mne \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/mne
-cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lazy_loader \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lazy_loader
-cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/lspopt \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/lspopt
-cp -r /home/snoozy/projects/snooz/snooz_workspace/snooz_310_env/lib/python3.10/site-packages/yasa \ /home/snoozy/projects/snooz/snooz_workspace/snooz-toolbox/target/Snooz/_internal/yasa
-
-```
-</details>
-
+## Create the installer (not needed for developers)
     (snooz_310_env)$ fbs installer
 
-### To run Scinode and keep logs (usefull when exe does not work properly)
+### To run Snooz and keep logs (usefull when executable does not work properly)
     windows
     (snooz_310_env)$ cmd /K target\Snooz\Snooz.exe
     Mac

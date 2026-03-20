@@ -264,11 +264,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         snooz_label.setScaledContents(True)
         snooz_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         snooz_label.setFrameShape(QtWidgets.QFrame.NoFrame)
-        getting_started_label = QtWidgets.QLabel("<h1>Hello Snooz user!</h1><h2>Start by navigating the menu.</h2><p>The tools installed within Snooz are divided into three categories:</p><ol><li><strong>Preprocessing:</strong>&nbsp;Includes importers/converters/extractors and the artifact detection tool.</li><li><strong>Processing:</strong>&nbsp;Includes sleep stages analyses, event detectors, and power spectral analysis.</li><li><strong>Postprocessing:</strong>&nbsp;Includes secondary analyses such as performance evaluation of detectors,<br />transposition of cohort reports, and slow wave events analysis.</li></ol><p>If you are new to Snooz, we recommend beginning with the Preprocessing category.<br />The Preprocessing category includes importers, converters, extractors, and the artifact detection tool.</p><p>Once your PSG files are compatible with Snooz, proceed to the Processing category.<br />The Processing category includes sleep analyses, event detectors, and power spectral analysis.</p><p>The Postprocessing category includes secondary analyses, such as performance evaluation of detectors,<br />transposition of cohort reports, and slow wave events analysis.</p><p><strong>Viewers</strong></p><p>The only available Viewer is the Oximeter, which allows you to select bad sections to generate <br />a valid Oxygen Saturation Report. The Oximeter is an application that operates within Snooz.</p><h2>To update Snooz</h2><p>Navigate to Help -&gt; About Snooz</p><p>(macOS) Navigate to Snooz -&gt; About</p>")
+        getting_started_label = QtWidgets.QLabel("<h1>Hello Snooz user!</h1><h2>Start by navigating the menu.</h2><p>The tools installed within Snooz are divided into three categories:</p><ol><li><strong>Preprocessing:</strong>&nbsp;Includes inspectors/importers/converters/extractors and the automated sleep staging and artifact detection tool.</li><li><strong>Processing:</strong>&nbsp;Includes sleep stages analyses, event detectors, and power spectral analysis.</li><li><strong>Postprocessing:</strong>&nbsp;Includes secondary analyses such as performance evaluation of detectors,<br />transposition of cohort reports, and slow wave events analysis.</li></ol><p>If you are new to Snooz, we recommend beginning with the Preprocessing category.<br />The Preprocessing category includes importers, converters, extractors, and the artifact detection tool.</p><p>Once your PSG files are compatible with Snooz, proceed to the Processing category.<br />The Processing category includes sleep analyses, event detectors, and power spectral analysis.</p><p>The Postprocessing category includes secondary analyses, such as performance evaluation of detectors,<br />transposition of cohort reports, and slow wave events analysis.</p><h2>To update Snooz</h2><p>Navigate to Help -&gt; About Snooz</p><p>(macOS)Navigate to Snooz -&gt; About Snooz</p>")
+        getting_started_label.setWordWrap(True)
+        getting_started_label.setFrameShape(QtWidgets.QFrame.NoFrame)
         getting_started_label.setFont(font)
         self.right_pane_layout.addWidget(snooz_label)
-        self.right_pane_layout.addWidget(getting_started_label)
-        self.right_pane_layout.addStretch()
+        
+        scroll_area = QtWidgets.QScrollArea()
+        scroll_area.setObjectName("step_scroll_area")
+        scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+        scroll_area.setLineWidth(0)
+        scroll_area.setWidget(getting_started_label)
+        scroll_area.setWidgetResizable(True)
+        self.right_pane_layout.addWidget(scroll_area)
 
         # Init the recently used widget
         self._recent_widget = RecentWidget(self._managers)
@@ -314,8 +322,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 # <p>If you are new to Snooz, we recommend beginning with the Preprocessing category.<br />The Preprocessing category includes importers, converters, extractors, and the artifact detection tool.</p>
 # <p>Once your PSG files are compatible with Snooz, proceed to the Processing category.<br />The Processing category includes sleep analyses, event detectors, and power spectral analysis.</p>
 # <p>The Postprocessing category includes secondary analyses, such as performance evaluation of detectors,<br />transposition of cohort reports, and slow wave events analysis.</p>
-# <p><strong>Viewers</strong></p>
-# <p>The only available Viewer is the Oximeter, which allows you to select bad sections to generate <br />a valid Oxygen Saturation Report. The Oximeter is an application that operates within Snooz.</p>
 # <h2>To update Snooz</h2>
 # <p>Navigate to Help -&gt; About Snooz</p>
 # <p>(macOS)Navigate to Snooz -&gt; About Snooz</p>

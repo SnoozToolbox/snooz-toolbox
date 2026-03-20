@@ -65,6 +65,26 @@ class SidebarStep(QtWidgets.QWidget):
     def step_content_index(self):
         return self._step_content_index
 
+
+class _ReadOnlyTextWheelForwarder(QtCore.QObject):
+    """Forward wheel input from read-only text blocks to the enclosing step scroll area."""
+
+    def __init__(self, owner):
+        super().__init__(owner)
+        self._owner = owner
+
+    def eventFilter(self, watched, event):
+        if not isinstance(watched, QtWidgets.QWidget):
+            return False
+
+        if event.type() == QtCore.QEvent.Type.Wheel:
+            return self._owner._forward_wheel_to_parent_scroll_area(watched, event)
+
+        if event.type() == QtCore.QEvent.Type.Resize:
+            self._owner._update_read_only_text_widget_height_from_watched(watched)
+
+        return False
+
 class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
     def __init__(self, managers, description, activation_params, tool_filepath, *args, **kwargs):
         super(StepsWidget, self).__init__(*args, **kwargs)
@@ -78,6 +98,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
         self._context_manager = ContextManager(self._pub_sub_manager)
         self._tool_filepath = tool_filepath
+        self._read_only_text_wheel_forwarder = _ReadOnlyTextWheelForwarder(self)
 
         self.setupUi(self)
         self.splitter.setStretchFactor(0, 0)
@@ -194,7 +215,16 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 return None
             else:
                 page = module.create_settings_view(self._activation_params)
-                top_layout.addWidget(page)
+                self._normalize_read_only_text_widgets(page)
+                page.setMinimumSize(0, 0)
+                page_scroll_area = QtWidgets.QScrollArea(top_widget)
+                page_scroll_area.setObjectName("step_scroll_area")
+                page_scroll_area.setWidgetResizable(True)
+                page_scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+                page_scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+                page_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+                page_scroll_area.setWidget(page)
+                top_layout.addWidget(page_scroll_area)
 
         elif 'custom_step_name' in step_content:
             custom_step_name = step_content['custom_step_name']
@@ -214,7 +244,16 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 context_manager=self._context_manager,
                 process_manager=self._managers.process_manager, asset_manager=asset_directory, custom_params=self._activation_params)
                 #node_manager = self._node_manager, asset_manager=self._asset_manager)
-            top_layout.addWidget(page)
+            self._normalize_read_only_text_widgets(page)
+            page.setMinimumSize(0, 0)
+            page_scroll_area = QtWidgets.QScrollArea(top_widget)
+            page_scroll_area.setObjectName("step_scroll_area")
+            page_scroll_area.setWidgetResizable(True)
+            page_scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+            page_scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+            page_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+            page_scroll_area.setWidget(page)
+            top_layout.addWidget(page_scroll_area)
 
         return self.steps_tabwidget.addTab(top_widget, QtGui.QIcon(),"")
 
@@ -266,6 +305,15 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             if step_content_index is not None:
                 self.steps_tabwidget.setCurrentIndex(step_content_index)
                 self.next_pushbutton.setVisible(not self._is_last_step())
+                current_page = self.steps_tabwidget.currentWidget()
+                if current_page is not None:
+                    current_page.setMinimumSize(0, 0)
+                    self._refresh_read_only_text_widget_heights(current_page)
+                    current_page.updateGeometry()
+                self.updateGeometry()
+                window = self.window()
+                if window is not None:
+                    window.updateGeometry()
             else:
                 print("ERROR: step_content_index is None. Usually this means the module_id was not found in the step definition")
             
@@ -274,6 +322,104 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         Return if the current step is the last step.
         """
         return self.steps_toolbox.currentIndex() == self.steps_toolbox.count() - 1
-    
+
+    def _normalize_read_only_text_widgets(self, page):
+        """Avoid nested scrollbars by letting step-level scrolling handle read-only text blocks."""
+        read_only_text_widgets = page.findChildren(QtWidgets.QTextEdit)
+        read_only_text_widgets.extend(page.findChildren(QtWidgets.QPlainTextEdit))
+        for widget in read_only_text_widgets:
+            if not widget.isReadOnly():
+                continue
+
+            widget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+            widget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+            widget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+            widget.setMinimumHeight(0)
+            widget.setMaximumHeight(16777215)
+
+            if isinstance(widget, QtWidgets.QTextEdit):
+                widget.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
+
+            widget.installEventFilter(self._read_only_text_wheel_forwarder)
+            viewport = widget.viewport()
+            if viewport is not None:
+                viewport.installEventFilter(self._read_only_text_wheel_forwarder)
+
+            self._update_read_only_text_widget_height(widget)
+
+    def _refresh_read_only_text_widget_heights(self, page):
+        """Recompute read-only text block heights after layout/step changes."""
+        read_only_text_widgets = page.findChildren(QtWidgets.QTextEdit)
+        read_only_text_widgets.extend(page.findChildren(QtWidgets.QPlainTextEdit))
+        for widget in read_only_text_widgets:
+            if widget.isReadOnly():
+                self._update_read_only_text_widget_height(widget)
+
+    def _update_read_only_text_widget_height_from_watched(self, watched):
+        """Resolve watched widget (text edit or viewport) and update its height."""
+        widget = watched
+        if isinstance(widget, QtWidgets.QAbstractScrollArea):
+            self._update_read_only_text_widget_height(widget)
+            return
+
+        parent = watched.parentWidget()
+        if isinstance(parent, QtWidgets.QAbstractScrollArea):
+            self._update_read_only_text_widget_height(parent)
+
+    def _update_read_only_text_widget_height(self, widget):
+        """Expand read-only text widgets to content height so parent step scroll can handle overflow."""
+        if not isinstance(widget, QtWidgets.QAbstractScrollArea):
+            return
+        if not widget.isReadOnly():
+            return
+
+        if isinstance(widget, QtWidgets.QTextEdit):
+            viewport_width = max(0, widget.viewport().width())
+            widget.document().setTextWidth(viewport_width)
+            document_height = widget.document().size().height()
+        elif isinstance(widget, QtWidgets.QPlainTextEdit):
+            block_count = max(1, widget.document().blockCount())
+            line_height = widget.fontMetrics().lineSpacing()
+            document_height = block_count * line_height
+        else:
+            return
+
+        frame_height = 2 * widget.frameWidth()
+        margins = widget.contentsMargins()
+        minimum_height = int(document_height + frame_height + margins.top() + margins.bottom() + 8)
+        widget.setMinimumHeight(max(0, minimum_height))
+
+    def _forward_wheel_to_parent_scroll_area(self, source_widget, event):
+        """Route wheel scrolling to the nearest parent QScrollArea to keep one scroll behavior."""
+        current = source_widget
+        while current is not None and not isinstance(current, QtWidgets.QScrollArea):
+            current = current.parentWidget()
+
+        if current is None:
+            return False
+
+        bar = current.verticalScrollBar()
+        if bar is None:
+            return False
+
+        delta = event.angleDelta().y()
+        if delta == 0:
+            delta = event.pixelDelta().y()
+
+        if delta == 0:
+            return False
+
+        base_step = bar.singleStep()
+        if base_step <= 0:
+            base_step = 20
+
+        if event.angleDelta().y() != 0:
+            delta_steps = event.angleDelta().y() / 120.0
+        else:
+            delta_steps = event.pixelDelta().y() / float(base_step)
+
+        bar.setValue(bar.value() - int(delta_steps * base_step * 3))
+        return True
+
     def _on_open_config(self, step_content_index):
         self.steps_tabwidget.setCurrentIndex(step_content_index)

@@ -274,6 +274,63 @@ QScrollArea QWidget#scrollAreaWidgetContents {
     background-color: rgb(252, 252, 252);
 }
 
+/* StepWidget page scrollbars: keep style in theme instead of inline Python. */
+QScrollArea#step_scroll_area QScrollBar:vertical {
+   background-color: rgb(226, 235, 240);
+   width: 12px;
+   margin: 0px;
+   border-radius: 6px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::handle:vertical {
+   background-color: rgb(150, 150, 150);
+   min-height: 28px;
+   border-radius: 6px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::handle:vertical:hover {
+   background-color: rgb(102, 102, 102);
+}
+
+QScrollArea#step_scroll_area QScrollBar::add-line:vertical,
+QScrollArea#step_scroll_area QScrollBar::sub-line:vertical {
+   height: 0px;
+   width: 0px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::add-page:vertical,
+QScrollArea#step_scroll_area QScrollBar::sub-page:vertical {
+   background: transparent;
+}
+
+QScrollArea#step_scroll_area QScrollBar:horizontal {
+   background-color: rgb(226, 235, 240);
+   height: 12px;
+   margin: 0px;
+   border-radius: 6px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::handle:horizontal {
+   background-color: rgb(150, 150, 150);
+   min-width: 28px;
+   border-radius: 6px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::handle:horizontal:hover {
+   background-color: rgb(102, 102, 102);
+}
+
+QScrollArea#step_scroll_area QScrollBar::add-line:horizontal,
+QScrollArea#step_scroll_area QScrollBar::sub-line:horizontal {
+   height: 0px;
+   width: 0px;
+}
+
+QScrollArea#step_scroll_area QScrollBar::add-page:horizontal,
+QScrollArea#step_scroll_area QScrollBar::sub-page:horizontal {
+   background: transparent;
+}
+
 /* ====== DISABLED STATE STYLES ====== */
 
 /* Disabled QPushButton */
