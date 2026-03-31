@@ -75,19 +75,28 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         self._settings_manager.append_setting(settings.packages, package_path)
         
     def _normalize_user_package_path(self, package_path):
-        """Return a corrected package path when the user selected a parent directory by mistake."""
-        expected_folder_names = ("CEAMSModules", "CEAMSTools", "CEAMSApps")
+        """Return a corrected package path when the user selected a parent directory by mistake.
+        
+        Scans subdirectories for a folder containing a {folderName}.json descriptor file.
+        """
         selected_path = Path(package_path)
 
-        if selected_path.name in expected_folder_names:
+        # Check if selected path itself is a valid package (contains {folderName}.json)
+        descriptor_file = selected_path / f"{selected_path.name}.json"
+        if descriptor_file.exists():
             return str(selected_path)
 
+        # Scan immediate subdirectories for valid packages
         candidate_paths = []
-        for folder_name in expected_folder_names:
-            candidate_path = selected_path / folder_name
-            descriptor_file = candidate_path / f"{folder_name}.json"
-            if candidate_path.is_dir() and descriptor_file.exists():
-                candidate_paths.append(candidate_path)
+        try:
+            for subfolder in selected_path.iterdir():
+                if subfolder.is_dir():
+                    descriptor_file = subfolder / f"{subfolder.name}.json"
+                    if descriptor_file.exists():
+                        candidate_paths.append(subfolder)
+        except (OSError, PermissionError):
+            # If we can't scan, return original path and let register_package handle it
+            return str(selected_path)
 
         if len(candidate_paths) == 1:
             return str(candidate_paths[0])
@@ -97,7 +106,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
             msg.setIcon(QMessageBox.Warning)
             msg.setText("Multiple valid package folders were found.")
             msg.setInformativeText(
-                "Please select one folder directly: CEAMSModules, CEAMSTools, or CEAMSApps."
+                "Please select one of the package folders directly."
             )
             msg.setWindowTitle("Select package folder")
             msg.exec()
