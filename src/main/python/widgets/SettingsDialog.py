@@ -5,6 +5,7 @@ See the file LICENCE for full license details.
 from qtpy import QtCore
 from qtpy import QtWidgets
 from qtpy.QtWidgets import QMessageBox
+from pathlib import Path
 
 from config import settings
 from Managers.EndpointManager import MenuEndpointHandler
@@ -52,6 +53,10 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         if package_path is None or package_path == '':
             return
         
+        package_path = self._normalize_user_package_path(package_path)
+        if package_path is None:
+            return
+        
         try:
             package_version = self._managers.package_manager.register_package(package_path, is_native=False)
             if package_version is None:
@@ -69,6 +74,37 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         self._add_package_to_package_ui(package_version, None)
         self._settings_manager.append_setting(settings.packages, package_path)
         
+    def _normalize_user_package_path(self, package_path):
+        """Return a corrected package path when the user selected a parent directory by mistake."""
+        expected_folder_names = ("CEAMSModules", "CEAMSTools", "CEAMSApps")
+        selected_path = Path(package_path)
+
+        if selected_path.name in expected_folder_names:
+            return str(selected_path)
+
+        candidate_paths = []
+        for folder_name in expected_folder_names:
+            candidate_path = selected_path / folder_name
+            descriptor_file = candidate_path / f"{folder_name}.json"
+            if candidate_path.is_dir() and descriptor_file.exists():
+                candidate_paths.append(candidate_path)
+
+        if len(candidate_paths) == 1:
+            return str(candidate_paths[0])
+
+        if len(candidate_paths) > 1:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Multiple valid package folders were found.")
+            msg.setInformativeText(
+                "Please select one folder directly: CEAMSModules, CEAMSTools, or CEAMSApps."
+            )
+            msg.setWindowTitle("Select package folder")
+            msg.exec()
+            return None
+
+        return str(selected_path)
+    
     
     def plugins_on_remove(self):
         for selected_item in self.packages_treewidget.selectedItems():
