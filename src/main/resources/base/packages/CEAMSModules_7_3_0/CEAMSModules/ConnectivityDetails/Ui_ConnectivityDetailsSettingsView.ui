@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ConnectivityDetailsSettingsView</class>
+ <widget class="QWidget" name="ConnectivityDetailsSettingsView">
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="recording_path_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="recording_path_label">
+       <property name="text">
+        <string>recording_path</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="recording_path_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="subject_info_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="subject_info_label">
+       <property name="text">
+        <string>subject_info</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="subject_info_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="con_dict_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="con_dict_label">
+       <property name="text">
+        <string>con_dict</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="con_dict_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="output_path_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="output_path_label">
+       <property name="text">
+        <string>output_path</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="output_path_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections/>
+ </ui>

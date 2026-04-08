@@ -1,0 +1,51 @@
+{   
+    "item_name": "JsonPathEditorMaster",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"JsonPathEditorMaster",
+        "name":"JsonPathEditorMaster",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.JsonPathEditorMaster",
+        "module_label": "Json Path Editor Master",
+        "module_category":"Files I/O",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "files": {
+                "name": "files",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"path_mapping": {
+                "name": "path_mapping",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"newfilespath": {
+                "name": "newfilespath",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"suffix": {
+                "name": "suffix",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "newfiles": {
+                "name": "newfiles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

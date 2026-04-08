@@ -1,0 +1,56 @@
+{   
+    "item_name": "RemoveChannelArtefact",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"RemoveChannelArtefact",
+        "name":"RemoveChannelArtefact",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.RemoveChannelArtefact",
+        "module_label": "Remove Channel Artefact",
+        "module_category":"Signal Processing",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"artefact_group": {
+                "name": "artefact_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"artefact_name": {
+                "name": "artefact_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "clean_signals": {
+                "name": "clean_signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"clean_events": {
+                "name": "clean_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

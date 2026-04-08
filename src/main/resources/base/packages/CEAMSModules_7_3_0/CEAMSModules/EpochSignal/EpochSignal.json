@@ -1,0 +1,61 @@
+{   
+    "item_name": "EpochSignal",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"EpochSignal",
+        "name":"EpochSignal",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.EpochSignal",
+        "module_label": "Epoch Signal",
+        "module_category":"Signal Processing",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"epoch_length_sec": {
+                "name": "epoch_length_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"overlap_sec": {
+                "name": "overlap_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"droplast": {
+                "name": "droplast",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "epochs": {
+                "name": "epochs",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

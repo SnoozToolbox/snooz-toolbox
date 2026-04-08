@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OxygenDesatDetectorResultsView</class>
+ <widget class="QWidget" name="OxygenDesatDetectorResultsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>864</width>
+    <height>190</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Display signals</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="time_label">
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::LeftToRight</enum>
+           </property>
+           <property name="text">
+            <string>Time elapsed (HH:MM:SS)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEditLive" name="time_lineedit">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Time elapsed since the beginning of the recording (ex. 01:10:5.5)
+Press enter to display the detection window.</string>
+           </property>
+           <property name="text">
+            <string notr="true">00:00:00</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="duration_label">
+           <property name="text">
+            <string>Duration (sec)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_duration">
+           <item>
+            <property name="text">
+             <string>30</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>150</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>300</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>1800</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>3600</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_ylim_norm">
+           <property name="text">
+            <string>Normalize y limits</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_ylim_fixed">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_display_y">
+           <property name="text">
+            <string>Display y axis</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="result_layout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
+       </property>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLineEditLive</class>
+   <extends>QLineEdit</extends>
+   <header>widgets.QLineEditLive</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>time_lineedit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>OxygenDesatDetectorResultsView</receiver>
+   <slot>time_elapsed_change_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_duration</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OxygenDesatDetectorResultsView</receiver>
+   <slot>duration_change_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_ylim_norm</sender>
+   <signal>clicked()</signal>
+   <receiver>OxygenDesatDetectorResultsView</receiver>
+   <slot>y_limit_enable_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_ylim_fixed</sender>
+   <signal>editingFinished()</signal>
+   <receiver>OxygenDesatDetectorResultsView</receiver>
+   <slot>y_limits_change_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>589</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_display_y</sender>
+   <signal>clicked()</signal>
+   <receiver>OxygenDesatDetectorResultsView</receiver>
+   <slot>y_label_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>690</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_show_button()</slot>
+  <slot>y_limits_change_slot()</slot>
+  <slot>update_y_axis_label_slot()</slot>
+  <slot>duration_change_slot()</slot>
+  <slot>time_elapsed_change_slot()</slot>
+  <slot>y_limit_enable_slot()</slot>
+  <slot>y_label_slot()</slot>
+ </slots>
+</ui>

@@ -1,0 +1,127 @@
+{
+    "item_name": "PSAImages",
+    "item_type": "tool",
+    "item_api_version": "2.0.0",
+    "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/PSAImages.html",
+    "item_author": "Mohammad Hasan Azad",
+    "tool_params": {
+        "tool_label": "Visualize EEG Spectral Power",
+        "tool_category": "Postprocessing",
+        "tool_author": "Mohammad Hasan Azad",
+        "tool_url": "",
+        "tool_description": "This tool generates EEG spectral power images.",
+        "package_name": "CEAMSTools",
+        "steps": [
+            {
+                "name": "EEG Spectral Power Images",
+                "description": "Click <strong>Read more!</strong> below for details.",
+                "custom_step_name": "IntroStep",
+                "show_index": false
+            },
+            {
+                "name": "Input Files",
+                "description": "Load your EEG spectral reports generated from the <strong>Analyze EEG Spectral Power</strong> tool.",
+                "custom_step_name": "InputFiles",
+                "show_index": true
+            },
+            {
+                "name": "Group Definition",
+                "description": "Assign a group for each file.\n\nAny group label is accepted.\n\nThe number of groups is unlimited.",
+                "custom_step_name": "GroupDefinition",
+                "show_index": true
+            },
+            {
+                "name": "Output Files",
+                "description": "Display Settings \nDefine the parameters to generate the pictures.",
+                "custom_step_name": "OutputFiles",
+                "show_index": true,
+                "configs": {
+                    "label": "Display Settings",
+                    "list": [
+                        {
+                            "name": "Colors",
+                            "description": "Define the colors desired.",
+                            "custom_step_name": "DisplaySettings"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "dependencies": [
+        {
+            "package_name": "CEAMSTools",
+            "package_version": "7.3.0",
+            "deleteable": false
+        },
+        {
+            "package_name": "CEAMSModules",
+            "package_version": "7.3.0"
+        }
+    ],
+    "process_params": {
+        "process_label": "Visualize EEG Spectral Power",
+        "subgraph_params": {},
+        "nodes": [
+            {
+                "cls": "PSAPicsGenerator",
+                "name": "PSAPicsGenerator",
+                "metadata": {},
+                "file_location": null,
+                "module": "CEAMSModules.PSAPicsGenerator",
+                "module_label": "PSA Pics Generator",
+                "module_category": "Events Utilities",
+                "module_author": "",
+                "module_url": "",
+                "module_description": "",
+                "module_options": {},
+                "inputs": {
+                    "filenames": {
+                        "name": "filenames",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "file_group": {
+                        "name": "file_group",
+                        "value": "{}",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "ROIs_def": {
+                        "name": "ROIs_def",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "chans_ROIs_sel": {
+                        "name": "chans_ROIs_sel",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "pics_param": {
+                        "name": "pics_param",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    },
+                    "colors_param": {
+                        "name": "colors_param",
+                        "value": "",
+                        "sub_plugs": {},
+                        "connections": {}
+                    }
+                },
+                "outputs": {},
+                "identifier": "bc3ee945-0abf-46b7-b110-db5e617ea70a",
+                "activation_state": "activated",
+                "package": {
+                    "package_name": "CEAMSModules"
+                },
+                "pos_x": -305.0,
+                "pos_y": -190.0
+            }
+        ]
+    }
+}

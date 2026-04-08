@@ -1,0 +1,61 @@
+{   
+    "item_name": "TrimSignal",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"TrimSignal",
+        "name":"TrimSignal",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.TrimSignal",
+        "module_label": "Trim Signal",
+        "module_category":"Signal Processing",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"start_sec": {
+                "name": "start_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"duration_sec": {
+                "name": "duration_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"reset_time": {
+                "name": "reset_time",
+                "value": true,
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "epochs": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

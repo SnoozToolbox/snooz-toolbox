@@ -1,0 +1,51 @@
+{   
+    "item_name": "DpliConnectivity",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"DpliConnectivity",
+        "name":"DpliConnectivity",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.DpliConnectivity",
+        "module_label": "Dpli Connectivity",
+        "module_category":"Connectivity Analysis",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "epochs",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"num_surr": {
+                "name": "num_surr",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"p_value": {
+                "name": "p_value",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "wpli_resuls": {
+                "name": "dpli_results",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

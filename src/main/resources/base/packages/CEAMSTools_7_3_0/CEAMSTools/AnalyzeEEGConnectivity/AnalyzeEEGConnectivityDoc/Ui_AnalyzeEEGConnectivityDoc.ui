@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AnalyzeEEGConnectivityDoc</class>
+ <widget class="QWidget" name="AnalyzeEEGConnectivityDoc">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>858</width>
+    <height>644</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>25</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <family>Roboto</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Analyze EEG Connectivity&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="font">
+      <font>
+       <family>Roboto</family>
+       <pointsize>12</pointsize>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:12pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;Weighted phase lag index (wPLI)&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt; quantifies the strength of non-zero phase-lagged connectivity of EEG channels, emphasizing stronger, more consistent interactions while minimizing the influence of noise and common sources [1]. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;Directed phase lag index (dPLI)&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt; is a measure of directional functional connectivity based on the consistency of phase lead-lag relationship between EEG channels, insensitive to volume conduction [2].&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;This tool computes wPLI and dPLI connectivity, using the algorithms described by Vinck et al. (2011) [1] for wPLI and Stam et al. (2012) [2] for dPLI. The statistical testing procedure to remove chance-related artifacts is based on Duclos et al. (2023) [3].&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Connectivity analysis cannot be performed with fewer than 2 brain EEG channels.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;1 - Input Files:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Add your PSG files (.edf, .sts or .eeg). &lt;br /&gt;The .tsv file is also needed for the edf format.&lt;br /&gt;The .sig file is also needed for the Stellate format.&lt;br /&gt;The whole NATUS subject folder is also needed for the NATUS format. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;2 - Events Exclusion:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Select events to discard from the analysis (i.e. artefacts previously detected and saved in the accessory file).&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;Important note:&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Connectivity analysis can only be performed on brain EEG channels. Any channels marked with the annotation group &amp;quot;art_inspector&amp;quot; and the name &amp;quot;art_channel&amp;quot; or &amp;quot;non_brain&amp;quot; will now be automatically excluded from the analysis.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;3 - Filter Settings:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;Frequency Band Selection:&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Define the appropriate frequency band to align with your research objectives (e.g., Full frequency band, Delta,  Theta, Alpha, Beta)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;Recording Scope Selection:&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Select Sleep Stages to analyze specific stages, Unscored to analyze the full recording or a chosen time segment, or Specific Annotations to base the analysis on event markers.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;4 - Annotation Selection:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;If the Analyse EEG Connectivity is performed on specific annotations, select them.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;&lt;br /&gt;5 - Connectivity Settings:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Define the connectivity type (dPLI or wPLI)&lt;br /&gt;Specify the Epoch length and Epoch overlap (in seconds) and number of surrogates and p-value threshold for statistical testing.&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;note:&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;&lt;br /&gt;Statistical testing ensures connections are not due to chance and provides more reliable connectivity estimates.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal; text-decoration: underline;&quot;&gt;&lt;br /&gt;6 - Output Files :&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;All files are saved in the selected Output folder (or next to the input recording if the &amp;quot; save in the same folder is checked). Filenames use the subject name and metric (wPLI or dPLI).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;- Connectivity matrix (TSV) --- &amp;lt;Filename&amp;gt;_{wpli|dpli}_convalue.tsv&lt;br /&gt;- Connectivity heatmap (PNG) --- &amp;lt;Filename&amp;gt;_{wpli|dpli}_conheatmap.png&lt;br /&gt;- Head connectivity plot (PNG) — &amp;lt;Filename&amp;gt;_{wpli|dpli}_contopomap.png (saved only if a best montage with ≥ 4 EEG channels is found)&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;References:&lt;/span&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-style:normal;&quot;&gt;&lt;br /&gt;[1] Stam, C. J., &amp;amp; van Straaten, E. C. W. (2012). &lt;/span&gt;&lt;span style=&quot; font-family:'Segoe UI';&quot;&gt;Go with the flow: Use of a directed phase lag index (dPLI) to characterize patterns of phase relations in a large-scale model of brain dynamics&lt;/span&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-style:normal;&quot;&gt;. NeuroImage, 62(3), 1415–1428. https://doi.org/10.1016/j.neuroimage.2012.05.050&lt;br /&gt;[2] Vinck, M., Oostenveld, R., van Wingerden, M., Battaglia, F., &amp;amp; Pennartz, C. M. (2011). &lt;/span&gt;&lt;span style=&quot; font-family:'Segoe UI';&quot;&gt;An improved index of phase-synchronization for electrophysiological data in the presence of volume-conduction, noise and sample-size bias&lt;/span&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-style:normal;&quot;&gt;. NeuroImage, 55(4), 1548–1565. https://doi.org/10.1016/j.neuroimage.2011.01.055&lt;br /&gt;[3] Duclos, C., Maschke, C., Mahdid, Y., Nadin, D., Rokos, A., Arbour, C., Badawy, M., Létourneau, J., Owen, A. M., Plourde, G., &amp;amp; Blain-Moraes, S. (2023). Brain responses to propofol in advance of recovery from coma and disorders of consciousness: A preliminary study. *American Journal of Respiratory and Critical Care Medicine, 207*(5), 602–613. https://doi.org/10.1164/rccm.202105-1223OC&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

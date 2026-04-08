@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SleepStageSelStep</class>
+ <widget class="QWidget" name="SleepStageSelStep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>812</width>
+    <height>840</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_7">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sleep Stage Selection&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::Panel</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select the sleep stages in which you want to detect artifacts.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Artifact detection performs better when similar sleep stages are selected, as the power distribution can be modeled more accurately. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Some detectors use a 3-component Gaussian Mixture Model (GMM) to estimate the standard deviation of non-corrupted data, &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;which is then used to define the threshold value.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* We recommend running artifact detection separately for NREM, REM, and Awake stages.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Make sur to have different annotation group or name to avoid confusion.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please select &amp;quot;Unscored&amp;quot; if your data does not include sleep stages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="checkBox_1">
+         <property name="text">
+          <string>N1</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>N2</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>N3</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QCheckBox" name="checkBox_5">
+         <property name="text">
+          <string>R</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_9">
+         <property name="text">
+          <string>Unscored</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QCheckBox" name="checkBox_0">
+         <property name="text">
+          <string>Awake</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Policy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Roboto</family>
+       <pointsize>12</pointsize>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Default threshold values&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Threshold values for the different algorithms can be edited in &quot;Step 5 – Detector Settings&quot;.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>However, two sets of default values are also available.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Clicking any of the radio buttons below will automatically apply the corresponding default values to all detectors.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="radioButton_set1">
+     <property name="text">
+      <string>Set 1 : is intended for NREM sleep stages and can also be used for Awake or Unscored stages.</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">Theshold_sets</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>160</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Default values for detection in NREM (Set 1)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Flatline&lt;/span&gt; : 		A=&lt;span style=&quot; font-weight:700;&quot;&gt;0.25&lt;/span&gt; µV&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;High Frequency Burst &lt;/span&gt;: 	A=&lt;span style=&quot; font-weight:700;&quot;&gt;4&lt;/span&gt; STD; 		B=&lt;span style=&quot; font-weight:700;&quot;&gt;8&lt;/span&gt; BSL MED, 	C=&lt;span style=&quot; font-weight:700;&quot;&gt;0.1&lt;/span&gt; Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Persistent Noise&lt;/span&gt; : 		A=&lt;span style=&quot; font-weight:700;&quot;&gt;4&lt;/span&gt; STD; 		B=&lt;span style=&quot; font-weight:700;&quot;&gt;0.1&lt;/span&gt; Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Power Line Contamination&lt;/span&gt; : 	A=&lt;span style=&quot; font-weight:700;&quot;&gt;0&lt;/span&gt; STD; 		B=&lt;span style=&quot; font-weight:700;&quot;&gt;0.1&lt;/span&gt; Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Baseline Variation&lt;/span&gt; : 	A=&lt;span style=&quot; font-weight:700;&quot;&gt;4&lt;/span&gt; STD&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Muscular&lt;/span&gt; : 		A=&lt;span style=&quot; font-weight:700;&quot;&gt;8&lt;/span&gt; BSL MED, 	B=&lt;span style=&quot; font-weight:700;&quot;&gt;5 &lt;/span&gt;BSL MED, 	C=&lt;span style=&quot; font-weight:700;&quot;&gt;5&lt;/span&gt; BSL MED&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="radioButton_set2">
+     <property name="text">
+      <string>Set 2 : is more sensitive and intended for REM sleep stages.</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">Theshold_sets</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEdit_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>160</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default values for detection in REM (Set 2)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Flatline&lt;/span&gt; : 		A=0.25 µV&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;High Frequency Burst&lt;/span&gt; : 	A=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;3&lt;/span&gt; STD; 		B=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;6&lt;/span&gt; BSL MED, 	C=0.1 Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Persistent Noise&lt;/span&gt; : 		A=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;2&lt;/span&gt; STD; 		B=0.1 Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Power Line Contamination&lt;/span&gt; : 	A=0 STD; 		B=0.1 Ratio&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Baseline Variation&lt;/span&gt; : 	A=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;2.5&lt;/span&gt; STD&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    &lt;span style=&quot; font-weight:700;&quot;&gt;Muscular&lt;/span&gt; : 		A=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;4&lt;/span&gt; BSL MED, 	B=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;3&lt;/span&gt; BSL MED, 	C=&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;3&lt;/span&gt; BSL MED&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>radioButton_set1</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>radio_threshold_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>489</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>489</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_set2</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>radio_threshold_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>489</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>489</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_0</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_1</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_3</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_5</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_9</sender>
+   <signal>clicked()</signal>
+   <receiver>SleepStageSelStep</receiver>
+   <slot>check_stages_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>56</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>radio_threshold_slot()</slot>
+  <slot>check_stages_slot()</slot>
+ </slots>
+ <buttongroups>
+  <buttongroup name="Theshold_sets"/>
+ </buttongroups>
+</ui>
