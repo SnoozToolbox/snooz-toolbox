@@ -3,5 +3,13 @@
     "description": "Snooz is a highly modular tool for building signal processing algorithms to analyze sleep recordings.",
     "author_email": "",
     "url": "http://ceams-carsm.ca/",
-	"hidden_imports": ["cmath"]
+	"hidden_imports": [
+		"cmath",
+		"qtpy",
+		"qtpy.QtCore",
+		"qtpy.QtGui",
+		"qtpy.QtWidgets"
+    	],
+	"installer": "Snooz.zip",
+	"requires_root": false
 }
