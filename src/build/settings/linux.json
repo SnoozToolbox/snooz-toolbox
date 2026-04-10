@@ -9,7 +9,5 @@
 		"qtpy.QtCore",
 		"qtpy.QtGui",
 		"qtpy.QtWidgets"
-    	],
-	"installer": "Snooz.zip",
-	"requires_root": false
+    	]
 }
