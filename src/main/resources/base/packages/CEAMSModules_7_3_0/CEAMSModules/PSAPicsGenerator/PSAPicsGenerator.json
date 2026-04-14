@@ -1,0 +1,56 @@
+{   
+    "item_name": "PSAPicsGenerator",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"PSAPicsGenerator",
+        "name":"PSAPicsGenerator",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.PSAPicsGenerator",
+        "module_label": "PSA Pics Generator",
+        "module_category":"Events Utilities",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "filenames": {
+                "name": "filenames",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"file_group": {
+                "name": "file_group",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"ROIs_def": {
+                "name": "ROIs_def",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"chans_ROIs_sel": {
+                "name": "chans_ROIs_sel",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"pics_param": {
+                "name": "pics_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"colors_param": {
+                "name": "colors_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            
+        }
+    }
+}

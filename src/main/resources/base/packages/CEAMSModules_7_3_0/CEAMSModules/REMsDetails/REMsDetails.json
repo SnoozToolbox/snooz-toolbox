@@ -1,0 +1,89 @@
+{
+    "item_name": "REMsDetails",
+    "item_type": "module",
+    "item_api_version": "2.0.0",
+    "item_url": "",
+    "item_author": "",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "REMsDetails",
+        "name": "REMsDetails",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "REMs Details",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "recording_path": {
+                "name": "recording_path",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rems_events_details": {
+                "name": "rems_events_details",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "artifact_events": {
+                "name": "artifact_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "sleep_cycle_param": {
+                "name": "sleep_cycle_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "stages_cycles": {
+                "name": "stages_cycles",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "rems_det_param": {
+                "name": "rems_det_param",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "report_constants": {
+                "name": "report_constants",
+                "value": {},
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "cohort_filename": {
+                "name": "cohort_filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "export_rems": {
+                "name": "export_rems",
+                "value": false,
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {},
+        "module": "CEAMSModules.REMsDetails"
+    }
+}
+

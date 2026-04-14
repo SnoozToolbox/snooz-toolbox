@@ -1,0 +1,430 @@
+{
+    "package_name": "CEAMSTools",
+    "package_version": "7.3.0",
+    "package_author": "",
+    "package_url": "",
+    "package_description": "",
+    "package_api_version": "2.0.0",
+    "items": [
+        {
+            "item_name": "ConvertDOMINO",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from DOMINOScreen"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ConvertEDFbrowser",
+            "item_type": "tool",
+            "item_version": "2.1.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from EDFbrowser"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ConvertXMLCompumedics",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Convert Annotations from XML"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "DetectArtifacts",
+            "item_type": "tool",
+            "item_version": "2.6.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Detect EEG Artifacts"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "DetectREMsYASA",
+            "item_type": "tool",
+            "item_version": "3.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Detect REM events with YASA"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "EditAnnotations",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Edit Snooz Annotations"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "EditPathsInSnoozWorkspace",
+            "item_type": "tool",
+            "item_version": "2.0.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Edit Paths in Snooz Workspace"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ExtractAnnotation",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Extract Snooz Annotations"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportEDFPlusAnnotations",
+            "item_type": "tool",
+            "item_version": "2.1.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Annotations from EDF+"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportTextAnnotations",
+            "item_type": "tool",
+            "item_version": "2.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Annotations from Text"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ImportSleepStagesVector",
+            "item_type": "tool",
+            "item_version": "2.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Import Sleep Stage Text Vector"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "RenameFiles",
+            "item_type": "tool",
+            "item_version": "2.1.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Rename Files"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ScoreSleepStagesYASA",
+            "item_type": "tool",
+            "item_version": "2.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Score Sleep Stages with YASA"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "ValidateSnoozTSVFile",
+            "item_type": "tool",
+            "item_version": "2.0.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "1-Preprocessing",
+                        "menu_label": "Validate Snooz Annotation File"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "AnalyzeEEGConnectivity",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Analyze EEG Connectivity"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "PowerSpectralAnalysis",
+            "item_type": "tool",
+            "item_version": "2.7.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Analyze EEG Spectral Power"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveDetection",
+            "item_type": "tool",
+            "item_version": "2.6.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Detect Slow Waves"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SpindleDetectionA7",
+            "item_type": "tool",
+            "item_version": "3.5.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Detect Spindles with A7"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SpindleDetectionMartin",
+            "item_type": "tool",
+            "item_version": "2.7.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Detect Spindles with Martin"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SpindleDetectionSumo",
+            "item_type": "tool",
+            "item_version": "2.8.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Detect Spindles with SUMO"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "OxygenSaturationReport",
+            "item_type": "tool",
+            "item_version": "2.8.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Report Oxygen Saturation"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepBouts",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Report Sleep Bouts"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepCycleExport",
+            "item_type": "tool",
+            "item_version": "2.4.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Report Sleep Cycle"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SleepReport",
+            "item_type": "tool",
+            "item_version": "2.5.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "2-Processing",
+                        "menu_label": "Report Sleep Variables"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveClassification",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Classify Slow Waves"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "CompareEventsFromPSG",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Evaluate Detected Events"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "PSACohortReview",
+            "item_type": "tool",
+            "item_version": "2.4.1",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Review EEG Spectral Power for the cohort"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "DetectionsCohortReview",
+            "item_type": "tool",
+            "item_version": "2.2.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Review Detections for the Cohort"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "PSAImages",
+            "item_type": "tool",
+            "item_version": "2.0.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Visualize EEG Spectral Power"
+                    }
+                }
+            ]
+        },
+        {
+            "item_name": "SlowWaveImages",
+            "item_type": "tool",
+            "item_version": "2.3.0",
+            "item_hooks": [
+                {
+                    "endpoint_name": "menu_endpoint",
+                    "parameters": {
+                        "menu_category": "3-Postprocessing",
+                        "menu_label": "Visualize Slow Waves"
+                    }
+                }
+            ]
+        }
+    ]
+}

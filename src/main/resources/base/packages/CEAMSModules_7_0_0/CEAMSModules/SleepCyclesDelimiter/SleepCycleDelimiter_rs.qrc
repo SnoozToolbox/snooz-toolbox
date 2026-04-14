@@ -1,7 +1,0 @@
-<RCC>
-  <qresource prefix="sleep_cycle_del">
-    <file>UI_v5_Aeschbach.png</file>
-    <file>UI_v5_Feinberg_floyd.png</file>
-    <file>UI_v5_minimal.png</file>
-  </qresource>
-</RCC>

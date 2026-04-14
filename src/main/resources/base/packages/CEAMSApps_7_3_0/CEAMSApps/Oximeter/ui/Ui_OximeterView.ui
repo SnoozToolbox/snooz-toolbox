@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OximeterView</class>
+ <widget class="QWidget" name="OximeterView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1059</width>
+    <height>496</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0,0">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Min. Saturation (%)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="ymin_comboBox">
+       <item>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>20</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>30</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>40</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>60</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>70</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>80</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>90</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_filename">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="OximeterDrawArea" name="oximeter_draw_area" native="true"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: Gray sections mark signal discontinuities. The black marker shows the minimum saturation value. &lt;br/&gt;Exclude additional sections if this minimum looks invalid.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;Invalid sections are saved as annotations : &lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;group&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal; color:#0055ff;&quot;&gt;SpO2&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;; &lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-style:normal;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:normal; color:#0055ff;&quot;&gt;art_SpO2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::RichText</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Left-click and drag to select sections to exclude.
+Sudden drops in the oximeter signal are typically artifacts and don’t reflect true oxygen saturation.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="remove_new_pushButton">
+       <property name="toolTip">
+        <string>Remove all new selections, keep the ones that we already saved.</string>
+       </property>
+       <property name="text">
+        <string>Remove new selections</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="remove_all_pushButton">
+       <property name="toolTip">
+        <string>Remove all selections, including the ones that we already saved.</string>
+       </property>
+       <property name="text">
+        <string>Remove all selections</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OximeterDrawArea</class>
+   <extends>QWidget</extends>
+   <header>OximeterDrawArea</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>remove_all_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OximeterView</receiver>
+   <slot>remove_all_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>741</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>remove_new_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OximeterView</receiver>
+   <slot>remove_new_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>602</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ymin_comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>OximeterView</receiver>
+   <slot>min_saturation_change()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>remove_new_clicked()</slot>
+  <slot>remove_all_clicked()</slot>
+  <slot>min_saturation_change()</slot>
+ </slots>
+</ui>
