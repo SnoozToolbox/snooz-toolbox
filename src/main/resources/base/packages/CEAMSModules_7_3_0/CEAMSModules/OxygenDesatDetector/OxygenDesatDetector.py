@@ -380,7 +380,9 @@ class OxygenDesatDetector(SciNode):
         
         # Detect recovery
         #----------------------------------------------------------------------
-        recovery_df = self.detect_recovery_ABOSA(desat_df, data_starts, data_clean, data_dev_list, fs_chan, channel, parameters_oxy)
+        recovery_df = self.detect_recovery_ABOSA(
+            desat_df, data_starts, data_clean, data_lpf_list, data_dev_list, fs_chan, channel, parameters_oxy
+        )
 
         desat_recovery_df = pd.concat([desat_df, recovery_df], ignore_index=True)
 
@@ -1364,10 +1366,9 @@ class OxygenDesatDetector(SciNode):
                                   f"duration={duration:.2f}s, drop={drop:.1f}%, "
                                   f"fall_rate={avg_fall_rate:.3f}%/s")
 
-            # Debug output for the result view
-            if DEBUG: 
-                data_lpf_list.append(signal_lpf)
-                data_hpf_list.append(signal_squared)
+            # Useful to detect recovery events later
+            data_lpf_list.append(signal_lpf)
+            data_hpf_list.append(signal_squared)
             data_dev_list.append(signal_derivative)
 
         # Resolve overlapping desaturations by keeping events with steepest fall rate
@@ -1411,7 +1412,7 @@ class OxygenDesatDetector(SciNode):
         return desat_df, plateau_df, data_lpf_list, data_hpf_list, data_dev_list, lmax_indices_list, lmin_indices_list
 
 
-    def detect_recovery_ABOSA(self, desat_df, data_starts, data_stats, data_dev_list, fs_chan, channel, parameters_oxy):
+    def detect_recovery_ABOSA(self, desat_df, data_starts, data_stats, data_lpf_list, data_dev_list, fs_chan, channel, parameters_oxy):
         """
         Detect recovery events following desaturation events as described in ABOSA.
 
@@ -1426,6 +1427,8 @@ class OxygenDesatDetector(SciNode):
                 Start time in seconds of each continuous signal section.
             data_stats : list of numpy array
                 Cleaned oxygen saturation signal for each continuous section.
+            data_lpf_list : list of numpy array
+                Low-pass filtered oxygen saturation signal for each section.
             fs_chan : float
                 Sampling frequency (Hz).
             channel : string
@@ -1448,8 +1451,6 @@ class OxygenDesatDetector(SciNode):
         # Parameters matching detect_desaturation_ABOSA
         min_peak_distance_sec = 5
         min_peak_prominence = 1
-        order = 4
-        frequency_cutoff = 0.1
         min_recovery_rise_percent = 2.0
         min_recovery_slope_percent_per_sec = 0.05
 
@@ -1460,11 +1461,8 @@ class OxygenDesatDetector(SciNode):
             data_start = data_starts[i]
             signal_end = data_start + len(signal) / fs_chan
             data_derivative = data_dev_list[i]
+            signal_lpf = data_lpf_list[i]
 
-            # Low-pass filter to detect local maxima (recovery endpoints)
-            signal_lpf = self.filter_nan_filtfilt(signal, order, fs_chan, frequency_cutoff, 'low')
-            # High-pass filter the signal at 0.1 Hz (which is already low-pass filtered to 0.1 Hz)
-            signal_hpf = self.filter_nan_filtfilt(signal_lpf, order, fs_chan, frequency_cutoff, 'high')
             min_peak_distance_samples = int(min_peak_distance_sec * fs_chan)
             lmax_indices, _ = self.detect_local_max(
                 signal, signal_lpf, fs_chan,
@@ -1496,7 +1494,7 @@ class OxygenDesatDetector(SciNode):
                     break  # No Lmax remains in this segment for any later desaturation either
 
                 # Allowed recovery duration: 120 s or 2x desaturation duration, 
-                # the minimum of the two
+                # the maximum of the two
                 max_recovery_duration_sec = max(120.0, 2.0 * desat_duration)
                 recovery_selected = False
                 for recovery_lmax_idx in next_lmax:
