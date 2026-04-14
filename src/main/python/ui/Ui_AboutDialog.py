@@ -24,7 +24,7 @@ class Ui_AboutDialog(object):
     def setupUi(self, AboutDialog):
         if not AboutDialog.objectName():
             AboutDialog.setObjectName(u"AboutDialog")
-        AboutDialog.resize(700, 479)
+        AboutDialog.resize(790, 574)
         AboutDialog.setStyleSheet(u"font: 12pt \"Roboto\";")
         self.verticalLayout = QVBoxLayout(AboutDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -94,7 +94,7 @@ class Ui_AboutDialog(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.pushButton_mac_intel = QPushButton(AboutDialog)
         self.pushButton_mac_intel.setObjectName(u"pushButton_mac_intel")
-        self.pushButton_mac_intel.setEnabled(False)
+        self.pushButton_mac_intel.setEnabled(True)
         self.pushButton_mac_intel.setStyleSheet(u"QPushButton {\n"
 "background-color: rgb(78, 134, 255);\n"
 "}\n"
@@ -136,9 +136,9 @@ class Ui_AboutDialog(object):
 
         self.gridLayout_2.addWidget(self.pushButton_mac_arm, 1, 1, 1, 1)
 
-        self.pushButton_linux = QPushButton(AboutDialog)
-        self.pushButton_linux.setObjectName(u"pushButton_linux")
-        self.pushButton_linux.setStyleSheet(u"QPushButton {\n"
+        self.pushButton_linux_deb = QPushButton(AboutDialog)
+        self.pushButton_linux_deb.setObjectName(u"pushButton_linux_deb")
+        self.pushButton_linux_deb.setStyleSheet(u"QPushButton {\n"
 "background-color: rgb(78, 134, 255);\n"
 "}\n"
 "\n"
@@ -147,7 +147,20 @@ class Ui_AboutDialog(object):
 "    color: rgb(220, 220, 220);\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.pushButton_linux, 0, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_linux_deb, 0, 2, 1, 1)
+
+        self.pushButton_linux_zip = QPushButton(AboutDialog)
+        self.pushButton_linux_zip.setObjectName(u"pushButton_linux_zip")
+        self.pushButton_linux_zip.setStyleSheet(u"QPushButton {\n"
+"background-color: rgb(78, 134, 255);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(160, 160, 160);\n"
+"    color: rgb(220, 220, 220);\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.pushButton_linux_zip, 1, 2, 1, 1)
 
 
         self.verticalLayout.addLayout(self.gridLayout_2)
@@ -156,6 +169,10 @@ class Ui_AboutDialog(object):
         self.label_2.setObjectName(u"label_2")
 
         self.verticalLayout.addWidget(self.label_2)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 13, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+
+        self.verticalLayout.addItem(self.verticalSpacer_5)
 
         self.label_5 = QLabel(AboutDialog)
         self.label_5.setObjectName(u"label_5")
@@ -168,10 +185,11 @@ class Ui_AboutDialog(object):
 
 
         self.retranslateUi(AboutDialog)
-        self.pushButton_linux.clicked.connect(AboutDialog.download_Linux_slot)
+        self.pushButton_linux_deb.clicked.connect(AboutDialog.download_Linux_slot)
         self.pushButton_mac_arm.clicked.connect(AboutDialog.download_mac_arm_slot)
         self.pushButton_windows.clicked.connect(AboutDialog.download_windows_slot)
         self.pushButton_mac_intel.clicked.connect(AboutDialog.download_MAC_slot)
+        self.pushButton_linux_zip.clicked.connect(AboutDialog.download_Linux_zip_slot)
 
         QMetaObject.connectSlotsByName(AboutDialog)
     # setupUi
@@ -184,12 +202,12 @@ class Ui_AboutDialog(object):
         self.snooz_version_label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The current version installed :<span style=\" font-weight:600;\"> beta-0.3.0</span></p></body></html>", None))
         self.label_released_version.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The latest version released :<span style=\" font-weight:600;\"> beta-0.3.0 </span><span style=\" font-family:'Roboto'; font-size:medium; color:#95a5a6;\">\u00a0(June 21, 2024)</span></p></body></html>", None))
         self.label_4.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Click on the appropriate box to download the latest installer.<br/></span><span style=\" font-size:9pt;\">Please check your operating system's architecture before proceeding.</span></p></body></html>", None))
-        self.pushButton_mac_intel.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS (Intel Chip)", None))
+        self.pushButton_mac_intel.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS X64 (Intel Chip)", None))
         self.pushButton_windows.setText(QCoreApplication.translate("AboutDialog", u"Download for Windows", None))
-        self.pushButton_mac_arm.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS (M-Chip)", None))
-        self.pushButton_linux.setText(QCoreApplication.translate("AboutDialog", u"Download for Linux", None))
+        self.pushButton_mac_arm.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS ARM64 (M-Chip)", None))
+        self.pushButton_linux_deb.setText(QCoreApplication.translate("AboutDialog", u"Download deb for Linux (admin)", None))
+        self.pushButton_linux_zip.setText(QCoreApplication.translate("AboutDialog", u"Download zip for Linux", None))
         self.label_2.setText(QCoreApplication.translate("AboutDialog", u"Close the current version before installing the new one to avoid errors.", None))
-        self.label_5.setText(QCoreApplication.translate("AboutDialog", u"Once Snooz is installed, make sure to activate the latest version\n"
-"of the CEAMS package in the settings by navigating to File > Settings > Packages. ", None))
+        self.label_5.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>Once Snooz is installed, make sure to activate the latest version of the CEAMS packages in the settings.<br/>Go to <span style=\" font-weight:700;\">File &gt; Settings &gt; Packages</span>. On macOS, go to <span style=\" font-weight:700;\">Snooz &gt; Preferences &gt; Settings &gt; Packages</span>.</p></body></html>", None))
     # retranslateUi
 

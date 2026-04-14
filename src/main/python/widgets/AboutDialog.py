@@ -30,7 +30,7 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
             version = PUBLIC_SETTINGS['version']
             self.snooz_version_label.setText(f"The version currently installed : <b>beta-{version}</b>")
         else:
-            self.snooz_version_label.setText("<b>You are using the dev environment, no updates required.</b>")
+            self.snooz_version_label.setText("<b>You are using the development environment, no updates required.</b>")
 
         os_name = platform.system()
         if os_name=="Darwin":
@@ -56,12 +56,14 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
         self.MAC_link = self._get_content(lines, 2)
         self.linux_link = self._get_content(lines, 3)
         self.mac_arm_link = self._get_content(lines, 4)
+        self.linux_zip_link = self._get_content(lines, 5)
 
         # Update push button activation
         self.pushButton_windows.setDisabled(self.windows_link=='disabled' or self.windows_link=="")
         self.pushButton_mac_intel.setDisabled(self.MAC_link=='disabled' or self.MAC_link=="")
-        self.pushButton_linux.setDisabled(self.linux_link=='disabled' or self.linux_link=="")
+        self.pushButton_linux_deb.setDisabled(self.linux_link=='disabled' or self.linux_link=="")
         self.pushButton_mac_arm.setDisabled(self.mac_arm_link=='disabled' or self.mac_arm_link=="")
+        self.pushButton_linux_zip.setDisabled(self.linux_zip_link=='disabled' or self.linux_zip_link=="")
 
         # Update label
         self.label_released_version.setText(str(self.snooz_released_version))
@@ -85,7 +87,7 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
             QDesktopServices.openUrl(url)
 
 
-    # Called when the user clicks on the download windows button
+    # Called when the user clicks on the download macOS-64x (Intel) button
     def download_MAC_slot(self):
         # Specify the URL you want to open
         if not self.MAC_link == 'disabled':
@@ -93,18 +95,29 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
             QDesktopServices.openUrl(url)
 
 
-    # Called when the user clicks on the download windows button
+    # Called when the user clicks on the download deb for Linux button
     def download_Linux_slot(self):
         # Specify the URL you want to open
         if not self.linux_link == 'disabled':
             url = QUrl(self.linux_link)
             QDesktopServices.openUrl(url)
 
+
+    # Called when the user clicks on the download macOS-ARM64 (M-Chip) button
     def download_mac_arm_slot(self):
-        
+        # Specify the URL you want to open
         if not self.mac_arm_link == 'disabled':
             url = QUrl(self.mac_arm_link)
             QDesktopServices.openUrl(url)
+
+
+    # Called when the user clicks on the download zip for Linux button
+    def download_Linux_zip_slot(self):
+        # Specify the URL you want to open
+        if not self.linux_zip_link == 'disabled':
+            url = QUrl(self.linux_zip_link)
+            QDesktopServices.openUrl(url)
+
 
     def _get_content(self, lines, index):
         return lines[index] if len(lines) > index else ""
