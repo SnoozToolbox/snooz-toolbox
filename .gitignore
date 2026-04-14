@@ -3,12 +3,16 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+snooz_310_env
+*.tar.gz
+
 # Node artifact files
 node_modules/
 dist/
 
 #Python cache
 __pycache__/
+*.pyc
 
 # Compiled Java class files
 *.class
@@ -28,7 +32,7 @@ dist/
 .idea/
 
 # VSCode
-.vscode/settings.json
+.VSCode/settings.json
 
 # Unit test reports
 TEST*.xml
