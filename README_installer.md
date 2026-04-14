@@ -1,5 +1,33 @@
 # Read me to create the Snooz installer
 
+## Update the snooz version in base.json
+    Edit /snooz-toolbox-ceams/src/build/settings/base.json
+    and update the version i.e. "version": "1.2.0",
+
+## Remove any __pycache__ folders and .pyc/.pyo files from the packages
+### Open a git bash terminal on Windows or a regular terminal on Linux and macOS
+    cd snooz-package-ceams
+    find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
+
+## Release a ceams-package if needed
+### In the vscode terminal
+    (snooz_310_env) $cd snooz-package-ceams
+    (snooz_310_env) $python .\main_utils.py
+    (snooz_310_env) $6- Create a release package
+    Move the packages into snooz-toolbox-ceams/src/main/resources/
+
+## Update your Snooz config to set "is_dev" to False
+    Open snooz-toolbox-ceams/src/main/python/config.py
+    set is_dev=False
+    -> the set is_dev=False needs to be pushed on the repository since installers are created on git action.
+
+## Push your modifications
+
+# Installer creation is made on git action
+https://github.com/SnoozToolbox/snooz_installers_public
+
+# Manual creation is still described lower but not needed anymore.
+
 ## On windows 
 
 Install NSIS (full installation) : https://sourceforge.net/projects/nsis/
@@ -29,29 +57,6 @@ Reboot
     $ source path_to_env/snooz_310_env/bin/activate
 ### Install FBS pro in your pyhton environment
 	(snooz_310_env) $ pip3 install path_to_fbs_pro\fbs_pro-0.9.8.tar.gz
-
-## Update the snooz version in base.json
-    Edit /snooz-toolbox-ceams/src/build/settings/base.json
-    and update the version i.e. "version": "1.2.0",
-
-## Remove any __pycache__ folders and .pyc/.pyo files from the packages
-### Open a git bash terminal on Windows or a regular terminal on Linux and macOS
-    cd snooz-package-ceams
-    find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
-
-## Release a ceams-package if needed
-### In the vscode terminal
-    (snooz_310_env) $cd snooz-package-ceams
-    (snooz_310_env) $python .\main_utils.py
-    (snooz_310_env) $6- Create a release package
-    Move the packages into snooz-toolbox-ceams/src/main/resources/
-
-## Push your modifications
-
-## Update your Snooz config to set "is_dev" to False
-    Open snooz-toolbox-ceams/src/main/python/config.py
-    set is_dev=False
-    -> the set is_dev=False should not be pushed on the repository.  
 
 ## Create the executable (not needed for developers)
     Open a terminal (windows command prompt or native terminal) in your snooz-toolbox or snooz-toolbox-ceams repository
@@ -86,7 +91,6 @@ Reboot
     The file is saved on backblaze to have the release notes outside the repository :
         to inform the user of a new Snooz release (the latest released version is updated automatically on the installed Snooz)
         to provide an easy way to download the new installer (links are updated automatically on the installed Snooz)
-    * For now, the download links are from Karine's google drive.
     
     Sign in to https://www.backblaze.com/
     Update about_notes.txt 

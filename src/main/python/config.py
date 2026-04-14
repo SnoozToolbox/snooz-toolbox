@@ -6,7 +6,7 @@ import os
 import sys
 import importlib.util
 
-is_dev = True
+is_dev = False
 
 # Check if running in headless mode
 HEADLESS_MODE = os.environ.get('SNOOZ_HEADLESS', 'false').lower() == 'true'
