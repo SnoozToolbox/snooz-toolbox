@@ -1,6 +1,7 @@
 from runtime import _state
 import os
 import sys
+import platform as py_platform
 
 def is_windows():
     """
@@ -13,6 +14,27 @@ def is_mac():
     Return True if the current OS is macOS, False otherwise.
     """
     return name() == 'Mac'
+
+def architecture():
+    """
+    Return the normalized CPU architecture name for the current machine.
+    """
+    machine = py_platform.machine().lower()
+    aliases = {
+        'amd64': 'x64',
+        'x86_64': 'x64',
+        'x64': 'x64',
+        'arm64': 'arm64',
+        'aarch64': 'arm64',
+    }
+    return aliases.get(machine, machine)
+
+def profile_name():
+    """
+    Return the resource profile name for the current OS and architecture.
+    Examples: mac-arm64, mac-x64, windows-x64.
+    """
+    return f'{name().lower()}-{architecture()}'
 
 def is_linux():
     """

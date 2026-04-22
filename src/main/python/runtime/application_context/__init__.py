@@ -58,6 +58,10 @@ class ApplicationContext:
     def get_default_profiles(self):
         profiles = ['base', 'secret', platform.name().lower()]
 
+        arch_profile = platform.profile_name()
+        if arch_profile not in profiles:
+            profiles.append(arch_profile)
+
         if is_linux():
             profiles.extend(
                 [distro for distro in ("ubuntu", "arch", "fedora") if globals()[f"is_{distro}"]()]
