@@ -17,6 +17,8 @@ class DataProcessor(QThread):
 
     def __init__(self, input_dir, selected_channels, selected_montage):
         super().__init__()
+        # macOS ARM worker threads can overflow their default stack in OpenBLAS.
+        self.setStackSize(16 * 1024 * 1024)
         self.input_dir = input_dir
         self.selected_channels = selected_channels
         self._selected_montage = selected_montage

@@ -36,6 +36,10 @@ Main EEG Inspector View - Controller class"""
 import os
 import re
 
+
+for env_name in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):
+    os.environ.setdefault(env_name, '1')
+
 # Third-party imports
 import mne
 import numpy as np
