@@ -4,7 +4,7 @@
     "package_author": "",
     "package_url": "",
     "package_description": "",
-    "package_api_version": "2.0.0",
+    "package_api_version": "3.0.0",
     "items": [
         {
             "item_name": "FilterSignal",
