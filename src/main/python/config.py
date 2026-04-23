@@ -192,7 +192,7 @@ settings.style = "style"
 settings.packages = "packages"
 settings.skip_beta_disclaimer = "skip_beta_disclaimer"
 settings.activated_package_items = "activated_package_items"
-settings.active_api_version = "2.0.0"
+settings.active_api_version = "3.0.0"
 
 DOCUMENTATION_URL = "https://snooz-toolbox-documentation.readthedocs.io/latest/"
 
