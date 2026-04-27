@@ -1,11 +1,12 @@
 {
     "item_name": "PowerSpectralAnalysis",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Processing/Power_Spectral_Analysis.html#power-spectral-analysis-psa",
     "item_author": "Karine Lacourse",
     "item_description": "To analyze the spectral power in sleep stages, periods, cycles, hours according to your needs.",
     "tool_params": {
+        "tool_version": "2.7.0",
         "tool_label": "Analyze EEG Spectral Power",
         "tool_category": "2-Processing",
         "asset_directory": "",

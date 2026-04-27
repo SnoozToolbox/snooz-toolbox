@@ -6,6 +6,7 @@
     "item_author": "",
     "item_description": "",
     "tool_params": {
+        "tool_version": "3.5.0",
         "tool_label": "Detect Spindles with A7",
         "tool_category": "2-Processing",
         "asset_directory": "",

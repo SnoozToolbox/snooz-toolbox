@@ -1,9 +1,10 @@
 {
     "item_name": "EditPathsInSnoozWorkspace",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/EditPathsInSnoozWorkspace.html",
     "tool_params": {
+        "tool_version": "2.0.0",
         "tool_label": "Edit Paths In Snooz Workspace",
         "tool_category": "1-Preprocessing",
         "tool_author": "Mohammad Hasan Azad",

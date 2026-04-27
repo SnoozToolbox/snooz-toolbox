@@ -1,7 +1,7 @@
 {
     "item_name": "ScoreSleepStagesYASA",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/YASA_Automatic_Sleep_Scoring.html",
     "tool_params": {
         "tool_label": "Score Sleep Stages with YASA",
@@ -9,7 +9,7 @@
         "tool_author": "Mohammad Hasan Azad",
         "tool_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/YASA_Automatic_Sleep_Scoring.html",
         "tool_description": "This is a tool to score sleep stages automaticly",
-        "tool_version": "0.0.0",
+        "tool_version": "2.3.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

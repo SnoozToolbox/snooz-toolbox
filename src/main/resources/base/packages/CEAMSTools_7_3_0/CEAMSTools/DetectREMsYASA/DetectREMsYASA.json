@@ -1,7 +1,7 @@
 {
     "item_name": "DetectREMsYASA",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/DetectREMsYASA.html",
     "tool_params": {
         "tool_label": "Detect REM events with YASA",
@@ -9,7 +9,7 @@
         "tool_author": "Mohammad Hasan Azad",
         "tool_url": "",
         "tool_description": "This tool uses YASA REMs Detector function to detect Rapid Eye Movements",
-        "tool_version": "0.0.0",
+        "tool_version": "3.3.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

@@ -1,11 +1,12 @@
 {
     "item_name": "ConvertEDFbrowser",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/EDFbrowser_Converter.html#convert-edfbrowser",
     "item_author": "Karine Lacourse",
     "item_description": "\"To convert the EDFbrowser .txt accessory files to Snooz accessory tsv file.\"",
     "tool_params": {
+        "tool_version": "2.1.0",
         "tool_label": "Convert Annotations from EDFbrowser",
         "tool_category": "1-Preprocessing",
         "asset_directory": "",

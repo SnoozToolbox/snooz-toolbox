@@ -2,8 +2,9 @@
     "item_name": "RenameFiles",
     "item_type": "tool",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/Rename_files.html#rename-files",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "tool_params": {
+        "tool_version": "2.1.0",
         "tool_label": "Rename Files",
         "tool_category": "1-Preprocessing",
         "tool_author": "CEAMS",

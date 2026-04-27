@@ -2,14 +2,14 @@
     "item_name": "AnalyzeEEGConnectivity",
     "item_type": "tool",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Processing/Analyze_EEG_connectivity.html#analyze-eeg-connectivity",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "tool_params": {
         "tool_label": "Analyze EEG Connectivity",
         "tool_category": "2-Processing",
         "tool_author": "Hanieh Bazreagrzadeh",
         "tool_url": "",
         "tool_description": "",
-        "tool_version": "2.0.0",
+        "tool_version": "2.2.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

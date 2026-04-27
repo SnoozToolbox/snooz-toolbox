@@ -2,14 +2,14 @@
     "item_name": "ImportSleepStagesVector",
     "item_type": "tool",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/Sleep_Stages_Importer.html#import-sleep-stages-vector",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "tool_params": {
         "tool_label": "Import Sleep Stage Text Vector",
         "tool_category": "1-Preprocessing",
         "tool_author": "CIUSSS-NIM",
         "tool_url": "",
         "tool_description": "To import sleep stages files into Snooz.",
-        "tool_version": "0.2.0",
+        "tool_version": "2.3.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

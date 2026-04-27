@@ -2,14 +2,14 @@
     "item_name": "ImportEDFPlusAnnotations",
     "item_type": "tool",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/EDF_Annotations_Importer.html#import-edf-plus-annotations",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "tool_params": {
         "tool_label": "Import Annotations from EDF+",
         "tool_category": "1-Preprocessing",
         "tool_author": "CEAMS",
         "tool_url": "",
         "tool_description": "To import the annotations from the EDF+ format.",
-        "tool_version": "0.1.0",
+        "tool_version": "2.1.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

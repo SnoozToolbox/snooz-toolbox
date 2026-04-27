@@ -1,11 +1,12 @@
 {
     "item_name": "SlowWaveImages",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/Slow_Wave_Images_Generator.html#slow-wave-images-generator",
     "item_author": "Karine Lacourse",
     "item_description": "",
     "tool_params": {
+        "tool_version": "2.3.0",
         "tool_label": "Visualize Slow Waves",
         "tool_category": "3-Postprocessing",
         "asset_directory": "",

@@ -1,14 +1,14 @@
 {
     "item_name": "ImportTextAnnotations",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "tool_params": {
         "tool_label": "Import Annotations from Text",
         "tool_category": "1-Preprocessing",
         "tool_author": "CEAMS",
         "tool_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Preprocessing/Import_Annotations_from_Text.html#import-annotations-from-text",
         "tool_description": "To import annotations from a text file into the Snooz annotations file.",
-        "tool_version": "0.3.0",
+        "tool_version": "2.3.0",
         "package_name": "CEAMSTools",
         "steps": [
             {

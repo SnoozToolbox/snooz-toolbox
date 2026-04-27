@@ -1,10 +1,11 @@
 {
     "item_name": "PSAImages",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/PSAImages.html",
     "item_author": "Mohammad Hasan Azad",
     "tool_params": {
+        "tool_version": "2.0.0",
         "tool_label": "Visualize EEG Spectral Power",
         "tool_category": "Postprocessing",
         "tool_author": "Mohammad Hasan Azad",

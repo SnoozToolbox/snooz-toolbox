@@ -1,11 +1,12 @@
 {
     "item_name": "CompareEventsFromPSG",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/Compare_PSG_events.html#compare-events-from-a-psg-file",
     "item_author": "Karine Lacourse",
     "item_description": "Compare 2 sets of events (experts and detections) to evaluate the performance of detections. ",
     "tool_params": {
+        "tool_version": "2.2.0",
         "tool_label": "Evaluate Detected Events",
         "tool_category": "3-Postprocessing",
         "asset_directory": "",

@@ -1,11 +1,12 @@
 {
     "item_name": "SleepCycleExport",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Processing/Sleep_cycles_export.html#sleep-cycles",
     "item_author": "",
     "item_description": "",
     "tool_params": {
+        "tool_version": "2.4.0",
         "tool_label": "Report Sleep Cycle",
         "tool_category": "2-Processing",
         "asset_directory": "",

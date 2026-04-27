@@ -1,11 +1,12 @@
 {
     "item_name": "OxygenSaturationReport",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Processing/Oxygen_saturation_report.html#oxygen-saturation-report",
     "item_author": "CEAMS",
     "item_description": "To generate oxygen saturation report.",
     "tool_params": {
+        "tool_version": "2.8.0",
         "tool_label": "Report Oxygen Saturation",
         "tool_category": "2-Processing",
         "asset_directory": "",

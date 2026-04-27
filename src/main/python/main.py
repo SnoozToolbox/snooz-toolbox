@@ -75,12 +75,29 @@ class AppContext(ApplicationContext):
             executeConsole(filename)
             return None
 
+def _maybe_dev_package_item_version_sync():
+    """
+    In dev (GUI or headless/--f), align embedded and optional sibling (snooz-package-ceams)
+    package item JSONs. If the sibling repo is absent, only embedded packages are synced.
+    Failures are swallowed so startup is not blocked.
+    """
+    if not config.is_dev:
+        return
+    try:
+        from sync_package_item_json_versions import run_dev_package_item_version_sync
+
+        run_dev_package_item_version_sync()
+    except Exception:
+        pass
+
 def main():
     parser = argparse.ArgumentParser(description='Snooz')
     parser.add_argument("--f", help="The process description file in JSON format.")
     parser.add_argument("--headless", action="store_true", help="Run in headless mode (no GUI dependencies).")
     args, unknown = parser.parse_known_args()
 
+    _maybe_dev_package_item_version_sync()
+    
     # Redirect stdout/stderr to avoid terminal messages from joblib, etc., in packaged mode
     if not config.is_dev and not config.HEADLESS_MODE:
         sys.stdout = open(os.devnull, 'w')

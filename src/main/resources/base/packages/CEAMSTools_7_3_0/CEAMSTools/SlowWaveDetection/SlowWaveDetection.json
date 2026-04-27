@@ -1,11 +1,12 @@
 {
     "item_name": "SlowWaveDetection",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Processing/Slow_wave_detection.html#slow-wave-detection",
     "item_author": "",
     "item_description": "",
     "tool_params": {
+        "tool_version": "2.6.0",
         "tool_label": "Detect Slow Waves",
         "tool_category": "2-Processing",
         "asset_directory": "",

@@ -1,11 +1,12 @@
 {
     "item_name": "DetectionsCohortReview",
     "item_type": "tool",
-    "item_api_version": "2.0.0",
+    "item_api_version": "3.0.0",
     "item_url": "https://snooz-toolbox-documentation.readthedocs.io/latest/user_guide/tools/Postprocessing/Detections_Cohort_Review.html#detections-cohort-review",
     "item_author": "Karine Lacourse",
     "item_description": "To clean and transpose the Spindle/Slow wave detector output.",
     "tool_params": {
+        "tool_version": "2.2.0",
         "tool_label": "Review Detections for the Cohort",
         "tool_category": "3-Postprocessing",
         "asset_directory": "",
