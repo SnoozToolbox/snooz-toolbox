@@ -2,8 +2,14 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2025
 See the file LICENCE for full license details.
 
-    TrimSignal
-    TODO CLASS DESCRIPTION
+TrimSignal
+----------
+Trim continuous/discontinuous signal segments and their associated events to a
+time window defined by `start_sec` and `duration_sec`.
+
+- Signals are cropped in sample space for each channel/segment.
+- Events are filtered to keep only overlapping events, then clipped to window bounds.
+- If `reset_time=True`, output times are shifted so the trimmed window starts at 0.
 """
 from flowpipe import SciNode, InputPlug, OutputPlug
 from commons.NodeInputException import NodeInputException
@@ -15,32 +21,33 @@ DEBUG = False
 
 class TrimSignal(SciNode):
     """
-    TODO CLASS DESCRIPTION
+    Trim a list of SignalModel objects and an events table to a target time window.
 
     Parameters
     ----------
-        signals: TODO TYPE
-            TODO DESCRIPTION
-        events: TODO TYPE
-            TODO DESCRIPTION
-        start_sec: TODO TYPE
-            TODO DESCRIPTION
-        duration_sec: TODO TYPE
-            TODO DESCRIPTION
-        reset_time: TODO TYPE
-            TODO DESCRIPTION
-        
+        signals: list[SignalModel]
+            Input signal segments to crop. Each element is expected to provide
+            at least: `samples`, `sample_rate`, `start_time`, `end_time`, and `duration`.
+        events: pandas.DataFrame
+            Event annotations with at least `start_sec` and `duration_sec` columns.
+        start_sec: float | str
+            Absolute start time (in seconds) of the trimming window.
+        duration_sec: float | str
+            Duration (in seconds) of the trimming window.
+        reset_time: bool
+            If True, output signal/event times are shifted so trimmed data starts at 0.
+            If False, absolute timeline is preserved.
 
     Returns
     -------
-        signals: TODO TYPE
-            TODO DESCRIPTION
-        events: TODO TYPE
-            TODO DESCRIPTION
-        
+        signals: list[SignalModel]
+            Deep-copied and trimmed signals, with updated timing metadata.
+        events: pandas.DataFrame
+            Events overlapping the trimming window, clipped to boundaries and optionally
+            time-shifted depending on `reset_time`.
     """
     def __init__(self, **kwargs):
-        """ Initialize module TrimSignal """
+        """Initialize TrimSignal node input/output plugs."""
         super().__init__(**kwargs)
         if DEBUG: print('TrimSignal.__init__')
 
@@ -55,94 +62,40 @@ class TrimSignal(SciNode):
         # Output plugs
         OutputPlug('signals',self)
         OutputPlug('events',self)
-        
-
-        # Init module variables
-        self.this_is_an_example_you_can_delete_it = 0
-
-        # A master module allows the process to be reexcuted multiple time.
-        # For exemple, this is useful when the process must be repeated over multiple
-        # files. When the master module is done, ie when all the files were process, 
-        # The compute function must set self.is_done = True
-        # There can only be 1 master module per process.
-        self._is_master = False 
+    
     
     def compute(self, signals, events, start_sec, duration_sec, reset_time=True):
         """
-        TODO DESCRIPTION
+        Trim signals and events to a time window.
 
         Parameters
         ----------
-            signals: TODO TYPE
-                TODO DESCRIPTION
-            events: TODO TYPE
-                TODO DESCRIPTION
-            start_sec: TODO TYPE
-                TODO DESCRIPTION
-            duration_sec: TODO TYPE
-                TODO DESCRIPTION
-            reset_time: TODO TYPE
-                TODO DESCRIPTION
-            
+            signals: list[SignalModel]
+                Input signal segments to trim.
+            events: pandas.DataFrame
+                Input events table containing `start_sec` and `duration_sec`.
+            start_sec: float | str
+                Start time of trimming window in seconds.
+            duration_sec: float | str
+                Length of trimming window in seconds.
+            reset_time: bool
+                Whether to shift output timeline to start at 0.
 
         Returns
         -------
-            signals: TODO TYPE
-                TODO DESCRIPTION
-            events: TODO TYPE
-                TODO DESCRIPTION
-            
+            signals: list[SignalModel]
+                Trimmed signal list.
+            events: pandas.DataFrame
+                Trimmed/clipped event table.
 
         Raises
         ------
             NodeInputException
-                If any of the input parameters have invalid types or missing keys.
+                If input types are invalid, required values are missing, or requested
+                trim window is out of bounds.
             NodeRuntimeException
-                If an error occurs during the execution of the function.
+                Reserved for runtime failures during processing.
         """
-
-        # Code examples
-
-        # Raise NodeInputException if the an input is wrong. This type of
-        # exception will stop the process with the error message given in parameter.
-        # raise NodeInputException(self.identifier, "my_input", \
-        #        f"TrimSignal this input is wrong.")
-
-        # Raise NodeRuntimeException if there is a critical error during runtime. 
-        # This will usually be a user error, a file that can't be read due to security reason,
-        # a parameter that is out of bound, etc. This exception will stop and skip the current
-        # process but will not stop the followin iterations if a master node is not done.
-        # Once the master node is completed, a dialog will appear to show all NodeRuntimeException
-        # to the user.
-        #
-        # Set the iteration_identifier if this module is a master node.
-        # This will be used to identify the problematic iteration if a runtime exception occurs
-        # in any module during this process. For example, a master node that reads one file at a 
-        # could set the identifier to the name of the file.
-        # self.iteration_identifier = current_filename
-        #
-        # Iteration count and counter are used to show a progress bar in percent.
-        # Update these when creating a master node to properly show the progress 
-        # for each iteration. This is optional and can be ignored but it's a good practice
-        # to do for your users.
-        #self.iteration_count = the total amout of iteration to make
-        #self.iteration_counter = the current iteration number
-
-        #
-        # Raise the runtime exception
-        # raise NodeRuntimeException(self.identifier, "files", \
-        #        f"Some file could not be open.")
-
-        #
-        #
-
-        # Write to the cache to use the data in the resultTab
-        # cache = {}
-        # cache['this_is_a_key'] = 42
-        # self._cache_manager.write_mem_cache(self.identifier, cache)
-
-        # Log message for the Logs tab
-
 
         # --- 1) INPUT CHECKS ---
         if not isinstance(signals, list):

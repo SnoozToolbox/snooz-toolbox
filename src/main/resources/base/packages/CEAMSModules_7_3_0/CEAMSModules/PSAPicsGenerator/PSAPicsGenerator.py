@@ -25,7 +25,7 @@ class PSAPicsGenerator(SciNode):
     * The PSA tool has been renamed "Analyze EEG Spectral Power" in Snooz CEAMS package 7.3.0.
 
     This module processes PSA data files and generates various types of plots including:
-    - Subject-level plots (individual subjects, single or all channels)
+    - group-level plots (individual groups, single or all channels)
     - Cohort-level plots (group averages with standard deviation bands)
     - Support for multiple sleep stages, frequency ranges, and log/linear scales
     - Automatic color expansion for scenarios with many recordings
@@ -43,7 +43,7 @@ class PSAPicsGenerator(SciNode):
         Keys are channel labels or ROI names. Values are boolean selection flags.
     pics_param : dict
         Plotting parameters with keys:
-        - 'cohort_avg', 'cohort_sel', 'subject_avg', 'subject_sel': bool flags for plot types
+        - 'cohort_avg', 'cohort_sel', 'group_avg', 'group_sel': bool flags for plot types
         - 'display': str, display mode ('all', 'mean', 'mean_std')
         - 'force_axis': bool or [xmin, xmax, ymin, ymax]
         - 'output_folder': str, path to save figures
@@ -51,7 +51,7 @@ class PSAPicsGenerator(SciNode):
         - 'log_scale': bool, use log scale for y-axis
         - 'show_legend': bool, show legend on plots (default: True)
         - 'font': str, font family for all text (default: 'Arial')
-        - 'fontsize': int, font size for titles (default: 12)
+        - 'fontsize': int, font size for axis labels and legend (default: 12)
         - 'figure_width': float, figure width in inches (default: 6)
         - 'figure_height': float, figure height in inches (default: 8)
         - 'sleep_stage_selection': list of str, sleep stages to include
@@ -61,7 +61,7 @@ class PSAPicsGenerator(SciNode):
         
     colors_param : dict
         Color palettes for different plot types with keys:
-        - 'subject_avg', 'subject_sel', 'cohort': list of color strings
+        - 'group_avg', 'group_sel', 'cohort': list of color strings
 
     """
     def __init__(self, **kwargs):
@@ -220,19 +220,19 @@ class PSAPicsGenerator(SciNode):
                             print(f"No data extracted for {ch}")
 
                     # **********************************************
-                    # One figure for the current subject : one picture per channel or ROI
+                    # One figure for the current group : one picture per channel or ROI
                     # **********************************************
-                    if pics_param['subject_sel'] | pics_param['cohort_sel']:
-                        # Save figure for a subject and a channel.
-                        if pics_param['subject_sel']:
-                            fig_save = 'subject_sel'
+                    if pics_param['group_sel'] | pics_param['cohort_sel']:
+                        # Save figure for a group and a channel.
+                        if pics_param['group_sel']:
+                            fig_save = 'group_sel'
                         else:
                             fig_save = False
                         
-                        # Only call plotting function if we need to save subject figure
+                        # Only call plotting function if we need to save group figure
                         if fig_save:
-                            self._save_subject_chan_fig_psa(psa_data_ch_sel, \
-                                pics_param, file_name, chan_label, fig_save, colors_param['subject_sel'])
+                            self._save_group_chan_fig_psa(psa_data_ch_sel, \
+                                pics_param, file_name, chan_label, fig_save, colors_param['group_sel'])
                             self._log_manager.log(self.identifier, \
                                 f"Images are generated for the file {file_name} and channel/ROI {ch}.")
                         
@@ -245,43 +245,43 @@ class PSAPicsGenerator(SciNode):
                                 psa_data_per_chan[chan_label] = \
                                     [[psa_data_ch_sel, file_group_name]]
 
-                    if pics_param['subject_avg'] | pics_param['cohort_avg']:
+                    if pics_param['group_avg'] | pics_param['cohort_avg']:
                         if psa_data_ch_sel is not None and len(psa_data_ch_sel) > 0:
                             psa_data_all_chan.append(psa_data_ch_sel) # psa_data_all_chan is a list of DataFrame
 
             # **********************************************
-            # One figure for the current subject : one picture for all channels
+            # One figure for the current group : one picture for all channels
             # **********************************************
-            if pics_param['subject_avg'] | pics_param['cohort_avg']:
-                if pics_param['subject_avg']:
-                    fig_save = 'subject_avg'
+            if pics_param['group_avg'] | pics_param['cohort_avg']:
+                if pics_param['group_avg']:
+                    fig_save = 'group_avg'
                 else:
                     fig_save = False
                 if len(chan_label_all_chan)>1:
-                    colors = colors_param['subject_avg']
+                    colors = colors_param['group_avg']
                 else:
                     # If there is only one channel, differentiate the categories by color.
-                    colors = colors_param['subject_sel']
+                    colors = colors_param['group_sel']
                 if (len(psa_data_all_chan)>0):
                     # psa_avg : numpy array
-                    #     Average PSA for all channels for the current subject
+                    #     Average PSA for all channels for the current group
                     if fig_save:
-                        self._save_subject_chan_fig_psa(psa_data_all_chan, \
+                        self._save_group_chan_fig_psa(psa_data_all_chan, \
                             pics_param, file_name, chan_label_all_chan, fig_save, colors)
                         self._log_manager.log(self.identifier, \
                             f"The image is generated for the file {file_name} for all channels.")
 
-            # Accumulate data for cohort analysis (independent of subject_avg plotting)
+            # Accumulate data for cohort analysis (independent of group_avg plotting)
             if pics_param['cohort_avg']:
-                # For cohort_avg, store all channel data (not averaged) to compute proper std across subjects
-                # Each subject contributes their list of channel DataFrames
+                # For cohort_avg, store all channel data (not averaged) to compute proper std across groups
+                # Each group contributes their list of channel DataFrames
                 if len(psa_data_all_chan) > 0:
                     if file_group_name in psa_data_cohort.keys():
                         psa_data_cohort[file_group_name].append(psa_data_all_chan)
                     else:
                         psa_data_cohort[file_group_name] = [psa_data_all_chan]
 
-        # -> all subjects are processed
+        # -> all groups are processed
 
         # **********************************************
         # One figure for the cohort : one picture per channel
@@ -289,7 +289,7 @@ class PSAPicsGenerator(SciNode):
         if pics_param['cohort_sel']:
             # For each channel in chans_ROIs_sel dict
             for ch, psa_data_grp in psa_data_per_chan.items():
-                # For each subject accumulate data
+                # For each group accumulate data
                 psa_data = {}
                 for psa_data_cur_sjt, group_cur_sjt in psa_data_grp:
                     if not (group_cur_sjt in psa_data.keys()):
@@ -422,9 +422,9 @@ class PSAPicsGenerator(SciNode):
                 
         return psa_data_ch_sel
 
-    def _save_subject_chan_fig_psa(self, psa_data_all_chan, pics_param, base_name, chan_label, fig_save, colors):
+    def _save_group_chan_fig_psa(self, psa_data_all_chan, pics_param, base_name, chan_label, fig_save, colors):
         """
-        Function to save figure for a subject.
+        Function to save figure for a group.
         This function display PSA data for the selected channels/ROIs.
 
         Parameters
@@ -447,7 +447,7 @@ class PSAPicsGenerator(SciNode):
         if not fig_save:
             return None, None
             
-        if 'subject' in fig_save:
+        if 'group' in fig_save:
             # Initialize the figure and canvas for plotting
             fig = Figure()
             fig.set_size_inches(self.figsize)
@@ -460,9 +460,14 @@ class PSAPicsGenerator(SciNode):
 
         n_channels = len(psa_data_all_chan)
         legend_labels = {}
+        # >10 channels: always pass through _expand_colors so the extended
+        # distinct-color path is used. If the palette is missing or shorter than
+        # n_channels, expand too (avoids IndexError on colors[i_chan]).
+        if n_channels > 10 or (not colors) or (len(colors) < n_channels):
+            colors = self._expand_colors(colors, n_channels)
         
         if DEBUG:
-            print(f"_save_subject_chan_fig_psa: Processing {n_channels} channels/ROIs")
+            print(f"_save_group_chan_fig_psa: Processing {n_channels} channels/ROIs")
             print(f"Channel labels: {chan_label}")
             print(f"Colors available: {len(colors)} colors")
             
@@ -471,7 +476,7 @@ class PSAPicsGenerator(SciNode):
         log_scale = pics_param.get('log_scale', False)
         sleep_stage_selection = pics_param.get('sleep_stage_selection', ['All'])
 
-        # Build activity variable string for filename and title
+        # Build activity variable string for filename
         if pics_param['activity_var'] == 'total':
             activity_str = 'Total'
         elif pics_param['activity_var'] in ['clock_h', 'stage_h']:
@@ -479,7 +484,7 @@ class PSAPicsGenerator(SciNode):
         elif pics_param['activity_var'] == 'cyc':
             activity_str = f"{pics_param['activity_var']}{pics_param['cycle']}"
         
-        # Build stage string for title
+        # Build stage string for filename
         if len(sleep_stage_selection) == 1:
             stage_str = sleep_stage_selection[0]
         else:
@@ -500,14 +505,14 @@ class PSAPicsGenerator(SciNode):
                 
                 # If there are multiple filenames, process each separately
                 if len(unique_filenames) > 1:
-                    # Check if we should compute mean across subjects
+                    # Check if we should compute mean across groups
                     if 'mean' in pics_param['display']:
                         # Use common frequency grid spanning full range
                         common_freq = np.linspace(freq_range[0], freq_range[1], 100)
                         
-                        # Collect data from all subjects for mean/std calculation
+                        # Collect data from all groups for mean/std calculation
                         for stage in sleep_stage_selection:
-                            subject_power_data = []
+                            group_power_data = []
                             
                             for filename_val in unique_filenames:
                                 psa_data_for_file = psa_data_cur_chan[psa_data_cur_chan['filename'] == filename_val]
@@ -534,20 +539,21 @@ class PSAPicsGenerator(SciNode):
                                     # Interpolate to common grid (no masking, interpolate full data)
                                     if len(power_data) > 0 and len(freq_low) > 0:
                                         interp_power = np.interp(common_freq, freq_low, power_data, left=np.nan, right=np.nan)
-                                        subject_power_data.append(interp_power)
+                                        group_power_data.append(interp_power)
                             
-                            # Compute mean and std across subjects
-                            if subject_power_data and len(subject_power_data) > 0:
-                                subject_power_data = np.array(subject_power_data)
-                                mean_power = np.nanmean(subject_power_data, axis=0)
-                                std_power = np.nanstd(subject_power_data, axis=0)
+                            # Compute mean and std across groups
+                            if group_power_data and len(group_power_data) > 0:
+                                group_power_data = np.array(group_power_data)
+                                mean_power = np.nanmean(group_power_data, axis=0)
+                                std_power = np.nanstd(group_power_data, axis=0)
                                 
                                 # Plot mean line
                                 stage_idx = sleep_stage_selection.index(stage)
                                 linestyle_idx = stage_idx % len(self.linestyles)
                                 
-                                # Simplified label - just channel name
-                                label_name = f'{chan_label[i_chan]}'
+                                # Include sleep stage in the label so multiple stages on one
+                                # channel produce distinct legend entries (cohort uses stage-group).
+                                label_name = f'{chan_label[i_chan]} - {stage}'
                                 if label_name not in legend_labels:
                                     ax.plot(common_freq, mean_power, color=colors[i_chan],
                                            linestyle=self.linestyles[linestyle_idx],
@@ -577,11 +583,11 @@ class PSAPicsGenerator(SciNode):
                                                        linestyle=self.linestyles[linestyle_idx],
                                                        linewidth=1.5)
                     else:
-                        # Display all individual subjects - use interpolation for consistency
+                        # Display all individual groups - use interpolation for consistency
                         total_items = len(unique_filenames) * n_channels
                         expanded_colors = self._expand_colors(colors, total_items)
                         
-                        # Use common frequency grid for all subjects
+                        # Use common frequency grid for all groups
                         common_freq = np.linspace(freq_range[0], freq_range[1], 200)
                         
                         for filename_idx, filename_val in enumerate(unique_filenames):
@@ -590,6 +596,7 @@ class PSAPicsGenerator(SciNode):
                             freq_low = psa_data_for_file['freq_low_Hz'].values
                             
                             # Get power columns (stage-specific activity) based on stage selection
+                            # Store (column_name, stage) so legend labels can name each stage.
                             power_columns = []
                             for stage in sleep_stage_selection:
                                 if stage == 'All' and pics_param['activity_var'] == 'total':
@@ -606,10 +613,10 @@ class PSAPicsGenerator(SciNode):
                                     stage_col = f"{pics_param['activity_var']}{pics_param['cycle']}_{stage}_act"
 
                                 if stage_col in psa_data_for_file.columns:
-                                    power_columns.append(stage_col)
+                                    power_columns.append((stage_col, stage))
                             
                             if power_columns:
-                                for stage_idx, stage_col in enumerate(power_columns):
+                                for stage_idx, (stage_col, stage_name) in enumerate(power_columns):
                                     color_idx = (i_chan * len(unique_filenames) + filename_idx) % len(expanded_colors)
                                     linestyle_idx = stage_idx % len(self.linestyles)
                                     power_data = psa_data_for_file[stage_col].values
@@ -626,9 +633,9 @@ class PSAPicsGenerator(SciNode):
                                                 filename_short = str(filename_val)
                                             
                                             if n_channels > 1:
-                                                label_name = f'{chan_label[i_chan]}_{filename_short}'
+                                                label_name = f'{chan_label[i_chan]}_{filename_short} - {stage_name}'
                                             else:
-                                                label_name = f'{filename_short}'
+                                                label_name = f'{filename_short} - {stage_name}'
                                             
                                             if label_name not in legend_labels:
                                                 ax.plot(common_freq, interp_power, color=expanded_colors[color_idx], 
@@ -660,10 +667,10 @@ class PSAPicsGenerator(SciNode):
                             stage_col = f"{pics_param['activity_var']}{pics_param['cycle']}_{stage}_act"
 
                         if stage_col in psa_data_cur_chan.columns:
-                            power_columns.append(stage_col)
+                            power_columns.append((stage_col, stage))
                     
                     if power_columns:
-                        for stage_idx, stage_col in enumerate(power_columns):
+                        for stage_idx, (stage_col, stage_name) in enumerate(power_columns):
                             linestyle_idx = stage_idx % len(self.linestyles)
                             power_data = psa_data_cur_chan[stage_col].values
                             
@@ -672,7 +679,7 @@ class PSAPicsGenerator(SciNode):
                                 interp_power = np.interp(common_freq, freq_low, power_data, left=np.nan, right=np.nan)
                                 
                                 if fig_save:
-                                    label_name = f'{chan_label[i_chan]}'
+                                    label_name = f'{chan_label[i_chan]} - {stage_name}'
                                     if label_name not in legend_labels:
                                         ax.plot(common_freq, interp_power, color=colors[i_chan], 
                                                label=label_name, linewidth=2, linestyle=self.linestyles[linestyle_idx])
@@ -702,38 +709,31 @@ class PSAPicsGenerator(SciNode):
 
         # If the function is used to generate pictures
         if fig_save:
-            if pics_param['subject_avg'] | pics_param['subject_sel']:
+            if pics_param['group_avg'] | pics_param['group_sel']:
                 # Build comprehensive filename
                 base_filename = os.path.splitext(os.path.basename(base_name))[0]
                 
-                # Build filename and title based on plot type
-                if pics_param['subject_sel'] and 'subject_sel' in fig_save:
-                    # subject_sel: always include channel name in filename
+                # Build filename based on plot type (no figure title; filenames carry context)
+                if pics_param['group_sel'] and 'group_sel' in fig_save:
+                    # group_sel: always include channel name in filename
                     fig_name = f"{pics_param['output_folder']}/{base_filename}_{chan_label[0]}_psa_{activity_str}_{stage_str}"
-                    fig_title = f"{base_filename} {chan_label[0]} - {activity_str} - {stage_str}"
-                elif pics_param['subject_avg'] and 'subject_avg' in fig_save:
-                    # subject_avg: include 'avg' suffix to distinguish from subject_sel
+                elif pics_param['group_avg'] and 'group_avg' in fig_save:
+                    # group_avg: include 'avg' suffix to distinguish from group_sel
                     if len(chan_label) == 1:
-                        # Single channel case: add 'avg' to differentiate from subject_sel
+                        # Single channel case: add 'avg' to differentiate from group_sel
                         fig_name = f"{pics_param['output_folder']}/{base_filename}_{chan_label[0]}_avg_psa_{activity_str}_{stage_str}"
-                        fig_title = f"{base_filename} {chan_label[0]} - {activity_str} - {stage_str}"
                     else:
                         # Multiple channels case
                         fig_name = f"{pics_param['output_folder']}/{base_filename}_avg_psa_{activity_str}_{stage_str}"
-                        fig_title = f"{base_filename} - {activity_str} - {stage_str}"
                 else:
                     # Fallback (shouldn't happen)
                     fig_name = f"{pics_param['output_folder']}/{base_filename}_psa_{activity_str}_{stage_str}"
-                    fig_title = f"{base_filename} - {activity_str} - {stage_str}"
                 
-                # Add mean/std suffix to both filename and title
+                # Add mean/std suffix to filename
                 if 'mean' in pics_param['display']:
                     fig_name += '_mean'
-                    fig_title += ' (Mean'
                     if 'std' in pics_param['display']:
                         fig_name += '_std'
-                        fig_title += '±SD'
-                    fig_title += ')'
                 
                 fig_name += '.pdf'
 
@@ -745,7 +745,6 @@ class PSAPicsGenerator(SciNode):
 
                 # Get font settings from parameters
                 font_family = pics_param.get('font', 'Arial')
-                title_fontsize = pics_param.get('fontsize', 12) + 2
                 label_fontsize = pics_param.get('fontsize', 12)
 
                 ax.set_xlabel('Frequency (Hz)', fontsize=label_fontsize, fontfamily=font_family)
@@ -755,7 +754,6 @@ class PSAPicsGenerator(SciNode):
                 else:
                     ax.set_ylabel('Power (μV²/Hz)', fontsize=label_fontsize, fontfamily=font_family)
                 ax.grid(which='both', axis='both')
-                ax.set_title(fig_title, fontsize=title_fontsize, fontfamily=font_family)
                 
                 # Update tick label font
                 for label in ax.get_xticklabels():
@@ -765,9 +763,11 @@ class PSAPicsGenerator(SciNode):
                     label.set_fontfamily(font_family)
                     label.set_fontsize(label_fontsize)
                 
-                # Add legend based on user preference and if there are multiple items
+                # Add legend based on user preference (same rule as cohort plots).
+                # Previously required len(legend_labels) > 1, which hid the legend when
+                # every curve reused the same channel-only label across sleep stages.
                 show_legend = pics_param.get('show_legend', True)
-                if show_legend and len(legend_labels) > 1:
+                if show_legend:
                     legend = ax.legend(loc='upper right', prop={'family': font_family, 'size': label_fontsize})
                 
                 try:
@@ -800,7 +800,7 @@ class PSAPicsGenerator(SciNode):
         -----------  
             None
         """
-        # Build activity variable string for filename and title
+        # Build activity variable string for filename
         if pics_param['activity_var'] == 'total':
             activity_str = 'Total'
         elif pics_param['activity_var'] in ['clock_h', 'stage_h']:
@@ -808,10 +808,9 @@ class PSAPicsGenerator(SciNode):
         elif pics_param['activity_var'] == 'cyc':
             activity_str = f"{pics_param['activity_var']}{pics_param['cycle']}"
         
-        # Build filename and title with optional channel label
+        # Build filename with optional channel label (no figure title)
         chan_suffix = f'_{chan_label}' if chan_label else ''
         fig_name = f"{pics_param['output_folder']}/cohort_psa_{pics_param['display']}_{activity_str}{chan_suffix}.pdf"
-        fig_title = f"Cohort PSA {activity_str}{' ' + chan_label if chan_label else ''}"
 
         # Create the figure
         fig = Figure()
@@ -827,6 +826,12 @@ class PSAPicsGenerator(SciNode):
 
         # Create the unique list of keys of psa_data
         group_list = list(psa_data.keys())
+        n_groups = len(group_list)
+        # Mirror group-level color guard:
+        # - always expand when there are >10 groups (distinct-color mode)
+        # - also expand when palette is missing/short to keep colors[i_grp] safe.
+        if n_groups > 10 or (not colors) or (len(colors) < n_groups):
+            colors = self._expand_colors(colors, n_groups)
 
         # signal_to_plot_grp : dict of list of numpy array
         #         keys are the subject group and values are the average signal for the current channel or ROI
@@ -900,7 +905,7 @@ class PSAPicsGenerator(SciNode):
 
                             if interpolated_power:
                                 freq_to_plot = common_freq
-                                subject_avg_power = np.nanmean(interpolated_power, axis=0)
+                                group_avg_power = np.nanmean(interpolated_power, axis=0)
                             else:
                                 continue
                             
@@ -910,15 +915,15 @@ class PSAPicsGenerator(SciNode):
                             if 'mean' in pics_param['display']:
                                 if cohort_group in signal_to_plot_grp.keys():
                                     if f'stage_{stage_name}' in signal_to_plot_grp[cohort_group].keys():
-                                        signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = np.concatenate((signal_to_plot_grp[cohort_group][f'stage_{stage_name}'], subject_avg_power.reshape(-1,1)), axis=1)
+                                        signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = np.concatenate((signal_to_plot_grp[cohort_group][f'stage_{stage_name}'], group_avg_power.reshape(-1,1)), axis=1)
                                     else:
-                                        signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = subject_avg_power.reshape(-1,1)
+                                        signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = group_avg_power.reshape(-1,1)
                                 else:
                                     signal_to_plot_grp[cohort_group] = {}
-                                    signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = subject_avg_power.reshape(-1,1)
+                                    signal_to_plot_grp[cohort_group][f'stage_{stage_name}'] = group_avg_power.reshape(-1,1)
                             else:
                                 # Display individual subject's channel-averaged PSA trace
-                                ax.plot(freq_to_plot, subject_avg_power, color=colors[i_grp], 
+                                ax.plot(freq_to_plot, group_avg_power, color=colors[i_grp], 
                                        linestyle=self.linestyles[stage_idx % len(self.linestyles)], 
                                        alpha=0.7, linewidth=1.5)
                                 
@@ -1051,7 +1056,6 @@ class PSAPicsGenerator(SciNode):
 
         # Get font settings from parameters
         font_family = pics_param.get('font', 'Arial')
-        title_fontsize = pics_param.get('fontsize', 12) + 2
         label_fontsize = pics_param.get('fontsize', 12)
 
         ax.grid(which='both', axis='both')
@@ -1074,12 +1078,6 @@ class PSAPicsGenerator(SciNode):
         show_legend = pics_param.get('show_legend', True)
         if show_legend:
             legend = ax.legend(loc="upper right", prop={'family': font_family, 'size': label_fontsize})
-        
-        ax.set_title(fig_title, fontsize=title_fontsize, fontfamily=font_family)
-        
-        # For cohort_avg, add overall title
-        if pics_param['cohort_avg']:
-            ax.set_title(f"{fig_title}", fontsize=title_fontsize, fontfamily=font_family)
 
         try:
             fig.savefig(fig_name)

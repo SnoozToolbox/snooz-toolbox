@@ -35,10 +35,17 @@ Optional (future) plot_options (NOT required for now):
 
 import os
 import re
+
+# Force a non-interactive backend before importing any matplotlib submodule.
+os.environ["MPLBACKEND"] = "Agg"
+import matplotlib
+matplotlib.use("Agg", force=True)
 from matplotlib import ticker
 import numpy as np
 import pandas as pd
+
 import matplotlib.pyplot as plt
+plt.switch_backend("Agg")
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 from matplotlib.collections import LineCollection
@@ -138,9 +145,9 @@ class ConnectivityDetails(SciNode):
 
             plt.figure(figsize=(fig_w, fig_h), dpi=200)
             if metric == 'wpli':
-                im = plt.imshow(matrix, cmap="jet", aspect="auto", vmin=0.0, vmax=0.3)  # <-- set limits
+                im = plt.imshow(matrix, cmap="jet", aspect="auto", origin="lower", vmin=0.0, vmax=0.3)  # <-- set limits
             elif metric == 'dpli':
-                im = plt.imshow(matrix, cmap="jet", aspect="auto", vmin=0.3, vmax=0.7)  # <-- set limits
+                im = plt.imshow(matrix, cmap="jet", aspect="auto", origin="lower", vmin=0.3, vmax=0.7)  # <-- set limits
             cbar = plt.colorbar(im)
 
             # --- force formatting with 2 decimal places ---

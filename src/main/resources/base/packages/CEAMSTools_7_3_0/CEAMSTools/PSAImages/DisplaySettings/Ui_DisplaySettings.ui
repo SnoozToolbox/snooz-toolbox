@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>679</height>
+    <width>788</width>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -90,7 +90,7 @@ Note that the condition groups and channels are not limited to four; ten colors 
       </spacer>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_subject_avg_auto">
+      <widget class="QCheckBox" name="checkBox_group_avg_auto">
        <property name="minimumSize">
         <size>
          <width>60</width>
@@ -162,7 +162,7 @@ Note that the condition groups and channels are not limited to four; ten colors 
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox_subject_avg_chan1">
+          <widget class="QComboBox" name="comboBox_group_avg_chan1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -219,7 +219,7 @@ Note that the condition groups and channels are not limited to four; ten colors 
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboBox_subject_avg_chan2">
+          <widget class="QComboBox" name="comboBox_group_avg_chan2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -279,7 +279,7 @@ Note that the condition groups and channels are not limited to four; ten colors 
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QComboBox" name="comboBox_subject_avg_chan3">
+          <widget class="QComboBox" name="comboBox_group_avg_chan3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -339,7 +339,7 @@ Note that the condition groups and channels are not limited to four; ten colors 
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QComboBox" name="comboBox_subject_avg_chan4">
+          <widget class="QComboBox" name="comboBox_group_avg_chan4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -448,7 +448,7 @@ a single channel to display.</string>
       </spacer>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_subject_sel_auto">
+      <widget class="QCheckBox" name="checkBox_group_sel_auto">
        <property name="minimumSize">
         <size>
          <width>60</width>
@@ -520,7 +520,7 @@ a single channel to display.</string>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox_subject_sel_cat1">
+          <widget class="QComboBox" name="comboBox_group_sel_cat1">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -577,7 +577,7 @@ a single channel to display.</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboBox_subject_sel_cat2">
+          <widget class="QComboBox" name="comboBox_group_sel_cat2">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -637,7 +637,7 @@ a single channel to display.</string>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QComboBox" name="comboBox_subject_sel_cat3">
+          <widget class="QComboBox" name="comboBox_group_sel_cat3">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -697,7 +697,7 @@ a single channel to display.</string>
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QComboBox" name="comboBox_subject_sel_cat4">
+          <widget class="QComboBox" name="comboBox_group_sel_cat4">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1170,7 +1170,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_subject_avg_auto</sender>
+   <sender>checkBox_group_avg_auto</sender>
    <signal>clicked()</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1186,7 +1186,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_subject_sel_auto</sender>
+   <sender>checkBox_group_sel_auto</sender>
    <signal>clicked()</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1266,7 +1266,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_avg_chan1</sender>
+   <sender>comboBox_group_avg_chan1</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1282,7 +1282,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_avg_chan2</sender>
+   <sender>comboBox_group_avg_chan2</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1298,7 +1298,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_avg_chan3</sender>
+   <sender>comboBox_group_avg_chan3</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1314,7 +1314,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_avg_chan4</sender>
+   <sender>comboBox_group_avg_chan4</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1330,7 +1330,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_sel_cat1</sender>
+   <sender>comboBox_group_sel_cat1</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1346,7 +1346,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_sel_cat2</sender>
+   <sender>comboBox_group_sel_cat2</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1362,7 +1362,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_sel_cat3</sender>
+   <sender>comboBox_group_sel_cat3</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>
@@ -1378,7 +1378,7 @@ a single channel to display.</string>
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_subject_sel_cat4</sender>
+   <sender>comboBox_group_sel_cat4</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>DisplaySettings</receiver>
    <slot>update_colors_slot()</slot>

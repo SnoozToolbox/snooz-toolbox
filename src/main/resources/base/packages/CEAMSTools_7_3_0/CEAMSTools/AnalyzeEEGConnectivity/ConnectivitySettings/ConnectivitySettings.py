@@ -10,6 +10,7 @@ See the file LICENCE for full license details.
 from qtpy import QtWidgets
 
 from CEAMSTools.AnalyzeEEGConnectivity.ConnectivitySettings.Ui_ConnectivitySettings import Ui_ConnectivitySettings
+from CEAMSTools.AnalyzeEEGConnectivity.FilterStep.FilterStep import FilterStep
 from commons.BaseStepView import BaseStepView
 from flowpipe.ActivationState import ActivationState
 
@@ -24,15 +25,29 @@ class ConnectivitySettings(BaseStepView, Ui_ConnectivitySettings, QtWidgets.QWid
         super().__init__(**kwargs)
         self.setupUi(self)
 
-        # --- Node IDs for WPLI and DPLI chains ---
-        self.connectivitydetails_node_id_wpli = "803b6207-918f-4e3e-b5be-48ad9fc8b01c"
-        self.wpliconnectivity_node_id = "3cace954-8d81-4039-8730-b2a90a67c93b"
-        self.epochsignal_node_id_wpli = "b680606e-dd88-442e-8969-19b71ea377a0"
-        self.networkproperties_node_id = "8608df84-c1f5-4568-bba9-ea8c8aa456ae"
-
-        self.connectivitydetails_node_id_dpli = "cc042193-2e41-49e0-b80e-973b1174cdb9"
-        self.dpliconnectivity_node_id = "327736b2-6d0a-4186-a123-f0e93a85d232"
-        self.epochsignal_node_id_dpli = "fdc0c057-3fb5-4c9f-92f5-23b1474f7a2d"
+        # Annotation branch nodes
+        self.annotation_wpli = {
+            "details": "803b6207-918f-4e3e-b5be-48ad9fc8b01c",
+            "conn": "3cace954-8d81-4039-8730-b2a90a67c93b",
+            "epoch": "b680606e-dd88-442e-8969-19b71ea377a0",
+        }
+        self.annotation_dpli = {
+            "details": "cc042193-2e41-49e0-b80e-973b1174cdb9",
+            "conn": "327736b2-6d0a-4186-a123-f0e93a85d232",
+            "epoch": "fdc0c057-3fb5-4c9f-92f5-23b1474f7a2d",
+        }
+        # Sleep-stage branch nodes
+        self.sleep_wpli = {
+            "details": "2ed43dd6-b69b-4fe2-a443-89f7b066e3b2",
+            "conn": "d71e961f-5d95-415b-a4f0-934c3af7b19d",
+            "epoch": "c36ee8d3-7f95-4690-b5c6-b53bf7cf803b",
+        }
+        self.sleep_dpli = {
+            "details": "c5a51a23-6afb-444f-a746-3c8e9c5be5ab",
+            "conn": "b7f4254a-adb5-4ede-9a9c-39cffe235232",
+            "epoch": "eec3640c-7e80-4912-9700-d5fe4a32a02b",
+        }
+        self._scope = "specific_annotations"
 
         # --- Connect radio buttons to method change handler ---
         self.dpli_radioButton.toggled.connect(self.on_method_changed)
@@ -47,27 +62,39 @@ class ConnectivitySettings(BaseStepView, Ui_ConnectivitySettings, QtWidgets.QWid
         When user switches between wPLI and dPLI, activate the relevant modules
         and deactivate the irrelevant ones.
         """
+        self._sync_method_scope_activation()
+
+    def _set_chain_state(self, chain_dict, activated):
+        for node_id in chain_dict.values():
+            if activated:
+                self.activate_node(node_id)
+            else:
+                self.deactivate_node(node_id)
+
+    def _active_chains(self):
+        if self._scope == "sleep_stages":
+            return self.sleep_wpli, self.sleep_dpli
+        return self.annotation_wpli, self.annotation_dpli
+
+    def _sync_method_scope_activation(self):
+        wpli_chain, dpli_chain = self._active_chains()
+        inactive_wpli_chain, inactive_dpli_chain = (
+            (self.annotation_wpli, self.annotation_dpli)
+            if self._scope == "sleep_stages"
+            else (self.sleep_wpli, self.sleep_dpli)
+        )
+
+        # Make sure the non-selected scope is always OFF.
+        self._set_chain_state(inactive_wpli_chain, False)
+        self._set_chain_state(inactive_dpli_chain, False)
+
+        # Activate only one method inside selected scope.
         if self.wpli_radioButton.isChecked():
-            # Activate wPLI modules, deactivate dPLI modules
-            self.activate_node(self.connectivitydetails_node_id_wpli)
-            self.activate_node(self.wpliconnectivity_node_id)
-            self.activate_node(self.epochsignal_node_id_wpli)
-            self.activate_node(self.networkproperties_node_id)
-
-            self.deactivate_node(self.connectivitydetails_node_id_dpli)
-            self.deactivate_node(self.dpliconnectivity_node_id)
-            self.deactivate_node(self.epochsignal_node_id_dpli)
-
-        elif self.dpli_radioButton.isChecked():
-            # Activate dPLI modules, deactivate wPLI modules
-            self.activate_node(self.connectivitydetails_node_id_dpli)
-            self.activate_node(self.dpliconnectivity_node_id)
-            self.activate_node(self.epochsignal_node_id_dpli)
-
-            self.deactivate_node(self.connectivitydetails_node_id_wpli)
-            self.deactivate_node(self.wpliconnectivity_node_id)
-            self.deactivate_node(self.epochsignal_node_id_wpli)
-            self.deactivate_node(self.networkproperties_node_id)
+            self._set_chain_state(wpli_chain, True)
+            self._set_chain_state(dpli_chain, False)
+        else:
+            self._set_chain_state(wpli_chain, False)
+            self._set_chain_state(dpli_chain, True)
 
     def activate_node(self, node_id):
         """
@@ -95,24 +122,21 @@ class ConnectivitySettings(BaseStepView, Ui_ConnectivitySettings, QtWidgets.QWid
         num_surr = self.num_surr_lineedit.text().strip()
         p_value = self.p_value_lineedit.text().strip()
 
+        self._sync_method_scope_activation()
+
         if self.wpli_radioButton.isChecked():
-            # Push epoch parameters to epochsignal_node_id_wpli
-            self._pub_sub_manager.publish(self, f"{self.epochsignal_node_id_wpli}.epoch_length_sec", epoch_length)
-            self._pub_sub_manager.publish(self, f"{self.epochsignal_node_id_wpli}.overlap_sec", epoch_overlap)
-            # Push connectivity params to wpliconnectivity_node_id
-            self._pub_sub_manager.publish(self, f"{self.wpliconnectivity_node_id}.num_surr", num_surr)
-            self._pub_sub_manager.publish(self, f"{self.wpliconnectivity_node_id}.p_value", p_value)
-        elif self.dpli_radioButton.isChecked():
-            # Push epoch parameters to epochsignal_node_id_dpli
-            self._pub_sub_manager.publish(self, f"{self.epochsignal_node_id_dpli}.epoch_length_sec", epoch_length)
-            self._pub_sub_manager.publish(self, f"{self.epochsignal_node_id_dpli}.overlap_sec", epoch_overlap)
-            # Push connectivity params to dpliconnectivity_node_id
-            self._pub_sub_manager.publish(self, f"{self.dpliconnectivity_node_id}.num_surr", num_surr)
-            self._pub_sub_manager.publish(self, f"{self.dpliconnectivity_node_id}.p_value", p_value)
+            active_chain = self._active_chains()[0]
+        else:
+            active_chain = self._active_chains()[1]
+
+        self._pub_sub_manager.publish(self, f"{active_chain['epoch']}.epoch_length_sec", epoch_length)
+        self._pub_sub_manager.publish(self, f"{active_chain['epoch']}.overlap_sec", epoch_overlap)
+        self._pub_sub_manager.publish(self, f"{active_chain['conn']}.num_surr", num_surr)
+        self._pub_sub_manager.publish(self, f"{active_chain['conn']}.p_value", p_value)
 
     def load_settings(self):
-        # Could ping nodes for initial values to display (optional, not strictly needed)
-        pass
+        self._scope = self._context_manager.get(FilterStep.context_Con_scope, "specific_annotations")
+        self._sync_method_scope_activation()
 
     def on_validate_settings(self):
         """
@@ -122,8 +146,9 @@ class ConnectivitySettings(BaseStepView, Ui_ConnectivitySettings, QtWidgets.QWid
         return True
 
     def on_topic_update(self, topic, message, sender):
-        # Not used, but could be for advanced sync
-        pass
+        if topic == self._context_manager.topic and message == FilterStep.context_Con_scope:
+            self._scope = self._context_manager.get(FilterStep.context_Con_scope, "specific_annotations")
+            self._sync_method_scope_activation()
 
     def on_topic_response(self, topic, message, sender):
         # Not used, but could be for advanced sync

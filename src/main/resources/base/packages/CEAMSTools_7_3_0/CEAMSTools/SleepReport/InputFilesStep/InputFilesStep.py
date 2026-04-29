@@ -29,6 +29,7 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
         super().__init__(**kwargs)
         # init variables
         self._identification_mapper = None
+        self._current_id_row = None
         self._file_context = None
         self._record_info_key = 'record_info'
         self._psg_reader_identifier = 'f2eccd70-fcb6-4ee8-bea8-76103e706827'
@@ -80,6 +81,10 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
 
 
     def on_apply_settings(self):
+        self._sync_current_identification_widgets_to_model()
+        if self._identification_mapper is not None:
+            self._identification_mapper.submit()
+
         # Fill input files data
         files = {}
         model = self.file_tableview.model()
@@ -94,18 +99,26 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
         model = self.file_tableview.model()
         for filename in files.keys():
             file_item = model.get_file_item_by_name(filename)
-            identifications[filename] = file_item.id_model.id_data.copy()
+            identification = file_item.id_model.id_data.copy()
 
-            if isinstance(identifications[filename]["birthdate"], QDateTime):
-                identifications[filename]["birthdate"] = identifications[filename]["birthdate"].toSecsSinceEpoch()
+            # Ensure expected keys always exist in published payload.
+            identification.setdefault('first_name', '')
+            identification.setdefault('last_name', '')
+            identification.setdefault('birthdate', None)
+            identification.setdefault('creation_date', None)
 
-            if isinstance(identifications[filename]["creation_date"], QDateTime):
-                identifications[filename]["creation_date"] = identifications[filename]["creation_date"].toSecsSinceEpoch()
+            if isinstance(identification["birthdate"], QDateTime):
+                identification["birthdate"] = identification["birthdate"].toSecsSinceEpoch()
 
-            if self.deidentify_checkbox.checkState():
-                identifications[filename]['first_name'] = ''
-                identifications[filename]['last_name'] = ''
-                identifications[filename]['birthdate'] = None
+            if isinstance(identification["creation_date"], QDateTime):
+                identification["creation_date"] = identification["creation_date"].toSecsSinceEpoch()
+
+            if self.deidentify_checkbox.isChecked():
+                identification['first_name'] = ''
+                identification['last_name'] = ''
+                identification['birthdate'] = None
+
+            identifications[filename] = identification
 
         self._pub_sub_manager.publish(self, self._dict_subject_info_topic, identifications)
         
@@ -134,6 +147,16 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
 
     def on_file_selection_change(self):
         index = self.file_tableview.currentIndex()
+        if not index.isValid():
+            return
+
+        row = index.row()
+        self._sync_current_identification_widgets_to_model()
+        if self._identification_mapper is not None:
+            self._identification_mapper.submit()
+            if self._current_id_row == row:
+                return
+
         id_model = self._model.get_id_model(index.row())
         if self._identification_mapper is not None:
             self._identification_mapper.clearMapping()
@@ -155,7 +178,6 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
         self._identification_mapper.addMapping(self.weight_unit_combobox, 14)
         self._identification_mapper.addMapping(self.waistline_unit_combobox, 15)
 
-        self.first_name_lineedit.textChanged.connect(self._identification_mapper.submit)
         self.id1_lineedit.textChanged.connect(self._identification_mapper.submit)
         self.id2_lineedit.textChanged.connect(self._identification_mapper.submit)
         self.first_name_lineedit.textChanged.connect(self._identification_mapper.submit)
@@ -172,7 +194,36 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
         self.weight_unit_combobox.currentTextChanged.connect(self._identification_mapper.submit)
         self.waistline_unit_combobox.currentTextChanged.connect(self._identification_mapper.submit)
         
+        self._current_id_row = row
         self._identification_mapper.toFirst()
+
+
+    def _sync_current_identification_widgets_to_model(self):
+        if self._current_id_row is None:
+            return
+        model = self.file_tableview.model()
+        if model is None:
+            return
+        if self._current_id_row < 0 or self._current_id_row >= model.rowCount(QtCore.QModelIndex()):
+            return
+
+        id_model = self._model.get_id_model(self._current_id_row)
+        id_data = id_model.id_data
+        id_data['id1'] = self.id1_lineedit.text()
+        id_data['id2'] = self.id2_lineedit.text()
+        id_data['first_name'] = self.first_name_lineedit.text()
+        id_data['last_name'] = self.last_name_lineedit.text()
+        id_data['sex'] = self.sex_combobox.currentText()
+        id_data['birthdate'] = self.birthdate_timeedit.dateTime()
+        id_data['creation_date'] = self.record_date_timeedit.dateTime()
+        id_data['age'] = self.age_spinbox.value()
+        id_data['height'] = self.height_doublespinbox.value()
+        id_data['weight'] = self.weight_doublespinbox.value()
+        id_data['bmi'] = self.bmi_doublespinbox.value()
+        id_data['waistline'] = self.waistline_doublespinbox.value()
+        id_data['height_unit'] = self.height_unit_combobox.currentText()
+        id_data['weight_unit'] = self.weight_unit_combobox.currentText()
+        id_data['waistline_unit'] = self.waistline_unit_combobox.currentText()
 
 
     def _add_file(self, filename):
@@ -254,7 +305,9 @@ class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
 
     def on_remove_file(self):
         if self._identification_mapper is not None:
+            self._identification_mapper.submit()
             self._identification_mapper.clearMapping()
+        self._current_id_row = None
 
         index = self.file_tableview.currentIndex()
         filename = index.data(3)

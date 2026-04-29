@@ -1073,7 +1073,7 @@
         {
             "item_name": "PSAPicsGenerator",
             "item_type": "module",
-            "item_version": "2.0.0",
+            "item_version": "2.0.1",
             "item_hooks": [
                 {
                     "endpoint_name": "module_endpoint",

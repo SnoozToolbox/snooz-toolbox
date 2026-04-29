@@ -58,8 +58,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         self.pics_param = {
             'cohort_avg': True,
             'cohort_sel': False,
-            'subject_avg': False,
-            'subject_sel': False,
+            'group_avg': False,
+            'group_sel': False,
             'sleep_stage_selection': ['All'],  # Default to All stages
             'activity_var' : 'total',  # Changed from sw_alignment for PSA
             'display': "mean_std", # all, mean, mean_std
@@ -139,7 +139,7 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
 
         # Verify that at least one checkbox is checked
         if not (self.checkBox_cohort_avg.isChecked() or self.checkBox_cohort_sel.isChecked() or\
-                self.checkBox_subject_avg.isChecked() or self.checkBox_subject_sel.isChecked()):
+                self.checkBox_group_avg.isChecked() or self.checkBox_group_sel.isChecked()):
             # Open the warning dialog
             WarningDialog(f"Make sure to select at the least one output in the step '3-Output Files'.")
             return False
@@ -232,8 +232,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
 
         self.pics_param["cohort_avg"] = self.checkBox_cohort_avg.isChecked()
         self.pics_param["cohort_sel"] = self.checkBox_cohort_sel.isChecked()
-        self.pics_param["subject_avg"] = self.checkBox_subject_avg.isChecked()
-        self.pics_param["subject_sel"] = self.checkBox_subject_sel.isChecked()
+        self.pics_param["group_avg"] = self.checkBox_group_avg.isChecked()
+        self.pics_param["group_sel"] = self.checkBox_group_sel.isChecked()
         
         # Build sleep stage selection list based on checked checkboxes
         sleep_stages = []
@@ -296,8 +296,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
     def init_ui_from_pics_param(self):
         self.checkBox_cohort_avg.setChecked(self.pics_param.get("cohort_avg", False))
         self.checkBox_cohort_sel.setChecked(self.pics_param.get("cohort_sel", False))
-        self.checkBox_subject_avg.setChecked(self.pics_param.get("subject_avg", False))
-        self.checkBox_subject_sel.setChecked(self.pics_param.get("subject_sel", False))
+        self.checkBox_group_avg.setChecked(self.pics_param.get("group_avg", False))
+        self.checkBox_group_sel.setChecked(self.pics_param.get("group_sel", False))
         
         # Set sleep stage checkboxes based on the list
         sleep_stages = self.pics_param.get("sleep_stage_selection", ['All'])
@@ -395,8 +395,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         # Set default checkboxes
         self.checkBox_cohort_avg.setChecked(True)
         self.checkBox_cohort_sel.setChecked(False)
-        self.checkBox_subject_avg.setChecked(False)
-        self.checkBox_subject_sel.setChecked(False)
+        self.checkBox_group_avg.setChecked(False)
+        self.checkBox_group_sel.setChecked(False)
         
         # Set default sleep stage to "All"
         self.checkBox_All.setChecked(True)
@@ -433,8 +433,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         if hasattr(self, 'radioButton_cohort_level') and hasattr(self, 'radioButton_report_level'):
             if self.radioButton_cohort_level.isChecked():
                 # Uncheck subject checkboxes before disabling
-                self.checkBox_subject_avg.setChecked(False)
-                self.checkBox_subject_sel.setChecked(False)
+                self.checkBox_group_avg.setChecked(False)
+                self.checkBox_group_sel.setChecked(False)
                 # Disable subject layout, enable cohort layout
                 self.set_layout_enabled(self.verticalLayout, False)
                 self.set_layout_enabled(self.verticalLayout_2, True)

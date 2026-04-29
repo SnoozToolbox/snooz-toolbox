@@ -56,11 +56,11 @@ class Ui_OutputFiles(object):
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.checkBox_subject_avg = QCheckBox(OutputFiles)
-        self.checkBox_subject_avg.setObjectName(u"checkBox_subject_avg")
-        self.checkBox_subject_avg.setFont(font)
+        self.checkBox_group_avg = QCheckBox(OutputFiles)
+        self.checkBox_group_avg.setObjectName(u"checkBox_group_avg")
+        self.checkBox_group_avg.setFont(font)
 
-        self.verticalLayout.addWidget(self.checkBox_subject_avg)
+        self.verticalLayout.addWidget(self.checkBox_group_avg)
 
         self.label_9 = QLabel(OutputFiles)
         self.label_9.setObjectName(u"label_9")
@@ -76,12 +76,12 @@ class Ui_OutputFiles(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_6)
 
-        self.checkBox_subject_sel = QCheckBox(OutputFiles)
-        self.checkBox_subject_sel.setObjectName(u"checkBox_subject_sel")
-        self.checkBox_subject_sel.setEnabled(True)
-        self.checkBox_subject_sel.setFont(font)
+        self.checkBox_group_sel = QCheckBox(OutputFiles)
+        self.checkBox_group_sel.setObjectName(u"checkBox_group_sel")
+        self.checkBox_group_sel.setEnabled(True)
+        self.checkBox_group_sel.setFont(font)
 
-        self.verticalLayout.addWidget(self.checkBox_subject_sel)
+        self.verticalLayout.addWidget(self.checkBox_group_sel)
 
         self.label_3 = QLabel(OutputFiles)
         self.label_3.setObjectName(u"label_3")
@@ -601,8 +601,8 @@ class Ui_OutputFiles(object):
         self.pushButton_choose.clicked.connect(OutputFiles.choose_slot)
         self.checkBox_cohort_avg.clicked.connect(OutputFiles.out_options_slot)
         self.checkBox_cohort_sel.clicked.connect(OutputFiles.out_options_slot)
-        self.checkBox_subject_avg.clicked.connect(OutputFiles.out_options_slot)
-        self.checkBox_subject_sel.clicked.connect(OutputFiles.out_options_slot)
+        self.checkBox_group_avg.clicked.connect(OutputFiles.out_options_slot)
+        self.checkBox_group_sel.clicked.connect(OutputFiles.out_options_slot)
 
         QMetaObject.connectSlotsByName(OutputFiles)
     # setupUi
@@ -611,15 +611,15 @@ class Ui_OutputFiles(object):
         OutputFiles.setWindowTitle("")
         self.radioButton_report_level.setText(QCoreApplication.translate("OutputFiles", u"Group level : to generate pictures for each individual group.", None))
 #if QT_CONFIG(tooltip)
-        self.checkBox_subject_avg.setToolTip("")
+        self.checkBox_group_avg.setToolTip("")
 #endif // QT_CONFIG(tooltip)
-        self.checkBox_subject_avg.setText(QCoreApplication.translate("OutputFiles", u"One picture per group", None))
+        self.checkBox_group_avg.setText(QCoreApplication.translate("OutputFiles", u"One picture per group", None))
         self.label_9.setText(QCoreApplication.translate("OutputFiles", u"<html><head/><body><p>All the selected channels or ROIs are illustrated on the same picture.</p></body></html>", None))
         self.label_2.setText(QCoreApplication.translate("OutputFiles", u"<html><head/><body><p>*The MEAN display option shows the average of all subjects in the group.</p></body></html>", None))
 #if QT_CONFIG(tooltip)
-        self.checkBox_subject_sel.setToolTip("")
+        self.checkBox_group_sel.setToolTip("")
 #endif // QT_CONFIG(tooltip)
-        self.checkBox_subject_sel.setText(QCoreApplication.translate("OutputFiles", u"One picture per channel or ROI per group", None))
+        self.checkBox_group_sel.setText(QCoreApplication.translate("OutputFiles", u"One picture per channel or ROI per group", None))
         self.label_3.setText(QCoreApplication.translate("OutputFiles", u"<html><head/><body><p>All the subjects in a group are illustrated on the same picture.</p></body></html>", None))
         self.label_10.setText(QCoreApplication.translate("OutputFiles", u"<html><head/><body><p>*The MEAN display option shows the average of all subjects per group For each selected channel.</p></body></html>", None))
         self.radioButton_cohort_level.setText(QCoreApplication.translate("OutputFiles", u"Cohort level : to generate pictures for the cohort.", None))

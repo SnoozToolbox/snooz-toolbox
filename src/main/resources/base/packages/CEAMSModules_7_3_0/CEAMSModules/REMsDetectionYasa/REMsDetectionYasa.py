@@ -226,7 +226,7 @@ class REMsDetectionYasa(SciNode):
                 'name': rems_event_name,
                 'start_sec': rems_detection_df['Start'],
                 'duration_sec': rems_detection_df['Duration'],
-                'channels': [f"{raw.ch_names[0]}, {raw.ch_names[1]}" for _ in range(len(rems_detection_df))]
+                'channels': [f"{raw.ch_names[0]}" for _ in range(len(rems_detection_df))]
             })
             #snooz_rem.to_csv(f"{filename}_YASA_REMs_snooz.tsv", sep='\t', index=False) # We can save this if we needed it later on. Now something similar is exported.
             # Add group, name and channels to the rems_detection_df as well.
@@ -234,7 +234,7 @@ class REMsDetectionYasa(SciNode):
             rems_detection_df['name'] = rems_event_name
             rems_detection_df['start_sec'] = snooz_rem['start_sec']
             rems_detection_df['duration_sec'] = snooz_rem['duration_sec']
-            rems_detection_df['channels'] = snooz_rem['channels']
+            rems_detection_df['channels'] = [f"{raw.ch_names[0]}, {raw.ch_names[1]}" for _ in range(len(rems_detection_df))]
         except Exception as e:
             raise NodeRuntimeException(self.identifier, "REMs detection", f"Error during REM detection: {str(e)}")
 

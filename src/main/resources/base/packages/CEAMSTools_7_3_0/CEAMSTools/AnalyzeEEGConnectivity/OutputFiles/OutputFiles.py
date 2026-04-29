@@ -23,10 +23,13 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         # init UI
         self.setupUi(self)
 
-        # --- 1. Set Node ID and Topic Strings ---
+        # --- 1. Set Node IDs and Topic Strings ---
+        # Annotation & unscored branch
         self._node_id_ConnectivityDetails_wpli = "803b6207-918f-4e3e-b5be-48ad9fc8b01c"
         self._node_id_ConnectivityDetails_dpli = "cc042193-2e41-49e0-b80e-973b1174cdb9"
-        self._node_id_NetworkProperties = "8608df84-c1f5-4568-bba9-ea8c8aa456ae"
+        # Sleep-stage branch
+        self._node_id_ConnectivityDetails_sleep_wpli = "2ed43dd6-b69b-4fe2-a443-89f7b066e3b2"
+        self._node_id_ConnectivityDetails_sleep_dpli = "c5a51a23-6afb-444f-a746-3c8e9c5be5ab"
 
         # --- 2. Connect UI Actions ---
         self.output_path_checkBox.stateChanged.connect(self.toggle_path_selection)
@@ -86,10 +89,15 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         use_input_folder = self.output_path_checkBox.isChecked()
         chosen_path = self.path_lineEdit.text() if not use_input_folder else ""
 
-        # Publish to both nodes (assuming they have a topic named .output_path)
-        self._pub_sub_manager.publish(self, f"{self._node_id_ConnectivityDetails_wpli}.output_path", chosen_path)
-        self._pub_sub_manager.publish(self, f"{self._node_id_ConnectivityDetails_dpli}.output_path", chosen_path)
-        self._pub_sub_manager.publish(self, f"{self._node_id_NetworkProperties}.output_path", chosen_path)
+        # Publish to all possible output nodes; only active branches will write files.
+        node_ids = [
+            self._node_id_ConnectivityDetails_wpli,
+            self._node_id_ConnectivityDetails_dpli,
+            self._node_id_ConnectivityDetails_sleep_wpli,
+            self._node_id_ConnectivityDetails_sleep_dpli,
+        ]
+        for node_id in node_ids:
+            self._pub_sub_manager.publish(self, f"{node_id}.output_path", chosen_path)
 
 
     def on_validate_settings(self):

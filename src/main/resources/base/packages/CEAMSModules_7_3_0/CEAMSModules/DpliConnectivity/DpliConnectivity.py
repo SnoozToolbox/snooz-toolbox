@@ -369,11 +369,17 @@ def dpli_corrected_numba(signal, num_surrogates, p_value):
             # _, p = wilcoxon(surrogates_dpli_ij - x)
 
             diffs = surrogates_dpli_ij - x
-            if np.allclose(diffs, 0):
-                p = 1.0      # Guard: if all diffs ~ 0, Wilcoxon is undefined; treat as non-significant
+            # Guard: if all diffs ~ 0, Wilcoxon is undefined; treat as non-significant.
+            if np.allclose(diffs, 0.0):
+                p = 1.0
             else:
                 try:
-                    _, p = wilcoxon(diffs, mode='auto')
+                    # Use approximation only when zeros are present in paired differences.
+                    # Otherwise keep SciPy's automatic mode to preserve usual behavior.
+                    if np.any(np.isclose(diffs, 0.0)):
+                        _, p = wilcoxon(diffs, zero_method="zsplit", mode="approx")
+                    else:
+                        _, p = wilcoxon(diffs, mode="auto")
                 except ValueError:
                     p = 1.0
 

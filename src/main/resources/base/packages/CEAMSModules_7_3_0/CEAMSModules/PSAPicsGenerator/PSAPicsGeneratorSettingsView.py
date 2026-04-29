@@ -138,8 +138,8 @@ class PSAPicsGeneratorSettingsView(BaseSettingsView, Ui_PSAPicsGeneratorSettings
         pics_param_dict = {
             'cohort_avg': True,
             'cohort_sel': False,
-            'subject_avg': False,
-            'subject_sel': False,
+            'group_avg': False,
+            'group_sel': False,
             'sleep_stage_selection': False,  # Changed from show_sw_categories for PSA
             'activity_var' : 'total',  # Changed from sw_alignment for PSA
             'display': "mean_std", # all, mean, mean_std

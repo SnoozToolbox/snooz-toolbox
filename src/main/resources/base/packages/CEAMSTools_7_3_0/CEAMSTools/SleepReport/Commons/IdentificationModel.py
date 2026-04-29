@@ -10,6 +10,24 @@ class IdentificationModel(QAbstractTableModel):
     def __init__(self, id_data):
         super().__init__()
         self._id_data = id_data
+        self._id_keys = [
+            "filename",
+            "id1",
+            "id2",
+            "first_name",
+            "last_name",
+            "sex",
+            "birthdate",
+            "creation_date",
+            "age",
+            "height",
+            "weight",
+            "bmi",
+            "waistline",
+            "height_unit",
+            "weight_unit",
+            "waistline_unit",
+        ]
 
         if self._id_data["birthdate"] is None:
             self._id_data["birthdate"] = None
@@ -41,25 +59,23 @@ class IdentificationModel(QAbstractTableModel):
         return len(self._header_data)
 
     def data(self, index, role=Qt.DisplayRole):
-        if role == Qt.DisplayRole or role == Qt.ToolTipRole or Qt.EditRole:
-            i = index.row()
+        if role in (Qt.DisplayRole, Qt.ToolTipRole, Qt.EditRole):
             j = index.column()
-            return list(self._id_data.values())[j]
-        else:
-            return None
+            key = self._id_keys[j]
+            return self._id_data.get(key)
+        return None
 
     def setData(self, index: QModelIndex, value: typing.Any, role: int = ...) -> bool:
         if role ==  Qt.EditRole:
-            i = index.row()
             j = index.column()
-            key = list(self._id_data)[j]
+            key = self._id_keys[j]
             self._id_data[key] = value
             return True
         return super().setData(index, value, role)
         
 
     def flags(self, index):
-        return Qt.ItemIsEnabled
+        return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable
 
     def headerData(self, section: int, orientation: Qt.Orientation, role: int = ...) -> typing.Any:
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:

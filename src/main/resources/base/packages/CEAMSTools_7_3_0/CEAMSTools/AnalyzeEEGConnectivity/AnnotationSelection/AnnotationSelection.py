@@ -8,7 +8,6 @@ See the file LICENCE for full license details.
 """
 
 from qtpy import QtWidgets
-from flowpipe.ActivationState import ActivationState
 
 from CEAMSTools.PowerSpectralAnalysis.NonValidEventStep.NonValidEventStep import NonValidEventStep
 from CEAMSTools.AnalyzeEEGConnectivity.FilterStep.FilterStep import FilterStep
@@ -44,18 +43,17 @@ class AnnotationSelection(NonValidEventStep):
 
 
     def on_apply_settings(self):
-        
-        if self.sleep_stage_scope:
-            files_list = self.reader_settings_view.get_files_list(self.files_check_event_model)
-            group_dict = {}
-            name_dict = {}
-            for file in files_list:
-                group_dict[file] = ','.join(['stage']*len(self.selected_sleep_stages_name.split(',')))
-                name_dict[file] = self.selected_sleep_stages_name
-            self._pub_sub_manager.publish(self, self._artefact_group_topic, str(group_dict))
-            self._pub_sub_manager.publish(self, self._artefact_name_topic, str(name_dict))   
-        else:
+        if self.annot_selection_scope:
             super().on_apply_settings()
+            return
+
+        # In sleep-stage / unscored scopes, make sure dictionaries always contain
+        # all files with string values (never None), so SignalsFromEvents can split safely.
+        files_list = self.reader_settings_view.get_files_list(self.files_check_event_model)
+        group_dict = {file: "" for file in files_list}
+        name_dict = {file: "" for file in files_list}
+        self._pub_sub_manager.publish(self, self._artefact_group_topic, str(group_dict))
+        self._pub_sub_manager.publish(self, self._artefact_name_topic, str(name_dict))
 
 
 
@@ -73,16 +71,11 @@ class AnnotationSelection(NonValidEventStep):
         super().on_topic_update(topic, message, sender)
 
         if topic==self._context_manager.topic:
-            # connectivity Annotation section selection changed
-            if message==FilterStep.context_Con_annot_selection: # key of the context dict
-                bool_flag = True if self._context_manager[FilterStep.context_Con_annot_selection]==1 else False
-                self.enable_widgets(bool_flag)
-                self.annot_selection_scope = bool_flag
-
-            if message==FilterStep.context_Con_sleep_stages:
-                bool_flag = False if self._context_manager[FilterStep.context_Con_sleep_stages]=='' else True
-                self.sleep_stage_scope = bool_flag
-                self.selected_sleep_stages_name = self._context_manager[FilterStep.context_Con_sleep_stages]
+            if message == FilterStep.context_Con_scope:
+                scope = self._context_manager.get(FilterStep.context_Con_scope, "specific_annotations")
+                self.annot_selection_scope = scope == "specific_annotations"
+                self.sleep_stage_scope = scope == "sleep_stages"
+                self.enable_widgets(self.annot_selection_scope)
 
 
     # Answer to a ping
