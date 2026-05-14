@@ -22,7 +22,6 @@ from Managers.Managers import Managers
 from Managers.EndpointManager import MenuEndpointHandler
 from Managers.EndpointManager import FileMenuEndpointHandler
 from Managers.StyleManager import Palette, Style
-from ConverterUtils import convert_package_to_v100
 from widgets.AboutDialog import AboutDialog
 from widgets.DataDialog import DataDialog
 from widgets.LogsDialog import LogsDialog
@@ -111,11 +110,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         success = self._managers.tool_manager.load_workspace()
         if success:
             self._managers.navigation_manager.show_tool()
-
-    def convert_file_clicked(self):
-        """ Convert file button clicked, convert the current file """
-        convert_package_to_v100(self)
-        QtWidgets.QMessageBox.information(self, "Info", "Conversion done")
 
     def logs_clicked(self):
         """ Logs menu item clicked, open the logs dialog """

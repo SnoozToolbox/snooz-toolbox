@@ -3,6 +3,7 @@
 See the file LICENCE for full license details.
 """
 import json
+import config
 from qtpy import QtCore
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QMessageBox, QFileDialog
@@ -90,6 +91,14 @@ class ToolManager(Manager):
         
         with open(filepath, 'r') as f:
             description = json.load(f)
+
+            item_api_version = description.get("item_api_version")
+            if item_api_version != config.settings.active_api_version:
+                message = f"This workspace uses an outdated or unsupported API version. Please update it to match the current Snooz API version ({config.settings.active_api_version})."
+                self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+                self._managers.content_manager.unload_process_content()
+                self._managers.content_manager.unload_tool_content()
+                return
 
             # Load the content of the tool
             for package in description["dependencies"]:

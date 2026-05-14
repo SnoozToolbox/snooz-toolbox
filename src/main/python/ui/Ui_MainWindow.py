@@ -289,7 +289,6 @@ class Ui_MainWindow(object):
         self.actionSave_process_as.triggered.connect(MainWindow.save_process_as_clicked)
         self.actionClose_process.triggered.connect(MainWindow.close_process_clicked)
         self.actionLoad_workspace.triggered.connect(MainWindow.load_workspace_clicked)
-        self.actionConvert_from_beta_to_v1_0_0.triggered.connect(MainWindow.convert_file_clicked)
         self.actionRun.triggered.connect(MainWindow.run_clicked)
         self.actionLogs.triggered.connect(MainWindow.logs_clicked)
         self.actionAbout_Snooz.triggered.connect(MainWindow.about_clicked)

@@ -97,7 +97,7 @@ def main():
     args, unknown = parser.parse_known_args()
 
     _maybe_dev_package_item_version_sync()
-    
+
     # Redirect stdout/stderr to avoid terminal messages from joblib, etc., in packaged mode
     if not config.is_dev and not config.HEADLESS_MODE:
         sys.stdout = open(os.devnull, 'w')
