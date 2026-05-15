@@ -1,58 +1,90 @@
 """
-@ Valorisation Recherche HSCM, Societe en Commandite – 2023
+@ Valorisation Recherche HSCM, Societe en Commandite - 2023
 See the file LICENCE for full license details.
 """
 
 """
-    Compute the STFT (right-side only) on the signal splitted into 
-    sliding windows.  Different normalization of the FFT output is available.
-    
+
+    Compute the STFT (right-side only) on the signal split into 
+    sliding windows. Different normalizations of the FFT output are available.
+    The normalization determines how the spectral values should be interpreted
+    (sinusoidal amplitude estimation, integrated spectral power, or spectral
+    density).
+
     Parameters
     -----------
+
     signals    : a list of SignalModel
                 signal.samples : The actual signal data as numpy list
-                signal.sample_rate : sampling rate of the signal (used to STFT)
+                signal.sample_rate : sampling rate of the signal (used for STFT)
                 signal.channel : current channel label
+
     win_len_sec     : float
-        window length in sec (how much data is taken for each fft)
-    win_step_sec    : float 
-        window step in sec (each time the fft is applied)
+        window length in seconds (amount of data used for each FFT)
+
+    win_step_sec    : float
+        window step in seconds (interval between successive FFT computations)
+
     zeros_pad       : bool, optional
-        To zero pad the data to the next fast size of input data to fft.
-        (the zeros padding can increases the frequency resolution and 
-        decreases the computing time, rounding up to the next power of 2 is 
-        not necessary optimal)
+        Zero-pad the data to the next fast FFT size.
+        Zero padding increases the apparent frequency resolution and can
+        reduce computation time depending on the FFT size. Padding to the
+        next power of two is not always optimal.
         (default = False)
+
     window_name     : string, optional
-        Window's name to scale the extracted time series before applying the fft
+        Name of the window applied to the time series before computing the FFT.
+
     rm_mean         : bool, optional
-        To remove mean of each window prior to the fft process
-        (defautl = True)
+        Remove the mean of each window prior to the FFT process
+        (default = True)
+
     norm            : string, optional
-        The normalization applied to the fft.
+        Normalization applied to the FFT output.
         (default = integrate)
-        "integrate" : To integrate (sum) the signal power within a frequency 
-                        range of the true spectrum (units² ex. µV²)                    
-        "rms"       : To read the RMS value signals from the power spectral density.
-                        (units²/Hz ex. µV²/Hz)
-        "noise"     : To read the noise level from an FFT the power spectral density.
-                        (units²/Hz ex. µV²/Hz)
-        "no"        : No normalization
+
+        "integrate" :
+            Normalization preserving the total signal power (energy).
+            This correction compensates for the attenuation introduced by
+            the window using the window noise gain. Each frequency bin
+            represents spectral power (units²/bin, e.g. µV²/bin).
+            Summing bins over a frequency range yields the total band power:
+                µV²/bin → sum over bins → µV²
+
+        "rms" :
+            Normalization preserving the amplitude of sinusoidal components.
+            This uses the coherent gain of the window so that the RMS amplitude
+            of sinusoidal signals is correctly represented in the spectrum.
+            Each bin represents the discrete spectral power associated with
+            that frequency component (units²/bin, e.g. µV²/bin).
+
+        "noise" :
+            Power spectral density (PSD) normalization suitable for estimating
+            broadband noise levels. The spectrum is expressed as a density
+            per frequency unit:
+                units²/Hz (e.g. µV²/Hz)
+
+        "no" :
+            No normalization applied to the FFT output.
+
     filename        : string
-        The python filename (including path) to save the STFT cache 
+        Python filename (including path) used to save the STFT cache
         in order to navigate through epochs.
-        
+
     Returns
     -----------
+
     psd             : list of dicts
-        key of the dict:
-            psd : power (µV^2)
+        keys of the dict:
+            psd : spectral power values
             freq_bins : frequency bins (Hz)
-            win_len : windows length (s)
-            win_step : windows step (s)
+            win_len : window length (s)
+            win_step : window step (s)
             sample_rate : sampling rate of the original signal (Hz)
             chan_label : channel label
+
 """
+
 import numpy as np
 import os
 from scipy import signal
@@ -69,57 +101,84 @@ DEBUG = False
 
 class Stft(SciNode):
     """
-        Compute the STFT (right-side only) on the signal splitted into 
-        sliding windows.  Different normalization of the FFT output is available.
-        
+
+        Compute the STFT (right-side only) on the signal split into 
+        sliding windows. Different normalizations of the FFT output are available.
+        The normalization determines how the spectral values should be interpreted
+        (sinusoidal amplitude estimation, integrated spectral power, or spectral
+        density).
+
         Parameters
         -----------
+
         signals    : a list of SignalModel
                     signal.samples : The actual signal data as numpy list
-                    signal.sample_rate : sampling rate of the signal (used to STFT)
+                    signal.sample_rate : sampling rate of the signal (used for STFT)
                     signal.channel : current channel label
+
         win_len_sec     : float
-            window length in sec (how much data is taken for each fft)
-        win_step_sec    : float 
-            window step in sec (each time the fft is applied)
+            window length in seconds (amount of data used for each FFT)
+
+        win_step_sec    : float
+            window step in seconds (interval between successive FFT computations)
+
         zeros_pad       : bool, optional
-            To zero pad the data to the next fast size of input data to fft.
-            (the zeros padding can increases the frequency resolution and 
-            decreases the computing time, rounding up to the next power of 2 is 
-            not necessary optimal)
+            Zero-pad the data to the next fast FFT size.
+            Zero padding increases the apparent frequency resolution and can
+            reduce computation time depending on the FFT size. Padding to the
+            next power of two is not always optimal.
             (default = False)
+
         window_name     : string, optional
-            Window's name to scale the extracted time series before applying the fft
+            Name of the window applied to the time series before computing the FFT.
+
         rm_mean         : bool, optional
-            To remove mean of each window prior to the fft process
-            (defautl = True)
+            Remove the mean of each window prior to the FFT process
+            (default = True)
+
         norm            : string, optional
-            The normalization applied to the fft.
+            Normalization applied to the FFT output.
             (default = integrate)
-            "integrate" : To integrate (sum) the signal power within a frequency 
-                            range of the true spectrum (units² ex. µV²)                    
-            "rms"       : To read the RMS value signals from the power spectral density.
-                            (units²/Hz ex. µV²/Hz)
-            "noise"     : To read the noise level from an FFT the power spectral density.
-                            (units²/Hz ex. µV²/Hz)
-            "no"        : No normalization
+
+            "integrate" :
+                Normalization preserving the total signal power (energy).
+                This correction compensates for the attenuation introduced by
+                the window using the window noise gain. Each frequency bin
+                represents spectral power (units²/bin, e.g. µV²/bin).
+                Summing bins over a frequency range yields the total band power:
+                    µV²/bin → sum over bins → µV²
+
+            "rms" :
+                Normalization preserving the amplitude of sinusoidal components.
+                This uses the coherent gain of the window so that the RMS amplitude
+                of sinusoidal signals is correctly represented in the spectrum.
+                Each bin represents the discrete spectral power associated with
+                that frequency component (units²/bin, e.g. µV²/bin).
+
+            "noise" :
+                Power spectral density (PSD) normalization suitable for estimating
+                broadband noise levels. The spectrum is expressed as a density
+                per frequency unit:
+                    units²/Hz (e.g. µV²/Hz)
+
+            "no" :
+                No normalization applied to the FFT output.
+
         filename        : string
-            The python filename (including path) to save the STFT cache 
+            Python filename (including path) used to save the STFT cache
             in order to navigate through epochs.
-            
+
         Returns
         -----------
+
         psd             : list of dicts
-            key of the dict:
-                psd : power (µV^2) narray [n_fft_windows x n_frequency_bins]
+            keys of the dict:
+                psd : spectral power values
                 freq_bins : frequency bins (Hz)
-                win_len : windows length (s)
-                win_step : windows step (s)
+                win_len : window length (s)
+                win_step : window step (s)
                 sample_rate : sampling rate of the original signal (Hz)
                 chan_label : channel label
-                start_time : start (s) of the signal (item of signals) on which the ffts are performed
-                end_time : end (s) of the signal (item of signals) on which the ffts are performed
-                duration : duraiton (s) of the signal (item of signals) on which the ffts are performed
     """
 
     def __init__(self, **kwargs):

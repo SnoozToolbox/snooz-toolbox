@@ -101,6 +101,7 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
             # If no saved settings, initialize with defaults
             self.init_ui_with_defaults()
 
+        self.out_options_slot()  # Ensure correct layout states based on loaded settings
 
     def on_topic_update(self, topic, message, sender):
         # Whenever a value is updated within the context, all steps receives a 
@@ -234,6 +235,13 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         self.pics_param["cohort_sel"] = self.checkBox_cohort_sel.isChecked()
         self.pics_param["group_avg"] = self.checkBox_group_avg.isChecked()
         self.pics_param["group_sel"] = self.checkBox_group_sel.isChecked()
+        
+        if self.checkBox_cohort_avg.isChecked() or self.checkBox_cohort_sel.isChecked():
+            self.radioButton_cohort_level.setChecked(True)
+            self.update_layout_states()
+        elif self.checkBox_group_avg.isChecked() or self.checkBox_group_sel.isChecked():
+            self.radioButton_report_level.setChecked(True)
+            self.update_layout_states()
         
         # Build sleep stage selection list based on checked checkboxes
         sleep_stages = []
@@ -392,6 +400,9 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
 
     def init_ui_with_defaults(self):
         """Initialize UI with default values when no saved settings exist"""
+        # Set default radio buttons
+        self.radioButton_cohort_level.setChecked(True)
+        self.radioButton_report_level.setChecked(False)
         # Set default checkboxes
         self.checkBox_cohort_avg.setChecked(True)
         self.checkBox_cohort_sel.setChecked(False)

@@ -5,10 +5,8 @@ See the file LICENCE for full license details.
 
     AnalyzeEEGConnectivityDoc
 """
-import os
+
 from qtpy import QtWidgets
-from qtpy.QtCore import QUrl
-from qtpy.QtWebEngineWidgets import QWebEngineView
 
 from CEAMSTools.AnalyzeEEGConnectivity.AnalyzeEEGConnectivityDoc.Ui_AnalyzeEEGConnectivityDoc import Ui_AnalyzeEEGConnectivityDoc
 from commons.BaseStepView import BaseStepView
@@ -24,9 +22,9 @@ class AnalyzeEEGConnectivityDoc(BaseStepView, Ui_AnalyzeEEGConnectivityDoc, QtWi
         # init UI
         self.setupUi(self)
 
-        self.web_engine_view = QWebEngineView()
-        self.web_engine_view.setObjectName(u"web_engine_view")
-        self.verticalLayout.addWidget(self.web_engine_view)
+        # self.web_engine_view = QtWidgets.QTextEdit()
+        # self.web_engine_view.setObjectName(u"web_engine_view")
+        # self.verticalLayout.addWidget(self.web_engine_view)
 
         # If necessary, init the context. The context is a memory space shared by 
         # all steps of a tool. It is used to share and notice other steps whenever

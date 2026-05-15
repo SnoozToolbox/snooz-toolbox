@@ -642,7 +642,7 @@ class Ui_OutputFiles(object):
         self.checkBox_N1.setText(QCoreApplication.translate("OutputFiles", u"N1", None))
         self.checkBox_N2.setText(QCoreApplication.translate("OutputFiles", u"N2", None))
         self.checkBox_N3.setText(QCoreApplication.translate("OutputFiles", u"N3", None))
-        self.checkBox_REM.setText(QCoreApplication.translate("OutputFiles", u"REM", None))
+        self.checkBox_REM.setText(QCoreApplication.translate("OutputFiles", u"R", None))
         self.checkBox_Unscored.setText(QCoreApplication.translate("OutputFiles", u"Unscored", None))
         self.checkBox_All.setText(QCoreApplication.translate("OutputFiles", u"All", None))
         self.label_6.setText(QCoreApplication.translate("OutputFiles", u"<html><head/><body><p><span style=\" font-weight:600;\">Section to Display</span></p></body></html>", None))

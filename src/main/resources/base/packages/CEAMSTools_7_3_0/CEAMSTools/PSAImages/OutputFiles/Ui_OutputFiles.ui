@@ -395,7 +395,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <item>
           <widget class="QCheckBox" name="checkBox_REM">
            <property name="text">
-            <string>REM</string>
+            <string>R</string>
            </property>
           </widget>
          </item>
@@ -1095,8 +1095,8 @@ and its standard deviation in a shaded area.</string>
   <slot>out_options_slot()</slot>
  </slots>
  <buttongroups>
+  <buttongroup name="buttonGroup_level"/>
   <buttongroup name="buttonGroup_section"/>
   <buttongroup name="buttonGroup_display"/>
-  <buttongroup name="buttonGroup_level"/>
  </buttongroups>
 </ui>

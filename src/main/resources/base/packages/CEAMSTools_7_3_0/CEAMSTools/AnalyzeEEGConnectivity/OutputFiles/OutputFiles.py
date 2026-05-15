@@ -63,8 +63,8 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
         Called when the settings view is opened. Can be used to sync UI from backend.
         """
         # You could ping the backend to get the saved path here, if desired.
-        # self._pub_sub_manager.publish(self, self._recording_path_topic, 'ping')
-        pass
+        self._pub_sub_manager.publish(self, f"{self._node_id_ConnectivityDetails_wpli}.output_path", 'ping')
+        #pass
 
     def on_topic_update(self, topic, message, sender):
         """
@@ -76,9 +76,16 @@ class OutputFiles(BaseStepView, Ui_OutputFiles, QtWidgets.QWidget):
 
     def on_topic_response(self, topic, message, sender):
         # This will be called as a response to ping request.
-        #if topic == self._somevalue_topic:
-        #    self._somevalue = message
-        pass
+        if topic == f"{self._node_id_ConnectivityDetails_wpli}.output_path":
+           if message:  # Only update if there's a saved path (not empty)
+                self.output_path_checkBox.setChecked(False)  # Uncheck to show custom path is used
+                self.path_lineEdit.setEnabled(True)
+                self.path_lineEdit.setText(message)
+           else:
+               self.output_path_checkBox.setChecked(True)
+               self.path_lineEdit.setEnabled(False)
+               self.path_lineEdit.clear()
+        # pass
 
     def on_apply_settings(self):
         """
