@@ -182,7 +182,9 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
     def feedback_pressed(self,event):
         toolname = self._process_description['item_name']
-        url_text = f"https://form.jotform.com/240234589570258?toolname={toolname}"
+        tool_label = self._process_description['tool_params']['tool_label']
+        tool_version = self._process_description['tool_params']['tool_version']
+        url_text = f"https://form.jotform.com/240234589570258?toolname={tool_label}{ ' v'}{tool_version}"
         
         url = QUrl(url_text, QUrl.TolerantMode)
         QDesktopServices.openUrl(url)
