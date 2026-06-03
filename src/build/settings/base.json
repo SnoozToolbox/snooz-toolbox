@@ -25,5 +25,6 @@
         "sklearn.neighbors._partition_nodes",
         "sklearn.dummy",
         "yasa",
-        "yasa.classifiers"]
+        "yasa.classifiers",
+        "fooof"]
 }
