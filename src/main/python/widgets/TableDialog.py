@@ -15,8 +15,9 @@ See the file LICENCE for full license details.
 """
 from pandas.core.frame import DataFrame
 
-from qtpy.QtCore import QCoreApplication
+from qtpy.QtCore import QCoreApplication, Qt
 from qtpy.QtWidgets import QTableWidgetItem, QDialog, QPushButton, QFileDialog
+from qtpy.QtWidgets import QAbstractItemView
 
 from ui.Ui_TableDialog import Ui_TableDialog
 
@@ -54,11 +55,18 @@ class TableDialog(QDialog, Ui_TableDialog):
         # Populate the tablewidget with the data from the DataFrame.
         for row in range(len(df)):
             for col in range(len(df.columns)):
+                value = df.iloc[row, col]
+                item = QTableWidgetItem(str(value))
+                if isinstance(value, str):
+                    item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
                 self.tablewidget.setItem(
                     row,
                     col,
-                    QTableWidgetItem(str(df.iloc[row, col]))
+                    item
                     )
+
+        # Keep the report read-only: users can inspect/export values but not modify them.
+        self.tablewidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
                 
         # Add a download button if necessary
         if showDownloadButton:
