@@ -1,0 +1,42 @@
+
+Power Spectral Analysis (PSA)
+
+An algorithm that estimates the strength of a time-domain signal in different frequency bands.
+
+
+1 - Input Files :
+	The PSA is performed on sampled time-domain signal.  Start by opening your PSG files (.edf, .eeg or .sts).  
+	The .sig file is also needed for Stellate format.  The whole NATUS subject folder is also needed for the .eeg format.  
+	Define the montage and channels for each open file you want to perform the PSA on.
+
+2 - Annotations to exclude :
+	Select events to exclude from the PSA (i.e. artefacts previously detected and saved on the accessory file).
+
+3 - Preparatory Step :
+Filtering : 
+	Define the appropriate filtering to match your research analyses.
+PSA data selection : 
+	The PSA is performed per sleep stage.  You have to define the stages to include in the PSA.  
+	There is also the possibility to run the PSA only on the signal included in the sleep cycles and to exclude NREM or REM periods.
+
+4 - Spectral Settings :
+	The PSA is performed through many short windows in order to estimate the spectral power.  The procedure is called Short Time Fourier Transform (STFT).
+	Define the window length (s) used to perform each FFT (Fast Fourier Transform) and at which window steps (s) each FFT is performed.
+	The frequency bin resolution (Hz) depends of the window length (s) used to perform each FFT.
+		Frequency bin resolution : 1 / [fft windows length (s)]
+		I.e. 1 / 5 s = 0.2 Hz or 1 / 4 s = 0.25 Hz
+
+	It is common to average the power from a few frequency bins in order to estimate the spectral power in a frequency band.
+	Define the width (Hz) of the frequency bands you are interested in. 
+	Define also the last frequency to analyze (the maximum is half the sampling frequency (Hz) of the channels to analyze).
+
+	For now : only the standard PSA is available. *** Add information about the Rythmic/arythmic PSA.
+
+5 - Output File :
+	The spectral power is computed per sleep stage.  Define how to average the spectral power across the recording.
+	-Select "Total" to output the average through the whole recording.
+	-Select "Distribution per hour" to output the average per real clock hour, from hour 1 to 9.  The start point is the sleep onset.
+	-Select "Distribution per sleep cycle" to output the average per sleep cycle, from sleep cycle 1 to 9.  The start point is the sleep onset.
+
+	The output file is a .tsv (tab separated values) file. Each line is specific to a subject, a channel and a frequency band. 
+	Warning : the PSA data is added (appended) to the output file, the output file will be modified each time the PSA tool is run.

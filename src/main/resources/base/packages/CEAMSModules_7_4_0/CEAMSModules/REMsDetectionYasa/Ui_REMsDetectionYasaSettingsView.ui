@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>REMsDetectionYasaSettingsView</class>
+ <widget class="QWidget" name="REMsDetectionYasaSettingsView">
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="signal_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="signal_label">
+       <property name="text">
+        <string>signal</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="signal_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="events_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="events_label">
+       <property name="text">
+        <string>events</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="events_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="sleepstages_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="sleepstages_label">
+       <property name="text">
+        <string>sleepstages</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="sleepstages_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="thresholds_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="thresholds_label">
+       <property name="text">
+        <string>thresholds</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="thresholds_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections/>
+ </ui>

@@ -1,8 +1,8 @@
 {
     "categories": "Utility;",
     "description": "Snooz is a highly modular tool for building signal processing algorithms to analyze sleep recordings.",
-    "author_email": "",
-    "url": "http://ceams-carsm.ca/",
+    "author_email": "snooztoolbox.cnmtl@ssss.gouv.qc.ca",
+    "url": "https://snooztoolbox.com/",
 	"hidden_imports": [
 		"cmath",
 		"qtpy",

@@ -64,7 +64,7 @@ class AppContext(ApplicationContext):
             window = MainWindow()
             if not config.is_dev:
                 version = PUBLIC_SETTINGS['version']
-                window.setWindowTitle("Snooz beta-" + version)
+                window.setWindowTitle("Snooz " + version)
             else:
                 window.setWindowTitle("Snooz (DEV)")
             

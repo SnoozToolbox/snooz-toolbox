@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SpindleDetectorSumoSettingsView</class>
+ <widget class="QWidget" name="SpindleDetectorSumoSettingsView">
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="original_signals_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="original_signals_label">
+       <property name="text">
+        <string>original_signals</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="original_signals_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="cleaned_signals_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="cleaned_signals_label">
+       <property name="text">
+        <string>cleaned_signals</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="cleaned_signals_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="norm_stat_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="norm_stat_label">
+       <property name="text">
+        <string>norm_stat</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="norm_stat_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="event_group_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="event_group_label">
+       <property name="text">
+        <string>event_group</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="event_group_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="event_name_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="event_name_label">
+       <property name="text">
+        <string>event_name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="event_name_lineedit"/>
+     </item>
+    </layout>
+   </item><item>
+    <layout class="QHBoxLayout" name="artifact_events_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="artifact_events_label">
+       <property name="text">
+        <string>artifact_events</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="artifact_events_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections/>
+ </ui>
