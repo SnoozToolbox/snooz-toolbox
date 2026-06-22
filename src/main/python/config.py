@@ -8,9 +8,17 @@ import importlib.util
 
 is_dev = True
 
+# Normalize optional release labels coming from env vars or fbs settings.
+def _normalize_release_label(value: object) -> str:
+    label = str(value or "").strip().strip('"').strip("'").strip()
+    # Some pipelines use "." as a placeholder for "no label".
+    if label == ".":
+        return ""
+    return label
+
 # Optional user-facing release label (for example: "RC1").
 # It can be injected by environment variable and does not affect fbs version constraints.
-release_label = os.environ.get('SNOOZ_RELEASE_LABEL', '').strip()
+release_label = _normalize_release_label(os.environ.get('SNOOZ_RELEASE_LABEL', ''))
 
 # Check if running in headless mode
 HEADLESS_MODE = os.environ.get('SNOOZ_HEADLESS', 'false').lower() == 'true'
@@ -155,9 +163,17 @@ For a developer, normally fbs (pro version) should not be installed on the envir
 no matter which version of Snooz he may be using.
 '''
 try:
+    # fbs exposes runtime settings through PUBLIC_SETTINGS.
+    # Values come from the packaged build settings (base.json merged with platform settings),
+    # not from this source file at runtime.
     from fbs_runtime import PUBLIC_SETTINGS
     if release_label == "":
-        release_label = str(PUBLIC_SETTINGS.get("release_label", "")).strip()
+        try:
+            # release_label is optional metadata used only for the window title.
+            # Keep startup robust if this key is missing in packaged settings.
+            release_label = _normalize_release_label(PUBLIC_SETTINGS["release_label"])
+        except KeyError:
+            release_label = ""
     if not is_dev:
         version = PUBLIC_SETTINGS["version"]
         settings_key = f"Snooz_{version}"
