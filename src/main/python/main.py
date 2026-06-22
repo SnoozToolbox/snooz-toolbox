@@ -46,8 +46,6 @@ from mne import io, _fiff
 if config.HEADLESS_MODE:
     from runtime.application_context.headless import HeadlessApplicationContext as ApplicationContext
 elif config.is_fbs_available():
-    if not config.is_dev:
-        from fbs_runtime import PUBLIC_SETTINGS
     from fbs_runtime.application_context.PySide6 import ApplicationContext
 else:
     from runtime.application_context import ApplicationContext
@@ -62,11 +60,7 @@ class AppContext(ApplicationContext):
             if config.HEADLESS_MODE:
                 raise RuntimeError("Cannot run GUI mode in headless environment. Use --f flag to run a process file.")
             window = MainWindow()
-            if not config.is_dev:
-                version = PUBLIC_SETTINGS['version']
-                window.setWindowTitle("Snooz " + version)
-            else:
-                window.setWindowTitle("Snooz (DEV)")
+            window.setWindowTitle(config.get_app_window_title())
             
             window.showMaximized()
             return self.app.exec_() if self.app else None

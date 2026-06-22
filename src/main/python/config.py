@@ -8,6 +8,10 @@ import importlib.util
 
 is_dev = True
 
+# Optional user-facing release label (for example: "RC1").
+# It can be injected by environment variable and does not affect fbs version constraints.
+release_label = os.environ.get('SNOOZ_RELEASE_LABEL', '').strip()
+
 # Check if running in headless mode
 HEADLESS_MODE = os.environ.get('SNOOZ_HEADLESS', 'false').lower() == 'true'
 
@@ -152,6 +156,8 @@ no matter which version of Snooz he may be using.
 '''
 try:
     from fbs_runtime import PUBLIC_SETTINGS
+    if release_label == "":
+        release_label = str(PUBLIC_SETTINGS.get("release_label", "")).strip()
     if not is_dev:
         version = PUBLIC_SETTINGS["version"]
         settings_key = f"Snooz_{version}"
@@ -161,6 +167,15 @@ try:
 except ImportError:
     settings_key = f"Snooz"
     version = 'dev'
+
+
+def get_app_window_title() -> str:
+    """Build the user-facing app title from strict version plus optional release label."""
+    if is_dev:
+        return "Snooz (DEV)"
+    if release_label:
+        return f"Snooz {version} ({release_label})"
+    return f"Snooz {version}"
 
 if not HEADLESS_MODE:
     app_settings = QtCore.QSettings("CEAMS", settings_key)
