@@ -3,7 +3,7 @@
     "author": "Valorisation Recherche HSCM, Societe en Commandite",
     "main_module": "src/main/python/main.py",
     "version": "1.0.0",
-    "release_label": "RC1",
+    "release_label": "",
     "public_settings": ["release_label"],
     "extra_hooks_dir": "src/hooks",
 	"hidden_imports": ["antropy",
