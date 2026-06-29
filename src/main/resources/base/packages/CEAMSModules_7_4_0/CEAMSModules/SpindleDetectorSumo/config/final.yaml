@@ -1,0 +1,13 @@
+data:
+  directory: 'input'
+  file_name: 'final_split_val.pickle'  # final_split.pickle gives error bc it doesn't contain 'val' split
+
+  split:
+    train: 'train'
+    validation: 'val'
+    cross_validation: Null
+    test: 'test'
+
+
+# original
+# file_name: 'subjects_val.pickle'

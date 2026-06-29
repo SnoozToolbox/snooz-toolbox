@@ -1,0 +1,71 @@
+{   
+    "item_name": "IRASAYASA",
+    "item_type": "module",
+    "item_api_version": "3.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"IRASAYASA",
+        "name":"IRASAYASA",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.IRASAYASA",
+        "module_label": "IRASA YASA",
+        "module_category":"Signal Processing",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "signals": {
+                "name": "signals",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"win_len_sec": {
+                "name": "win_len_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"win_step_sec": {
+                "name": "win_step_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"window_name": {
+                "name": "window_name",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"first_freq": {
+                "name": "first_freq",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"last_freq": {
+                "name": "last_freq",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"flag": {
+                "name": "flag",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "rhythmic_psd": {
+                "name": "rhythmic_psd",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"arhythmic_psd": {
+                "name": "arhythmic_psd",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

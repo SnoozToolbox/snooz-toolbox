@@ -1,0 +1,371 @@
+"""
+@ Valorisation Recherche HSCM, Societe en Commandite – 2023
+See the file LICENCE for full license details.
+"""
+"""
+    InputFilesStep
+    TODO CLASS DESCRIPTION
+"""
+from datetime import datetime, timedelta
+import os
+import pandas as pd
+import sys
+from qtpy import QtWidgets, QtCore, QtGui
+from qtpy.QtCore import QDateTime
+
+from commons.BaseStepView import BaseStepView
+from CEAMSModules.PSGReader.commons import Units, Sex
+from CEAMSModules.PSGReader import commons
+from CEAMSModules.PSGReader.PSGReaderManager import PSGReaderManager
+from CEAMSTools.SleepReport.Commons import ContextConstants
+from CEAMSTools.SleepReport.Commons.SleepReportModel import SleepReportModel
+from CEAMSTools.SleepReport.InputFilesStep.Ui_InputFilesStep import Ui_InputFilesStep
+from widgets.TableDialog import TableDialog
+from widgets.WarningDialog import WarningDialog
+
+class InputFilesStep( BaseStepView,  Ui_InputFilesStep, QtWidgets.QWidget):
+    """
+        InputFilesStep
+    """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # init variables
+        self._identification_mapper = None
+        self._current_id_row = None
+        self._file_context = None
+        self._record_info_key = 'record_info'
+        self._psg_reader_identifier = 'f2eccd70-fcb6-4ee8-bea8-76103e706827'
+        self._psg_reader_files_topic = f"{self._psg_reader_identifier}.files"
+        self._subject_info_dict_identifier = '5866b374-c3e8-4f07-8702-35abd46ce4b2'
+        self._dict_subject_info_topic = f"{self._subject_info_dict_identifier}.dictionary"
+        
+        # init UI
+        self.setupUi(self)
+
+        # TODO
+        # Fix the problem with the timezone.
+        # The data from Harmonie and Xltek is set in a UTC timezone.
+        # We need to convert it to local using EST timezone
+        # Problem is that when the data comes from Xltek, there's sometime an offset
+        # of 1 hour. It might be due to the daylight saving time.
+        # Also, Dates from EDF are local and not in UTC we also need to take that into account.
+        # Since the birthdate and creation_date isn't really important for the report
+        # I put these invisible and go do something more productive...
+        self.birthdate_timeedit.setVisible(False)
+        self.label_5.setVisible(False)
+        self.record_date_timeedit.setVisible(False)
+        self.label_6.setVisible(False)
+
+        # init model and context
+        self._model = SleepReportModel(self._pub_sub_manager)
+        self.file_tableview.setModel(self._model)
+        self.file_tableview.setColumnHidden(2, True)
+        self.file_tableview.setColumnHidden(3, True)
+        selectionModel = self.file_tableview.selectionModel()
+        selectionModel.selectionChanged.connect(self.on_file_selection_change)
+
+        # Init EEG reader modules
+        self._psg_reader_manager = PSGReaderManager()
+        self._psg_reader_manager._init_readers()
+
+
+    def load_settings(self):
+        context = {
+            "model":self._model
+        }
+        self._context_manager[ContextConstants.context_input_files] = context
+
+        # Ask for the settings to the publisher to display on the SettingsView
+        # The order is important, we need to load the files before loading it 
+        # identification data.
+        self._pub_sub_manager.publish(self, self._psg_reader_files_topic, 'ping')
+        self._pub_sub_manager.publish(self, self._dict_subject_info_topic, 'ping')
+
+
+    def on_apply_settings(self):
+        self._sync_current_identification_widgets_to_model()
+        if self._identification_mapper is not None:
+            self._identification_mapper.submit()
+
+        # Fill input files data
+        files = {}
+        model = self.file_tableview.model()
+        for idx in range(model.rowCount(QtCore.QModelIndex())):
+            file_item = model.files[idx]
+            files[file_item.full_filename] = None
+
+        self._pub_sub_manager.publish(self, self._psg_reader_files_topic, files)
+
+        # Fill file/identification dict
+        identifications = {}
+        model = self.file_tableview.model()
+        for filename in files.keys():
+            file_item = model.get_file_item_by_name(filename)
+            identification = file_item.id_model.id_data.copy()
+
+            # Ensure expected keys always exist in published payload.
+            identification.setdefault('first_name', '')
+            identification.setdefault('last_name', '')
+            identification.setdefault('birthdate', None)
+            identification.setdefault('creation_date', None)
+
+            if isinstance(identification["birthdate"], QDateTime):
+                identification["birthdate"] = identification["birthdate"].toSecsSinceEpoch()
+
+            if isinstance(identification["creation_date"], QDateTime):
+                identification["creation_date"] = identification["creation_date"].toSecsSinceEpoch()
+
+            if self.deidentify_checkbox.isChecked():
+                identification['first_name'] = ''
+                identification['last_name'] = ''
+                identification['birthdate'] = None
+
+            identifications[filename] = identification
+
+        self._pub_sub_manager.publish(self, self._dict_subject_info_topic, identifications)
+        
+
+    def on_topic_response(self, topic, message, sender):
+        """ Called by the publisher to init settings in the SettingsView 
+        """
+        if topic == self._psg_reader_files_topic:
+            # message is a dict and the keys are the filenames
+            removed_files = []
+            for filename in message.keys():
+                removed_files = self._add_file(filename, removed_files=removed_files)
+            if len(removed_files) > 0:
+                self._show_batch_load_warnings(removed_files, title="Some files were not loaded")
+        if topic == self._dict_subject_info_topic:
+            # message is a dict and the keys are the filenames
+            model = self.file_tableview.model()
+            for filename in message.keys():
+                file_item = model.get_file_item_by_name(filename)
+                file_item.id_model.id_data = message[filename]
+
+                birthdate = datetime(1970, 1, 1) + timedelta(seconds=file_item.id_model.id_data["birthdate"])
+                birthdate_datetime = QDateTime(birthdate)
+                file_item.id_model.id_data["birthdate"] = birthdate_datetime
+
+                creation_date = datetime(1970, 1, 1) + timedelta(seconds=file_item.id_model.id_data["creation_date"])
+                creation_date_datetime = QDateTime(creation_date)
+                file_item.id_model.id_data["creation_date"] = creation_date_datetime
+
+    def on_file_selection_change(self):
+        index = self.file_tableview.currentIndex()
+        if not index.isValid():
+            return
+
+        row = index.row()
+        self._sync_current_identification_widgets_to_model()
+        if self._identification_mapper is not None:
+            self._identification_mapper.submit()
+            if self._current_id_row == row:
+                return
+
+        id_model = self._model.get_id_model(index.row())
+        if self._identification_mapper is not None:
+            self._identification_mapper.clearMapping()
+        self._identification_mapper = QtWidgets.QDataWidgetMapper(self)
+        self._identification_mapper.setModel(id_model)
+        self._identification_mapper.addMapping(self.id1_lineedit, 1)
+        self._identification_mapper.addMapping(self.id2_lineedit, 2)
+        self._identification_mapper.addMapping(self.first_name_lineedit, 3)
+        self._identification_mapper.addMapping(self.last_name_lineedit, 4)
+        self._identification_mapper.addMapping(self.sex_combobox, 5)
+        self._identification_mapper.addMapping(self.birthdate_timeedit, 6)
+        self._identification_mapper.addMapping(self.record_date_timeedit, 7)
+        self._identification_mapper.addMapping(self.age_spinbox, 8)
+        self._identification_mapper.addMapping(self.height_doublespinbox, 9)
+        self._identification_mapper.addMapping(self.weight_doublespinbox, 10)
+        self._identification_mapper.addMapping(self.bmi_doublespinbox, 11)
+        self._identification_mapper.addMapping(self.waistline_doublespinbox, 12)
+        self._identification_mapper.addMapping(self.height_unit_combobox, 13)
+        self._identification_mapper.addMapping(self.weight_unit_combobox, 14)
+        self._identification_mapper.addMapping(self.waistline_unit_combobox, 15)
+
+        self.id1_lineedit.textChanged.connect(self._identification_mapper.submit)
+        self.id2_lineedit.textChanged.connect(self._identification_mapper.submit)
+        self.first_name_lineedit.textChanged.connect(self._identification_mapper.submit)
+        self.last_name_lineedit.textChanged.connect(self._identification_mapper.submit)
+        self.sex_combobox.currentTextChanged.connect(self._identification_mapper.submit)
+        self.birthdate_timeedit.dateChanged.connect(self._identification_mapper.submit)
+        self.record_date_timeedit.dateChanged.connect(self._identification_mapper.submit)
+        self.age_spinbox.textChanged.connect(self._identification_mapper.submit)
+        self.height_doublespinbox.textChanged.connect(self._identification_mapper.submit)
+        self.weight_doublespinbox.textChanged.connect(self._identification_mapper.submit)
+        self.bmi_doublespinbox.textChanged.connect(self._identification_mapper.submit)
+        self.waistline_doublespinbox.textChanged.connect(self._identification_mapper.submit)
+        self.height_unit_combobox.currentTextChanged.connect(self._identification_mapper.submit)
+        self.weight_unit_combobox.currentTextChanged.connect(self._identification_mapper.submit)
+        self.waistline_unit_combobox.currentTextChanged.connect(self._identification_mapper.submit)
+        
+        self._current_id_row = row
+        self._identification_mapper.toFirst()
+
+
+    def _sync_current_identification_widgets_to_model(self):
+        if self._current_id_row is None:
+            return
+        model = self.file_tableview.model()
+        if model is None:
+            return
+        if self._current_id_row < 0 or self._current_id_row >= model.rowCount(QtCore.QModelIndex()):
+            return
+
+        id_model = self._model.get_id_model(self._current_id_row)
+        id_data = id_model.id_data
+        id_data['id1'] = self.id1_lineedit.text()
+        id_data['id2'] = self.id2_lineedit.text()
+        id_data['first_name'] = self.first_name_lineedit.text()
+        id_data['last_name'] = self.last_name_lineedit.text()
+        id_data['sex'] = self.sex_combobox.currentText()
+        id_data['birthdate'] = self.birthdate_timeedit.dateTime()
+        id_data['creation_date'] = self.record_date_timeedit.dateTime()
+        id_data['age'] = self.age_spinbox.value()
+        id_data['height'] = self.height_doublespinbox.value()
+        id_data['weight'] = self.weight_doublespinbox.value()
+        id_data['bmi'] = self.bmi_doublespinbox.value()
+        id_data['waistline'] = self.waistline_doublespinbox.value()
+        id_data['height_unit'] = self.height_unit_combobox.currentText()
+        id_data['weight_unit'] = self.weight_unit_combobox.currentText()
+        id_data['waistline_unit'] = self.waistline_unit_combobox.currentText()
+
+
+    def _add_file(self, filename, removed_files=None):
+        file_item = self._model.get_file_item_by_name(filename)
+
+        if file_item is None:
+            success, error = self._psg_reader_manager.open_file(filename)
+
+            if not success:
+                if removed_files is not None:
+                    removed_files.append(f"{filename}: ({error})")
+                    return removed_files
+                else: # single add from file dialog, show error message box
+                    WarningDialog(f"Could not open file:{filename}")
+                    return
+            id_data = self._psg_reader_manager.get_subject_info()
+            events_data = self._psg_reader_manager.get_events()
+            sleep_stages = self._psg_reader_manager.get_sleep_stages()
+
+            if len(sleep_stages) == 0 or len(sleep_stages[sleep_stages["name"] != "9"]) == 0:
+                if removed_files is not None:
+                    removed_files.append(f"{filename} (not scored)")
+                    return removed_files
+                else: # single add from file dialog, show warning message box
+                    WarningDialog(f"This file has not been scored and will be not added:{filename}")
+            else:
+                self._model.add_file(filename, id_data, events_data)
+                self.file_tableview.resizeColumnsToContents()
+        return removed_files
+
+
+    def on_add_files(self):
+        dlg = QtWidgets.QFileDialog()
+        dlg.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
+        dlg.setNameFilters(self._psg_reader_manager.get_file_extensions_filters())
+        if dlg.exec_():
+            filenames = dlg.selectedFiles()
+
+            for filename in filenames:
+                self._add_file(filename)
+
+
+    def on_deidentify_change(self, checked):
+        self.first_name_lineedit.setEnabled(not checked)
+        self.last_name_lineedit.setEnabled(not checked)
+        self.birthdate_timeedit.setEnabled(not checked)
+
+    def on_validate_settings(self):
+        # Validate that all input were set correctly by the user.
+        # If everything is correct, return True.
+        # If not, display an error message to the user and return False.
+        # This is called just before the apply settings function.
+        # Returning False will prevent the process from executing.
+        model = self.file_tableview.model()
+        if model.rowCount(QtCore.QModelIndex()) == 0:
+            WarningDialog(f"The files in the Input File Step is empty. You need to select at least one file.")
+            return False
+        return True
+
+    def on_add_from_folder(self):
+        file_dialog = QtWidgets.QFileDialog()
+        file_dialog.setFileMode(QtWidgets.QFileDialog.Directory) 
+        file_dialog.setOption(QtWidgets.QFileDialog.ShowDirsOnly, True) # Allows the user to select only directories (folders).
+        # The non native QFileDialog supports only local files.
+            # So it is better to use the native dialog instead to see athena
+        # The native dialog does not support multiple folders selection in windows and macOS
+            # Natus needs the option to select multiple folders
+        file_dialog.setOption(QtWidgets.QFileDialog.DontUseNativeDialog, True)
+        file_view = file_dialog.findChild(QtWidgets.QListView, 'listView')
+
+        if file_view:
+                file_view.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+        f_tree_view = file_dialog.findChild(QtWidgets.QTreeView)
+        if f_tree_view:
+            f_tree_view.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+
+        if file_dialog.exec():
+            folders = file_dialog.selectedFiles()
+
+            for folder in folders:
+                filenames = self._psg_reader_manager.find_psg_within_folder(folder)
+                for filename in filenames:
+                    self._add_file(filename)
+
+    def on_remove_file(self):
+        if self._identification_mapper is not None:
+            self._identification_mapper.submit()
+            self._identification_mapper.clearMapping()
+        self._current_id_row = None
+
+        index = self.file_tableview.currentIndex()
+        filename = index.data(3)
+        # Extract the full filename
+        model = self.file_tableview.model()
+        full_filename = model.files[index.row()].full_filename
+
+        # Remove event reports related to this file and update the context
+        reports = self._context_manager[ContextConstants.context_event_report_list]
+        if full_filename in reports:
+            del reports[full_filename]
+        self._context_manager[ContextConstants.context_event_report_list] = reports
+
+        # Remove temporal links reports related to this file and update the context
+        reports = self._context_manager[ContextConstants.context_temporal_links_report_list]
+        if full_filename in reports:
+            del reports[full_filename]
+        self._context_manager[ContextConstants.context_temporal_links_report_list] = reports
+
+        self._model.remove_file(index.row())
+
+        
+    def get_current_filename(self):
+        ind = self.file_tableview.currentIndex()
+        return 
+
+
+    def _show_batch_load_warnings(self, removed_files, title="Workspace loaded partially"):
+        if len(removed_files) == 0:
+            return
+
+        rows = []
+        for detail in removed_files:
+            if detail.endswith(")") and " (" in detail:
+                file_path, reason = detail.rsplit(" (", 1)
+                rows.append({
+                    "Filename": os.path.basename(file_path),
+                    "Path": file_path,
+                    "Reason": reason[:-1]
+                })
+            else:
+                rows.append({
+                    "Filename": os.path.basename(detail),
+                    "Path": detail,
+                    "Reason": "unknown"
+                })
+
+        details_df = pd.DataFrame(rows, columns=["Filename", "Path", "Reason"])
+        message = f"{len(removed_files)} file(s) were skipped while loading."
+        table_dialog_msg = TableDialog(df=details_df, title=title, message=message, showDownloadButton=True)
+        table_dialog_msg.exec_()

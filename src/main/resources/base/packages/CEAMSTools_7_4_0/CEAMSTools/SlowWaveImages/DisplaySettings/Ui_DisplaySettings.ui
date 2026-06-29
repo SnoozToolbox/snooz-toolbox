@@ -1,0 +1,1399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DisplaySettings</class>
+ <widget class="QWidget" name="DisplaySettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>790</width>
+    <height>679</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_7">
+   <item>
+    <widget class="QLabel" name="label_16">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Colors settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_23">
+     <property name="text">
+      <string>This page allows you to define the first four colors out of a possibility of ten used in the pictures.
+Note that the condition groups and channels are not limited to four; ten colors are available.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pictures at the subject level.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_subject_avg_auto">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Auto</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One picture per subject&lt;/span&gt; (available when displaying the mean signal curve).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Colors are used to differentiate channels.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Channel #1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Channel #2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Channel #3</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>Channel #4</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="comboBox_subject_avg_chan1">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBox_subject_avg_chan2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="comboBox_subject_avg_chan3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="comboBox_subject_avg_chan4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>SW categories are distinguished by the line style when multiple channels are displayed.
+The lower colors (for SW categories) are used when there is only a single channel to display.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_subject_sel_auto">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Auto</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One picture per channel&lt;/span&gt; (available when displaying all sw signal curves).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Colors are used to differentiate SW categories.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>SW category #1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>SW category #2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>SW category #3</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>SW category #4</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="comboBox_subject_sel_cat1">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBox_subject_sel_cat2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="comboBox_subject_sel_cat3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="comboBox_subject_sel_cat4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_14">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pictures at the cohort level.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>13</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_cohort_auto">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Auto</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>Colors are used to differentiate condition group.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_18">
+           <property name="text">
+            <string>Group #1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="comboBox_cohort_group1">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="comboBox_cohort_group4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>Group #3</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>Group #4</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Group #2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBox_cohort_group2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="comboBox_cohort_group3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>blue</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>blue</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>red</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>green</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>orange</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>purple</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>brown</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pink</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>gray</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>olive</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cyan</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_22">
+         <property name="text">
+          <string>SW categories are differentiated with the line style.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_5">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>116</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>checkBox_cohort_auto</sender>
+   <signal>clicked()</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>415</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_subject_avg_auto</sender>
+   <signal>clicked()</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_subject_sel_auto</sender>
+   <signal>clicked()</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_cohort_group1</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_cohort_group2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>479</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_cohort_group3</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>624</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_cohort_group4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>770</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_avg_chan1</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_avg_chan2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>479</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_avg_chan3</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>624</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_avg_chan4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>770</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_sel_cat1</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_sel_cat2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>479</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_sel_cat3</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>624</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_subject_sel_cat4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>DisplaySettings</receiver>
+   <slot>update_colors_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>770</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>update_colors_slot()</slot>
+ </slots>
+</ui>

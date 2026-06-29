@@ -28,7 +28,7 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
         # Developers who create the installer needs to use FBS pro.
         if not config.is_dev:
             version = PUBLIC_SETTINGS['version']
-            self.snooz_version_label.setText(f"The version currently installed : <b>beta-{version}</b>")
+            self.snooz_version_label.setText(f"The version currently installed : <b>{version}</b>")
         else:
             self.snooz_version_label.setText("<b>You are using the development environment, no updates required.</b>")
 

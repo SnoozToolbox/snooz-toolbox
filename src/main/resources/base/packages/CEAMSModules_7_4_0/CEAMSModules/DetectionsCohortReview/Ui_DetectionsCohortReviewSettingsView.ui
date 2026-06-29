@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DetectionsCohortReviewSettingsView</class>
+ <widget class="QWidget" name="DetectionsCohortReviewSettingsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>929</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="handleWidth">
+      <number>15</number>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="layoutWidget">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Subject List</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Subject Channel List</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Cohort Channel List</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QListView" name="subject_listView">
+         <property name="editTriggers">
+          <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QListView" name="chan_subject_listView"/>
+       </item>
+       <item row="2" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="clear_pushButton">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add_pushButton">
+           <property name="text">
+            <string>Add Events Report</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="all_subject_chan_checkBox">
+         <property name="text">
+          <string>Select All</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="all_cohort_chan_checkBox">
+           <property name="text">
+            <string>Select All</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add_ROI_pushButton">
+           <property name="toolTip">
+            <string>Rename your channel labels first. Adding the ROIs must be the final step.</string>
+           </property>
+           <property name="text">
+            <string>Add ROI</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="2">
+        <widget class="QListWidget" name="chan_cohort_listWidget"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Event File information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="message_textEdit">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>clear_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>clear_subject_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>add_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>add_subject_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_subject_chan_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>select_all_subject_chan_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>425</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>all_cohort_chan_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>select_all_cohort_chan_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>add_ROI_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>add_ROI_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>544</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>subject_listView</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>DetectionsCohortReviewSettingsView</receiver>
+   <slot>subject_selection_changed_slot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>clear_subject_slot()</slot>
+  <slot>add_subject_slot()</slot>
+  <slot>select_all_subject_chan_slot()</slot>
+  <slot>select_all_cohort_chan_slot()</slot>
+  <slot>add_ROI_slot()</slot>
+  <slot>item_changed_subject_slot()</slot>
+  <slot>item_changed_cohort_slot()</slot>
+  <slot>subject_selection_changed_slot()</slot>
+ </slots>
+</ui>

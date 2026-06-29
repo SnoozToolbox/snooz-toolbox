@@ -57,7 +57,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._init_homepage(font)
 
         # Warn the user this is a beta version
-        self._display_disclaimer()
+        # self._display_disclaimer() no more in Beta version
 
         # Most information and error messages are handled here.
         self._managers.pub_sub_manager.subscribe(self, "show_error_message")

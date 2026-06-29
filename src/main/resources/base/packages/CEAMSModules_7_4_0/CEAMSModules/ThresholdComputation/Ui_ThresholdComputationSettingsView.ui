@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ThresholdComputationSettingsView</class>
+ <widget class="QWidget" name="ThresholdComputationSettingsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>369</width>
+    <height>261</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="1" column="0">
+          <widget class="QLabel" name="threshold_definition_label">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>threshold value (definition)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="threshold_definition_lineedit">
+           <property name="toolTip">
+            <string>Enter the threshold value to compute i.e. 95 for 95 percentile or 4 for 4 x standard deviation.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="threshold_metric_label">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>threshold metric (unit)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="unit_comboBox">
+           <item>
+            <property name="text">
+             <string>percentile</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>standard deviation</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>median</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>variance</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Threshold Computation Settings</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Compute a theshold per ...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="thresh_signal_radioButton">
+         <property name="toolTip">
+          <string>Select to compute a threshold per item of signals (each channel and bout of signals will be linked to its own threshold)</string>
+         </property>
+         <property name="text">
+          <string>item of signals</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="thresh_cycle_radioButton">
+         <property name="toolTip">
+          <string>Select to compute a threshold per sleep cycle and channel(the threshold will be duplicated for all signals included in the same sleep cycle).</string>
+         </property>
+         <property name="text">
+          <string>sleep cycle and channel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="thresh_channel_radioButton">
+         <property name="toolTip">
+          <string>Select to compute a single threshold per channel (through all signals and/or sleep cycles).</string>
+         </property>
+         <property name="text">
+          <string>channel (through all signals)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>58</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>thresh_signal_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ThresholdComputationSettingsView</receiver>
+   <slot>on_settings_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>thresh_cycle_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ThresholdComputationSettingsView</receiver>
+   <slot>on_settings_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>thresh_channel_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ThresholdComputationSettingsView</receiver>
+   <slot>on_settings_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_settings_changed()</slot>
+ </slots>
+</ui>

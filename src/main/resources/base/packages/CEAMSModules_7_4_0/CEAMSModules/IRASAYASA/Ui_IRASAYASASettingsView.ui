@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IRASAYASASettingsView</class>
+ <widget class="QWidget" name="IRASAYASASettingsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>333</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="signals_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="signals_label">
+       <property name="text">
+        <string>signals</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="signals_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="win_len_sec_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="win_len_sec_label">
+       <property name="text">
+        <string>win_len_sec</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="win_len_sec_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="win_step_sec_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="win_step_sec_label">
+       <property name="text">
+        <string>win_step_sec</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="win_step_sec_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="window_name_label">
+       <property name="text">
+        <string>window_name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="window_name_comboBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentText">
+        <string>hann</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>boxcar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>trlang</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>blackman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>hamming</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>hann</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>bartlett</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>flattop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>parzen</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>bohman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>blackmanharris</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>nuttall</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>barthann</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>kasier</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>gaussian</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>general_gaussian</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>dpss</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>chebwin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>exponential</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>tukey</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>taylor</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="first_freq_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="first_freq_label">
+       <property name="text">
+        <string>first_freq</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="first_freq_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="last_freq_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="last_freq_label">
+       <property name="text">
+        <string>last_freq</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="last_freq_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="flag_horizontalLayout">
+     <item>
+      <widget class="QLabel" name="flag_label">
+       <property name="text">
+        <string>flag</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="flag_lineedit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../snooz-toolbox/src/main/python/ui/themes/themes.qrc"/>
+ </resources>
+ <connections/>
+</ui>
