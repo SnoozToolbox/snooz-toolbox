@@ -1,5 +1,5 @@
 {
-    "mac_bundle_identifier": "com.ceams.snooz",
+    "mac_bundle_identifier": "com.snooztoolbox",
     "hidden_imports": ["sklearn.utils._typedefs", 
         "sklearn.utils._heap", 
         "sklearn.utils._sorting",
