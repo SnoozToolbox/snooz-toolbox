@@ -1,4 +1,4 @@
-# from PyInstaller.utils.hooks import collect_submodules, collect_data_files
+from PyInstaller.utils.hooks import collect_all
 
-# hiddenimports = collect_submodules('mne')
-# datas = collect_data_files('mne')
+# One hook file per dependency keeps packaging behavior explicit and debuggable.
+datas, binaries, hiddenimports = collect_all("mne")
