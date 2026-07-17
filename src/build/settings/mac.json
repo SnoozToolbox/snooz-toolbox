@@ -1,5 +1,11 @@
 {
     "mac_bundle_identifier": "com.snooztoolbox",
+    "included_files": [
+        ["../snooz_310_env/lib/python3.10/site-packages/mne", "mne"],
+        ["../snooz_310_env/lib/python3.10/site-packages/lazy_loader", "lazy_loader"],
+        ["../snooz_310_env/lib/python3.10/site-packages/lspopt", "lspopt"],
+        ["../snooz_310_env/lib/python3.10/site-packages/yasa", "yasa"]
+    ],
     "hidden_imports": ["sklearn.utils._typedefs", 
         "sklearn.utils._heap", 
         "sklearn.utils._sorting",

@@ -18,3 +18,7 @@ package_base, package_dir = get_package_paths("mne")
 init_stub = Path(package_dir) / "__init__.pyi"
 if init_stub.exists():
 	datas.append((str(init_stub), "mne"))
+
+print(f"[hook-mne] package_dir={package_dir}")
+print(f"[hook-mne] init_stub_exists={init_stub.exists()} path={init_stub}")
+print(f"[hook-mne] datas={len(datas)} binaries={len(binaries)} hiddenimports={len(hiddenimports)}")
