@@ -6,6 +6,10 @@
     "release_label": "",
     "public_settings": ["release_label"],
     "extra_hooks_dir": "src/hooks",
+	"extra_pyinstaller_args": [
+		"--additional-hooks-dir",
+		"src/hooks"
+	],
 	"hidden_imports": [
     "ica",
     "lightgbm",
