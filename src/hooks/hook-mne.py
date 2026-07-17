@@ -1,13 +1,16 @@
 from pathlib import Path
 
-from PyInstaller.utils.hooks import collect_all, collect_data_files, get_package_paths
+from PyInstaller.utils.hooks import collect_all, collect_data_files, collect_submodules, get_package_paths
 
 # lazy_loader needs sibling stub files on disk next to the mne package modules.
 # Keep mne as loose .py files (not only in PYZ) so mne/__init__.pyi can be present next to it.
-module_collection_mode = "py"
+module_collection_mode = {"mne": "py"}
 
 # One hook file per dependency keeps packaging behavior explicit and debuggable.
 datas, binaries, hiddenimports = collect_all("mne")
+hiddenimports += collect_submodules("mne")
+hiddenimports += ["mne.utils._logging"]
+
 # Request all type stubs packaged by mne.
 datas += collect_data_files("mne", includes=["**/*.pyi", "*.pyi"])
 
