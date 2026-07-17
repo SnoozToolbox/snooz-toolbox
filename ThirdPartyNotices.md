@@ -12,6 +12,7 @@ colorama
 contourpy
 cycler
 fonttools
+fooof
 ica
 Jinja2
 joblib
@@ -82,6 +83,13 @@ Redistribution and use in source and binary forms, with or without modification,
 **Copyright:** (c) 2017 Just van Rossum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction...
+
+## fooof
+**License:** Apache License 2.0  
+**Copyright:** Copyright 2017 Voytek Lab
+
+FOOOF (Fitting Oscillations and One-Over-F) is a Python toolbox for fitting neural power spectra parameterizations. It is licensed under the Apache License 2.0.
+Recommended citation: Donoghue et al. (2020), "Parameterizing neural power spectra into periodic and aperiodic components", Nature Neuroscience, 23(12), 1655-1665. DOI: 10.1038/s41593-020-00744-x.
 
 ## ica
 **License:** MIT License  
