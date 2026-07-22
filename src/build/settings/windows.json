@@ -1,8 +1,2 @@
 {
-    "included_files": [
-        ["../snooz_310_env/Lib/site-packages/mne", "mne"],
-        ["../snooz_310_env/Lib/site-packages/lazy_loader", "lazy_loader"],
-        ["../snooz_310_env/Lib/site-packages/lspopt", "lspopt"],
-        ["../snooz_310_env/Lib/site-packages/yasa", "yasa"]
-    ]
 }

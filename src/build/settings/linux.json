@@ -3,12 +3,6 @@
     "description": "Snooz is a highly modular tool for building signal processing algorithms to analyze sleep recordings.",
     "author_email": "snooztoolbox.cnmtl@ssss.gouv.qc.ca",
     "url": "https://snooztoolbox.com/",
-	"included_files": [
-		["../snooz_310_env/lib/python3.10/site-packages/mne", "mne"],
-		["../snooz_310_env/lib/python3.10/site-packages/lazy_loader", "lazy_loader"],
-		["../snooz_310_env/lib/python3.10/site-packages/lspopt", "lspopt"],
-		["../snooz_310_env/lib/python3.10/site-packages/yasa", "yasa"]
-	],
 	"hidden_imports": [
 		"cmath",
 		"qtpy",
