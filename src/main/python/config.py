@@ -255,6 +255,7 @@ class MemoryConfig:
         'torch.linalg', 'torch.sparse', 'torch.special', 'torch.futures',
         'torchvision', 'torchaudio', 'torch._C', 'torch._dynamo',
         'numpy', 'scipy', 'sklearn', 'cv2', 'tensorflow', 'keras',
+        'llvmlite',
         'numba', 'numba.core', 'numba.typed', 'numba.types', 'numba.cuda',
         'numba.experimental', 'numba.misc', 'numba.np', 'numba.cpython'
     }
