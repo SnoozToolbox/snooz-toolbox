@@ -18,7 +18,6 @@ if sys.platform.startswith('linux') and '--headless' not in sys.argv and '--f' n
     os.environ.setdefault('GIO_MODULE_DIR', empty_gio_modules_dir)
     os.environ.setdefault('GIO_USE_VFS', 'local')
     os.environ.setdefault('GVFS_DISABLE_FUSE', '1')
-    os.environ.setdefault('QT_QPA_PLATFORM', 'xcb')
     os.environ.pop('GTK_PATH', None)
 
 # Check for --headless flag or --f flag early (before any imports)
