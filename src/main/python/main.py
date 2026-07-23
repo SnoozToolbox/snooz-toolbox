@@ -38,8 +38,8 @@ if not config.HEADLESS_MODE:
     import widgets
 from Managers.Managers import Managers
 import module_dependencies
-import mne
-from mne import io, _fiff
+# import mne added in hidden_imports
+# from mne import io, _fiff
 # DONT REMOVE
 
 # Import ApplicationContext based on mode

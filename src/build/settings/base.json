@@ -11,8 +11,10 @@
 		"src/hooks"
 	],
 	"hidden_imports": [
+    "fooof",
     "ica",
     "lightgbm",
+    "mne",
     "matplotlib.backends.backend_pdf",
     "matplotlib.backends.backend_qtagg",
     "scipy.signal",
