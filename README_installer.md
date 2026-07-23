@@ -64,10 +64,12 @@ Reboot
     (snooz_310_env)$ fbs clean
     (snooz_310_env)$ fbs freeze --debug
 
-## Copy manually the missing packages : mne, lazy_loader, lspopt and yasa packages
-    Please update the paths in the script CookBook\copy_missing_packages_to_internal.py
-    Call the python script in VScode terminal
-    (snooz_310_env)$ python CookBook\copy_missing_packages_to_internal.py
+## Frozen package contents
+    The fbs build settings now include the runtime packages that need to stay loose in the bundle:
+    mne, lazy_loader, lspopt and yasa.
+
+    The script `CookBook\copy_missing_packages_to_internal.py` is kept only as a legacy/debug fallback
+    if you need to compare the frozen bundle with a manual copy.
 
 ## Create the installer (not needed for developers)
     (snooz_310_env)$ fbs installer
