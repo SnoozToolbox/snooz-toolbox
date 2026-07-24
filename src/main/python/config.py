@@ -20,6 +20,9 @@ def _normalize_release_label(value: object) -> str:
 # It can be injected by environment variable and does not affect fbs version constraints.
 release_label = _normalize_release_label(os.environ.get('SNOOZ_RELEASE_LABEL', ''))
 
+# User-facing application name (defaults to "Snooz" when fbs settings are unavailable).
+app_name = "Snooz Toolbox"
+
 # Check if running in headless mode
 HEADLESS_MODE = os.environ.get('SNOOZ_HEADLESS', 'false').lower() == 'true'
 
@@ -167,6 +170,7 @@ try:
     # Values come from the packaged build settings (base.json merged with platform settings),
     # not from this source file at runtime.
     from fbs_runtime import PUBLIC_SETTINGS
+    app_name = str(PUBLIC_SETTINGS.get("app_name", app_name)).strip() or app_name
     if release_label == "":
         try:
             # release_label is optional metadata used only for the window title.
@@ -188,10 +192,10 @@ except ImportError:
 def get_app_window_title() -> str:
     """Build the user-facing app title from strict version plus optional release label."""
     if is_dev:
-        return "Snooz (DEV)"
+        return f"{app_name} (DEV)"
     if release_label:
-        return f"Snooz {version} ({release_label})"
-    return f"Snooz {version}"
+        return f"{app_name} {version} ({release_label})"
+    return f"{app_name} {version}"
 
 if not HEADLESS_MODE:
     app_settings = QtCore.QSettings("CEAMS", settings_key)
