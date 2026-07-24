@@ -9,6 +9,16 @@ import json
 import multiprocessing
 import os
 import sys
+import tempfile
+
+# On Linux packaged runs, avoid loading incompatible host GIO modules against bundled libs.
+if sys.platform.startswith('linux') and '--headless' not in sys.argv and '--f' not in sys.argv:
+    empty_gio_modules_dir = os.path.join(tempfile.gettempdir(), 'snooz_empty_gio_modules')
+    os.makedirs(empty_gio_modules_dir, exist_ok=True)
+    os.environ.setdefault('GIO_MODULE_DIR', empty_gio_modules_dir)
+    os.environ.setdefault('GIO_USE_VFS', 'local')
+    os.environ.setdefault('GVFS_DISABLE_FUSE', '1')
+    os.environ.pop('GTK_PATH', None)
 
 # Check for --headless flag or --f flag early (before any imports)
 # This allows headless mode to be set via command line argument
@@ -24,7 +34,6 @@ if not config.HEADLESS_MODE:
     os.environ['QT_API'] = 'pyside6'
 
 # Set NUMBA cache to user temp directory (works on Windows, macOS, Linux)
-import tempfile
 numba_cache_dir = os.path.join(tempfile.gettempdir(), 'snooz_numba_cache')
 os.makedirs(numba_cache_dir, exist_ok=True)
 os.environ["NUMBA_CACHE_DIR"] = numba_cache_dir
