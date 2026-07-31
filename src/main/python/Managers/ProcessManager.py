@@ -476,15 +476,45 @@ class ProcessManager(Manager):
         self._managers.pub_sub_manager.publish(self, "maximize", None)
 
     def run_console(self, graph_json):
-        """Execute process in console/headless mode without Qt dependencies."""
+        """Execute process in console/headless mode without Qt dependencies.
+
+        Returns:
+            tuple: (passed, interruptions) where passed is True when the analysis
+            completed with no interrupted iterations, and interruptions is the list
+            of per-iteration failures (empty when none).
+        """
         if len(graph_json["process_params"]["nodes"]) == 0:
             print("Nothing to run.")
-            return
+            return True, []
 
         self.worker = ProcessWorker(graph_json, False, self._managers, self._use_multithread)
-        self.worker.run()
+        try:
+            self.worker.run()
+        except Exception:
+            # Non-master NodeRuntimeException re-raises; still report FAIL and allow
+            # the caller to write the log.
+            self.worker.passed = False
+            self.worker.was_interrupted = True
+            if getattr(self.worker, "interruptions", None) is None:
+                self.worker.interruptions = []
 
-        print("Process execution completed.")
+        passed = bool(getattr(self.worker, "passed", False))
+        interruptions = getattr(self.worker, "interruptions", None) or []
+        return passed, interruptions
+
+    @staticmethod
+    def print_headless_analysis_result(passed, interruptions):
+        """Print a one-line PASS/FAIL summary for headless runs."""
+        if passed:
+            print("Analysis PASSED.")
+            return
+
+        if interruptions:
+            n = len(interruptions)
+            label = "iteration" if n == 1 else "iterations"
+            print(f"Analysis FAILED: {n} interrupted {label}. See the log for details.")
+        else:
+            print("Analysis FAILED: process interrupted. See the log for details.")
 
     # Private functions
     def _open_loading_dialog(self):

@@ -73,8 +73,7 @@ class AppContext(ApplicationContext):
             return self.app.exec_() if self.app else None
         
         else:
-            executeConsole(filename)
-            return None
+            return executeConsole(filename)
 
 def _maybe_dev_package_item_version_sync():
     """
@@ -133,11 +132,12 @@ def executeConsole(filename):
             success = managers.process_manager.load_dependencies_from_description(json_data)
             if not success:
                 print("ERROR Could not load dependencies.")
-                return
+                print("Analysis FAILED.")
+                return 1
             
             managers.process_manager.use_multithread = False
             # Call run_process or similar method that doesn't depend on Qt threading
-            managers.process_manager.run_console(json_data)
+            passed, interruptions = managers.process_manager.run_console(json_data)
 
             # Write the logs
             base_name = os.path.splitext(filename)[0]
@@ -148,9 +148,12 @@ def executeConsole(filename):
                 for (id, log) in managers.log_manager.timeline_logs:
                     file.write(f"{id} {log}\n")
 
-            print("Process completed.")
+            managers.process_manager.print_headless_analysis_result(passed, interruptions)
+            return 0 if passed else 1
     else:
         print("ERROR Could not find file:" + filename)
+        print("Analysis FAILED.")
+        return 1
     
 if __name__ == "__main__":
     multiprocessing.freeze_support()

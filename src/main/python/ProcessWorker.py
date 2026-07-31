@@ -70,6 +70,12 @@ class ProcessWorkerMixin:
 
         return graph, master_node
 
+    def _set_run_result(self, interruptions, *, passed, was_interrupted):
+        """Store headless/GUI-readable outcome of the process run."""
+        self.interruptions = interruptions if interruptions is not None else []
+        self.passed = passed
+        self.was_interrupted = was_interrupted
+
     def run(self):
         """ Run the process
             The graph will be evaluated once if no master node has been found.
@@ -83,14 +89,15 @@ class ProcessWorkerMixin:
         #gc.enable()
 
         self._managers.log_manager.clear()
+        self._set_run_result([], passed=False, was_interrupted=False)
         is_master_done = False
+        iteration_interruption = []
         try:
             total_start_time = time.time()
             self._managers.log_manager.log("process", "*****************************")
             self._managers.log_manager.log("process", "Starting Run")
 
             # Initialize the list of interruption
-            iteration_interruption = []
             iteration = 0
             while not is_master_done and not self._should_stop:
                 iteration_start_time = time.time()
@@ -118,6 +125,8 @@ class ProcessWorkerMixin:
                             WarningDialog(err.message)
                         else:
                             print(f"ERROR: {err.message}")
+                        self._set_run_result(
+                            iteration_interruption, passed=False, was_interrupted=True)
                         raise err
                     
                 iteration += 1
@@ -150,6 +159,12 @@ class ProcessWorkerMixin:
             eval_time = time.time() - total_start_time
             feval_time = dt.timedelta(seconds=eval_time)
             self._managers.log_manager.log("process", f"Total process time:\t{feval_time}\n\n")
+
+            passed = (not self._should_stop) and (len(iteration_interruption) == 0)
+            self._set_run_result(
+                iteration_interruption,
+                passed=passed,
+                was_interrupted=bool(self._should_stop))
             
             if self._should_stop:
                 self.interrupted.emit(outputs, iteration_interruption)
@@ -160,11 +175,15 @@ class ProcessWorkerMixin:
         except RuntimeError as exc:
             self._managers.log_manager.log("process", f"Fatal Error: {exc}")
             self._managers.log_manager.log("error", f"This is a known error, please restart Snooz to fix it.")
+            self._set_run_result(
+                iteration_interruption, passed=False, was_interrupted=True)
             self.interrupted.emit([], iteration_interruption)
 
         except Exception as exc:
             if DEBUG: print(f"General Exception occured {exc}")
             self._managers.log_manager.log("process", f"Interrupted:{exc}")
+            self._set_run_result(
+                iteration_interruption, passed=False, was_interrupted=True)
             self.interrupted.emit([], iteration_interruption)
 
     def stop(self):
