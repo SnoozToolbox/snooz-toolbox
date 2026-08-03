@@ -5,8 +5,30 @@ See the file LICENCE for full license details.
 import os
 import sys
 import importlib.util
+from pathlib import Path
 
 is_dev = True
+
+
+def _build_settings_version() -> str:
+    """Read source-tree version from src/build/settings/base.json when available."""
+    settings_path = Path(__file__).resolve().parents[2] / "build" / "settings" / "base.json"
+    try:
+        import json
+
+        with settings_path.open(encoding="utf-8") as f:
+            data = json.load(f)
+        return str(data.get("version", "")).strip()
+    except Exception:
+        return ""
+
+
+def _as_dev_version(base_version: str) -> str:
+    """Return a user-visible dev version string from a base semantic version."""
+    value = str(base_version or "").strip()
+    if value == "" or value.lower() == "dev":
+        return "dev"
+    return f"{value}-dev"
 
 # Normalize optional release labels coming from env vars or fbs settings.
 def _normalize_release_label(value: object) -> str:
@@ -183,10 +205,14 @@ try:
         settings_key = f"Snooz_{version}"
     else:
         settings_key = f"Snooz"
-        version = 'dev'
+        try:
+            base_version = PUBLIC_SETTINGS["version"]
+        except KeyError:
+            base_version = _build_settings_version()
+        version = _as_dev_version(base_version)
 except ImportError:
     settings_key = f"Snooz"
-    version = 'dev'
+    version = _as_dev_version(_build_settings_version())
 
 
 def get_app_window_title() -> str:

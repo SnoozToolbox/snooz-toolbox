@@ -307,6 +307,7 @@ class PackageManager(Manager):
         
         Native packages are the ones that are included with the installation of the software.
         They are loaded from the resources folder of the application."""
+        native_package_path = 'packages'
         try:
             native_package_path = config.app_context.get_resource('packages')
             subfolders = [f.path for f in os.scandir(native_package_path) if f.is_dir()]
