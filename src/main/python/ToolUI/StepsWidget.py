@@ -12,6 +12,7 @@ from qtpy.QtCore import QUrl
 
 from config import C
 from commons.BaseSettingsView import BaseSettingsView
+from commons.tooltip_help_decorator import decorate_tooltip_help_marks
 from ui.Ui_StepsWidget import Ui_StepsWidget
 from ToolUI.ContextManager import ContextManager
 
@@ -218,6 +219,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             else:
                 page = module.create_settings_view(self._activation_params)
                 self._normalize_read_only_text_widgets(page)
+                decorate_tooltip_help_marks(page)
                 page.setMinimumSize(0, 0)
                 page_scroll_area = QtWidgets.QScrollArea(top_widget)
                 page_scroll_area.setObjectName("step_scroll_area")
@@ -247,6 +249,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 process_manager=self._managers.process_manager, asset_manager=asset_directory, custom_params=self._activation_params)
                 #node_manager = self._node_manager, asset_manager=self._asset_manager)
             self._normalize_read_only_text_widgets(page)
+            decorate_tooltip_help_marks(page)
             page.setMinimumSize(0, 0)
             page_scroll_area = QtWidgets.QScrollArea(top_widget)
             page_scroll_area.setObjectName("step_scroll_area")

@@ -359,6 +359,23 @@ QLabel:disabled {
     color: rgb(150, 150, 150);
 }
 
+/* Tooltip help cue shown on widgets that expose a toolTip */
+QLabel#snoozTooltipHelpMark {
+    color: #b0b0b0;
+    background-color: #f7f7f7;
+    border: 1px solid #c8c8c8;
+    border-radius: 7px;
+    font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+    font-size: 10pt;
+    font-weight: 700;
+    font-style: normal;
+    padding: 0px;
+    min-width: 14px;
+    max-width: 14px;
+    min-height: 14px;
+    max-height: 14px;
+}
+
 /* Disabled QCheckBox */
 QCheckBox:disabled {
     color: rgb(150, 150, 150);
