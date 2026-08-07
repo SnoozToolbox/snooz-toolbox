@@ -16,6 +16,11 @@ Placement strategy (content-aware, not full-width):
 """
 from qtpy import QtCore, QtGui, QtWidgets
 
+try:
+    import shiboken6
+except ImportError:  # pragma: no cover - non-PySide6 runtimes
+    shiboken6 = None
+
 _OPT_OUT_PROPERTY = "snoozNoHelpIcon"
 _MARK_OBJECT_NAME = "snoozTooltipHelpMark"
 _MARK_ATTR = "_snooz_help_mark"
@@ -40,15 +45,29 @@ QLabel#snoozTooltipHelpMark {
 }
 """
 
+# Prefer concrete slider type: QAbstractSlider also matches transient QScrollBars.
 _HELPABLE_TYPES = (
     QtWidgets.QAbstractButton,
-    QtWidgets.QAbstractSlider,
+    QtWidgets.QSlider,
     QtWidgets.QAbstractSpinBox,
     QtWidgets.QComboBox,
     QtWidgets.QLineEdit,
     QtWidgets.QKeySequenceEdit,
     QtWidgets.QLabel,
 )
+
+
+def _widget_alive(widget):
+    """True when the Python wrapper still owns a live Qt C++ object."""
+    if widget is None:
+        return False
+    if shiboken6 is not None:
+        return shiboken6.isValid(widget)
+    try:
+        widget.objectName()
+        return True
+    except RuntimeError:
+        return False
 
 
 class _TooltipHelpFilter(QtCore.QObject):
@@ -65,13 +84,22 @@ class _TooltipHelpFilter(QtCore.QObject):
 
         if event_type == QtCore.QEvent.Type.ChildAdded:
             child = event.child()
-            if isinstance(child, QtWidgets.QWidget):
+            # Alias UIs rebuild often; ignore transient scrollbars/marks.
+            if (
+                isinstance(child, QtWidgets.QWidget)
+                and not isinstance(child, QtWidgets.QScrollBar)
+                and _widget_alive(child)
+                and child.objectName() != _MARK_OBJECT_NAME
+            ):
                 self._watch(child)
                 self._schedule_scan()
             return False
 
         mark = self._marks.get(id(watched))
         if mark is None:
+            return False
+        if not _widget_alive(mark):
+            self._marks.pop(id(watched), None)
             return False
 
         if event_type in (
@@ -85,20 +113,32 @@ class _TooltipHelpFilter(QtCore.QObject):
         elif event_type == QtCore.QEvent.Type.Destroy:
             self._marks.pop(id(watched), None)
             target = getattr(mark, "_snooz_target", None)
-            if target is not None and getattr(target, _MARK_ATTR, None) is mark:
+            if (
+                _widget_alive(target)
+                and getattr(target, _MARK_ATTR, None) is mark
+            ):
                 setattr(target, _MARK_ATTR, None)
-            mark.deleteLater()
+            if _widget_alive(mark):
+                mark.deleteLater()
         return False
 
     def _watch(self, widget):
+        if not _widget_alive(widget):
+            return
         if widget.objectName() == _MARK_OBJECT_NAME:
+            return
+        if isinstance(widget, QtWidgets.QScrollBar):
             return
         if getattr(widget, _WATCHED_ATTR, False):
             return
         setattr(widget, _WATCHED_ATTR, True)
         widget.installEventFilter(self)
         for child in widget.findChildren(QtWidgets.QWidget):
+            if not _widget_alive(child):
+                continue
             if child.objectName() == _MARK_OBJECT_NAME:
+                continue
+            if isinstance(child, QtWidgets.QScrollBar):
                 continue
             if getattr(child, _WATCHED_ATTR, False):
                 continue
@@ -113,7 +153,7 @@ class _TooltipHelpFilter(QtCore.QObject):
 
     def _run_pending_scan(self):
         self._pending_scan = False
-        if self._root is not None:
+        if _widget_alive(self._root):
             _scan_and_decorate(self._root, self)
 
 
@@ -124,7 +164,7 @@ def decorate_tooltip_help_marks(root):
     Opt out with ``widget.setProperty("snoozNoHelpIcon", True)``.
     Late-created widgets under ``root`` are picked up automatically.
     """
-    if root is None or not isinstance(root, QtWidgets.QWidget):
+    if not _widget_alive(root) or not isinstance(root, QtWidgets.QWidget):
         return
 
     filter_obj = getattr(root, "_snooz_help_filter", None)
@@ -137,14 +177,22 @@ def decorate_tooltip_help_marks(root):
 
 
 def _scan_and_decorate(root, filter_obj):
+    if not _widget_alive(root):
+        return
     widgets = [root]
     widgets.extend(root.findChildren(QtWidgets.QWidget))
     for widget in widgets:
-        if _should_decorate(widget):
-            _attach_help_mark(widget, filter_obj)
+        try:
+            if _should_decorate(widget):
+                _attach_help_mark(widget, filter_obj)
+        except RuntimeError:
+            # Widget deleted while alias UI / layouts were rebuilding.
+            continue
 
 
 def _should_decorate(widget):
+    if not _widget_alive(widget):
+        return False
     if not isinstance(widget, _HELPABLE_TYPES):
         return False
     if widget.objectName() == _MARK_OBJECT_NAME:
@@ -319,9 +367,11 @@ def _label_for_field_in_layout(layout, widget):
 
 
 def _reposition_help_mark(mark):
+    if not _widget_alive(mark):
+        return
     widget = getattr(mark, "_snooz_target", None)
     host = getattr(mark, "_snooz_host", None)
-    if widget is None or host is None:
+    if not _widget_alive(widget) or not _widget_alive(host):
         return
 
     if mark.parentWidget() is not host:
