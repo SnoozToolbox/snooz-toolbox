@@ -7,6 +7,7 @@ import json
 import os
 import platform
 import sys
+from pathlib import Path
 
 from qtpy.QtWidgets import QMessageBox
 
@@ -109,11 +110,11 @@ class PackageManager(Manager):
         
         Deactivating means removing the root path of the package from the sys.path variable.
         """
+        self._reset_modules()
         for package in self._packages:
             if package.active_version is not None:
                 self._remove_from_sys_path(package.active_version.root_path)
                 package.active_version = None
-        self._reset_modules()
 
     def _get_package_version(self, package_name:str, package_version:str) -> PackageVersion:
         """ Get the package version.
@@ -442,41 +443,47 @@ class PackageManager(Manager):
         object is created, Python looks into this list to find the module to load from memory
         instead of loading it from disk.
 
-        Since Snooz use the concept of version package. The same python class can point to
-        different versions on disk. This reference allow us to get back to a blank state
-        whenever we change package version.        
+        This reference is used for final application shutdown cleanup. During package
+        changes, only modules belonging to active package directories are unloaded.
         """
         self._modules_reference = list(sys.modules)
 
     def _reset_modules(self):
-        """ Reset the modules.
-       
-        When we change package version, we need to remove all the modules that have been
-        loaded from memory. However, we must be careful not to remove C++ extension modules
-        like PyTorch, as they cannot be safely reimported in the same Python process.
-        """
-        if self._modules_reference is None:
+        """Unload active package code, preserving shared libraries and the debugger."""
+        package_paths = {
+            Path(package.active_version.package_path).resolve()
+            for package in self._packages
+            if package.active_version is not None
+        }
+        if not package_paths:
             return
-       
-        modules = list(sys.modules)
-        new_modules = [module for module in modules if module not in self._modules_reference]
-       
-        # List of C++ extension modules that should NOT be removed from sys.modules
-        # during execution as they cannot be safely reimported
         protected_modules = config.memory_config.PROTECTED_DURING_EXECUTION
-       
-        for m in new_modules:
-            # Check if this module or any of its parent modules are protected
-            should_protect = False
-            for protected in protected_modules:
-                if m == protected or m.startswith(protected + '.'):
-                    should_protect = True
-                    break
-           
-            if not should_protect:
-                del sys.modules[m]
-            # else:
-            #     print(f"Protected module from reset: {m}")  # Debug info
+        modules_to_remove = {}
+        for name, module in list(sys.modules.items()):
+            if module is None or any(
+                name == protected or name.startswith(protected + '.')
+                for protected in protected_modules
+            ):
+                continue
+            module_attributes = vars(module)
+            filename = module_attributes.get("__file__")
+            locations = [filename] if filename else list(module_attributes.get("__path__", ()))
+            if locations and all(
+                any(
+                    package_path == path or package_path in path.parents
+                    for package_path in package_paths
+                )
+                for path in (Path(location).resolve() for location in locations)
+            ):
+                modules_to_remove[name] = module
+
+        # Remove child attributes too, so "from package import module" cannot reuse stale code.
+        for name in sorted(modules_to_remove, key=lambda name: name.count("."), reverse=True):
+            parent_name, _, attribute = name.rpartition(".")
+            parent = sys.modules.get(parent_name)
+            if parent is not None and vars(parent).get(attribute) is modules_to_remove[name]:
+                delattr(parent, attribute)
+            sys.modules.pop(name, None)
 
     def _force_memory_cleanup(self):
         """

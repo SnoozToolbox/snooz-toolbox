@@ -29,10 +29,6 @@ if '--headless' in sys.argv or '--f' in sys.argv:
 # Import config early - it will set up Qt stubs if in headless mode
 import config
 
-# Set QT_API only if not in headless mode
-if not config.HEADLESS_MODE:
-    os.environ['QT_API'] = 'pyside6'
-
 # Set NUMBA cache to user temp directory (works on Windows, macOS, Linux)
 numba_cache_dir = os.path.join(tempfile.gettempdir(), 'snooz_numba_cache')
 os.makedirs(numba_cache_dir, exist_ok=True)
