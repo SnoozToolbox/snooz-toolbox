@@ -6,10 +6,11 @@
     "configurations": [
         {
             "name": "Main",
-            "type": "debugpy", // or python for newer versions
+            "type": "debugpy", // or python for older versions
             "request": "launch",
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/src/main/python/main.py",
+            "guiEventLoop": "none",
             "justMyCode": false
         },
         {
@@ -19,6 +20,7 @@
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/src/main/python/main.py",
             "args": ["--f", "test.json"],
+            "guiEventLoop": "none",
             "justMyCode": false
         }
     ]

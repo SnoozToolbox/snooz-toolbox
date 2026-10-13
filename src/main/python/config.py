@@ -140,6 +140,7 @@ if HEADLESS_MODE:
         QSettings = StubBase
 else:
     # Import real Qt modules
+    os.environ['QT_API'] = 'pyside6'
     from qtpy import QtGui, QtCore
 
 """ Global constants """
@@ -192,7 +193,10 @@ try:
     # Values come from the packaged build settings (base.json merged with platform settings),
     # not from this source file at runtime.
     from fbs_runtime import PUBLIC_SETTINGS
-    app_name = str(PUBLIC_SETTINGS.get("app_name", app_name)).strip() or app_name
+    try:
+        app_name = str(PUBLIC_SETTINGS["app_name"]).strip() or app_name
+    except KeyError:
+        pass
     if release_label == "":
         try:
             # release_label is optional metadata used only for the window title.
@@ -280,6 +284,7 @@ class MemoryConfig:
     # These are C++ extensions that cannot be safely reimported while running
     # BUT they WILL be removed on shutdown for complete memory cleanup
     PROTECTED_DURING_EXECUTION = {
+        'PySide6', 'shiboken6',
         'torch', 'torch.nn', 'torch.optim', 'torch.utils', 'torch.cuda',
         'torch.jit', 'torch.autograd', 'torch.distributions', 'torch.fft',
         'torch.linalg', 'torch.sparse', 'torch.special', 'torch.futures',
