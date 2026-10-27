@@ -52,8 +52,6 @@ class Ui_MainWindow(object):
         self.actionClose_process.setObjectName(u"actionClose_process")
         self.actionLoad_workspace = QAction(MainWindow)
         self.actionLoad_workspace.setObjectName(u"actionLoad_workspace")
-        self.actionConvert_from_beta_to_v1_0_0 = QAction(MainWindow)
-        self.actionConvert_from_beta_to_v1_0_0.setObjectName(u"actionConvert_from_beta_to_v1_0_0")
         self.actionRun = QAction(MainWindow)
         self.actionRun.setObjectName(u"actionRun")
         self.actionLogs = QAction(MainWindow)
@@ -138,14 +136,6 @@ class Ui_MainWindow(object):
         self.app_buttons_layout.setObjectName(u"app_buttons_layout")
 
         self.app_buttons_root_layout.addLayout(self.app_buttons_layout)
-
-        self.line = QFrame(self.app_root_nav_frame)
-        self.line.setObjectName(u"line")
-        self.line.setLineWidth(1)
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.app_buttons_root_layout.addWidget(self.line)
 
 
         self.verticalLayout.addWidget(self.app_root_nav_frame)
@@ -251,8 +241,6 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName(u"menuFile")
         self.menuDev_Tools = QMenu(self.menuBar)
         self.menuDev_Tools.setObjectName(u"menuDev_Tools")
-        self.menuConvert_tool_file = QMenu(self.menuDev_Tools)
-        self.menuConvert_tool_file.setObjectName(u"menuConvert_tool_file")
         self.menuHelp = QMenu(self.menuBar)
         self.menuHelp.setObjectName(u"menuHelp")
         MainWindow.setMenuBar(self.menuBar)
@@ -270,10 +258,8 @@ class Ui_MainWindow(object):
         self.menuDev_Tools.addAction(self.actionSave_process)
         self.menuDev_Tools.addAction(self.actionSave_process_as)
         self.menuDev_Tools.addAction(self.actionClose_process)
-        self.menuDev_Tools.addAction(self.menuConvert_tool_file.menuAction())
         self.menuDev_Tools.addSeparator()
         self.menuDev_Tools.addAction(self.actionRun)
-        self.menuConvert_tool_file.addAction(self.actionConvert_from_beta_to_v1_0_0)
         self.menuHelp.addAction(self.actionLogs)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionData_Files)
@@ -324,7 +310,6 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionLoad_workspace.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+W", None))
 #endif // QT_CONFIG(shortcut)
-        self.actionConvert_from_beta_to_v1_0_0.setText(QCoreApplication.translate("MainWindow", u"Convert from beta to v1.0.0", None))
         self.actionRun.setText(QCoreApplication.translate("MainWindow", u"Run", None))
 #if QT_CONFIG(shortcut)
         self.actionRun.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
@@ -357,7 +342,5 @@ class Ui_MainWindow(object):
         self.content_tabWidget.setTabText(self.content_tabWidget.indexOf(self.process_tab), QCoreApplication.translate("MainWindow", u"Process", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuDev_Tools.setTitle(QCoreApplication.translate("MainWindow", u"Dev Tools", None))
-        self.menuConvert_tool_file.setTitle(QCoreApplication.translate("MainWindow", u"Convert tool file", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
     # retranslateUi
-

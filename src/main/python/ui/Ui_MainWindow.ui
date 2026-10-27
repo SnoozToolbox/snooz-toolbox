@@ -170,16 +170,6 @@
          <item>
           <layout class="QVBoxLayout" name="app_buttons_layout"/>
          </item>
-         <item>
-          <widget class="Line" name="line">
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
@@ -381,18 +371,11 @@
     <property name="title">
      <string>Dev Tools</string>
     </property>
-    <widget class="QMenu" name="menuConvert_tool_file">
-     <property name="title">
-      <string>Convert tool file</string>
-     </property>
-     <addaction name="actionConvert_from_beta_to_v1_0_0"/>
-    </widget>
     <addaction name="actionNew_process"/>
     <addaction name="actionOpen_process"/>
     <addaction name="actionSave_process"/>
     <addaction name="actionSave_process_as"/>
     <addaction name="actionClose_process"/>
-    <addaction name="menuConvert_tool_file"/>
     <addaction name="separator"/>
     <addaction name="actionRun"/>
    </widget>
@@ -460,11 +443,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
-   </property>
-  </action>
-  <action name="actionConvert_from_beta_to_v1_0_0">
-   <property name="text">
-    <string>Convert from beta to v1.0.0</string>
    </property>
   </action>
   <action name="actionRun">
@@ -606,22 +584,6 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>load_workspace_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>413</x>
-     <y>350</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionConvert_from_beta_to_v1_0_0</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>convert_file_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -818,7 +780,6 @@
   <slot>save_process_as_clicked()</slot>
   <slot>close_process_clicked()</slot>
   <slot>load_workspace_clicked()</slot>
-  <slot>convert_file_clicked()</slot>
   <slot>logs_clicked()</slot>
   <slot>about_clicked()</slot>
   <slot>preferences_clicked()</slot>
