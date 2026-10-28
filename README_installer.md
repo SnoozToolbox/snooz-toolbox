@@ -82,6 +82,11 @@ Reboot
     Linux
     (snooz_310_env)$ target/Snooz/Snooz
 
+### Headless process files and logs
+    When using --f, Snooz reads the process JSON as UTF-8 and writes its timestamped
+    .log file beside the JSON in UTF-8, including on Windows.
+    Changes to this behavior require rebuilding the installer used for validation.
+
 ## The final installer should not be in debug mode, once it is working
     (snooz_310_env)$ fbs clean
     (snooz_310_env)$ fbs freeze
@@ -169,5 +174,4 @@ https://www.learnpyqt.com/tutorials/packaging-pyqt5-apps-fbs/
 > type in the terminal 
 `/Applications/Snooz.app/Contents/MacOS/Snooz`
 warning : wait until Snooz is launched
-
 

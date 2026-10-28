@@ -111,7 +111,7 @@ def main():
 
 def executeConsole(filename):
     if os.path.isfile(filename):
-        with open(filename) as process_file:
+        with open(filename, encoding="utf-8") as process_file:
 
             current_datetime = datetime.datetime.now()
             formatted_datetime = current_datetime.strftime("%Y%m%d_%H%M%S")
@@ -138,7 +138,7 @@ def executeConsole(filename):
             # Write the logs
             base_name = os.path.splitext(filename)[0]
             log_filename = base_name + "_" + formatted_datetime + ".log"
-            with open(log_filename, "w") as file:
+            with open(log_filename, "w", encoding="utf-8") as file:
 
                 # Write content to the file
                 for (id, log) in managers.log_manager.timeline_logs:
