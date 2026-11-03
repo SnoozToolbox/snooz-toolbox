@@ -196,6 +196,8 @@ class PackageManager(Manager):
             # we assume the name of the file is the same as the package folder
             # with a json extension
             package_name = os.path.basename(package_path)
+            # Shown by the splash screen while Snooz starts
+            self._managers.pub_sub_manager.publish(self, "loading_package", package_name)
 
             package_description_file = os.path.join(package_path, f"{package_name}.json")
             if not os.path.exists(package_description_file):

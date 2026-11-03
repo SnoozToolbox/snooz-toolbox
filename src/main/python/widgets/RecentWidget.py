@@ -7,7 +7,21 @@ import os
 
 from qtpy import QtWidgets, QtGui, QtCore
 from config import app_settings, settings
-from config import C
+
+
+class _ElidedLabel(QtWidgets.QLabel):
+    """ Label showing its text on one line, elided in the middle when it is too long. """
+
+    def __init__(self, text:str, parent:QtWidgets.QWidget=None):
+        super().__init__(text, parent)
+        self._full_text = text
+        self.setMinimumWidth(1)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.setText(self.fontMetrics().elidedText(self._full_text, QtCore.Qt.ElideMiddle, self.width()))
+
 
 class RecentWidget(QtWidgets.QWidget):
     """ Display a list of recent files """
@@ -31,20 +45,28 @@ class RecentWidget(QtWidgets.QWidget):
         def create_label(filepath:str):
             text = os.path.basename(filepath)
             label = QtWidgets.QLabel(text)
+            label.setObjectName("recent_file_label")
             label.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            label.setStyleSheet(f"color: {C.clickable_link_color};")
             label.setToolTip(filepath)
             label.mousePressEvent = lambda e, filepath=filepath: self.on_file_click(filepath)
             return label
 
+        # Helper function to create an entry: the clickable file name above its folder
+        def create_entry(filepath:str):
+            entry = QtWidgets.QWidget()
+            entry_layout = QtWidgets.QVBoxLayout(entry)
+            entry_layout.setContentsMargins(0, 0, 0, 0)
+            entry_layout.setSpacing(0)
+            entry_layout.addWidget(create_label(filepath))
+            folder_label = _ElidedLabel(os.path.dirname(filepath))
+            folder_label.setObjectName("recent_folder_label")
+            folder_label.setToolTip(filepath)
+            entry_layout.addWidget(folder_label)
+            return entry
+
         # Helper function to create a header
         def create_header(header:str):
-            label = QtWidgets.QLabel(header)
-            header_font = QtGui.QFont()
-            header_font.setPointSize(11)
-            header_font.setBold(False)
-            label.setFont(header_font)
-            return label
+            return QtWidgets.QLabel(f"<h3 style='margin:0'>{header}</h3>")
 
         # Remove all widget from the layout
         self._clear_layout()
@@ -58,17 +80,23 @@ class RecentWidget(QtWidgets.QWidget):
             recent_files = []
 
         # Add a header
-        header = create_header("Recent Files")
+        header = create_header("Recent files")
         self.layout().addWidget(header)
+        self.layout().setSpacing(10)
 
         # Add each file to the layout
         if isinstance(recent_files, str):
             recent_files = [recent_files]
             app_settings.setValue(settings.recent_files, recent_files)
 
+        if len(recent_files) == 0:
+            empty_label = QtWidgets.QLabel("The workspaces and processes you open will appear here.")
+            empty_label.setObjectName("recent_folder_label")
+            empty_label.setWordWrap(True)
+            self.layout().addWidget(empty_label)
+
         for filepath in recent_files:
-            label = create_label(filepath)
-            self.layout().addWidget(label)
+            self.layout().addWidget(create_entry(filepath))
 
     def _add_file(self, filepath:str):
         """ add a filename to the list of recent filenames """

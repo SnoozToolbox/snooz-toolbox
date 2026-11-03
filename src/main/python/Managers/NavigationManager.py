@@ -30,6 +30,7 @@ class NavigationManager(Manager):
         self._main_window.tool_root_nav_frame.setVisible(False)
         self._main_window.process_root_nav_frame.setVisible(False)
         self._main_window.content_tabWidget.setCurrentIndex(0)
+        self._set_current_button(self._main_window.home_pushButton)
 
     def show_app(self):
         if len(self._main_window.app_root_nav_frame.children()) > 1:
@@ -39,6 +40,7 @@ class NavigationManager(Manager):
         self._main_window.tool_root_nav_frame.setVisible(False)
         self._main_window.process_root_nav_frame.setVisible(False)
         self._main_window.content_tabWidget.setCurrentIndex(2)
+        self._set_current_button(self._main_window.app_pushButton)
 
     def show_process(self):
         if len(self._main_window.process_root_nav_frame.children()) > 1:
@@ -48,6 +50,7 @@ class NavigationManager(Manager):
         self._main_window.tool_root_nav_frame.setVisible(False)
         self._main_window.app_root_nav_frame.setVisible(False)
         self._main_window.content_tabWidget.setCurrentIndex(3)
+        self._set_current_button(self._main_window.process_pushButton)
     
     def show_tool(self):
         if len(self._main_window.tool_root_nav_frame.children()) > 1:
@@ -57,6 +60,13 @@ class NavigationManager(Manager):
         self._main_window.process_root_nav_frame.setVisible(False)
         self._main_window.app_root_nav_frame.setVisible(False)
         self._main_window.content_tabWidget.setCurrentIndex(1)
+        self._set_current_button(self._main_window.tool_pushButton)
+
+    def _set_current_button(self, current_button):
+        """ Check the navigation button of the current page, uncheck the others. """
+        for button in (self._main_window.home_pushButton, self._main_window.tool_pushButton,
+                       self._main_window.process_pushButton, self._main_window.app_pushButton):
+            button.setChecked(button is current_button)
 
     def hide_app_buttons(self):
         self._main_window.app_pushButton.setVisible(False)

@@ -55,6 +55,7 @@ else:
 
 if not config.HEADLESS_MODE:
     from MainWindow import MainWindow
+    from widgets.SplashScreen import SplashScreen
 
 class AppContext(ApplicationContext):
     def run(self, filename=None):
@@ -62,10 +63,16 @@ class AppContext(ApplicationContext):
         if filename is None:
             if config.HEADLESS_MODE:
                 raise RuntimeError("Cannot run GUI mode in headless environment. Use --f flag to run a process file.")
-            window = MainWindow()
+            # Shown while the packages load
+            splash = SplashScreen()
+            splash.show()
+            self.app.processEvents()
+
+            window = MainWindow(splash=splash)
             window.setWindowTitle(config.get_app_window_title())
-            
+
             window.showMaximized()
+            splash.finish()
             return self.app.exec_() if self.app else None
         
         else:

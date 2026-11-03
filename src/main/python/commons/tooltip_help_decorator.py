@@ -22,6 +22,8 @@ except ImportError:  # pragma: no cover - non-PySide6 runtimes
     shiboken6 = None
 
 _OPT_OUT_PROPERTY = "snoozNoHelpIcon"
+# Set on push buttons showing the cue, the style sheet keeps their text clear of it.
+_HAS_MARK_PROPERTY = "snoozHasHelpMark"
 _MARK_OBJECT_NAME = "snoozTooltipHelpMark"
 _MARK_ATTR = "_snooz_help_mark"
 _WATCHED_ATTR = "_snooz_help_watch"
@@ -266,6 +268,14 @@ def _attach_help_mark(widget, filter_obj):
             max(margins.right(), _MARK_SIZE + 2),
             margins.bottom(),
         )
+
+    if isinstance(widget, QtWidgets.QPushButton) and host is widget and not outside:
+        # The style sheet gives these buttons room for the cue; polish again
+        # so the new property is taken into account.
+        widget.setProperty(_HAS_MARK_PROPERTY, True)
+        widget.style().unpolish(widget)
+        widget.style().polish(widget)
+        widget.updateGeometry()
 
     setattr(widget, _MARK_ATTR, mark)
     filter_obj._marks[id(widget)] = mark

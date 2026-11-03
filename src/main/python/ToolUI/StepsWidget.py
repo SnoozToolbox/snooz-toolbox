@@ -12,6 +12,7 @@ from qtpy.QtCore import QUrl
 
 from config import C
 from commons.BaseSettingsView import BaseSettingsView
+from commons.theme_helpers import frame_pictures
 from commons.tooltip_help_decorator import decorate_tooltip_help_marks
 from ui.Ui_StepsWidget import Ui_StepsWidget
 from ToolUI.ContextManager import ContextManager
@@ -100,6 +101,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         self._context_manager = ContextManager(self._pub_sub_manager)
         self._tool_filepath = tool_filepath
         self._read_only_text_wheel_forwarder = _ReadOnlyTextWheelForwarder(self)
+        self._steps_column_fitted = False
 
         self.setupUi(self)
         self.splitter.setStretchFactor(0, 0)
@@ -125,6 +127,10 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
                 self.steps_toolbox.addItem(sidebar_step, step_name)
 
+            # The full name of each step in its tooltip: long names are elided
+            for i in range(self.steps_toolbox.count()):
+                self.steps_toolbox.setItemToolTip(i, self.steps_toolbox.itemText(i))
+
             # Hide all tab's tab
             for i in range(self.steps_tabwidget.count()):
                 self.steps_tabwidget.setTabVisible(i, False)
@@ -148,6 +154,27 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             # important to do it after everything to avoid triggering it when
             # things are being setup.
             self.steps_toolbox.currentChanged.connect(self.on_step_changed) 
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        if not self._steps_column_fitted:
+            self._steps_column_fitted = True
+            self._fit_steps_column()
+
+    def _fit_steps_column(self):
+        """ Widen the column of the steps, up to a limit, so their names are not elided. """
+        # The first step (the tool name) is bold, see the QToolBox rules of the style sheet.
+        font = QtGui.QFont(self.steps_toolbox.font())
+        font.setBold(True)
+        metrics = QtGui.QFontMetrics(font)
+        text_width = max((metrics.horizontalAdvance(self.steps_toolbox.itemText(i))
+            for i in range(self.steps_toolbox.count())), default=0)
+        margins = self.verticalLayout_4.contentsMargins()
+        # The style keeps 42px of each tab for its margins, plus a few pixels to spare.
+        width = min(text_width + 50 + margins.left() + margins.right(), 360)
+        sizes = self.splitter.sizes()
+        if len(sizes) == 2 and width > sizes[0]:
+            self.splitter.setSizes([width, sizes[0] + sizes[1] - width])
 
     # Slots
     @QtCore.Slot()
@@ -220,6 +247,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 page = module.create_settings_view(self._activation_params)
                 self._normalize_read_only_text_widgets(page)
                 decorate_tooltip_help_marks(page)
+                frame_pictures(page)
                 page.setMinimumSize(0, 0)
                 page_scroll_area = QtWidgets.QScrollArea(top_widget)
                 page_scroll_area.setObjectName("step_scroll_area")
@@ -250,6 +278,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 #node_manager = self._node_manager, asset_manager=self._asset_manager)
             self._normalize_read_only_text_widgets(page)
             decorate_tooltip_help_marks(page)
+            frame_pictures(page)
             page.setMinimumSize(0, 0)
             page_scroll_area = QtWidgets.QScrollArea(top_widget)
             page_scroll_area.setObjectName("step_scroll_area")
@@ -312,6 +341,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 self.next_pushbutton.setVisible(not self._is_last_step())
                 current_page = self.steps_tabwidget.currentWidget()
                 if current_page is not None:
+                    frame_pictures(current_page)
                     current_page.setMinimumSize(0, 0)
                     self._refresh_read_only_text_widget_heights(current_page)
                     current_page.updateGeometry()

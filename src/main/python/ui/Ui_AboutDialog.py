@@ -95,14 +95,7 @@ class Ui_AboutDialog(object):
         self.pushButton_mac_intel = QPushButton(AboutDialog)
         self.pushButton_mac_intel.setObjectName(u"pushButton_mac_intel")
         self.pushButton_mac_intel.setEnabled(True)
-        self.pushButton_mac_intel.setStyleSheet(u"QPushButton {\n"
-"background-color: rgb(78, 134, 255);\n"
-"}\n"
-"\n"
-"QPushButton:disabled {\n"
-"    background-color: rgb(160, 160, 160);\n"
-"    color: rgb(220, 220, 220);\n"
-"}")
+        self.pushButton_mac_intel.setProperty(u"variant", u"primary")
 
         self.gridLayout_2.addWidget(self.pushButton_mac_intel, 0, 1, 1, 1)
 
@@ -112,53 +105,25 @@ class Ui_AboutDialog(object):
 
         self.pushButton_windows = QPushButton(AboutDialog)
         self.pushButton_windows.setObjectName(u"pushButton_windows")
-        self.pushButton_windows.setStyleSheet(u"QPushButton {\n"
-"background-color: rgb(78, 134, 255);\n"
-"}\n"
-"\n"
-"QPushButton:disabled {\n"
-"    background-color: rgb(160, 160, 160);\n"
-"    color: rgb(220, 220, 220);\n"
-"}")
+        self.pushButton_windows.setProperty(u"variant", u"primary")
 
         self.gridLayout_2.addWidget(self.pushButton_windows, 0, 0, 1, 1)
 
         self.pushButton_mac_arm = QPushButton(AboutDialog)
         self.pushButton_mac_arm.setObjectName(u"pushButton_mac_arm")
-        self.pushButton_mac_arm.setStyleSheet(u"QPushButton {\n"
-"background-color: rgb(78, 134, 255);\n"
-"}\n"
-"\n"
-"QPushButton:disabled {\n"
-"    background-color: rgb(160, 160, 160);\n"
-"    color: rgb(220, 220, 220);\n"
-"}")
+        self.pushButton_mac_arm.setProperty(u"variant", u"primary")
 
         self.gridLayout_2.addWidget(self.pushButton_mac_arm, 1, 1, 1, 1)
 
         self.pushButton_linux_deb = QPushButton(AboutDialog)
         self.pushButton_linux_deb.setObjectName(u"pushButton_linux_deb")
-        self.pushButton_linux_deb.setStyleSheet(u"QPushButton {\n"
-"background-color: rgb(78, 134, 255);\n"
-"}\n"
-"\n"
-"QPushButton:disabled {\n"
-"    background-color: rgb(160, 160, 160);\n"
-"    color: rgb(220, 220, 220);\n"
-"}")
+        self.pushButton_linux_deb.setProperty(u"variant", u"primary")
 
         self.gridLayout_2.addWidget(self.pushButton_linux_deb, 0, 2, 1, 1)
 
         self.pushButton_linux_zip = QPushButton(AboutDialog)
         self.pushButton_linux_zip.setObjectName(u"pushButton_linux_zip")
-        self.pushButton_linux_zip.setStyleSheet(u"QPushButton {\n"
-"background-color: rgb(78, 134, 255);\n"
-"}\n"
-"\n"
-"QPushButton:disabled {\n"
-"    background-color: rgb(160, 160, 160);\n"
-"    color: rgb(220, 220, 220);\n"
-"}")
+        self.pushButton_linux_zip.setProperty(u"variant", u"primary")
 
         self.gridLayout_2.addWidget(self.pushButton_linux_zip, 1, 2, 1, 1)
 

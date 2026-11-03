@@ -169,15 +169,8 @@
        <property name="enabled">
         <bool>true</bool>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for MacOS X64 (Intel Chip)</string>
@@ -199,15 +192,8 @@ QPushButton:disabled {
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="pushButton_windows">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for Windows</string>
@@ -216,15 +202,8 @@ QPushButton:disabled {
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="pushButton_mac_arm">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for MacOS ARM64 (M-Chip)</string>
@@ -233,15 +212,8 @@ QPushButton:disabled {
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="pushButton_linux_deb">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download deb for Linux (admin)</string>
@@ -250,15 +222,8 @@ QPushButton:disabled {
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="pushButton_linux_zip">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download zip for Linux</string>

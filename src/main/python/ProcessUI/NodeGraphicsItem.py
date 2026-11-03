@@ -15,6 +15,7 @@ from flowpipe.ActivationState import ActivationState
 from ProcessUI.BaseNodeView import BaseNodeView
 from ProcessUI.ProcessSceneUtils import compute_box_width
 from ProcessUI.NodePortGraphicsItem import NodePortGraphicsItem
+from commons.theme_helpers import frame_pictures
 from commons.tooltip_help_decorator import decorate_tooltip_help_marks
 from config import Z
 
@@ -251,6 +252,7 @@ class NodeGraphicsItem(QtWidgets.QGraphicsItem):
             pub_sub_manager=self._managers.pub_sub_manager, 
             options=self._options)
         decorate_tooltip_help_marks(settings_view)
+        frame_pictures(settings_view)
         return settings_view
     
     def create_results_view(self, custom_params = None):

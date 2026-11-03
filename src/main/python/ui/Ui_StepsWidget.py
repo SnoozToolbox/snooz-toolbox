@@ -185,7 +185,7 @@ class Ui_StepsWidget(object):
 #if QT_CONFIG(accessibility)
         self.run_pushbutton.setAccessibleName(QCoreApplication.translate("StepsWidget", u"run_pushbutton", None))
 #endif // QT_CONFIG(accessibility)
-        self.run_pushbutton.setText(QCoreApplication.translate("StepsWidget", u"> Run", None))
+        self.run_pushbutton.setText(QCoreApplication.translate("StepsWidget", u"Run", None))
 #if QT_CONFIG(accessibility)
         self.steps_tabwidget.setAccessibleName(QCoreApplication.translate("StepsWidget", u"steps_tabwidget", None))
 #endif // QT_CONFIG(accessibility)

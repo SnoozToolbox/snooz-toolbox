@@ -168,7 +168,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>&gt; Run</string>
+            <string>Run</string>
            </property>
            <property name="iconSize">
             <size>
