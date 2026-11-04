@@ -2,15 +2,15 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2023
 See the file LICENCE for full license details.
 """
-import base64
 import certifi
 import platform
 import ssl
 import urllib.request
 from qtpy import QtWidgets
 from qtpy.QtCore import QUrl
-from qtpy.QtGui import QPixmap, QDesktopServices
+from qtpy.QtGui import QDesktopServices
 
+from commons.theme_helpers import snooz_logo
 import config
 if not config.is_dev:
     from fbs_runtime import PUBLIC_SETTINGS
@@ -70,13 +70,9 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
 
 
     def _load_embedded_image(self):
-        """Load the embedded base64 image data into snooz_label."""
-        from ui.assets.art_image_data import SNOOZ_LOGO_IMAGE_BASE64
-        
-        image_bytes = base64.b64decode(SNOOZ_LOGO_IMAGE_BASE64)
-        pixmap = QPixmap()
-        pixmap.loadFromData(image_bytes)
-        self.snooz_label.setPixmap(pixmap)
+        """Show the Snooz logo in snooz_label, drawn for the pixel ratio of the screen."""
+        # The whole 400 x 198 image of the logo, margins included: the label scales it to its size.
+        self.snooz_label.setPixmap(snooz_logo(400, ratio=self.devicePixelRatioF(), margins=True))
 
 
     # Called when the user clicks on the download windows button

@@ -1,11 +1,12 @@
 import base64
 import os
 
-# List of artifact example images to convert
-image_files = ['Snooz_logo.png']
+# List of images to convert: the Snooz logo (vector images) on light backgrounds,
+# and on dark backgrounds (for a dark theme)
+image_files = ['Snooz_logo.svg', 'Snooz_logo_on_dark.svg']
 
 # Variable names for each image
-variable_names = ['SNOOZ_LOGO_IMAGE_BASE64']
+variable_names = ['SNOOZ_LOGO_SVG_BASE64', 'SNOOZ_LOGO_ON_DARK_SVG_BASE64']
 
 # Get script directory
 script_dir = os.path.dirname(os.path.abspath(__file__))

@@ -8,12 +8,13 @@ pictures of the tools and the color of the Windows title bar. Colors come from t
 theme tokens (ui/themes/light/tokens.json).
 """
 import base64
+import functools
 import math
 import sys
 
-from qtpy import QtCore, QtGui, QtWidgets
+from qtpy import QtCore, QtGui, QtSvg, QtWidgets
 
-from ui.assets.art_image_data import SNOOZ_LOGO_IMAGE_BASE64
+from ui.assets.art_image_data import SNOOZ_LOGO_SVG_BASE64
 
 # Icons are drawn at this scale so they stay sharp on high resolution screens.
 _IMAGE_SCALE = 3
@@ -116,24 +117,53 @@ def _glyph_pixmap(glyph, color, size):
     return pixmap
 
 
-def snooz_logo(width, white=False, ratio=1.0):
-    """ The Snooz logo without its margins, in its colors or in white (dark backgrounds).
+def _logo_renderer():
+    """ Renderer of the vector image of the Snooz logo (ui/assets/Snooz_logo.svg). """
+    return QtSvg.QSvgRenderer(QtCore.QByteArray(base64.b64decode(SNOOZ_LOGO_SVG_BASE64)))
 
+
+@functools.lru_cache(maxsize=None)
+def _logo_drawing_rect():
+    """ The part of the view box of the logo covered by its drawing, plus a small
+    margin for the antialiased edges (view box units).
+    """
+    renderer = _logo_renderer()
+    view = renderer.viewBoxF()
+    # One pixel per unit of the view box
+    image = QtGui.QImage(math.ceil(view.width()), math.ceil(view.height()),
+                         QtGui.QImage.Format_ARGB32_Premultiplied)
+    image.fill(QtCore.Qt.transparent)
+    painter = QtGui.QPainter(image)
+    renderer.render(painter, QtCore.QRectF(0, 0, view.width(), view.height()))
+    painter.end()
+    drawing = QtGui.QRegion(QtGui.QBitmap.fromImage(image.createAlphaMask())).boundingRect()
+    return QtCore.QRectF(drawing.translated(view.topLeft().toPoint())).adjusted(-2, -2, 2, 2)
+
+
+def snooz_logo(width, white=False, ratio=1.0, margins=False):
+    """ The Snooz logo, in its colors or in white (dark backgrounds), drawn from its
+    vector image so it stays sharp at any size.
+
+    The logo is cropped to its drawing, unless margins is True (whole image of the logo).
     The pixmap has the device pixel ratio given: drawn on a screen with this ratio,
     it is not scaled again (see SnoozLogo).
     """
-    image = QtGui.QImage()
-    image.loadFromData(base64.b64decode(SNOOZ_LOGO_IMAGE_BASE64))
-    image = image.convertToFormat(QtGui.QImage.Format_ARGB32_Premultiplied)
-    bounds = QtGui.QRegion(QtGui.QBitmap.fromImage(image.createAlphaMask())).boundingRect()
-    image = image.copy(bounds.adjusted(-2, -2, 2, 2).intersected(image.rect()))
+    renderer = _logo_renderer()
+    view = renderer.viewBoxF()
+    source = view if margins else _logo_drawing_rect()
+    scale = width * ratio / source.width()
+    image = QtGui.QImage(round(width * ratio), round(source.height() * scale),
+                         QtGui.QImage.Format_ARGB32_Premultiplied)
+    image.fill(QtCore.Qt.transparent)
+    painter = QtGui.QPainter(image)
+    # The whole view box, placed so that the source part fills the image
+    renderer.render(painter, QtCore.QRectF((view.x() - source.x()) * scale, (view.y() - source.y()) * scale,
+                                           view.width() * scale, view.height() * scale))
     if white:
-        painter = QtGui.QPainter(image)
         painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceIn)
         painter.fillRect(image.rect(), QtCore.Qt.white)
-        painter.end()
-    pixmap = QtGui.QPixmap.fromImage(
-        image.scaledToWidth(round(width * ratio), QtCore.Qt.SmoothTransformation))
+    painter.end()
+    pixmap = QtGui.QPixmap.fromImage(image)
     pixmap.setDevicePixelRatio(ratio)
     return pixmap
 
