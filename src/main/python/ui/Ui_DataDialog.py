@@ -55,21 +55,7 @@ class Ui_DataDialog(object):
 
         self.data_dialog_close_button = QPushButton(DataDialog)
         self.data_dialog_close_button.setObjectName(u"data_dialog_close_button")
-        self.data_dialog_close_button.setStyleSheet(u"QPushButton#data_dialog_close_button {\n"
-"    background-color: rgba(0, 182, 121, 255);\n"
-"    color: white;\n"
-"    border: none;\n"
-"    border-radius: 5px;\n"
-"    padding: 6px 12px;\n"
-"}\n"
-"\n"
-"QPushButton#data_dialog_close_button:hover {\n"
-"    background-color: rgba(0, 224, 121, 255);\n"
-"}\n"
-"\n"
-"QPushButton#data_dialog_close_button:pressed {\n"
-"    background-color: rgba(0, 160, 121, 255);\n"
-"}")
+        self.data_dialog_close_button.setProperty(u"variant", u"primary")
 
         self.horizontalLayout.addWidget(self.data_dialog_close_button)
 

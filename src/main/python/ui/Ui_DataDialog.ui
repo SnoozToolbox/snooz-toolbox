@@ -77,22 +77,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <property name="accessibleName">
         <string>data_dialog_close_button</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton#data_dialog_close_button {
-    background-color: rgba(0, 182, 121, 255);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 12px;
-}
-
-QPushButton#data_dialog_close_button:hover {
-    background-color: rgba(0, 224, 121, 255);
-}
-
-QPushButton#data_dialog_close_button:pressed {
-    background-color: rgba(0, 160, 121, 255);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Close</string>
