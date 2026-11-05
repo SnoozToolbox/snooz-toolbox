@@ -9,6 +9,7 @@ import sys
 from qtpy import QtCore, QtGui, QtWidgets
 
 import config
+from commons.fonts import application_font
 from commons.theme_helpers import SnoozLogo
 from Managers.StyleManager import load_tokens
 
@@ -30,16 +31,8 @@ class SplashScreen(QtWidgets.QWidget):
             self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setFixedSize(560, 300)
 
-        # The Snooz font, from the same file as MainWindow._init_fonts.
-        font = QtGui.QFont()
-        try:
-            font_id = QtGui.QFontDatabase.addApplicationFont(
-                config.app_context.get_resource("fonts/Roboto/Roboto-Regular.ttf"))
-            if font_id >= 0:
-                font = QtGui.QFont(QtGui.QFontDatabase.applicationFontFamilies(font_id)[0])
-        except FileNotFoundError:
-            pass
-        font.setPointSize(12)
+        # The Snooz font (shown before the main window sets it for the application)
+        font = application_font()
         self.setFont(font)
         small_font = QtGui.QFont(font)
         small_font.setPointSize(10)

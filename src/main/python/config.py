@@ -172,8 +172,6 @@ C.grid_background_color = QtGui.QColor(21, 21, 21,255)
 C.selected_border_color = QtGui.QColor(61, 174, 233,255)
 C.text_foreground_color_X = '#e1e3e5'
 
-font_size = 12
-
 '''
 When configuring the application's settings under QSettings, it creates new folder (key) with said settings in the OS system.
 

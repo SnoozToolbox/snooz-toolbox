@@ -359,12 +359,24 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         return self.steps_toolbox.currentIndex() == self.steps_toolbox.count() - 1
 
     def _normalize_read_only_text_widgets(self, page):
-        """Avoid nested scrollbars by letting step-level scrolling handle read-only text blocks."""
+        """Avoid nested scrollbars by letting step-level scrolling handle read-only text blocks.
+
+        A read-only text written in the form (a description, a formula) is part of the
+        page: it has no frame, so it is on the page background like the other texts
+        (a frame makes it a white field). A box still empty here is filled with
+        messages later: it keeps its frame.
+        """
         read_only_text_widgets = page.findChildren(QtWidgets.QTextEdit)
         read_only_text_widgets.extend(page.findChildren(QtWidgets.QPlainTextEdit))
         for widget in read_only_text_widgets:
             if not widget.isReadOnly():
                 continue
+
+            if widget.frameShape() != QtWidgets.QFrame.NoFrame and not widget.document().isEmpty():
+                widget.setFrameShape(QtWidgets.QFrame.NoFrame)
+                # The style sheet rules depend on the frame shape
+                widget.style().unpolish(widget)
+                widget.style().polish(widget)
 
             widget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
             widget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)

@@ -48,6 +48,10 @@ tqdm
 tzdata
 yasa
 
+# Included Fonts
+
+Inter
+
 # Licenses
 
 ## ascii-canvas
@@ -96,6 +100,12 @@ Recommended citation: Donoghue et al. (2020), "Parameterizing neural power spect
 **Copyright:** [Information not specified]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction...
+
+## Inter
+**License:** SIL Open Font License 1.1  
+**Copyright:** Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
+
+Inter is the typeface of the Snooz interface. The full license is in resources/base/fonts/Inter/LICENSE.txt.
 
 ## Jinja2
 **License:** BSD License  

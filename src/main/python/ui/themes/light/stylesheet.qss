@@ -232,7 +232,8 @@ QPushButton[variant="primary"]:pressed {
    border-color: @primary_pressed;
 }
 
-/* Run button of the tools: the main action, dark blue like the menu bar. */
+/* Run button of the tools: the main action, dark blue like the menu bar. It turns
+   green under the mouse: the tool is about to run. */
 QPushButton[accessibleName="run_pushbutton"] {
    background-color: @chrome;
    border: 0px;
@@ -246,12 +247,12 @@ QPushButton[accessibleName="run_pushbutton"] {
 }
 
 QPushButton[accessibleName="run_pushbutton"]:hover:!pressed {
-   background-color: @chrome_hover;
+   background-color: @run_hover;
    color: @on_primary;
 }
 
 QPushButton[accessibleName="run_pushbutton"]:pressed {
-   background-color: @chrome_pressed;
+   background-color: @run_pressed;
 }
 
 QPushButton[accessibleName="save_pushbutton"],

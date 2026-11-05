@@ -20,6 +20,7 @@ from Managers.Managers import Managers
 from Managers.EndpointManager import MenuEndpointHandler
 from Managers.EndpointManager import FileMenuEndpointHandler
 from Managers.StyleManager import Palette, Style, load_tokens
+from commons.fonts import apply_application_font
 from commons.theme_helpers import SnoozStyle, nav_icon, round_menu_corners, set_title_bar_color
 from widgets.AboutDialog import AboutDialog
 from widgets.DataDialog import DataDialog
@@ -289,22 +290,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.right_pane_layout.addWidget(HomeWidget(self._managers, self))
 
     def _init_fonts(self):
-        fonts = [
-            "fonts/Roboto/Roboto-Regular.ttf"
-        ]
-        # Load fonts
-        for font_path in fonts:
-            release_notes_path = config.app_context.get_resource(font_path)
-            fontId = QtGui.QFontDatabase.addApplicationFont(release_notes_path)
-            if fontId < 0:
-                print('font not loaded')
-        
-        families = QtGui.QFontDatabase.applicationFontFamilies(0)
-        font = QtGui.QFont(families[0])
-        font.setPointSize(config.font_size)
-        QtWidgets.QApplication.setFont(font)
-        return font
-    
+        """ The Snooz font (Inter) for every widget, see commons/fonts.py """
+        apply_application_font()
+
 
     def _display_disclaimer(self):
         """ Display the beta version disclaimer """

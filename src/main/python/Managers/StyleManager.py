@@ -12,6 +12,7 @@ import config
 from qtpy.QtCore import QFile, QTextStream
 from qtpy import QtGui
 
+from commons.fonts import apply_application_font
 from Managers.Manager import Manager
 
 # Import themes_rc conditionally since it's a Qt resource file
@@ -56,6 +57,8 @@ class Style():
                 qss = replace_tokens(qss, self._tokens)
                 qss += self._compact_button_rules()
                 config.app_context.app.setStyleSheet(qss)
+                # The style sheet gives the menus and message boxes the system font back
+                apply_application_font()
 
     def _compact_button_rules(self):
         """ Rules giving a compact padding to the small QPushButtons (e.g. ">" or "...").

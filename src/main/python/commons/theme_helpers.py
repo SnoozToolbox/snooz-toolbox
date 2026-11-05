@@ -216,6 +216,8 @@ def frame_pictures(root):
 
     The white background of most pictures then belongs to the card instead of
     standing out from the page (QLabel[snoozPicture="true"] rule of the style sheet).
+    The card goes around the picture, which keeps its own size: the layout of the
+    page does not change (see _PictureCard).
     """
     for label in root.findChildren(QtWidgets.QLabel):
         pixmap = label.pixmap()
@@ -229,11 +231,101 @@ def frame_pictures(root):
                 label.setMaximumWidth(label.maximumWidth() + 2 * _PICTURE_FRAME)
             if label.maximumHeight() < _NO_MAXIMUM_SIZE:
                 label.setMaximumHeight(label.maximumHeight() + 2 * _PICTURE_FRAME)
-            # In the middle of its card when the card is wider than the picture
-            label.setAlignment(QtCore.Qt.AlignCenter)
         label.setProperty("snoozPicture", True)
         label.style().unpolish(label)
         label.style().polish(label)
+        _PictureCard(label)
+
+
+def _fitted(size, bounds):
+    """ The size, made smaller to fit in the bounds if needed, keeping its proportions. """
+    if size.width() <= bounds.width() and size.height() <= bounds.height():
+        return size
+    return size.scaled(bounds, QtCore.Qt.KeepAspectRatio)
+
+
+def _layout_with(layout, widget):
+    """ The layout holding the widget: the given layout or one of its nested layouts. """
+    if layout.indexOf(widget) >= 0:
+        return layout
+    for index in range(layout.count()):
+        child = layout.itemAt(index).layout()
+        if child is not None:
+            found = _layout_with(child, widget)
+            if found is not None:
+                return found
+    return None
+
+
+class _PictureCard(QtCore.QObject):
+    """ Paints the picture of a label in its card (see frame_pictures).
+
+    The picture is scaled once for the pixels of the screen, smoothly, so lines
+    stay even. A label filling its area with its picture (scaled contents in Qt
+    Designer) keeps doing so. The other ones are not wider than their picture,
+    in the middle of their layout cell, and show it with its proportions.
+    """
+
+    def __init__(self, label):
+        super().__init__(label)
+        self._designer_maximum = label.maximumSize()
+        self._fills = label.hasScaledContents()
+        self._pixmap_key = None
+        self._scaled = None
+        self._scaled_key = None
+        if not self._fills:
+            label.setAlignment(QtCore.Qt.AlignCenter)
+            parent = label.parentWidget()
+            layout = _layout_with(parent.layout(), label) if parent is not None and parent.layout() is not None else None
+            if layout is not None:
+                alignment = layout.itemAt(layout.indexOf(label)).alignment()
+                if not alignment & QtCore.Qt.AlignHorizontal_Mask:
+                    layout.setAlignment(label, alignment | QtCore.Qt.AlignHCenter)
+            self._update_width(label)
+        label.installEventFilter(self)
+
+    def _update_width(self, label):
+        """ The card goes around the picture: the label is not wider than it. """
+        pixmap = label.pixmap()
+        self._pixmap_key = pixmap.cacheKey()
+        frame = 2 * (_PICTURE_FRAME + label.margin())
+        size = _fitted(pixmap.deviceIndependentSize().toSize(), self._designer_maximum - QtCore.QSize(frame, frame))
+        label.setMaximumWidth(size.width() + frame)
+
+    def eventFilter(self, label, event):
+        if event.type() == QtCore.QEvent.Paint and not label.pixmap().isNull():
+            if not self._fills and label.pixmap().cacheKey() != self._pixmap_key:
+                self._update_width(label)  # The page shows another picture
+            self._paint(label)
+            return True
+        return super().eventFilter(label, event)
+
+    def _paint(self, label):
+        pixmap = label.pixmap()
+        margin = label.margin()
+        rect = label.contentsRect().adjusted(margin, margin, -margin, -margin)
+        if self._fills:
+            size = rect.size()
+        else:
+            size = _fitted(pixmap.deviceIndependentSize().toSize(), rect.size())
+        if size.isEmpty():
+            return
+        ratio = label.devicePixelRatioF()
+        key = (pixmap.cacheKey(), size.width(), size.height(), ratio, label.isEnabled())
+        if key != self._scaled_key:
+            # Scaled once for the pixels of the screen, smoothly: lines stay even.
+            self._scaled = pixmap.scaled(round(size.width() * ratio), round(size.height() * ratio),
+                                         QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)
+            self._scaled.setDevicePixelRatio(ratio)
+            if not label.isEnabled():
+                option = QtWidgets.QStyleOption()
+                option.initFrom(label)
+                self._scaled = label.style().generatedIconPixmap(QtGui.QIcon.Disabled, self._scaled, option)
+            self._scaled_key = key
+        position = QtWidgets.QStyle.alignedRect(label.layoutDirection(), label.alignment(), size, rect).topLeft()
+        painter = QtGui.QPainter(label)
+        painter.drawPixmap(position, self._scaled)
+        painter.end()
 
 
 def round_menu_corners(menu):
