@@ -21,6 +21,8 @@ text, whatever the font.
 """
 from qtpy import QtCore, QtGui, QtWidgets
 
+from commons.fonts import text_style_rules
+
 try:
     import shiboken6
 except ImportError:  # pragma: no cover - non-PySide6 runtimes
@@ -38,18 +40,17 @@ _COMPACT_THRESHOLD = 28
 # Expanding editors: keep the cue near the usable field area, not line-end.
 _MAX_FIELD_ANCHOR = 220
 
-_MARK_STYLE = """
-QLabel#snoozTooltipHelpMark {
+_MARK_STYLE = f"""
+QLabel#snoozTooltipHelpMark {{
     color: #b0b0b0;
     background-color: #f7f7f7;
     border: 1px solid #c8c8c8;
     border-radius: 7px;
-    font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
-    font-size: 10pt;
+    {text_style_rules("small")}
     font-weight: 700;
     font-style: normal;
-    padding: 0px;
-}
+    padding: 1px 0px 0px 0px; /* centers the "?" of the Snooz font in the circle */
+}}
 """
 
 # Prefer concrete slider type: QAbstractSlider also matches transient QScrollBars.
@@ -250,16 +251,6 @@ def _attach_help_mark(widget, filter_obj):
     mark.setCursor(QtGui.QCursor(QtCore.Qt.WhatsThisCursor))
     mark.setFocusPolicy(QtCore.Qt.NoFocus)
     mark.setStyleSheet(_MARK_STYLE)
-    mark_font = QtGui.QFont("Segoe UI", 10)
-    if not mark_font.exactMatch():
-        mark_font = QtGui.QFont("Trebuchet MS", 10)
-    if not mark_font.exactMatch():
-        mark_font = QtGui.QFont("Arial", 10)
-    mark_font.setBold(True)
-    mark_font.setItalic(False)
-    mark_font.setStyle(QtGui.QFont.Style.StyleNormal)
-    mark_font.setStyleHint(QtGui.QFont.StyleHint.SansSerif)
-    mark.setFont(mark_font)
     mark._snooz_target = widget
     mark._snooz_host = host
     mark._snooz_outside = outside

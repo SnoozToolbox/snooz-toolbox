@@ -6,6 +6,7 @@ import json
 import os
 
 from qtpy import QtWidgets, QtGui, QtCore
+from commons.fonts import text_label
 from config import app_settings, settings
 
 
@@ -64,10 +65,6 @@ class RecentWidget(QtWidgets.QWidget):
             entry_layout.addWidget(folder_label)
             return entry
 
-        # Helper function to create a header
-        def create_header(header:str):
-            return QtWidgets.QLabel(f"<h3 style='margin:0'>{header}</h3>")
-
         # Remove all widget from the layout
         self._clear_layout()
 
@@ -80,8 +77,7 @@ class RecentWidget(QtWidgets.QWidget):
             recent_files = []
 
         # Add a header
-        header = create_header("Recent files")
-        self.layout().addWidget(header)
+        self.layout().addWidget(text_label("Recent files", "h2"))
         self.layout().setSpacing(10)
 
         # Add each file to the layout

@@ -26,7 +26,7 @@
    <string>Settings Snooz</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+   <string notr="true">font: 16px &quot;Inter&quot;;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

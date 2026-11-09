@@ -12,7 +12,7 @@ import config
 from qtpy.QtCore import QFile, QTextStream
 from qtpy import QtGui
 
-from commons.fonts import apply_application_font
+from commons.fonts import apply_application_font, font_tokens
 from Managers.Manager import Manager
 
 # Import themes_rc conditionally since it's a Qt resource file
@@ -54,7 +54,7 @@ class Style():
         if self._qss_filepath is not None:
             qss = read_text_file(self._qss_filepath)
             if qss is not None:
-                qss = replace_tokens(qss, self._tokens)
+                qss = replace_tokens(qss, {**font_tokens(), **self._tokens})
                 qss += self._compact_button_rules()
                 config.app_context.app.setStyleSheet(qss)
                 # The style sheet gives the menus and message boxes the system font back

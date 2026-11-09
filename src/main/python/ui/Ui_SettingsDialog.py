@@ -32,7 +32,7 @@ class Ui_SettingsDialog(object):
         sizePolicy.setHeightForWidth(SettingsDialog.sizePolicy().hasHeightForWidth())
         SettingsDialog.setSizePolicy(sizePolicy)
         SettingsDialog.setMinimumSize(QSize(820, 500))
-        SettingsDialog.setStyleSheet(u"font: 12pt \"Roboto\";")
+        SettingsDialog.setStyleSheet(u"font: 16px \"Inter\";")
         self.verticalLayout = QVBoxLayout(SettingsDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.splitter = QSplitter(SettingsDialog)

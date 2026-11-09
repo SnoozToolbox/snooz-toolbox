@@ -8,6 +8,7 @@ Its look is in the HOME PAGE section of the style sheet.
 from qtpy import QtCore, QtGui, QtWidgets
 
 import config
+from commons.fonts import text_label
 from commons.theme_helpers import SnoozLogo
 from widgets.RecentWidget import RecentWidget
 
@@ -46,7 +47,7 @@ class HomeWidget(QtWidgets.QScrollArea):
 
         self._page_layout.addLayout(self._create_header())
         self._page_layout.addSpacing(28)
-        self._page_layout.addWidget(QtWidgets.QLabel("<h2 style='margin:0'>Your analysis workflow</h2>"))
+        self._page_layout.addWidget(text_label("Your analysis workflow", "h1"))
         self._page_layout.addSpacing(4)
         self._page_layout.addWidget(_muted_label(
             "New to Snooz? Start with Preprocessing to make your PSG files compatible with Snooz, "
@@ -134,7 +135,7 @@ class HomeWidget(QtWidgets.QScrollArea):
 
         help_layout = QtWidgets.QVBoxLayout()
         help_layout.setSpacing(10)
-        help_layout.addWidget(QtWidgets.QLabel("<h3 style='margin:0'>Learn and get help</h3>"))
+        help_layout.addWidget(text_label("Learn and get help", "h2"))
         for title, description, callback in (
                 ("Example data", "Download example PSG files to try the tools.",
                  self._main_window.data_clicked),
@@ -174,7 +175,7 @@ class _WorkflowStep(QtWidgets.QWidget):
         badge.setAlignment(QtCore.Qt.AlignCenter)
         header_layout.addWidget(badge)
         header_layout.addSpacing(6)
-        header_layout.addWidget(QtWidgets.QLabel(f"<h3 style='margin:0'>{title}</h3>"), 1)
+        header_layout.addWidget(text_label(title, "h2"), 1)
         layout.addLayout(header_layout)
         layout.addWidget(_muted_label(description))
         layout.addStretch(1)

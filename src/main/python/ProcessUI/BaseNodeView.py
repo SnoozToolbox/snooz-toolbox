@@ -12,6 +12,7 @@ See the file LICENCE for full license details.
 
 from qtpy import QtWidgets
 
+from commons.fonts import set_text_style
 from ui.Ui_BaseNodeView import Ui_BaseNodeView
 
 class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
@@ -32,6 +33,7 @@ class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
 
         # init UI
         self.setupUi(self)
+        set_text_style(self.logs_textedit, "mono")
 
         # Update logs
         self.update_logs()

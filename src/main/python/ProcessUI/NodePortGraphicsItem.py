@@ -9,6 +9,7 @@ from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
 
+from commons.fonts import text_style_font
 from config import Z
 
 DEBUG = False
@@ -91,9 +92,7 @@ class NodePortGraphicsItem(QtWidgets.QGraphicsItem):
         style = self._style_manager.get_current_style()
 
         painter.setPen(style.palette.node_text)
-        font = painter.font()
-        font.setPointSize(8)
-        painter.setFont(font)
+        painter.setFont(text_style_font("node"))
 
         if self.is_input_port:
             painter.drawText(

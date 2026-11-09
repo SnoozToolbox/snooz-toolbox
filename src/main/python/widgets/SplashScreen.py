@@ -9,7 +9,7 @@ import sys
 from qtpy import QtCore, QtGui, QtWidgets
 
 import config
-from commons.fonts import application_font
+from commons.fonts import apply_application_font, text_label
 from commons.theme_helpers import SnoozLogo
 from Managers.StyleManager import load_tokens
 
@@ -32,10 +32,7 @@ class SplashScreen(QtWidgets.QWidget):
         self.setFixedSize(560, 300)
 
         # The Snooz font (shown before the main window sets it for the application)
-        font = application_font()
-        self.setFont(font)
-        small_font = QtGui.QFont(font)
-        small_font.setPointSize(10)
+        apply_application_font()
 
         on_primary = self._tokens.get("on_primary", "#ffffff")
         self.setStyleSheet(
@@ -48,10 +45,9 @@ class SplashScreen(QtWidgets.QWidget):
         layout.setContentsMargins(40, 40, 40, 30)
         layout.addWidget(SnoozLogo(260, white=True), 0, QtCore.Qt.AlignHCenter)
         layout.addSpacing(8)
-        # The fonts are set on each label: the inherited font is lost when the
+        # Each label has its text style: the inherited font is lost when the
         # application style changes while the packages load.
-        tagline_label = QtWidgets.QLabel("Open-source toolbox for sleep PSG analysis")
-        tagline_label.setFont(font)
+        tagline_label = text_label("Open-source toolbox for sleep PSG analysis", "body")
         layout.addWidget(tagline_label, 0, QtCore.Qt.AlignHCenter)
         layout.addStretch(1)
 
@@ -62,12 +58,10 @@ class SplashScreen(QtWidgets.QWidget):
         layout.addWidget(self._progress)
 
         status_layout = QtWidgets.QHBoxLayout()
-        self._status_label = QtWidgets.QLabel()
-        self._status_label.setFont(small_font)
+        self._status_label = text_label("", "small")
         self._status_label.setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
         status_layout.addWidget(self._status_label, 1)
-        version_label = QtWidgets.QLabel("Development version" if config.is_dev else f"Version {config.version}")
-        version_label.setFont(small_font)
+        version_label = text_label("Development version" if config.is_dev else f"Version {config.version}", "small")
         status_layout.addWidget(version_label)
         layout.addLayout(status_layout)
 

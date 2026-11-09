@@ -99,9 +99,6 @@ class Ui_BaseNodeView(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.logs_textedit = QTextEdit(self.logs_tab)
         self.logs_textedit.setObjectName(u"logs_textedit")
-        font = QFont()
-        font.setFamilies([u"Courier 10 Pitch"])
-        self.logs_textedit.setFont(font)
         self.logs_textedit.setReadOnly(True)
         self.logs_textedit.setAcceptRichText(False)
 

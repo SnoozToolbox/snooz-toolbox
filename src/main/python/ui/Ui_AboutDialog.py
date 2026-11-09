@@ -25,7 +25,7 @@ class Ui_AboutDialog(object):
         if not AboutDialog.objectName():
             AboutDialog.setObjectName(u"AboutDialog")
         AboutDialog.resize(790, 574)
-        AboutDialog.setStyleSheet(u"font: 12pt \"Roboto\";")
+        AboutDialog.setStyleSheet(u"font: 16px \"Inter\";")
         self.verticalLayout = QVBoxLayout(AboutDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.snooz_label = QLabel(AboutDialog)
