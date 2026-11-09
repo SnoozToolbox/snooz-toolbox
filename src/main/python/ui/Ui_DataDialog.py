@@ -38,8 +38,7 @@ class Ui_DataDialog(object):
 "    color: #2c3e50;             /* dark text */\n"
 "    border: 1px solid #ccc;\n"
 "    padding: 5px;\n"
-"}\n"
-"font: 12pt \"Roboto\";")
+"}")
         self.textBrowser.setOpenExternalLinks(True)
 
         self.verticalLayout.addWidget(self.textBrowser)
@@ -81,14 +80,13 @@ class Ui_DataDialog(object):
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Roboto'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI';\">The following link leads to a GitHub repository hosted by the Snooz ToolBox Team. </span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI';\">It contains two </span><span style=\" font-family:'Courier New';\">.edf</span><span style=\" font-fa"
-                        "mily:'Segoe UI';\"> files and their corresponding </span><span style=\" font-family:'Courier New';\">.tsv</span><span style=\" font-family:'Segoe UI';\"> files, which are compatible with most tools that Snooz offers. </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://github.com/SnoozToolbox/snooz-datasets/releases/tag/latest\"><span style=\" font-family:'Segoe UI'; font-weight:700; text-decoration: underline; color:#0000ff;\">Download NSRR Example Files</span></a></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-weight:700; text-decoration: underline; color:#99ebff;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI';\">After arriving on the download page, "
-                        "simply click on the filenames that you which to download in the </span><span style=\" font-family:'Segoe UI'; font-weight:700;\">Assets</span><span style=\" font-family:'Segoe UI';\"> section.</span></p></body></html>", None))
+"</style></head><body style=\" font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The following link leads to a GitHub repository hosted by the Snooz ToolBox Team. </p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">It contains two <span style=\" font-family:'Consolas','Menlo','DejaVu Sans Mono','monospace';\">.edf</span> files and their corresponding <span style=\" font-family:'Consolas','Menlo','DejaVu Sans Mono','monospace';\">.tsv</spa"
+                        "n> files, which are compatible with most tools that Snooz offers. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://github.com/SnoozToolbox/snooz-datasets/releases/tag/latest\"><span style=\" font-weight:700; text-decoration: underline; color:#0000ff;\">Download NSRR Example Files</span></a></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; text-decoration: underline; color:#99ebff;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">After arriving on the download page, simply click on the filenames that you which to download in the <span style=\" font-weight:700;\">Assets</span> section.</p></body></html>", None))
 #if QT_CONFIG(accessibility)
         self.data_dialog_close_button.setAccessibleName(QCoreApplication.translate("DataDialog", u"data_dialog_close_button", None))
 #endif // QT_CONFIG(accessibility)

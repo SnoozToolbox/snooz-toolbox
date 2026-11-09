@@ -172,10 +172,10 @@ class Ui_SettingsDialog(object):
         ___qlistwidgetitem1.setText(QCoreApplication.translate("SettingsDialog", u"Packages", None));
         self.settings_list.setSortingEnabled(__sortingEnabled)
 
-        self.label.setText(QCoreApplication.translate("SettingsDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">General Settings</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("SettingsDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">General Settings</span></p></body></html>", None))
         self.label_3.setText(QCoreApplication.translate("SettingsDialog", u"Reset all settings to default", None))
         self.reset_to_default_pushButton.setText(QCoreApplication.translate("SettingsDialog", u"Reset to default", None))
-        self.label_2.setText(QCoreApplication.translate("SettingsDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Packages</span></p></body></html>", None))
+        self.label_2.setText(QCoreApplication.translate("SettingsDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">Packages</span></p></body></html>", None))
         self.label_4.setText(QCoreApplication.translate("SettingsDialog", u"Once added, activate the package you want to use by using the associated checkbox then press Apply.", None))
         self.plugins_remove_pushbutton.setText(QCoreApplication.translate("SettingsDialog", u"Remove", None))
         self.plugins_add_from_folder_pushbutton.setText(QCoreApplication.translate("SettingsDialog", u"Add from folder", None))

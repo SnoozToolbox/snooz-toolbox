@@ -37,12 +37,6 @@ class Ui_AboutDialog(object):
         self.snooz_label.setSizePolicy(sizePolicy)
         self.snooz_label.setMinimumSize(QSize(0, 0))
         self.snooz_label.setMaximumSize(QSize(200, 100))
-        font = QFont()
-        font.setFamilies([u"Roboto"])
-        font.setPointSize(12)
-        font.setBold(False)
-        font.setItalic(False)
-        self.snooz_label.setFont(font)
         self.snooz_label.setFrameShape(QFrame.Shape.NoFrame)
         self.snooz_label.setScaledContents(True)
         self.snooz_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
@@ -68,7 +62,6 @@ class Ui_AboutDialog(object):
 
         self.snooz_version_label = QLabel(AboutDialog)
         self.snooz_version_label.setObjectName(u"snooz_version_label")
-        self.snooz_version_label.setFont(font)
 
         self.verticalLayout.addWidget(self.snooz_version_label)
 
@@ -162,11 +155,11 @@ class Ui_AboutDialog(object):
     def retranslateUi(self, AboutDialog):
         AboutDialog.setWindowTitle(QCoreApplication.translate("AboutDialog", u"About Snooz", None))
         self.snooz_label.setText("")
-        self.label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Snooz Toolbox</span> is a Python 3.10 software for analyzing sleep recordings (Polysomnography).<br/>It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.</p><p>Snooz is built using a cross-platform graphical interface framework called PyQt, <br/>making it compatible with Windows, Linux, and Mac computers.<br/></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">Snooz Toolbox</span> is a Python 3.10 software for analyzing sleep recordings (Polysomnography).<br/>It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.</p><p>Snooz is built using a cross-platform graphical interface framework called PyQt, <br/>making it compatible with Windows, Linux, and Mac computers.<br/></p></body></html>", None))
         self.label_3.setText(QCoreApplication.translate("AboutDialog", u"@ Valorisation Recherche HSCM, Societe en Commandite - 2024", None))
-        self.snooz_version_label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The current version installed :<span style=\" font-weight:600;\"> beta-0.3.0</span></p></body></html>", None))
-        self.label_released_version.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The latest version released :<span style=\" font-weight:600;\"> beta-0.3.0 </span><span style=\" font-family:'Roboto'; font-size:medium; color:#95a5a6;\">\u00a0(June 21, 2024)</span></p></body></html>", None))
-        self.label_4.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Click on the appropriate box to download the latest installer.<br/></span><span style=\" font-size:9pt;\">Please check your operating system's architecture before proceeding.</span></p></body></html>", None))
+        self.snooz_version_label.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The current version installed :<span style=\" font-weight:700;\"> beta-0.3.0</span></p></body></html>", None))
+        self.label_released_version.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p>The latest version released :<span style=\" font-weight:700;\"> beta-0.3.0 </span><span style=\" color:#95a5a6;\">\u00a0(June 21, 2024)</span></p></body></html>", None))
+        self.label_4.setText(QCoreApplication.translate("AboutDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">Click on the appropriate box to download the latest installer.<br/></span><span style=\" font-size:12px;\">Please check your operating system's architecture before proceeding.</span></p></body></html>", None))
         self.pushButton_mac_intel.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS X64 (Intel Chip)", None))
         self.pushButton_windows.setText(QCoreApplication.translate("AboutDialog", u"Download for Windows", None))
         self.pushButton_mac_arm.setText(QCoreApplication.translate("AboutDialog", u"Download for MacOS ARM64 (M-Chip)", None))

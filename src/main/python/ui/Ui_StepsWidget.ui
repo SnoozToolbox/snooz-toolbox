@@ -145,16 +145,6 @@
              <height>50</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <family>Roboto</family>
-             <pointsize>12</pointsize>
-             <italic>false</italic>
-             <bold>false</bold>
-             <underline>false</underline>
-             <strikeout>false</strikeout>
-            </font>
-           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>

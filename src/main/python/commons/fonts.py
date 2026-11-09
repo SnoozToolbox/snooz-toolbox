@@ -16,7 +16,15 @@ The text sizes of the toolbox are all in TEXT_STYLES. To use one of them:
 
 Forms made in Qt Designer do not use them: a heading is a text made bold in the
 text editor of the label.
+
+Forms made before Inter, such as the ones of the packages, give sizes in points,
+name other fonts and save bold as the weight 600 (Qt 5 Designer). The application
+style converts them when a widget is polished, before it is shown, see
+harmonize_widget_fonts. The forms keep their settings, so the packages already
+released are converted too.
 """
+import math
+import re
 import struct
 
 from qtpy import QtCore, QtGui, QtWidgets
@@ -153,3 +161,239 @@ def text_style_font(name):
 def font_tokens():
     """ The sizes of the text styles, as tokens of the style sheet: @font_body... """
     return {f"font_{name}": f"{size}px" for name, (size, _) in TEXT_STYLES.items()}
+
+
+# ----- Forms made before Inter -----
+
+# Monospaced fonts named by forms: they are shown in the fonts of the "mono" style.
+_MONOSPACED_NAMES = {"consolas", "menlo", "dejavu sans mono", "monospace", "courier", "courier new",
+                     "courier 10 pitch", "lucida console", "monaco", "liberation mono", "source code pro"}
+# A font declaration of a style sheet: name, colon, value.
+_SHEET_DECLARATION = re.compile(r"(?<![-\w])(font(?:-size|-family|-weight)?)(\s*:\s*)([^;}]*)", re.IGNORECASE)
+# The value of the font shorthand: style and weight, size, families.
+_SHORTHAND = re.compile(r"^((?:(?:italic|oblique|normal|small-caps|bold|bolder|lighter|\d+)\s+)*)"
+                        r"(\d+(?:\.\d+)?)(pt|px)\b\s*(.*)$", re.IGNORECASE | re.DOTALL)
+_POINTS = re.compile(r"^(\d+(?:\.\d+)?)pt$", re.IGNORECASE)
+# Declarations of rich text (style attributes, families in single quotes).
+_RICH_SIZE = re.compile(r"(font-size\s*:\s*)(\d+(?:\.\d+)?)pt", re.IGNORECASE)
+_RICH_FAMILY = re.compile(r"(\s*)font-family\s*:\s*((?:'[^']*'|[^;\"'<>])*)(;?)", re.IGNORECASE)
+_RICH_SEMI_BOLD = re.compile(r"(font-weight\s*:\s*)600\b", re.IGNORECASE)
+# Revision of a text box document when its formats were last converted.
+_DOCUMENT_REVISION_PROPERTY = "_snoozFontRevision"
+_SEMI_BOLD = 600
+_BOLD = 700
+
+
+def harmonize_widget_fonts(widget):
+    """ Show a widget of a form made before Inter in the fonts of Snooz.
+
+    Called by the application style when the widget is polished, before it is
+    shown (theme_helpers.SnoozStyle). It converts the font declarations of the
+    style sheet of the widget, the font set on it (Font panel of Qt Designer), the
+    rich text of a label or text box and its tooltip:
+    - sizes in points become pixels, their size on Windows and Linux (12pt = 16 px;
+      macOS gave 12 px),
+    - other fonts become Inter, and monospaced ones the fonts of the "mono" style,
+    - the weight 600 becomes 700: Qt 5 Designer saved bold as 600, which Inter
+      shows semi-bold.
+    Settings already in the fonts of Snooz are left as they are.
+    """
+    sheet = widget.styleSheet()
+    if "font" in sheet:
+        new_sheet = _harmonized_sheet(sheet)
+        if new_sheet != sheet:
+            # Qt gives the new style sheet to the children only when the widget is
+            # polished: a form can be polished when it is placed, before it is shown
+            # (process editor), and its children would keep the old font.
+            widget.ensurePolished()
+            if widget.styleSheet() == sheet:  # Not converted while it was polished
+                widget.setStyleSheet(new_sheet)
+    _harmonize_own_font(widget)
+    if isinstance(widget, QtWidgets.QLabel):
+        text = widget.text()
+        if "font-" in text and _is_rich_text(text, widget.textFormat()):
+            new_text = _harmonized_html(text)
+            if new_text != text:
+                widget.setText(new_text)
+    elif isinstance(widget, QtWidgets.QTextEdit):
+        _harmonize_text_box(widget)
+    tip = widget.toolTip()
+    if "font-" in tip and _is_rich_text(tip):
+        new_tip = _harmonized_html(tip)
+        if new_tip != tip:
+            widget.setToolTip(new_tip)
+
+
+def _pixels(points):
+    """ A size in points, in pixels: its size on Windows and Linux (96 dpi), rounded like Qt. """
+    return max(1, math.floor(points * 96 / 72 + 0.5))
+
+
+def _family_names(value):
+    """ The fonts of a list such as 'Roboto','sans-serif'. """
+    return [name.strip().strip("'\"").strip() for name in value.split(",") if name.strip().strip("'\"").strip()]
+
+
+def _snooz_families(names):
+    """ The fonts of Snooz for fonts named by a form: Inter, or the monospaced fonts. """
+    if any(name.lower() in _MONOSPACED_NAMES for name in names):
+        return list(_MONO_FAMILIES)
+    return [FAMILY]
+
+
+def _is_rich_text(text, text_format=None):
+    # The default is read here, not at import: headless mode replaces Qt with stubs
+    if text_format is None:
+        text_format = QtCore.Qt.TextFormat.AutoText
+    return text_format == QtCore.Qt.TextFormat.RichText or (
+        text_format == QtCore.Qt.TextFormat.AutoText and QtGui.Qt.mightBeRichText(text))
+
+
+def _harmonized_sheet(sheet):
+    return _SHEET_DECLARATION.sub(_harmonized_declaration, sheet)
+
+
+def _harmonized_declaration(match):
+    name, colon, value = match.groups()
+    current = value.strip()
+    kind = name.lower()
+    if kind == "font":
+        new = _harmonized_shorthand(current)
+    elif kind == "font-size":
+        points = _POINTS.match(current)
+        new = f"{_pixels(float(points.group(1)))}px" if points else current
+    elif kind == "font-family":
+        new = _harmonized_families(current)
+    else:
+        new = "700" if current.lower() in ("600", "demibold") else current
+    if new == current:
+        return match.group(0)
+    return f"{name}{colon}{value.replace(current, new, 1)}"
+
+
+def _harmonized_shorthand(value):
+    parts = _SHORTHAND.match(value)
+    if parts is None:
+        return value
+    style_and_weight, size, unit, families = parts.groups()
+    style_and_weight = " ".join("700" if token == "600" else token for token in style_and_weight.split())
+    if unit.lower() == "pt":
+        size, unit = _pixels(float(size)), "px"
+    families = _harmonized_families(families) if families else ""
+    return " ".join(part for part in (style_and_weight, f"{size}{unit}", families) if part)
+
+
+def _harmonized_families(value):
+    names = _family_names(value)
+    families = _snooz_families(names)
+    if names == families:
+        return value
+    return ", ".join(f'"{family}"' for family in families)
+
+
+def _harmonized_html(html):
+    html = _RICH_SIZE.sub(lambda match: f"{match.group(1)}{_pixels(float(match.group(2)))}px", html)
+    html = _RICH_FAMILY.sub(_harmonized_rich_families, html)
+    return _RICH_SEMI_BOLD.sub(r"\g<1>700", html)
+
+
+def _harmonized_rich_families(match):
+    space, value, end = match.groups()
+    names = _family_names(value)
+    if not names:
+        return match.group(0)
+    families = _snooz_families(names)
+    if families == [FAMILY]:
+        return ""  # The text takes the font of its widget
+    listed = ",".join(f"'{family}'" for family in families)
+    return f"{space}font-family:{listed}{end}"
+
+
+def _harmonize_own_font(widget):
+    """ The font set on the widget itself: Font panel of Qt Designer, setFont. """
+    if not widget.testAttribute(QtCore.Qt.WidgetAttribute.WA_SetFont):
+        return
+    font = widget.font()
+    changed = False
+    if font.pixelSize() <= 0 and font.pointSizeF() > 0:
+        font.setPixelSize(_pixels(font.pointSizeF()))
+        changed = True
+    names = list(font.families()) or [font.family()]
+    families = _snooz_families(names)
+    if names != families:
+        font.setFamilies(families)
+        changed = True
+    if font.weight() == QtGui.QFont.Weight(_SEMI_BOLD):
+        font.setWeight(QtGui.QFont.Weight(_BOLD))
+        changed = True
+    if changed:
+        widget.setFont(font)
+
+
+def _harmonize_text_box(text_edit):
+    """ The character formats of a text box, like the rich text of a label. """
+    document = text_edit.document()
+    if document.property(_DOCUMENT_REVISION_PROPERTY) == document.revision():
+        return
+    changes = []
+    block = document.begin()
+    while block.isValid():
+        # The format of a block gives the height of an empty line
+        char_format = _harmonized_char_format(block.charFormat())
+        if char_format is not None:
+            changes.append((block.position(), None, char_format))
+        for text_format in block.textFormats():
+            char_format = _harmonized_char_format(text_format.format)
+            if char_format is not None:
+                start = block.position() + text_format.start
+                changes.append((start, start + text_format.length, char_format))
+        block = block.next()
+    if changes:
+        modified = document.isModified()
+        undo_steps = document.availableUndoSteps()
+        # The text does not change: no textChanged for the code of the form
+        signals_blocked = text_edit.blockSignals(True)
+        try:
+            cursor = QtGui.QTextCursor(document)
+            cursor.beginEditBlock()
+            for start, end, char_format in changes:
+                cursor.setPosition(start)
+                if end is None:
+                    cursor.setBlockCharFormat(char_format)
+                else:
+                    cursor.setPosition(end, QtGui.QTextCursor.MoveMode.KeepAnchor)
+                    cursor.setCharFormat(char_format)
+            cursor.endEditBlock()
+            document.setModified(modified)
+            if undo_steps == 0:
+                document.clearUndoRedoStacks()
+        finally:
+            text_edit.blockSignals(signals_blocked)
+    document.setProperty(_DOCUMENT_REVISION_PROPERTY, document.revision())
+
+
+def _harmonized_char_format(char_format):
+    """ A character format in the fonts of Snooz, None if it already is. """
+    new = QtGui.QTextCharFormat(char_format)
+    changed = False
+    if char_format.hasProperty(QtGui.QTextFormat.Property.FontPointSize):
+        new.clearProperty(QtGui.QTextFormat.Property.FontPointSize)
+        new.setProperty(QtGui.QTextFormat.Property.FontPixelSize,
+                        _pixels(char_format.doubleProperty(QtGui.QTextFormat.Property.FontPointSize)))
+        changed = True
+    if char_format.hasProperty(QtGui.QTextFormat.Property.FontFamilies) or char_format.hasProperty(QtGui.QTextFormat.Property.FontFamily):
+        names = list(char_format.fontFamilies() or []) or [char_format.fontFamily()]
+        families = _snooz_families(names)
+        if families == [FAMILY]:
+            # The text takes the font of its text box
+            new.clearProperty(QtGui.QTextFormat.Property.FontFamilies)
+            new.clearProperty(QtGui.QTextFormat.Property.FontFamily)
+            changed = True
+        elif names != families:
+            new.setFontFamilies(families)
+            changed = True
+    if char_format.hasProperty(QtGui.QTextFormat.Property.FontWeight) and \
+            char_format.intProperty(QtGui.QTextFormat.Property.FontWeight) == _SEMI_BOLD:
+        new.setFontWeight(_BOLD)
+        changed = True
+    return new if changed else None
