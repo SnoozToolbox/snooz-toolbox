@@ -155,6 +155,11 @@ QToolBox::tab:hover {
 	color: @on_primary;
 }
 
+/* Links to the sub-steps of a step (StepsWidget) */
+QLabel#step_config_link {
+   color: @link;
+}
+
 
 /* ====== BUTTONS ====== */
 /* Generic buttons first: the named buttons below override them. */

@@ -10,12 +10,17 @@ from qtpy import QtGui
 from qtpy.QtGui import QDesktopServices
 from qtpy.QtCore import QUrl
 
-from config import C
 from commons.BaseSettingsView import BaseSettingsView
 from commons.theme_helpers import frame_pictures
 from commons.tooltip_help_decorator import decorate_tooltip_help_marks
 from ui.Ui_StepsWidget import Ui_StepsWidget
 from ToolUI.ContextManager import ContextManager
+
+# Object names of the sub-step (config) title and links in the left panel (see the style sheet)
+CONFIG_TITLE_NAME = "step_config_title"
+CONFIG_LINK_NAME = "step_config_link"
+# Widest column of the steps, in pixels: longer texts wrap
+STEPS_COLUMN_MAX_WIDTH = 360
 
 class SidebarStep(QtWidgets.QWidget):
 
@@ -30,6 +35,8 @@ class SidebarStep(QtWidgets.QWidget):
             
             # Add the configs label
             settings_label = QtWidgets.QLabel(f"{step['configs']['label']}")
+            settings_label.setObjectName(CONFIG_TITLE_NAME)
+            settings_label.setWordWrap(True)
             layout.addWidget(settings_label)
 
             # Add a line
@@ -41,8 +48,10 @@ class SidebarStep(QtWidgets.QWidget):
             # Add all config links
             for idx, config in enumerate(step['configs']['list']):
                 label = QtWidgets.QLabel(f"   {config['name']}")
+                # In the link color of the theme (style sheet)
+                label.setObjectName(CONFIG_LINK_NAME)
+                label.setWordWrap(True)
                 label.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                label.setStyleSheet(f"color: {C.clickable_link_color};")
 
                 step_content_index = step_widget._add_step_content(config, process_description, self._step_content_index, step["name"])
                 label.mousePressEvent = lambda e, step_content_index=step_content_index: step_widget._on_open_config(step_content_index)
@@ -131,6 +140,15 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             for i in range(self.steps_toolbox.count()):
                 self.steps_toolbox.setItemToolTip(i, self.steps_toolbox.itemText(i))
 
+            # The pages of the steps never scroll sideways: their long texts wrap
+            for i in range(self.steps_toolbox.count()):
+                area = self.steps_toolbox.widget(i).parentWidget()
+                while area is not None and area is not self.steps_toolbox \
+                        and not isinstance(area, QtWidgets.QScrollArea):
+                    area = area.parentWidget()
+                if isinstance(area, QtWidgets.QScrollArea):
+                    area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
             # Hide all tab's tab
             for i in range(self.steps_tabwidget.count()):
                 self.steps_tabwidget.setTabVisible(i, False)
@@ -162,7 +180,8 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             self._fit_steps_column()
 
     def _fit_steps_column(self):
-        """ Widen the column of the steps, up to a limit, so their names are not elided. """
+        """ Widen the column of the steps, up to a limit, so the names of the steps and of
+        their sub-steps hold on one line (longer ones are elided or wrap). """
         # The first step (the tool name) is bold, see the QToolBox rules of the style sheet.
         font = QtGui.QFont(self.steps_toolbox.font())
         font.setBold(True)
@@ -171,7 +190,18 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
             for i in range(self.steps_toolbox.count())), default=0)
         margins = self.verticalLayout_4.contentsMargins()
         # The style keeps 42px of each tab for its margins, plus a few pixels to spare.
-        width = min(text_width + 50 + margins.left() + margins.right(), 360)
+        width = text_width + 50 + margins.left() + margins.right()
+        # The sub-steps are listed in the page of their step, inside its margins.
+        for i in range(self.steps_toolbox.count()):
+            page = self.steps_toolbox.widget(i)
+            page_margins = page.layout().contentsMargins() if page.layout() is not None else QtCore.QMargins()
+            for label in page.findChildren(QtWidgets.QLabel):
+                if label.objectName() in (CONFIG_TITLE_NAME, CONFIG_LINK_NAME):
+                    label.ensurePolished()
+                    label_width = label.fontMetrics().horizontalAdvance(label.text())
+                    width = max(width, label_width + page_margins.left() + page_margins.right()
+                                + margins.left() + margins.right() + 4)
+        width = min(width, STEPS_COLUMN_MAX_WIDTH)
         sizes = self.splitter.sizes()
         if len(sizes) == 2 and width > sizes[0]:
             self.splitter.setSizes([width, sizes[0] + sizes[1] - width])

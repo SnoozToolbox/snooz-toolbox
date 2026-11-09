@@ -18,10 +18,10 @@ Forms made in Qt Designer do not use them: a heading is a text made bold in the
 text editor of the label.
 
 Forms made before Inter, such as the ones of the packages, give sizes in points,
-name other fonts and save bold as the weight 600 (Qt 5 Designer). The application
-style converts them when a widget is polished, before it is shown, see
-harmonize_widget_fonts. The forms keep their settings, so the packages already
-released are converted too.
+name other fonts and save bold as the weight 600 (Qt 5 Designer); their links are
+the pure blue of Qt Designer. The application style converts them when a widget is
+polished, before it is shown, see harmonize_widget_text. The forms keep their
+settings, so the packages already released are converted too.
 """
 import math
 import re
@@ -178,14 +178,18 @@ _POINTS = re.compile(r"^(\d+(?:\.\d+)?)pt$", re.IGNORECASE)
 _RICH_SIZE = re.compile(r"(font-size\s*:\s*)(\d+(?:\.\d+)?)pt", re.IGNORECASE)
 _RICH_FAMILY = re.compile(r"(\s*)font-family\s*:\s*((?:'[^']*'|[^;\"'<>])*)(;?)", re.IGNORECASE)
 _RICH_SEMI_BOLD = re.compile(r"(font-weight\s*:\s*)600\b", re.IGNORECASE)
+# Links: Qt Designer colors them pure blue, they take the link color of the theme.
+_DESIGNER_LINK_BLUE = "#0000ff"
+_DESIGNER_LINK_COLOR = re.compile(r"(color\s*:\s*)#0000ff\b", re.IGNORECASE)
+_ANCHOR = re.compile(r"(<a\b[^>]*>)(.*?)(</a>)", re.IGNORECASE | re.DOTALL)
 # Revision of a text box document when its formats were last converted.
 _DOCUMENT_REVISION_PROPERTY = "_snoozFontRevision"
 _SEMI_BOLD = 600
 _BOLD = 700
 
 
-def harmonize_widget_fonts(widget):
-    """ Show a widget of a form made before Inter in the fonts of Snooz.
+def harmonize_widget_text(widget):
+    """ Show a widget of a form made before Inter in the fonts and link color of Snooz.
 
     Called by the application style when the widget is polished, before it is
     shown (theme_helpers.SnoozStyle). It converts the font declarations of the
@@ -195,7 +199,8 @@ def harmonize_widget_fonts(widget):
       macOS gave 12 px),
     - other fonts become Inter, and monospaced ones the fonts of the "mono" style,
     - the weight 600 becomes 700: Qt 5 Designer saved bold as 600, which Inter
-      shows semi-bold.
+      shows semi-bold,
+    - links in the pure blue of Qt Designer take the link color of the theme.
     Settings already in the fonts of Snooz are left as they are.
     """
     sheet = widget.styleSheet()
@@ -211,14 +216,14 @@ def harmonize_widget_fonts(widget):
     _harmonize_own_font(widget)
     if isinstance(widget, QtWidgets.QLabel):
         text = widget.text()
-        if "font-" in text and _is_rich_text(text, widget.textFormat()):
+        if _has_old_rich_text_style(text) and _is_rich_text(text, widget.textFormat()):
             new_text = _harmonized_html(text)
             if new_text != text:
                 widget.setText(new_text)
     elif isinstance(widget, QtWidgets.QTextEdit):
         _harmonize_text_box(widget)
     tip = widget.toolTip()
-    if "font-" in tip and _is_rich_text(tip):
+    if _has_old_rich_text_style(tip) and _is_rich_text(tip):
         new_tip = _harmonized_html(tip)
         if new_tip != tip:
             widget.setToolTip(new_tip)
@@ -291,10 +296,25 @@ def _harmonized_families(value):
     return ", ".join(f'"{family}"' for family in families)
 
 
+def _has_old_rich_text_style(text):
+    """ True when rich text may set fonts or color its links in the blue of Qt Designer. """
+    return "font-" in text or _DESIGNER_LINK_COLOR.search(text) is not None
+
+
 def _harmonized_html(html):
     html = _RICH_SIZE.sub(lambda match: f"{match.group(1)}{_pixels(float(match.group(2)))}px", html)
     html = _RICH_FAMILY.sub(_harmonized_rich_families, html)
-    return _RICH_SEMI_BOLD.sub(r"\g<1>700", html)
+    html = _RICH_SEMI_BOLD.sub(r"\g<1>700", html)
+    return _with_theme_links(html)
+
+
+def _with_theme_links(html):
+    """ The links of rich text in the link color of the theme instead of the blue of Qt Designer. """
+    if _DESIGNER_LINK_COLOR.search(html) is None:
+        return html
+    link = QtGui.QGuiApplication.palette().color(QtGui.QPalette.ColorRole.Link).name()
+    return _ANCHOR.sub(lambda match: match.group(1) + _DESIGNER_LINK_COLOR.sub(
+        lambda color: color.group(1) + link, match.group(2)) + match.group(3), html)
 
 
 def _harmonized_rich_families(match):
@@ -373,7 +393,7 @@ def _harmonize_text_box(text_edit):
 
 
 def _harmonized_char_format(char_format):
-    """ A character format in the fonts of Snooz, None if it already is. """
+    """ A character format in the fonts and link color of Snooz, None if it already is. """
     new = QtGui.QTextCharFormat(char_format)
     changed = False
     if char_format.hasProperty(QtGui.QTextFormat.Property.FontPointSize):
@@ -395,5 +415,9 @@ def _harmonized_char_format(char_format):
     if char_format.hasProperty(QtGui.QTextFormat.Property.FontWeight) and \
             char_format.intProperty(QtGui.QTextFormat.Property.FontWeight) == _SEMI_BOLD:
         new.setFontWeight(_BOLD)
+        changed = True
+    if char_format.isAnchor() and char_format.hasProperty(QtGui.QTextFormat.Property.ForegroundBrush) and \
+            char_format.foreground().color() == QtGui.QColor(_DESIGNER_LINK_BLUE):
+        new.setForeground(QtGui.QGuiApplication.palette().link())
         changed = True
     return new if changed else None

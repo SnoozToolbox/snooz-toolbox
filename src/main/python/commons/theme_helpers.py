@@ -14,7 +14,7 @@ import sys
 
 from qtpy import QtCore, QtGui, QtSvg, QtWidgets
 
-from commons.fonts import harmonize_widget_fonts
+from commons.fonts import harmonize_widget_text
 from ui.assets.art_image_data import SNOOZ_LOGO_SVG_BASE64
 
 # Icons are drawn at this scale so they stay sharp on high resolution screens.
@@ -194,9 +194,10 @@ class SnoozStyle(QtWidgets.QProxyStyle):
     """ The Fusion style, with transparent tooltip windows so they show the round
     corners of the QToolTip rule of the style sheet.
 
-    It also shows every widget in the fonts of Snooz when it is polished, before
-    it is shown: the forms made before Inter, such as the ones of the packages,
-    give sizes in points and other fonts (fonts.harmonize_widget_fonts).
+    It also shows every widget in the fonts and link color of Snooz when it is
+    polished, before it is shown: the forms made before Inter, such as the ones of
+    the packages, give sizes in points and other fonts, and links in the pure blue of
+    Qt Designer (fonts.harmonize_widget_text).
     """
 
     def __init__(self):
@@ -208,9 +209,9 @@ class SnoozStyle(QtWidgets.QProxyStyle):
         widget = args[0]
         if isinstance(widget, QtWidgets.QWidget):
             try:
-                harmonize_widget_fonts(widget)
+                harmonize_widget_text(widget)
             except Exception as error:  # A font must never prevent a page from showing
-                print(f"fonts: the fonts of a {type(widget).__name__} were not converted: {error}")
+                print(f"fonts: the text of a {type(widget).__name__} was not converted: {error}")
         if _TRANSLUCENT_POPUPS and isinstance(widget, QtWidgets.QWidget) and widget.inherits("QTipLabel"):
             # A tooltip is polished when it is created, before its window exists. Like the
             # menus, it must be frameless: on Windows, the transparent pixels of a window
