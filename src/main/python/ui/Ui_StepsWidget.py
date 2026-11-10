@@ -25,7 +25,7 @@ class Ui_StepsWidget(object):
         if not StepsWidget.objectName():
             StepsWidget.setObjectName(u"StepsWidget")
         StepsWidget.resize(986, 671)
-        StepsWidget.setStyleSheet(u"font: 16px \"Inter\";")
+        StepsWidget.setStyleSheet(u"font-family: \"Inter\";")
         self.verticalLayout_2 = QVBoxLayout(StepsWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.splitter = QSplitter(StepsWidget)

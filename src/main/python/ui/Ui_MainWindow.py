@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet(u"font: 16px \"Inter\";")
+        MainWindow.setStyleSheet(u"font-family: \"Inter\";")
         self.actionQuit = QAction(MainWindow)
         self.actionQuit.setObjectName(u"actionQuit")
         self.actionLoad_package = QAction(MainWindow)

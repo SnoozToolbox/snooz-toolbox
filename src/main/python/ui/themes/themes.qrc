@@ -16,6 +16,5 @@
     <file>light/icons/dash.png</file>
     <file>light/icons/radio_dot.png</file>
     <file>light/icons/play.png</file>
-    <file>Roboto-Regular.ttf</file>
   </qresource>
 </RCC>

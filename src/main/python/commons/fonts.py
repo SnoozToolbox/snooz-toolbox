@@ -14,14 +14,18 @@ The text sizes of the toolbox are all in TEXT_STYLES. To use one of them:
     text_style_font("node")             a text painted in code
     font-size: @font_body;              a rule of the style sheet
 
-Forms made in Qt Designer do not use them: a heading is a text made bold in the
-text editor of the label.
+Forms made in Qt Designer do not use them: a heading is a text made bigger or
+bold in the Font panel of the widget or in the text editor of the label. Sizes
+in points are converted to pixels when the widget is shown (12pt = 16 px, 18pt
+= 24 px), so they are the same on every operating system. The forms of the
+toolbox (main window, steps, dialogs) only set the family of the font: a font
+rule with a size in a style sheet would hide the sizes of the forms.
 
-Forms made before Inter, such as the ones of the packages, give sizes in points,
-name other fonts and save bold as the weight 600 (Qt 5 Designer); their links are
-the pure blue of Qt Designer. The application style converts them when a widget is
-polished, before it is shown, see harmonize_widget_text. The forms keep their
-settings, so the packages already released are converted too.
+Forms made before Inter, such as the ones of the packages already released, give
+sizes in points, name other fonts and save bold as the weight 600 (Qt 5
+Designer); their links are the pure blue of Qt Designer. The application style
+converts them when a widget is polished, before it is shown, see
+harmonize_widget_text.
 """
 import math
 import re
@@ -41,8 +45,6 @@ TEXT_STYLES = {
     "h3": (16, 700),
     "small": (13, 400),
     "mono": (14, 400),
-    # Headers of the tables of the process editor
-    "table_header": (12, 400),
     # Labels painted on the nodes of the process editor
     "node": (11, 400),
 }
@@ -132,9 +134,9 @@ def set_text_style(widget, name):
     """ Show the text of a widget in a text style.
 
     The style is set on the widget itself because the application style sheet
-    cannot do it: a form-level font rule, such as 'font: 16px "Inter";' on the
-    main window, has priority over it whatever the selector. The selector on
-    the property keeps the style off the children of the widget, such as the
+    cannot do it: a form-level font rule, such as the family set on the main
+    window, has priority over it whatever the selector. The selector on the
+    property keeps the style off the children of the widget, such as the
     context menu of a text box.
     """
     widget.setProperty(_TEXT_STYLE_PROPERTY, name)
@@ -330,12 +332,23 @@ def _harmonized_rich_families(match):
 
 
 def _harmonize_own_font(widget):
-    """ The font set on the widget itself: Font panel of Qt Designer, setFont. """
-    if not widget.testAttribute(QtCore.Qt.WidgetAttribute.WA_SetFont):
-        return
+    """ The font set on the widget itself (Font panel of Qt Designer, setFont), or a
+    size in points it got from its form.
+
+    The font of Snooz is in pixels, so a size in points inside a window comes from
+    a form: the font of a group box or a spin box given to the widgets inside it...
+    The parent is converted when it is polished, but Qt does not pass its new font
+    to the widgets polished before it (process editor: the widgets of a module view
+    are polished when the view is placed in its tab): they would keep the size in
+    points, smaller on macOS. Windows are left out: without a font of their own,
+    they follow the font of the application.
+    """
     font = widget.font()
+    in_points = font.pixelSize() <= 0 and font.pointSizeF() > 0
+    if not widget.testAttribute(QtCore.Qt.WidgetAttribute.WA_SetFont) and (not in_points or widget.isWindow()):
+        return
     changed = False
-    if font.pixelSize() <= 0 and font.pointSizeF() > 0:
+    if in_points:
         font.setPixelSize(_pixels(font.pointSizeF()))
         changed = True
     names = list(font.families()) or [font.family()]

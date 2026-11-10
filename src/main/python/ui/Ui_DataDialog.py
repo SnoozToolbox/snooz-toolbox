@@ -25,7 +25,7 @@ class Ui_DataDialog(object):
         if not DataDialog.objectName():
             DataDialog.setObjectName(u"DataDialog")
         DataDialog.resize(668, 272)
-        DataDialog.setStyleSheet(u"font: 16px \"Inter\";")
+        DataDialog.setStyleSheet(u"font-family: \"Inter\";")
         self.vboxLayout = QVBoxLayout(DataDialog)
         self.vboxLayout.setObjectName(u"vboxLayout")
         self.verticalLayout = QVBoxLayout()

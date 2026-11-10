@@ -14,7 +14,7 @@
    <string>Data Files</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 16px &quot;Inter&quot;;</string>
+   <string notr="true">font-family: &quot;Inter&quot;;</string>
   </property>
   <layout class="QVBoxLayout">
    <item>

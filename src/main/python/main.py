@@ -73,6 +73,7 @@ class AppContext(ApplicationContext):
 
             window.showMaximized()
             splash.finish()
+            _maybe_dev_form_font_check()
             return self.app.exec_() if self.app else None
         
         else:
@@ -90,6 +91,24 @@ def _maybe_dev_package_item_version_sync():
         from sync_package_item_json_versions import run_dev_package_item_version_sync
 
         run_dev_package_item_version_sync()
+    except Exception:
+        pass
+
+def _maybe_dev_form_font_check():
+    """
+    In dev with a window, check the fonts of the forms of the packages added in the settings
+    against the form guideline (check_form_fonts.py), in the background once the window is
+    shown, and print the result in the terminal. Failures are swallowed so startup is not blocked.
+    """
+    if not config.is_dev:
+        return
+    try:
+        from check_form_fonts import start_dev_check
+
+        packages = config.app_settings.value(config.settings.packages, [])
+        if isinstance(packages, str):  # QSettings gives a list of one value as a string
+            packages = [packages]
+        start_dev_check(packages or [])
     except Exception:
         pass
 
