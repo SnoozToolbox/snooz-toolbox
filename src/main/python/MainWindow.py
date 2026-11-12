@@ -218,17 +218,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QApplication.setPalette(self._create_qt_palette(light_tokens))
 
         light_style_name = "Light"
-        light_palette = Palette()
-        light_palette.grid_background = QtGui.QColor(247, 250, 251)
-        light_palette.grid_line = QtGui.QColor(181,196,201)
-        light_palette.node_selection = QtGui.QColor(light_tokens["primary"])
-        light_palette.node_background_activated = QtGui.QColor(195, 211, 217)
-        light_palette.node_background_deactivated = QtGui.QColor(102,102,102)
-        light_palette.node_background_bypass = QtGui.QColor(247,250,251)
-        light_palette.node_border = QtGui.QColor(102, 102, 102)
-        light_palette.node_text = QtGui.QColor(31,31,31)
-        light_palette.node_socket_border = QtGui.QColor(102, 102, 102)
-        light_palette.node_socket_background = QtGui.QColor(206, 208, 209)
+        light_palette = self._create_process_editor_palette(light_tokens)
 
         light_style = Style(light_style_name, light_palette, ":/themes/light/stylesheet.qss",
             ":/themes/light/tokens.json")
@@ -255,6 +245,52 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().showEvent(event)
         # Title bar in the color of the menu bar (Windows 11)
         set_title_bar_color(self, *self._title_bar_colors)
+
+    @staticmethod
+    def _create_process_editor_palette(tokens):
+        """ Create the colors of the process editor from the color tokens of a theme. """
+        def color(name, alpha=255):
+            value = QtGui.QColor(tokens[name])
+            value.setAlpha(alpha)
+            return value
+
+        palette = Palette()
+        palette.grid_background = color("page")
+        palette.grid_line = color("grid")
+        palette.grid_line_major = color("border")
+        palette.node_selection = color("primary")
+        palette.node_background_activated = color("surface")
+        palette.node_header_activated = color("primary")
+        palette.node_title_activated = color("on_primary")
+        palette.node_version_activated = color("primary_soft_pressed")
+        palette.node_header_bypass = color("header")
+        palette.node_separator = color("border")
+        palette.node_border = color("border_strong")
+        palette.node_shadow = color("chrome", 28)
+        palette.node_text = color("text")
+        palette.node_text_muted = color("text_muted")
+        palette.node_background_deactivated = color("inactive")
+        palette.node_header_deactivated = color("inactive_header")
+        palette.node_border_deactivated = color("inactive_border")
+        palette.node_text_deactivated = color("inactive_text")
+        palette.node_background_failed = color("failed")
+        palette.node_header_failed = color("failed_header")
+        palette.node_version_failed = color("failed_header_muted")
+        palette.node_text_failed = color("failed_text")
+        palette.node_socket_border = color("border_strong")
+        palette.node_socket_background = color("surface")
+        palette.node_socket_target_background = color("primary_soft_pressed")
+        palette.connection = color("border_strong")
+        palette.state_waiting = color("border_strong")
+        palette.state_running = color("warning")
+        palette.state_done = color("success")
+        palette.state_failed = color("danger")
+        palette.control_hover = color("primary_soft_hover")
+        palette.control_pressed = color("primary_soft_pressed")
+        palette.window_background = color("page")
+        palette.window_title = color("surface")
+        palette.window_border = color("border_strong")
+        return palette
 
     @staticmethod
     def _create_qt_palette(tokens):

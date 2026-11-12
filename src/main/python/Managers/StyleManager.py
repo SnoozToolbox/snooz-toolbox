@@ -25,17 +25,51 @@ else:
         pass
 
 class Palette():
+    """ Colors of the process editor (yellow until a theme sets them). """
     def __init__(self):
         self.grid_background = QtGui.QColor(255, 255, 0)
         self.grid_line = QtGui.QColor(255, 255, 0)
+        self.grid_line_major = QtGui.QColor(255, 255, 0)
         self.node_selection = QtGui.QColor(255, 255, 0)
         self.node_background_activated = QtGui.QColor(255, 255, 0)
-        self.node_background_deactivated = QtGui.QColor(255, 255, 0)
-        self.node_background_bypass = QtGui.QColor(255, 255, 0)
+        # Running node: band in the accent color behind its title and version
+        self.node_header_activated = QtGui.QColor(255, 255, 0)
+        self.node_title_activated = QtGui.QColor(255, 255, 0)
+        self.node_version_activated = QtGui.QColor(255, 255, 0)
+        # Bypassed node: pale band (the node is drawn see-through)
+        self.node_header_bypass = QtGui.QColor(255, 255, 0)
+        self.node_separator = QtGui.QColor(255, 255, 0)
         self.node_border = QtGui.QColor(255, 255, 0)
+        self.node_shadow = QtGui.QColor(255, 255, 0)
         self.node_text = QtGui.QColor(255, 255, 0)
+        self.node_text_muted = QtGui.QColor(255, 255, 0)
+        # Deactivated node (it does not run): darker grey box
+        self.node_background_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_header_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_border_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_text_deactivated = QtGui.QColor(255, 255, 0)
+        # Module that failed during the last run: red box
+        self.node_background_failed = QtGui.QColor(255, 255, 0)
+        self.node_header_failed = QtGui.QColor(255, 255, 0)
+        self.node_version_failed = QtGui.QColor(255, 255, 0)
+        self.node_text_failed = QtGui.QColor(255, 255, 0)
         self.node_socket_border = QtGui.QColor(255, 255, 0)
         self.node_socket_background = QtGui.QColor(255, 255, 0)
+        # Socket on which a dragged connection can be dropped
+        self.node_socket_target_background = QtGui.QColor(255, 255, 0)
+        self.connection = QtGui.QColor(255, 255, 0)
+        # Small buttons painted on the canvas: options of a node, close of a node window
+        self.control_hover = QtGui.QColor(255, 255, 0)
+        self.control_pressed = QtGui.QColor(255, 255, 0)
+        # Window of a node (double click on the node)
+        self.window_background = QtGui.QColor(255, 255, 0)
+        self.window_title = QtGui.QColor(255, 255, 0)
+        self.window_border = QtGui.QColor(255, 255, 0)
+        # Run state of a node: waiting, running, done, failed
+        self.state_waiting = QtGui.QColor(255, 255, 0)
+        self.state_running = QtGui.QColor(255, 255, 0)
+        self.state_done = QtGui.QColor(255, 255, 0)
+        self.state_failed = QtGui.QColor(255, 255, 0)
 
 
 class Style():

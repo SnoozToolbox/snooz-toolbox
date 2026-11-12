@@ -33,6 +33,8 @@ class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
 
         # init UI
         self.setupUi(self)
+        # Shown in the frame of the window (NodeWindowProxy)
+        self.setWindowTitle(parent_node.module_description["module_label"])
         set_text_style(self.logs_textedit, "mono")
 
         # Update logs

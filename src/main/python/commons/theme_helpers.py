@@ -81,12 +81,84 @@ def _app_glyph(path):
     path.lineTo(21.5, 12)
 
 
+def _file_glyph(path):
+    # Sheet with a folded corner: the file of a process.
+    path.moveTo(13.5, 3.5)
+    path.lineTo(7.5, 3.5)
+    path.quadTo(5.5, 3.5, 5.5, 5.5)
+    path.lineTo(5.5, 18.5)
+    path.quadTo(5.5, 20.5, 7.5, 20.5)
+    path.lineTo(16.5, 20.5)
+    path.quadTo(18.5, 20.5, 18.5, 18.5)
+    path.lineTo(18.5, 8.5)
+    path.closeSubpath()
+    path.moveTo(13.5, 3.5)
+    path.lineTo(13.5, 8.5)
+    path.lineTo(18.5, 8.5)
+
+
+def _close_glyph(path):
+    # Cross: closes a window.
+    path.moveTo(7, 7)
+    path.lineTo(17, 17)
+    path.moveTo(17, 7)
+    path.lineTo(7, 17)
+
+
+def _minus_glyph(path):
+    # Zoom out.
+    path.moveTo(6, 12)
+    path.lineTo(18, 12)
+
+
+def _plus_glyph(path):
+    # Zoom in.
+    _minus_glyph(path)
+    path.moveTo(12, 6)
+    path.lineTo(12, 18)
+
+
+def _fit_glyph(path):
+    # Four corners of a frame: fits the whole process in the view.
+    path.moveTo(4, 9)
+    path.lineTo(4, 6)
+    path.quadTo(4, 4, 6, 4)
+    path.lineTo(9, 4)
+    path.moveTo(15, 4)
+    path.lineTo(18, 4)
+    path.quadTo(20, 4, 20, 6)
+    path.lineTo(20, 9)
+    path.moveTo(20, 15)
+    path.lineTo(20, 18)
+    path.quadTo(20, 20, 18, 20)
+    path.lineTo(15, 20)
+    path.moveTo(9, 20)
+    path.lineTo(6, 20)
+    path.quadTo(4, 20, 4, 18)
+    path.lineTo(4, 15)
+
+
+def _search_glyph(path):
+    # Magnifying glass: search box.
+    path.addEllipse(QtCore.QPointF(10.5, 10.5), 6, 6)
+    path.moveTo(15, 15)
+    path.lineTo(20, 20)
+
+
 _GLYPHS = {
     "home": _home_glyph,
     "tool": _tool_glyph,
     "process": _process_glyph,
     "app": _app_glyph,
+    "file": _file_glyph,
+    "close": _close_glyph,
+    "minus": _minus_glyph,
+    "plus": _plus_glyph,
+    "fit": _fit_glyph,
+    "search": _search_glyph,
 }
+# Width of the lines of the glyphs, on their 24 x 24 grid
+_GLYPH_LINE_WIDTH = 1.75
 
 
 def nav_icon(glyph, tokens, size=22):
@@ -95,27 +167,41 @@ def nav_icon(glyph, tokens, size=22):
     """
     icon = QtGui.QIcon()
     for state, color in ((QtGui.QIcon.Off, tokens["text_muted"]), (QtGui.QIcon.On, tokens["chrome"])):
-        icon.addPixmap(_glyph_pixmap(glyph, color, size), QtGui.QIcon.Normal, state)
+        icon.addPixmap(glyph_pixmap(glyph, color, size), QtGui.QIcon.Normal, state)
     return icon
 
 
-def _glyph_pixmap(glyph, color, size):
+def glyph_pixmap(glyph, color, size):
+    """ A glyph (see _GLYPHS) in a color (token value or QColor), size x size pixels,
+    drawn sharp for high resolution screens.
+    """
     pixels = size * _IMAGE_SCALE
     image = QtGui.QImage(pixels, pixels, QtGui.QImage.Format_ARGB32_Premultiplied)
     image.fill(QtCore.Qt.transparent)
     painter = QtGui.QPainter(image)
     painter.setRenderHint(QtGui.QPainter.Antialiasing)
-    painter.scale(pixels / 24, pixels / 24)
-    path = QtGui.QPainterPath()
-    _GLYPHS[glyph](path)
-    painter.setBrush(QtCore.Qt.NoBrush)
-    painter.setPen(QtGui.QPen(QtGui.QColor(color), 1.75, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin))
-    painter.drawPath(path)
+    paint_glyph(painter, glyph, QtCore.QRectF(0, 0, pixels, pixels), color)
     painter.end()
 
     pixmap = QtGui.QPixmap.fromImage(image)
     pixmap.setDevicePixelRatio(_IMAGE_SCALE)
     return pixmap
+
+
+def paint_glyph(painter, glyph, rect, color):
+    """ Draw a glyph (see _GLYPHS) in a square of a painter. Drawn as lines, it stays
+    sharp at any zoom (icons of the process editor).
+    """
+    path = QtGui.QPainterPath()
+    _GLYPHS[glyph](path)
+    painter.save()
+    painter.translate(rect.topLeft())
+    painter.scale(rect.width() / 24, rect.height() / 24)
+    painter.setBrush(QtCore.Qt.NoBrush)
+    painter.setPen(QtGui.QPen(QtGui.QColor(color), _GLYPH_LINE_WIDTH, QtCore.Qt.SolidLine,
+                              QtCore.Qt.RoundCap, QtCore.Qt.RoundJoin))
+    painter.drawPath(path)
+    painter.restore()
 
 
 def _logo_renderer():

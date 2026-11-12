@@ -349,16 +349,68 @@ QPushButton#close_app_pushButton:hover {
    background-color: @primary_soft;
 }
 
-QPushButton[accessibleName="node_option_push_button"] {
-   border: 1px solid @border_strong;
-   padding:3;
-   border-radius: 3px;
-   qproperty-icon:url(":/themes/light/icons/settings_icon.png")
+/* Process editor: name of the process file above the canvas (with an icon), and
+   the title of the module library. The nodes and their buttons are painted in code
+   (ProcessUI), from the colors of the theme (see MainWindow._create_process_editor_palette). */
+QFrame[accessibleName="process_title"] {
+   background-color: @surface;
+   border: 1px solid @border;
+   border-radius: 6px;
 }
 
-QPushButton[accessibleName="node_option_push_button"]:hover:!pressed {
-   border: 2px solid @primary;
-   border-radius: 3px;
+QLabel[accessibleName="process_title_text"],
+QLabel[accessibleName="module_library_title"] {
+   color: @text;
+   font-weight: 600;
+}
+
+/* Next to the name of the process while it has changes that are not saved */
+QLabel[accessibleName="process_unsaved_dot"] {
+   background-color: @primary;
+   border-radius: 4px;
+}
+
+QLabel[accessibleName="process_unsaved_text"] {
+   color: @text_muted;
+}
+
+/* Zoom controls in the bottom right corner of the canvas */
+QFrame[accessibleName="canvas_zoom"] {
+   background-color: @surface;
+   border: 1px solid @border;
+   border-radius: 6px;
+}
+
+QFrame[accessibleName="canvas_zoom"] QToolButton {
+   background-color: transparent;
+   border: none;
+   border-radius: 4px;
+   color: @text_muted;
+   padding: 0px;
+}
+
+QFrame[accessibleName="canvas_zoom"] QToolButton:hover {
+   background-color: @primary_soft_hover;
+   color: @text;
+}
+
+QFrame[accessibleName="canvas_zoom"] QToolButton:pressed {
+   background-color: @primary_soft_pressed;
+}
+
+QFrame[accessibleName="canvas_zoom_separator"] {
+   background-color: @separator;
+   border: none;
+}
+
+/* Middle of an empty canvas: how to start a process */
+QLabel[accessibleName="canvas_hint_title"] {
+   color: @text_muted;
+   font-weight: 600;
+}
+
+QLabel[accessibleName="canvas_hint_text"] {
+   color: @text_muted;
 }
 
 

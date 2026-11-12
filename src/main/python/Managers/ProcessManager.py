@@ -324,6 +324,9 @@ class ProcessManager(Manager):
     
     def run_current_process(self):
         if self._is_loaded:
+            # The modules that failed during the last run are no longer drawn red
+            for node in self._process_view.nodes:
+                node.clear_failed()
             graph_json = self._process_view.scene.serialize()
             self.run(graph_json)
 
@@ -534,8 +537,12 @@ class ProcessManager(Manager):
         interruption_df = pd.DataFrame(interruptions)
         
         if len(interruptions) > 0:
-            # create a pandas DataFrame with only the selected columns
-            columns = list(interruptions[0].keys())
+            # create a pandas DataFrame with only the selected columns, in this order:
+            # the file, the module that stopped it, then its message (the keys come
+            # sorted by name when the worker sends them)
+            keys = list(interruptions[0].keys())
+            order = ["identifier", "module", "type", "message"]
+            columns = [key for key in order if key in keys] + [key for key in keys if key not in order]
             interruption_df = pd.DataFrame(interruptions, columns=columns)
             
             if config.HEADLESS_MODE:
