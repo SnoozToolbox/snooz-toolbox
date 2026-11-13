@@ -935,6 +935,43 @@ QLabel#home_muted {
    color: @text_muted;
 }
 
+/* Search of the tools (widgets/ToolSearch.py) */
+QLineEdit#home_search {
+   padding: 8px 12px;
+   border-radius: 10px;
+}
+
+#home_search_results {
+   background-color: @surface;
+   border: 1px solid @border;
+   border-radius: 10px;
+}
+
+#home_search_results QLabel {
+   background-color: transparent;
+}
+
+QFrame#home_tool_row {
+   background-color: transparent;
+   border: 0px;
+   border-radius: 6px;
+}
+
+QFrame#home_tool_row[selected="true"] {
+   background-color: @hover_row;
+}
+
+QLabel#home_tool_name {
+   color: @link;
+}
+
+#home_search_results QLabel#home_tool_chip {
+   color: @primary_pressed;
+   background-color: @primary_soft;
+   border-radius: 9px;
+   padding: 1px 9px;
+}
+
 /* The analysis workflow: one card with the three steps */
 #home_card {
    background-color: @surface;

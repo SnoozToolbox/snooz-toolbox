@@ -112,6 +112,8 @@ class MenuEndpointHandler(EndpointHandler):
         self._menu_bar = None
         self._before_menu = None
         self._actions = {}
+        # Hook of each action, by label: the item it opens (see menu_items)
+        self._hooks = {}
         self._categories = {}
         self._ordered_categories_menu = []
 
@@ -156,6 +158,7 @@ class MenuEndpointHandler(EndpointHandler):
         action = QAction(full_label, self, triggered=(lambda checked, hook=hook: self.on_action(hook)))
         menu_category.addAction(action)
         self._actions[label] = action 
+        self._hooks[label] = hook
         self._managers.pub_sub_manager.publish(self, "menus_changed", None)
 
     def unregister_hook(self, hook):
@@ -175,6 +178,7 @@ class MenuEndpointHandler(EndpointHandler):
         if action.text() == full_label:
             menu_category.removeAction(action)
             del self._actions[label]
+            self._hooks.pop(label, None)
 
             if len(menu_category.actions()) == 0:
                 self._menu_bar.removeAction(menu_category.menuAction())
@@ -189,9 +193,44 @@ class MenuEndpointHandler(EndpointHandler):
                 self._menu_bar.removeAction(menu.menuAction())
 
         self._actions = {}
+        self._hooks = {}
         self._categories = {}
         self._ordered_categories_menu = []
         self._managers.pub_sub_manager.publish(self, "menus_changed", None)
+
+    def menu_items(self):
+        """ The items of the menus (tools, apps), in the order of the menus.
+
+        Returns
+        -------
+        list of dict
+            label, category (title of its menu), version, description (the
+            item_description of the item, "" if it has none) and action (the QAction
+            that opens the item).
+        """
+        labels = {action: label for label, action in self._actions.items()}
+        items = []
+        for menu in self._ordered_categories_menu:
+            for action in menu.actions():
+                label = labels.get(action)
+                hook = self._hooks.get(label)
+                if hook is None:
+                    continue
+                description = ""
+                try:
+                    package_item = self._package_manager.get_package_item(
+                        hook["package_name"], hook["package_version"], hook["item_name"])
+                    if package_item is not None:
+                        description = package_item.description.get("item_description", "") or ""
+                except Exception:
+                    # An item without a readable description is still listed
+                    description = ""
+                items.append({"label": label, "category": menu.menuAction().text(),
+                              "version": hook["item_version"],
+                              # Some descriptions are saved with their quotation marks
+                              "description": str(description).strip().strip('"').strip(),
+                              "action": action})
+        return items
 
     @staticmethod
     def _action_text(label, version):

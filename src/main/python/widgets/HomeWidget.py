@@ -2,7 +2,8 @@
 @ Valorisation Recherche HSCM, Societe en Commandite – 2026
 See the file LICENCE for full license details.
 
-Home page of Snooz: the logo, the analysis workflow, the recent files and the help links.
+Home page of Snooz: the logo, the search of the tools, the analysis workflow, the recent
+files and the help links.
 Its look is in the HOME PAGE section of the style sheet.
 """
 from qtpy import QtCore, QtGui, QtWidgets
@@ -11,6 +12,7 @@ import config
 from commons.fonts import text_label
 from commons.theme_helpers import SnoozLogo
 from widgets.RecentWidget import RecentWidget
+from widgets.ToolSearch import ToolSearch
 
 # Steps of the analysis workflow: title of the menu category and description.
 _WORKFLOW_STEPS = (
@@ -46,6 +48,9 @@ class HomeWidget(QtWidgets.QScrollArea):
         self._page_layout.setSpacing(0)
 
         self._page_layout.addLayout(self._create_header())
+        self._page_layout.addSpacing(24)
+        self._tool_search = ToolSearch(self._managers)
+        self._page_layout.addWidget(self._tool_search)
         self._page_layout.addSpacing(28)
         self._page_layout.addWidget(text_label("Your analysis workflow", "h1"))
         self._page_layout.addSpacing(4)
@@ -77,9 +82,10 @@ class HomeWidget(QtWidgets.QScrollArea):
             self._page_layout.setContentsMargins(side, margins.top(), side, margins.bottom())
 
     def refresh(self):
-        """ Update the number of tools of the workflow steps. """
+        """ Update the number of tools of the workflow steps and the tools found. """
         for step in self._workflow_steps:
             step.refresh()
+        self._tool_search.refresh()
 
     def _create_header(self):
         """ The logo and the main actions. """
