@@ -103,55 +103,55 @@ QWidget[accessibleName="task_main"] {
     background-color: @primary_soft;
 }
 
- /* QToolBox*/
- /*For some reason this one is necessary to make the next one work...*/
- QToolBox QScrollArea>QWidget>QWidget {
-   background-color:	@primary_soft;
-   padding:0;
-   margin:0;
-}
-
-QToolBox QScrollArea {
-   padding-top:0px;
-   margin-top:0px;
-   background-color:	@primary_soft;
-   border: 0px solid @border;
-   border-top-width: 0px;
-   border-left-width: 0px;
-   border-right-width: 0px;
-   border-bottom-width: 0px;
-
-   border-top-left-radius :0px;
-   border-top-right-radius :0px;
-   border-bottom-left-radius :10px;
-   border-bottom-right-radius :10px;
-}
-
-QToolBox::tab {
- 	background-color: @primary_soft;
+/* Steps of a tool (ToolUI/StepsColumn.py): numbered circles joined by a line,
+   the current step open in place. The object names beat the generic QScrollArea
+   rules below. The colors of the circles and lines are set by the qproperty
+   lines. */
+StepsColumn#steps_column {
+   background-color: @primary_soft;
    border-radius: 10px;
-   border: 0px solid @border;
+   qproperty-accentColor: @primary;
+   qproperty-lineColor: @border_strong;
+   qproperty-errorColor: @danger;
+   qproperty-surfaceColor: @surface;
+   qproperty-mutedColor: @text_muted;
+   qproperty-onAccentColor: @on_primary;
 }
 
-QToolBox::tab:first {
-	font-size: @font_body;
-	font-weight:bold;
+StepsColumn#steps_column > QWidget#qt_scrollarea_viewport,
+StepsColumn#steps_column > QWidget > QWidget#steps_column_content {
+   background-color: transparent;
 }
 
-QToolBox::tab:selected {
-	background-color: @primary;
-	color: @on_primary;
-   border-top: none;
-   border-top-left-radius :10px;
-   border-top-right-radius :10px;
-   border-bottom-left-radius :0px;
-   border-bottom-right-radius :0px;
-   border: 0px;
+QFrame#step_row {
+   background-color: transparent;
+   border-radius: 8px;
 }
 
-QToolBox::tab:hover {
-	background-color: @primary;
-	color: @on_primary;
+QFrame#step_row[stepState="todo"]:hover,
+QFrame#step_row[stepState="visited"]:hover,
+QFrame#step_row[stepState="error"]:hover {
+   background-color: @primary_soft_hover;
+}
+
+/* The current step: a white card with its description and sub-steps */
+QFrame#step_row[stepState="current"] {
+   background-color: @surface;
+}
+
+QLabel#step_name[stepState="current"] {
+   color: @primary;
+}
+
+QLabel#step_name[stepState="todo"],
+QLabel#step_count {
+   color: @text_muted;
+}
+
+/* A step whose settings have to be fixed (found by Run) */
+QLabel#step_name[stepState="error"],
+QLabel#step_error_note {
+   color: @danger;
 }
 
 /* Links to the sub-steps of a step (StepsWidget) */

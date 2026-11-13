@@ -16,8 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QPushButton, QSizePolicy,
-    QSpacerItem, QSplitter, QTabWidget, QToolBox,
-    QVBoxLayout, QWidget)
+    QSpacerItem, QSplitter, QTabWidget, QVBoxLayout,
+    QWidget)
+
+from ToolUI.StepsColumn import StepsColumn
 import themes_rc
 
 class Ui_StepsWidget(object):
@@ -38,27 +40,16 @@ class Ui_StepsWidget(object):
         self.verticalLayout_4.setSpacing(6)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(9, 9, 9, 9)
-        self.steps_toolbox = QToolBox(self.layoutWidget)
-        self.steps_toolbox.setObjectName(u"steps_toolbox")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
+        self.steps_column = StepsColumn(self.layoutWidget)
+        self.steps_column.setObjectName(u"steps_column")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.steps_toolbox.sizePolicy().hasHeightForWidth())
-        self.steps_toolbox.setSizePolicy(sizePolicy)
-        self.steps_toolbox.setMinimumSize(QSize(200, 0))
-        self.steps_toolbox.setMaximumSize(QSize(16777215, 16777215))
-        self.steps_toolbox.setStyleSheet(u"")
-        self.steps_toolbox.setLineWidth(1)
-        self.widget = QWidget()
-        self.widget.setObjectName(u"widget")
-        self.widget.setEnabled(True)
-        self.widget.setGeometry(QRect(0, 0, 353, 498))
-        self.widget.setMinimumSize(QSize(353, 0))
-        self.widget.setAutoFillBackground(True)
-        self.widget.setStyleSheet(u"")
-        self.steps_toolbox.addItem(self.widget, u"")
+        sizePolicy.setHeightForWidth(self.steps_column.sizePolicy().hasHeightForWidth())
+        self.steps_column.setSizePolicy(sizePolicy)
+        self.steps_column.setMinimumSize(QSize(200, 0))
 
-        self.verticalLayout_4.addWidget(self.steps_toolbox)
+        self.verticalLayout_4.addWidget(self.steps_column)
 
         self.save_pushButton = QPushButton(self.layoutWidget)
         self.save_pushButton.setObjectName(u"save_pushButton")
@@ -151,10 +142,6 @@ class Ui_StepsWidget(object):
         self.save_pushButton.clicked.connect(StepsWidget.save_clicked)
         self.documentation_pushButton.clicked.connect(StepsWidget.documentation_pressed)
 
-        self.steps_toolbox.setCurrentIndex(0)
-        self.steps_toolbox.layout().setSpacing(7)
-
-
         QMetaObject.connectSlotsByName(StepsWidget)
     # setupUi
 
@@ -163,7 +150,6 @@ class Ui_StepsWidget(object):
 #if QT_CONFIG(accessibility)
         StepsWidget.setAccessibleName(QCoreApplication.translate("StepsWidget", u"step_widget_main", None))
 #endif // QT_CONFIG(accessibility)
-        self.steps_toolbox.setItemText(self.steps_toolbox.indexOf(self.widget), "")
 #if QT_CONFIG(accessibility)
         self.save_pushButton.setAccessibleName(QCoreApplication.translate("StepsWidget", u"save_pushbutton", None))
 #endif // QT_CONFIG(accessibility)
