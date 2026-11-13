@@ -452,12 +452,15 @@ class ProcessManager(Manager):
 
         # TODO Avoid showing the progress dialog when called from the console
         if not config.HEADLESS_MODE:
-            self._progress_dialog = ProgressDialog()
+            # Name of each module that runs, as written on its box in the process
+            module_labels = {node.get("identifier"): node.get("module_label", "")
+                for node in graph_json["process_params"]["nodes"]}
+            self._progress_dialog = ProgressDialog(module_labels, self._managers.pub_sub_manager)
             self._progress_dialog.show()
             self._managers.pub_sub_manager.publish(self, "minimize", None)
         else:
             self._progress_dialog = None
- 
+
         if self._use_multithread:
             if not config.HEADLESS_MODE:
                 self.thread = QtCore.QThread()

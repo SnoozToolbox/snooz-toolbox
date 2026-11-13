@@ -1028,6 +1028,27 @@ QLabel#recent_folder_label {
 }
 
 
+/* ====== RUN PROGRESS (ProcessUI/ProgressDialog.py) ====== */
+QDialog#run_progress {
+   background-color: @surface;
+}
+
+QLabel#run_progress_muted {
+   color: @text_muted;
+}
+
+QProgressBar#run_progress_bar {
+   background-color: @primary_soft;
+   border: 0px;
+   border-radius: 5px;
+}
+
+QProgressBar#run_progress_bar::chunk {
+   background-color: @primary;
+   border-radius: 5px;
+}
+
+
 /* ====== DISABLED STATE STYLES ====== */
 
 /* Disabled QPushButton */
