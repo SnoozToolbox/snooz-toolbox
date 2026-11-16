@@ -16,5 +16,14 @@
     <file>light/icons/dash.png</file>
     <file>light/icons/radio_dot.png</file>
     <file>light/icons/play.png</file>
+    <file>dark/tokens.json</file>
+    <file>dark/icons/chevron_down.png</file>
+    <file>dark/icons/chevron_up.png</file>
+    <file>dark/icons/chevron_down_disabled.png</file>
+    <file>dark/icons/chevron_up_disabled.png</file>
+    <file>dark/icons/check.png</file>
+    <file>dark/icons/dash.png</file>
+    <file>dark/icons/radio_dot.png</file>
+    <file>dark/icons/play.png</file>
   </qresource>
 </RCC>

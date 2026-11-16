@@ -7,6 +7,10 @@ See the file LICENCE for full license details.
     This is the main window of the software. It initializes and handles the 
     menus, the managers, the main view, etc.
 """
+import os
+import subprocess
+import sys
+
 from qtpy import QtWidgets
 from qtpy import QtCore
 from qtpy import QtGui
@@ -19,14 +23,50 @@ from ui.Ui_MainWindow import Ui_MainWindow
 from Managers.Managers import Managers
 from Managers.EndpointManager import MenuEndpointHandler
 from Managers.EndpointManager import FileMenuEndpointHandler
-from Managers.StyleManager import Palette, Style, load_tokens
+from Managers.StyleManager import (DEFAULT_THEME, STYLE_SHEET, THEMES, Palette, Style,
+    is_dark_theme, theme_tokens, theme_tokens_path)
 from commons.fonts import apply_application_font
-from commons.theme_helpers import SnoozStyle, nav_icon, round_menu_corners, set_title_bar_color
+from commons.theme_helpers import (SnoozStyle, glyph_pixmap, nav_icon, round_menu_corners,
+    set_title_bar_color)
 from widgets.AboutDialog import AboutDialog
 from widgets.DataDialog import DataDialog
 from widgets.LogsDialog import LogsDialog
 from widgets.SettingsDialog import SettingsDialog
 from widgets.HomeWidget import HomeWidget
+
+
+def restart_command():
+    """ The program and the arguments that start Snooz again, as it was started. """
+    if getattr(sys, "frozen", False):
+        # Installed Snooz: its own program
+        return sys.executable, sys.argv[1:]
+    # Development: the Python interpreter and main.py
+    return sys.executable, [os.path.abspath(sys.argv[0])] + sys.argv[1:]
+
+
+def start_detached(program, arguments):
+    """ Start a program that keeps running when Snooz closes. Returns True if it started.
+
+    On Windows the program leaves the job of Snooz, if Snooz is in one: a debugger
+    (Visual Studio Code) ends all the processes of its job when Snooz closes, the
+    new Snooz included.
+    """
+    command = [program] + list(arguments)
+    options = {"stdin": subprocess.DEVNULL, "stdout": subprocess.DEVNULL,
+               "stderr": subprocess.DEVNULL, "close_fds": True}
+    try:
+        if sys.platform == "win32":
+            flags = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
+            try:
+                subprocess.Popen(command, creationflags=flags | subprocess.CREATE_BREAKAWAY_FROM_JOB, **options)
+            except OSError:
+                # The job does not let a process leave it
+                subprocess.Popen(command, creationflags=flags, **options)
+        else:
+            subprocess.Popen(command, start_new_session=True, **options)
+    except OSError:
+        return False
+    return True
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -87,6 +127,48 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """ Preferences button clicked, open the settings dialog """
         settings = SettingsDialog(self._managers, self)
         settings.exec_()
+
+    def request_theme(self, name):
+        """ The user chose a theme (settings, sun / moon button of the home page).
+
+        Snooz is shown in one theme from start to end, so it restarts to change it:
+        the user is asked first, the tool or process that is open is closed.
+        Returns True when Snooz restarts, False when the theme is not changed.
+        """
+        style_manager = self._managers.style_manager
+        if name not in style_manager.styles:
+            return False
+        if name == style_manager.get_current_style().name:
+            style_manager.set_user_style_name(name)
+            return False
+        box = QtWidgets.QMessageBox(self)
+        box.setIcon(QtWidgets.QMessageBox.Icon.Question)
+        box.setWindowTitle("Change the theme")
+        box.setText(f"Snooz restarts to show the {name.lower()} theme.")
+        box.setInformativeText("The tool or process that is open will be closed: "
+                               "save your workspace first to keep its settings.")
+        restart_button = box.addButton("Restart now", QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        box.addButton(QtWidgets.QMessageBox.StandardButton.Cancel)
+        box.setDefaultButton(restart_button)
+        box.exec()
+        if box.clickedButton() is not restart_button:
+            return False
+        style_manager.set_user_style_name(name)
+        config.app_settings.sync()
+        self._restart()
+        return True
+
+    def _restart(self):
+        """ Close Snooz and start it again. """
+        program, arguments = restart_command()
+        for widget in QtWidgets.QApplication.topLevelWidgets():
+            if isinstance(widget, QtWidgets.QDialog) and widget.isVisible():
+                widget.close()
+        self.close()
+        if not start_detached(program, arguments):
+            QtWidgets.QMessageBox.information(None, "Snooz",
+                "Snooz could not restart itself. Start it again to see the new theme.")
+        QtWidgets.QApplication.quit()
 
     def run_clicked(self):
         """ Run button clicked, execute the current process """
@@ -212,20 +294,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """ Init the themes """
         QtWidgets.QApplication.setStyle(SnoozStyle())
 
-        # The colors of the light theme are defined once in its tokens.json,
-        # shared by the Qt palette below and the style sheet.
-        light_tokens = load_tokens(":/themes/light/tokens.json")
-        QtWidgets.QApplication.setPalette(self._create_qt_palette(light_tokens))
+        # The colors of a theme are defined once in its tokens.json, shared by the
+        # Qt palette below and the style sheet (one style sheet for all the themes).
+        # Snooz is shown in the theme of the settings; a theme chosen in the settings
+        # is used at the next start.
+        tokens = theme_tokens()
+        QtWidgets.QApplication.setPalette(self._create_qt_palette(tokens))
 
-        light_style_name = "Light"
-        light_palette = self._create_process_editor_palette(light_tokens)
-
-        light_style = Style(light_style_name, light_palette, ":/themes/light/stylesheet.qss",
-            ":/themes/light/tokens.json")
-        self._managers.style_manager.register_style(light_style)
-        self._managers.style_manager.set_default_style(light_style_name)
+        for name, folder in THEMES.items():
+            style = Style(name, self._create_process_editor_palette(theme_tokens(name)), STYLE_SHEET,
+                theme_tokens_path(name), f"{folder}/icons")
+            self._managers.style_manager.register_style(style)
+        self._managers.style_manager.set_default_style(DEFAULT_THEME)
         self._managers.style_manager.load_user_style()
-        self._init_window_chrome(light_tokens)
+        self._init_window_chrome(tokens)
 
     def _init_window_chrome(self, tokens):
         """ Round menus, navigation icons and title bar color. """
@@ -240,6 +322,41 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Applied when the window is shown, see showEvent.
         self._title_bar_colors = (tokens["chrome"], tokens["chrome_text"])
+        self._init_theme_button(tokens)
+
+    def _init_theme_button(self, tokens):
+        """ Sun / moon item of the menu bar, next to Help, always at hand: it switches to
+        the other theme (a moon on the light theme, a sun on the dark one). An item of
+        the menu bar with an icon shows only its icon, with the look of the other items.
+
+        A menu bar shown by the system (macOS) does not show an item without a menu:
+        the home page then shows the button (HomeWidget).
+        """
+        self.theme_action = None
+        if self.menuBar.isNativeMenuBar():
+            return
+        dark = is_dark_theme()
+        other = "Light" if dark else "Dark"
+        icon_size = self.menuBar.style().pixelMetric(QtWidgets.QStyle.PixelMetric.PM_SmallIconSize, None, self.menuBar)
+        action = QtGui.QAction(
+            QtGui.QIcon(glyph_pixmap("sun" if dark else "moon", tokens["chrome_text"], icon_size)),
+            f"{other} theme", self.menuBar)
+        action.setObjectName("theme_action")
+        action.setToolTip(f"Switch to the {other.lower()} theme (Snooz restarts)")
+        action.triggered.connect(lambda checked=False: self.request_theme(other))
+        # After Help, the last menu: the menus of the packages are put before Dev Tools
+        self.menuBar.addAction(action)
+        self.theme_action = action
+        # A menu bar does not show the tooltips of its items by itself
+        self.menuBar.installEventFilter(self)
+
+    def eventFilter(self, watched, event):
+        if watched is self.menuBar and event.type() == QtCore.QEvent.Type.ToolTip:
+            action = self.menuBar.actionAt(event.pos())
+            if action is not None and action is self.theme_action:
+                QtWidgets.QToolTip.showText(event.globalPos(), action.toolTip(), self.menuBar)
+                return True
+        return super().eventFilter(watched, event)
 
     def showEvent(self, event):
         super().showEvent(event)

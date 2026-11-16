@@ -13,6 +13,7 @@ from qtpy.QtCore import QUrl
 from commons.BaseSettingsView import BaseSettingsView
 from commons.theme_helpers import frame_pictures
 from commons.tooltip_help_decorator import decorate_tooltip_help_marks
+from Managers.StyleManager import is_dark_theme
 from ui.Ui_StepsWidget import Ui_StepsWidget
 from ToolUI.ContextManager import ContextManager
 from ToolUI.RunCheckMessages import RunCheckMessages
@@ -419,7 +420,11 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 self.next_pushbutton.setVisible(not self._is_last_step())
                 current_page = self.steps_tabwidget.currentWidget()
                 if current_page is not None:
-                    frame_pictures(current_page)
+                    # The pictures of a page get their card when it is built
+                    # (_add_step_content). Dark theme: a picture shown with the settings
+                    # (sleep cycles, transparent background) gets its card here.
+                    if is_dark_theme():
+                        frame_pictures(current_page)
                     current_page.setMinimumSize(0, 0)
                     self._refresh_read_only_text_widget_heights(current_page)
                     current_page.updateGeometry()
@@ -548,3 +553,9 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
     def _on_open_config(self, step_content_index):
         self.steps_tabwidget.setCurrentIndex(step_content_index)
+        # Dark theme: its pictures get their card when it is shown, like a step page
+        # (on_step_changed). A picture with a transparent background (sleep cycles)
+        # needs it to be read on the dark page.
+        page = self.steps_tabwidget.widget(step_content_index)
+        if page is not None and is_dark_theme():
+            frame_pictures(page)

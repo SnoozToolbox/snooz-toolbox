@@ -11,7 +11,7 @@ from qtpy import QtCore, QtGui, QtWidgets
 import config
 from commons.fonts import apply_application_font, text_label
 from commons.theme_helpers import SnoozLogo
-from Managers.StyleManager import load_tokens
+from Managers.StyleManager import theme_tokens
 
 
 class SplashScreen(QtWidgets.QWidget):
@@ -24,7 +24,7 @@ class SplashScreen(QtWidgets.QWidget):
     def __init__(self, parent:QtWidgets.QWidget=None):
         super().__init__(parent, QtCore.Qt.SplashScreen | QtCore.Qt.FramelessWindowHint)
         # The style sheet of the application is not active yet: the colors come from the tokens.
-        self._tokens = load_tokens(":/themes/light/tokens.json")
+        self._tokens = theme_tokens()
         # Round corners need a transparent window, not available on Linux without a compositor.
         self._rounded = not sys.platform.startswith("linux")
         if self._rounded:
@@ -34,7 +34,7 @@ class SplashScreen(QtWidgets.QWidget):
         # The Snooz font (shown before the main window sets it for the application)
         apply_application_font()
 
-        on_primary = self._tokens.get("on_primary", "#ffffff")
+        on_primary = self._tokens.get("on_strong", "#ffffff")
         self.setStyleSheet(
             f"QLabel {{ color: {on_primary}; background-color: transparent; }}"
             "QProgressBar { background-color: rgba(255, 255, 255, 60); border: 0px;"

@@ -10,7 +10,8 @@ from qtpy import QtCore, QtGui, QtWidgets
 
 import config
 from commons.fonts import text_label
-from commons.theme_helpers import SnoozLogo
+from commons.theme_helpers import SnoozLogo, glyph_pixmap
+from Managers.StyleManager import is_dark_theme, theme_tokens
 from widgets.RecentWidget import RecentWidget
 from widgets.ToolSearch import ToolSearch
 
@@ -93,7 +94,7 @@ class HomeWidget(QtWidgets.QScrollArea):
         layout.setSpacing(10)
         title_layout = QtWidgets.QVBoxLayout()
         title_layout.setSpacing(8)
-        title_layout.addWidget(SnoozLogo(240))
+        title_layout.addWidget(SnoozLogo(240, on_dark=is_dark_theme()))
         title_layout.addWidget(_muted_label(
             f"Open-source toolbox for sleep PSG analysis  ·  {_version_text()}", wrap=False))
         layout.addLayout(title_layout)
@@ -108,7 +109,29 @@ class HomeWidget(QtWidgets.QScrollArea):
             button.setCursor(QtCore.Qt.PointingHandCursor)
             button.clicked.connect(lambda checked=False, callback=callback: callback())
             layout.addWidget(button, 0, QtCore.Qt.AlignVCenter)
+        # The sun / moon button of the themes is at the right of the menu bar
+        # (MainWindow). A menu bar shown by the system (macOS) has no room for it:
+        # the button is then here.
+        self.theme_button = None
+        if self._main_window.menuBar.isNativeMenuBar():
+            layout.addWidget(self._create_theme_button(), 0, QtCore.Qt.AlignVCenter)
         return layout
+
+    def _create_theme_button(self):
+        """ Button of the other theme: a moon on the light theme, a sun on the dark one.
+        Snooz restarts to change its theme (MainWindow.request_theme). """
+        dark = is_dark_theme()
+        other = "Light" if dark else "Dark"
+        button = QtWidgets.QPushButton()
+        button.setObjectName("home_theme_button")
+        button.setAccessibleName(f"Switch to the {other.lower()} theme")
+        button.setToolTip(f"Switch to the {other.lower()} theme (Snooz restarts)")
+        button.setIcon(QtGui.QIcon(glyph_pixmap("sun" if dark else "moon", theme_tokens()["text"], 20)))
+        button.setIconSize(QtCore.QSize(20, 20))
+        button.setCursor(QtCore.Qt.PointingHandCursor)
+        button.clicked.connect(lambda checked=False: self._main_window.request_theme(other))
+        self.theme_button = button
+        return button
 
     def _create_workflow(self):
         """ The three steps of the workflow, in one card. """

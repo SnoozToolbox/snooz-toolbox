@@ -27,8 +27,39 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         self._main_window = main_window
 
         self.setupUi(self)
+        self._add_theme_setting()
         self.packages_treewidget.setHeaderLabels(["Name", "Version", "Type", "Path"])
         self._load_package_list()
+
+    def _add_theme_setting(self):
+        """ General Settings: the theme of Snooz (light or dark). Snooz restarts to
+        change its theme, after asking the user (MainWindow.request_theme).
+        """
+        style_manager = self._managers.style_manager
+        layout = QtWidgets.QHBoxLayout()
+        layout.addWidget(QtWidgets.QLabel("Theme"))
+        note = QtWidgets.QLabel("Snooz restarts to change its theme.")
+        note.setObjectName("settings_note")
+        layout.addStretch(1)
+        layout.addWidget(note)
+        self.theme_comboBox = QtWidgets.QComboBox()
+        self.theme_comboBox.setAccessibleName("Theme")
+        self.theme_comboBox.addItems(list(style_manager.styles))
+        self.theme_comboBox.setCurrentText(style_manager.get_current_style().name)
+        self.theme_comboBox.setMinimumWidth(self.reset_to_default_pushButton.sizeHint().width())
+        self.theme_comboBox.currentTextChanged.connect(self._on_theme_changed)
+        layout.addWidget(self.theme_comboBox)
+        # Under the title of the page, above "Reset all settings to default"
+        self.verticalLayout_2.insertLayout(1, layout)
+
+    def _on_theme_changed(self, name):
+        if not self._main_window.request_theme(name):
+            # Not changed (the user canceled): the theme Snooz is shown in
+            current = self._managers.style_manager.get_current_style().name
+            if self.theme_comboBox.currentText() != current:
+                blocked = self.theme_comboBox.blockSignals(True)
+                self.theme_comboBox.setCurrentText(current)
+                self.theme_comboBox.blockSignals(blocked)
 
     def _load_package_list(self):
         activated_package_items = self._settings_manager.get_setting(settings.activated_package_items, None)

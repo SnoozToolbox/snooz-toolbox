@@ -24,6 +24,38 @@ else:
     class themes_rc:
         pass
 
+# Themes of Snooz: the name shown to the user and the folder of its colors
+# (tokens.json) and icons in ui/themes. They share one style sheet.
+THEMES = {"Light": "light", "Dark": "dark"}
+DEFAULT_THEME = "Light"
+STYLE_SHEET = ":/themes/light/stylesheet.qss"
+# Theme of this session: the one of the settings when Snooz started. A theme chosen
+# in the settings is used the next time Snooz starts.
+_session_theme = None
+
+
+def session_theme():
+    """ The name of the theme Snooz is shown in (see THEMES). """
+    global _session_theme
+    if _session_theme is None:
+        name = config.app_settings.value(config.settings.style)
+        _session_theme = name if name in THEMES else DEFAULT_THEME
+    return _session_theme
+
+
+def is_dark_theme():
+    return session_theme() == "Dark"
+
+
+def theme_tokens_path(name=None):
+    return f":/themes/{THEMES[name or session_theme()]}/tokens.json"
+
+
+def theme_tokens(name=None):
+    """ The colors of a theme by token name, the theme of the session by default. """
+    return load_tokens(theme_tokens_path(name))
+
+
 class Palette():
     """ Colors of the process editor (yellow until a theme sets them). """
     def __init__(self):
@@ -76,11 +108,13 @@ class Style():
     # QPushButtons narrower than this keep a compact padding (see _compact_button_rules).
     COMPACT_BUTTON_MAX_WIDTH = 79
 
-    def __init__(self, name, palette, qss_filepath, tokens_filepath=None):
+    def __init__(self, name, palette, qss_filepath, tokens_filepath=None, icon_dir="light/icons"):
         self._name = name
         self._palette = palette
         self._qss_filepath = qss_filepath
         self._tokens = load_tokens(tokens_filepath) if tokens_filepath is not None else {}
+        # Folder of the icons of the style sheet in ui/themes (@icon_dir)
+        self._icon_dir = icon_dir
 
     def activate(self):
         if config.HEADLESS_MODE:
@@ -88,7 +122,7 @@ class Style():
         if self._qss_filepath is not None:
             qss = read_text_file(self._qss_filepath)
             if qss is not None:
-                qss = replace_tokens(qss, {**font_tokens(), **self._tokens})
+                qss = replace_tokens(qss, {**font_tokens(), **self._tokens, "icon_dir": self._icon_dir})
                 qss += self._compact_button_rules()
                 config.app_context.app.setStyleSheet(qss)
                 # The style sheet gives the menus and message boxes the system font back
@@ -180,21 +214,28 @@ class StyleManager(Manager):
         self._styles[style.name] = style
 
     def get_current_style(self):
-        current_style_name = config.app_settings.value(config.settings.style)
-        return self._styles[current_style_name]
+        """ The style Snooz is shown in: the one of the settings when it started. """
+        name = session_theme()
+        return self._styles[name if name in self._styles else self._default_style]
 
     def set_default_style(self, style_name):
         self._default_style = style_name
 
     def load_user_style(self):
-        current_style = config.app_settings.value(config.settings.style)
-        if current_style is not None:
-            self._set_style(current_style)
-        else:
-            self._set_style(self._default_style)
+        name = session_theme()
+        self._set_style(name if name in self._styles else self._default_style)
+
+    def user_style_name(self):
+        """ The style chosen in the settings (shown the next time Snooz starts). """
+        name = config.app_settings.value(config.settings.style)
+        return name if name in self._styles else session_theme()
+
+    def set_user_style_name(self, style_name):
+        """ Choose the style of the next start of Snooz. """
+        if style_name in self._styles:
+            config.app_settings.setValue(config.settings.style, style_name)
 
     # Private functions
     def _set_style(self, style_name):
         if style_name in self._styles:
             self._styles[style_name].activate()
-            config.app_settings.setValue(config.settings.style, style_name)

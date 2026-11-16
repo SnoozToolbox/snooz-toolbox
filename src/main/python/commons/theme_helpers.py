@@ -15,7 +15,7 @@ import sys
 from qtpy import QtCore, QtGui, QtSvg, QtWidgets
 
 from commons.fonts import harmonize_widget_text
-from ui.assets.art_image_data import SNOOZ_LOGO_SVG_BASE64
+from ui.assets.art_image_data import SNOOZ_LOGO_ON_DARK_SVG_BASE64, SNOOZ_LOGO_SVG_BASE64
 
 # Icons are drawn at this scale so they stay sharp on high resolution screens.
 _IMAGE_SCALE = 3
@@ -145,7 +145,28 @@ def _search_glyph(path):
     path.lineTo(20, 20)
 
 
+def _sun_glyph(path):
+    # Sun: switches to the light theme.
+    path.addEllipse(QtCore.QPointF(12, 12), 4, 4)
+    for dx, dy in ((0, -1), (0.7071, -0.7071), (1, 0), (0.7071, 0.7071),
+                   (0, 1), (-0.7071, 0.7071), (-1, 0), (-0.7071, -0.7071)):
+        path.moveTo(12 + 6.8 * dx, 12 + 6.8 * dy)
+        path.lineTo(12 + 9.3 * dx, 12 + 9.3 * dy)
+
+
+def _moon_glyph(path):
+    # Crescent moon: switches to the dark theme.
+    path.moveTo(20, 13.5)
+    path.cubicTo(18.5, 18, 14, 20.6, 9.5, 19.6)
+    path.cubicTo(5, 18.6, 2.6, 14, 4, 9.6)
+    path.cubicTo(5, 6.5, 7.6, 4.4, 10.6, 4)
+    path.cubicTo(8.4, 7.4, 9, 12, 12.2, 14.4)
+    path.cubicTo(14.5, 16.1, 17.6, 15.9, 20, 13.5)
+
+
 _GLYPHS = {
+    "sun": _sun_glyph,
+    "moon": _moon_glyph,
     "home": _home_glyph,
     "tool": _tool_glyph,
     "process": _process_glyph,
@@ -166,7 +187,7 @@ def nav_icon(glyph, tokens, size=22):
     checked (the current page) and muted when it is not.
     """
     icon = QtGui.QIcon()
-    for state, color in ((QtGui.QIcon.Off, tokens["text_muted"]), (QtGui.QIcon.On, tokens["chrome"])):
+    for state, color in ((QtGui.QIcon.Off, tokens["text_muted"]), (QtGui.QIcon.On, tokens["nav_checked_text"])):
         icon.addPixmap(glyph_pixmap(glyph, color, size), QtGui.QIcon.Normal, state)
     return icon
 
@@ -204,9 +225,12 @@ def paint_glyph(painter, glyph, rect, color):
     painter.restore()
 
 
-def _logo_renderer():
-    """ Renderer of the vector image of the Snooz logo (ui/assets/Snooz_logo.svg). """
-    return QtSvg.QSvgRenderer(QtCore.QByteArray(base64.b64decode(SNOOZ_LOGO_SVG_BASE64)))
+def _logo_renderer(on_dark=False):
+    """ Renderer of the vector image of the Snooz logo (ui/assets/Snooz_logo.svg), or of
+    its version for dark backgrounds (Snooz_logo_on_dark.svg: same drawing, lighter text).
+    """
+    data = SNOOZ_LOGO_ON_DARK_SVG_BASE64 if on_dark else SNOOZ_LOGO_SVG_BASE64
+    return QtSvg.QSvgRenderer(QtCore.QByteArray(base64.b64decode(data)))
 
 
 @functools.lru_cache(maxsize=None)
@@ -227,15 +251,15 @@ def _logo_drawing_rect():
     return QtCore.QRectF(drawing.translated(view.topLeft().toPoint())).adjusted(-2, -2, 2, 2)
 
 
-def snooz_logo(width, white=False, ratio=1.0, margins=False):
-    """ The Snooz logo, in its colors or in white (dark backgrounds), drawn from its
-    vector image so it stays sharp at any size.
+def snooz_logo(width, white=False, ratio=1.0, margins=False, on_dark=False):
+    """ The Snooz logo, in its colors (on_dark: its version for the dark theme) or in
+    white (splash screen), drawn from its vector image so it stays sharp at any size.
 
     The logo is cropped to its drawing, unless margins is True (whole image of the logo).
     The pixmap has the device pixel ratio given: drawn on a screen with this ratio,
     it is not scaled again (see SnoozLogo).
     """
-    renderer = _logo_renderer()
+    renderer = _logo_renderer(on_dark)
     view = renderer.viewBoxF()
     source = view if margins else _logo_drawing_rect()
     scale = width * ratio / source.width()
@@ -258,11 +282,12 @@ def snooz_logo(width, white=False, ratio=1.0, margins=False):
 class SnoozLogo(QtWidgets.QWidget):
     """ The Snooz logo, drawn for the pixel ratio of its screen so it stays sharp. """
 
-    def __init__(self, width, white=False, parent=None):
+    def __init__(self, width, white=False, parent=None, on_dark=False):
         super().__init__(parent)
         self._width = width
         self._white = white
-        self._pixmap = snooz_logo(width, white, self.devicePixelRatioF())
+        self._on_dark = on_dark
+        self._pixmap = snooz_logo(width, white, self.devicePixelRatioF(), on_dark=on_dark)
         size = self._pixmap.deviceIndependentSize()
         self.setFixedSize(math.ceil(size.width()), math.ceil(size.height()))
 
@@ -270,7 +295,7 @@ class SnoozLogo(QtWidgets.QWidget):
         ratio = self.devicePixelRatioF()
         # Drawn again when the window moves to a screen with another pixel ratio
         if self._pixmap.devicePixelRatio() != ratio:
-            self._pixmap = snooz_logo(self._width, self._white, ratio)
+            self._pixmap = snooz_logo(self._width, self._white, ratio, on_dark=self._on_dark)
         painter = QtGui.QPainter(self)
         painter.drawPixmap(0, 0, self._pixmap)
         painter.end()

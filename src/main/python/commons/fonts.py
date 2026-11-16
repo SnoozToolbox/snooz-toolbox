@@ -184,6 +184,10 @@ _RICH_SEMI_BOLD = re.compile(r"(font-weight\s*:\s*)600\b", re.IGNORECASE)
 _DESIGNER_LINK_BLUE = "#0000ff"
 _DESIGNER_LINK_COLOR = re.compile(r"(color\s*:\s*)#0000ff\b", re.IGNORECASE)
 _ANCHOR = re.compile(r"(<a\b[^>]*>)(.*?)(</a>)", re.IGNORECASE | re.DOTALL)
+# Text colors of rich text (not background-color): adapted on a dark theme.
+_TEXT_COLOR = re.compile(r"(?<![-\w])(color\s*:\s*)(#[0-9a-fA-F]{6})\b")
+# Lowest contrast of a text with its page (WCAG AA)
+_MIN_TEXT_CONTRAST = 4.5
 # Revision of a text box document when its formats were last converted.
 _DOCUMENT_REVISION_PROPERTY = "_snoozFontRevision"
 _SEMI_BOLD = 600
@@ -299,15 +303,61 @@ def _harmonized_families(value):
 
 
 def _has_old_rich_text_style(text):
-    """ True when rich text may set fonts or color its links in the blue of Qt Designer. """
-    return "font-" in text or _DESIGNER_LINK_COLOR.search(text) is not None
+    """ True when rich text may set fonts, color its links in the blue of Qt Designer
+    or, on a dark theme, color its text. """
+    return "font-" in text or _DESIGNER_LINK_COLOR.search(text) is not None or \
+        ("color" in text and _on_dark_theme() and _TEXT_COLOR.search(text) is not None)
 
 
 def _harmonized_html(html):
     html = _RICH_SIZE.sub(lambda match: f"{match.group(1)}{_pixels(float(match.group(2)))}px", html)
     html = _RICH_FAMILY.sub(_harmonized_rich_families, html)
     html = _RICH_SEMI_BOLD.sub(r"\g<1>700", html)
-    return _with_theme_links(html)
+    html = _with_theme_links(html)
+    if _on_dark_theme():
+        html = _TEXT_COLOR.sub(lambda match: match.group(1) + readable_text_color(match.group(2)).name(), html)
+    return html
+
+
+def _on_dark_theme():
+    """ True when Snooz is shown in a dark theme (dark window color). """
+    return QtGui.QGuiApplication.palette().color(QtGui.QPalette.ColorRole.Window).lightness() < 128
+
+
+def _luminance(color):
+    """ Relative luminance of a color (WCAG). """
+    def channel(value):
+        return value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+    return 0.2126 * channel(color.redF()) + 0.7152 * channel(color.greenF()) + 0.0722 * channel(color.blueF())
+
+
+def _contrast(color, background):
+    """ Contrast ratio of two colors (WCAG), from 1 to 21. """
+    lighter, darker = sorted((_luminance(color), _luminance(background)), reverse=True)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def readable_text_color(color):
+    """ A text color written in a form (black text, pure red note...), as it is shown.
+
+    These colors are chosen for a light page. On a dark theme, a color that could not
+    be read is replaced: black and greys by the text color of the theme, other colors
+    by a lighter shade of the same hue. On a light theme the color is not changed.
+    """
+    color = QtGui.QColor(color)
+    if not _on_dark_theme():
+        return color
+    palette = QtGui.QGuiApplication.palette()
+    background = palette.color(QtGui.QPalette.ColorRole.Window)
+    if _contrast(color, background) >= _MIN_TEXT_CONTRAST:
+        return color
+    hue, saturation, lightness, alpha = color.getHslF()
+    if saturation < 0.15:
+        return palette.color(QtGui.QPalette.ColorRole.WindowText)
+    while lightness < 1.0 and _contrast(color, background) < _MIN_TEXT_CONTRAST:
+        lightness = min(1.0, lightness + 0.02)
+        color = QtGui.QColor.fromHslF(hue, saturation, lightness, alpha)
+    return color
 
 
 def _with_theme_links(html):
@@ -433,4 +483,11 @@ def _harmonized_char_format(char_format):
             char_format.foreground().color() == QtGui.QColor(_DESIGNER_LINK_BLUE):
         new.setForeground(QtGui.QGuiApplication.palette().link())
         changed = True
+    elif char_format.hasProperty(QtGui.QTextFormat.Property.ForegroundBrush) and _on_dark_theme():
+        # A text color made for a light page (black, pure red...), see readable_text_color
+        color = char_format.foreground().color()
+        readable = readable_text_color(color)
+        if readable != color:
+            new.setForeground(readable)
+            changed = True
     return new if changed else None

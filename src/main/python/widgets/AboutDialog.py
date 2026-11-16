@@ -11,6 +11,7 @@ from qtpy.QtCore import QUrl
 from qtpy.QtGui import QDesktopServices
 
 from commons.theme_helpers import snooz_logo
+from Managers.StyleManager import is_dark_theme
 import config
 if not config.is_dev:
     from fbs_runtime import PUBLIC_SETTINGS
@@ -72,7 +73,8 @@ class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
     def _load_embedded_image(self):
         """Show the Snooz logo in snooz_label, drawn for the pixel ratio of the screen."""
         # The whole 400 x 198 image of the logo, margins included: the label scales it to its size.
-        self.snooz_label.setPixmap(snooz_logo(400, ratio=self.devicePixelRatioF(), margins=True))
+        self.snooz_label.setPixmap(snooz_logo(400, ratio=self.devicePixelRatioF(), margins=True,
+            on_dark=is_dark_theme()))
 
 
     # Called when the user clicks on the download windows button

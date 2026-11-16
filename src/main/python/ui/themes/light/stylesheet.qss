@@ -83,8 +83,8 @@ QMenu::separator {
 
 /* Boxes of the tool versions in the menus (OrderedMenu, MenuEndpointHandler.py) */
 OrderedMenu {
-   qproperty-versionBackground: @chrome_soft;
-   qproperty-versionColor: @chrome;
+   qproperty-versionBackground: @nav_checked_bg;
+   qproperty-versionColor: @nav_checked_text;
 }
 
 /* Tooltips: round corners thanks to a transparent window (SnoozStyle in
@@ -239,19 +239,19 @@ QPushButton[variant="primary"]:pressed {
 /* Run button of the tools: the main action, dark blue like the menu bar. It turns
    green under the mouse: the tool is about to run. */
 QPushButton[accessibleName="run_pushbutton"] {
-   background-color: @chrome;
+   background-color: @strong;
    border: 0px;
-   color: @on_primary;
+   color: @on_strong;
    border-radius: 25px;
    padding-top:0px;
    padding-bottom:0px;
-   qproperty-icon: url(":/themes/light/icons/play.png");
+   qproperty-icon: url(":/themes/@icon_dir/play.png");
    qproperty-iconSize: 20px 20px;
 }
 
 QPushButton[accessibleName="run_pushbutton"]:hover:!pressed {
    background-color: @run_hover;
-   color: @on_primary;
+   color: @on_strong;
 }
 
 QPushButton[accessibleName="run_pushbutton"]:pressed {
@@ -332,8 +332,8 @@ QPushButton[accessibleName="home_button"]:checked,
 QPushButton[accessibleName="app_button"]:checked,
 QPushButton[accessibleName="task_button"]:checked,
 QPushButton[accessibleName="schema_button"]:checked {
-   color: @chrome;
-   background-color: @chrome_soft;
+   color: @nav_checked_text;
+   background-color: @nav_checked_bg;
 }
 
 /* Closes the current app, next to the app navigation button. */
@@ -487,13 +487,13 @@ QComboBox::drop-down {
 }
 
 QComboBox::down-arrow {
-   image: url(":/themes/light/icons/chevron_down.png");
+   image: url(":/themes/@icon_dir/chevron_down.png");
    width: 10px;
    height: 10px;
 }
 
 QComboBox::down-arrow:disabled {
-   image: url(":/themes/light/icons/chevron_down_disabled.png");
+   image: url(":/themes/@icon_dir/chevron_down_disabled.png");
 }
 
 /* The text field of an editable combo box is drawn by the combo box. */
@@ -564,25 +564,25 @@ QAbstractSpinBox::down-button:pressed {
 }
 
 QAbstractSpinBox::up-arrow {
-   image: url(":/themes/light/icons/chevron_up.png");
+   image: url(":/themes/@icon_dir/chevron_up.png");
    width: 8px;
    height: 8px;
 }
 
 QAbstractSpinBox::down-arrow {
-   image: url(":/themes/light/icons/chevron_down.png");
+   image: url(":/themes/@icon_dir/chevron_down.png");
    width: 8px;
    height: 8px;
 }
 
 QAbstractSpinBox::up-arrow:disabled,
 QAbstractSpinBox::up-arrow:off {
-   image: url(":/themes/light/icons/chevron_up_disabled.png");
+   image: url(":/themes/@icon_dir/chevron_up_disabled.png");
 }
 
 QAbstractSpinBox::down-arrow:disabled,
 QAbstractSpinBox::down-arrow:off {
-   image: url(":/themes/light/icons/chevron_down_disabled.png");
+   image: url(":/themes/@icon_dir/chevron_down_disabled.png");
 }
 
 QDateTimeEdit::drop-down {
@@ -593,7 +593,7 @@ QDateTimeEdit::drop-down {
 }
 
 QDateTimeEdit::down-arrow {
-   image: url(":/themes/light/icons/chevron_down.png");
+   image: url(":/themes/@icon_dir/chevron_down.png");
    width: 10px;
    height: 10px;
 }
@@ -636,20 +636,20 @@ QGroupBox::indicator:checked,
 QAbstractItemView::indicator:checked {
    border-color: @primary;
    background-color: @primary;
-   image: url(":/themes/light/icons/check.png");
+   image: url(":/themes/@icon_dir/check.png");
 }
 
 QCheckBox::indicator:indeterminate,
 QAbstractItemView::indicator:indeterminate {
    border-color: @primary;
    background-color: @primary;
-   image: url(":/themes/light/icons/dash.png");
+   image: url(":/themes/@icon_dir/dash.png");
 }
 
 QRadioButton::indicator:checked {
    border-color: @primary;
    background-color: @primary;
-   image: url(":/themes/light/icons/radio_dot.png");
+   image: url(":/themes/@icon_dir/radio_dot.png");
 }
 
 QCheckBox::indicator:disabled,
@@ -911,9 +911,10 @@ QSplitter::handle:hover {
 
 /* Pictures of the tools (QLabel showing an image, see frame_pictures in
    commons/theme_helpers.py): white cards, so the white background of a picture
-   belongs to its card. Padding + border = _PICTURE_FRAME. */
+   belongs to its card (white on the dark theme too: the pictures are drawn for a
+   white page). Padding + border = _PICTURE_FRAME. */
 QLabel[snoozPicture="true"] {
-   background-color: @surface;
+   background-color: @picture_bg;
    border: 1px solid @border;
    border-radius: 10px;
    padding: 6px;
@@ -928,6 +929,12 @@ QLabel[snoozPicture="true"] {
 
 QPushButton#home_header_button {
    padding: 7px 18px;
+   border-radius: 8px;
+}
+
+/* Sun / moon button of the home page (menu bar shown by the system, macOS) */
+QPushButton#home_theme_button {
+   padding: 7px 9px;
    border-radius: 8px;
 }
 
@@ -984,8 +991,8 @@ QLabel#home_tool_name {
 }
 
 QLabel#home_badge {
-   color: @on_primary;
-   background-color: @chrome;
+   color: @on_strong;
+   background-color: @strong;
    border-radius: 17px;
 }
 
@@ -1024,6 +1031,12 @@ QLabel#recent_file_label {
 }
 
 QLabel#recent_folder_label {
+   color: @text_muted;
+}
+
+
+/* Note beside a setting (SettingsDialog.py) */
+QLabel#settings_note {
    color: @text_muted;
 }
 
@@ -1081,9 +1094,9 @@ QLabel:disabled {
 /* Tooltip help cue shown on widgets that expose a toolTip. Its font is set in
    commons/tooltip_help_decorator.py. */
 QLabel#snoozTooltipHelpMark {
-    color: #b0b0b0;
-    background-color: #f7f7f7;
-    border: 1px solid #c8c8c8;
+    color: @help_mark_text;
+    background-color: @help_mark_bg;
+    border: 1px solid @help_mark_border;
     border-radius: 7px;
     padding: 0px;
     min-width: 14px;

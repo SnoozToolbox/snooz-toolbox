@@ -40,11 +40,9 @@ _COMPACT_THRESHOLD = 28
 # Expanding editors: keep the cue near the usable field area, not line-end.
 _MAX_FIELD_ANCHOR = 220
 
+# The colors of the mark are in the style sheet of the theme (same rule)
 _MARK_STYLE = f"""
 QLabel#snoozTooltipHelpMark {{
-    color: #b0b0b0;
-    background-color: #f7f7f7;
-    border: 1px solid #c8c8c8;
     border-radius: 7px;
     {text_style_rules("small")}
     font-weight: 700;
