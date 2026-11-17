@@ -160,11 +160,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <widget class="QTextEdit" name="logs_textedit">
-           <property name="font">
-            <font>
-             <family>Courier 10 Pitch</family>
-            </font>
-           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>

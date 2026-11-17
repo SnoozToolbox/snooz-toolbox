@@ -1,5 +1,6 @@
-from qtpy import QtWidgets
 from qtpy import QtGui
+
+from commons.fonts import text_style_font
 
 def compute_box_width(data):
         padding = 40
@@ -26,9 +27,7 @@ def compute_box_width(data):
 
             i = i + 1
 
-        f = QtWidgets.QApplication.font()
-        f.setPointSize(8)
-        font_metric = QtGui.QFontMetrics(f)
+        font_metric = QtGui.QFontMetrics(text_style_font("node"))
 
         width = font_metric.width(max_line) 
         return width + padding

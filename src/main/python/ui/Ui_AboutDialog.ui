@@ -14,7 +14,7 @@
    <string>About Snooz</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 12pt &quot;Roboto&quot;;</string>
+   <string notr="true">font-family: &quot;Inter&quot;;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -36,14 +36,6 @@
        <width>200</width>
        <height>100</height>
       </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Roboto</family>
-       <pointsize>12</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
      </property>
      <property name="frameShape">
       <enum>QFrame::Shape::NoFrame</enum>
@@ -68,7 +60,7 @@
       </size>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Snooz Toolbox&lt;/span&gt; is a Python 3.10 software for analyzing sleep recordings (Polysomnography).&lt;br/&gt;It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.&lt;/p&gt;&lt;p&gt;Snooz is built using a cross-platform graphical interface framework called PyQt, &lt;br/&gt;making it compatible with Windows, Linux, and Mac computers.&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Snooz Toolbox&lt;/span&gt; is a Python 3.10 software for analyzing sleep recordings (Polysomnography).&lt;br/&gt;It is developed by the team at the CARSM (Center for Advanced Research in Sleep Medicine) in Montreal.&lt;/p&gt;&lt;p&gt;Snooz is built using a cross-platform graphical interface framework called PyQt, &lt;br/&gt;making it compatible with Windows, Linux, and Mac computers.&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -103,16 +95,8 @@
    </item>
    <item>
     <widget class="QLabel" name="snooz_version_label">
-     <property name="font">
-      <font>
-       <family>Roboto</family>
-       <pointsize>12</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The current version installed :&lt;span style=&quot; font-weight:600;&quot;&gt; beta-0.3.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The current version installed :&lt;span style=&quot; font-weight:700;&quot;&gt; beta-0.3.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -135,7 +119,7 @@
    <item>
     <widget class="QLabel" name="label_released_version">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The latest version released :&lt;span style=&quot; font-weight:600;&quot;&gt; beta-0.3.0 &lt;/span&gt;&lt;span style=&quot; font-family:'Roboto'; font-size:medium; color:#95a5a6;&quot;&gt; (June 21, 2024)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The latest version released :&lt;span style=&quot; font-weight:700;&quot;&gt; beta-0.3.0 &lt;/span&gt;&lt;span style=&quot; color:#95a5a6;&quot;&gt; (June 21, 2024)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -158,7 +142,7 @@
    <item alignment="Qt::AlignmentFlag::AlignBottom">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Click on the appropriate box to download the latest installer.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please check your operating system's architecture before proceeding.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Click on the appropriate box to download the latest installer.&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;Please check your operating system's architecture before proceeding.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -169,15 +153,8 @@
        <property name="enabled">
         <bool>true</bool>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for MacOS X64 (Intel Chip)</string>
@@ -199,15 +176,8 @@ QPushButton:disabled {
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="pushButton_windows">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for Windows</string>
@@ -216,15 +186,8 @@ QPushButton:disabled {
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="pushButton_mac_arm">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download for MacOS ARM64 (M-Chip)</string>
@@ -233,15 +196,8 @@ QPushButton:disabled {
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="pushButton_linux_deb">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download deb for Linux (admin)</string>
@@ -250,15 +206,8 @@ QPushButton:disabled {
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="pushButton_linux_zip">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-background-color: rgb(78, 134, 255);
-}
-
-QPushButton:disabled {
-    background-color: rgb(160, 160, 160);
-    color: rgb(220, 220, 220);
-}</string>
+       <property name="variant" stdset="0">
+        <string notr="true">primary</string>
        </property>
        <property name="text">
         <string>Download zip for Linux</string>

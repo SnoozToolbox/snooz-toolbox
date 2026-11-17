@@ -84,7 +84,7 @@ class Ui_MissingPackagesDialog(object):
 
     def retranslateUi(self, MissingPackagesDialog):
         MissingPackagesDialog.setWindowTitle(QCoreApplication.translate("MissingPackagesDialog", u"Missing packages", None))
-        self.label.setText(QCoreApplication.translate("MissingPackagesDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Missing package</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("MissingPackagesDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">Missing package</span></p></body></html>", None))
         self.label_2.setText(QCoreApplication.translate("MissingPackagesDialog", u"WARNING These package are needed to be able to run this process. Find these package and add them in File->Settings->Package.", None))
         ___qtablewidgetitem = self.missing_packages_tablewidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MissingPackagesDialog", u"Package", None));

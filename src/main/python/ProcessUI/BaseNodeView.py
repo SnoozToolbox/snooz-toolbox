@@ -12,6 +12,9 @@ See the file LICENCE for full license details.
 
 from qtpy import QtWidgets
 
+from commons.fonts import set_text_style
+from commons.theme_helpers import frame_pictures
+from Managers.StyleManager import is_dark_theme
 from ui.Ui_BaseNodeView import Ui_BaseNodeView
 
 class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
@@ -32,6 +35,9 @@ class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
 
         # init UI
         self.setupUi(self)
+        # Shown in the frame of the window (NodeWindowProxy)
+        self.setWindowTitle(parent_node.module_description["module_label"])
+        set_text_style(self.logs_textedit, "mono")
 
         # Update logs
         self.update_logs()
@@ -83,7 +89,12 @@ class BaseNodeView(QtWidgets.QWidget, Ui_BaseNodeView):
         if self.isVisible():
             if self._settings_view is not None:
                 self._settings_view.load_settings()
-            
+                # Dark theme: its pictures get their card when it is shown, after its
+                # settings are loaded (a picture can come with the settings). A picture
+                # with a transparent background needs it to be read on the dark page.
+                if is_dark_theme():
+                    frame_pictures(self._settings_view)
+
             if self._results_view is not None:
                 self._results_view.load_results()
             self.update_logs()

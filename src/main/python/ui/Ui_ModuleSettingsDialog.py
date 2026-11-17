@@ -82,7 +82,7 @@ class Ui_ModuleSettingsDialog(object):
 
     def retranslateUi(self, ModuleSettingsDialog):
         ModuleSettingsDialog.setWindowTitle(QCoreApplication.translate("ModuleSettingsDialog", u"Settings SciNode", None))
-        self.label.setText(QCoreApplication.translate("ModuleSettingsDialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Module Library Settings</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("ModuleSettingsDialog", u"<html><head/><body><p><span style=\" font-weight:700;\">Module Library Settings</span></p></body></html>", None))
         self.label_2.setText(QCoreApplication.translate("ModuleSettingsDialog", u"Please select the packages you want to activate.", None))
         ___qtreewidgetitem = self.package_treewidget.headerItem()
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("ModuleSettingsDialog", u"Version", None));

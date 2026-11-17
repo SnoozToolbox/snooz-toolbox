@@ -3,12 +3,16 @@
 See the file LICENCE for full license details.
 """
 DEBUG = False
+import json
+import re
+
 import config
 
 # Import Qt modules - config.py provides stubs in headless mode via sys.modules
 from qtpy.QtCore import QFile, QTextStream
 from qtpy import QtGui
 
+from commons.fonts import apply_application_font, font_tokens
 from Managers.Manager import Manager
 
 # Import themes_rc conditionally since it's a Qt resource file
@@ -20,36 +24,126 @@ else:
     class themes_rc:
         pass
 
+# Themes of Snooz: the name shown to the user and the folder of its colors
+# (tokens.json) and icons in ui/themes. They share one style sheet.
+THEMES = {"Light": "light", "Dark": "dark"}
+DEFAULT_THEME = "Light"
+STYLE_SHEET = ":/themes/light/stylesheet.qss"
+# Theme of this session: the one of the settings when Snooz started. A theme chosen
+# in the settings is used the next time Snooz starts.
+_session_theme = None
+
+
+def session_theme():
+    """ The name of the theme Snooz is shown in (see THEMES). """
+    global _session_theme
+    if _session_theme is None:
+        name = config.app_settings.value(config.settings.style)
+        _session_theme = name if name in THEMES else DEFAULT_THEME
+    return _session_theme
+
+
+def is_dark_theme():
+    return session_theme() == "Dark"
+
+
+def theme_tokens_path(name=None):
+    return f":/themes/{THEMES[name or session_theme()]}/tokens.json"
+
+
+def theme_tokens(name=None):
+    """ The colors of a theme by token name, the theme of the session by default. """
+    return load_tokens(theme_tokens_path(name))
+
+
 class Palette():
+    """ Colors of the process editor (yellow until a theme sets them). """
     def __init__(self):
         self.grid_background = QtGui.QColor(255, 255, 0)
         self.grid_line = QtGui.QColor(255, 255, 0)
+        self.grid_line_major = QtGui.QColor(255, 255, 0)
         self.node_selection = QtGui.QColor(255, 255, 0)
         self.node_background_activated = QtGui.QColor(255, 255, 0)
-        self.node_background_deactivated = QtGui.QColor(255, 255, 0)
-        self.node_background_bypass = QtGui.QColor(255, 255, 0)
+        # Running node: band in the accent color behind its title and version
+        self.node_header_activated = QtGui.QColor(255, 255, 0)
+        self.node_title_activated = QtGui.QColor(255, 255, 0)
+        self.node_version_activated = QtGui.QColor(255, 255, 0)
+        # Bypassed node: pale band (the node is drawn see-through)
+        self.node_header_bypass = QtGui.QColor(255, 255, 0)
+        self.node_separator = QtGui.QColor(255, 255, 0)
         self.node_border = QtGui.QColor(255, 255, 0)
+        self.node_shadow = QtGui.QColor(255, 255, 0)
         self.node_text = QtGui.QColor(255, 255, 0)
+        self.node_text_muted = QtGui.QColor(255, 255, 0)
+        # Deactivated node (it does not run): darker grey box
+        self.node_background_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_header_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_border_deactivated = QtGui.QColor(255, 255, 0)
+        self.node_text_deactivated = QtGui.QColor(255, 255, 0)
+        # Module that failed during the last run: red box
+        self.node_background_failed = QtGui.QColor(255, 255, 0)
+        self.node_header_failed = QtGui.QColor(255, 255, 0)
+        self.node_version_failed = QtGui.QColor(255, 255, 0)
+        self.node_text_failed = QtGui.QColor(255, 255, 0)
         self.node_socket_border = QtGui.QColor(255, 255, 0)
         self.node_socket_background = QtGui.QColor(255, 255, 0)
+        # Socket on which a dragged connection can be dropped
+        self.node_socket_target_background = QtGui.QColor(255, 255, 0)
+        self.connection = QtGui.QColor(255, 255, 0)
+        # Small buttons painted on the canvas: options of a node, close of a node window
+        self.control_hover = QtGui.QColor(255, 255, 0)
+        self.control_pressed = QtGui.QColor(255, 255, 0)
+        # Window of a node (double click on the node)
+        self.window_background = QtGui.QColor(255, 255, 0)
+        self.window_title = QtGui.QColor(255, 255, 0)
+        self.window_border = QtGui.QColor(255, 255, 0)
+        # Run state of a node: waiting, running, done, failed
+        self.state_waiting = QtGui.QColor(255, 255, 0)
+        self.state_running = QtGui.QColor(255, 255, 0)
+        self.state_done = QtGui.QColor(255, 255, 0)
+        self.state_failed = QtGui.QColor(255, 255, 0)
 
 
 class Style():
-    def __init__(self, name, palette, qss_filepath):
+    # QPushButtons narrower than this keep a compact padding (see _compact_button_rules).
+    COMPACT_BUTTON_MAX_WIDTH = 79
+
+    def __init__(self, name, palette, qss_filepath, tokens_filepath=None, icon_dir="light/icons"):
         self._name = name
         self._palette = palette
         self._qss_filepath = qss_filepath
+        self._tokens = load_tokens(tokens_filepath) if tokens_filepath is not None else {}
+        # Folder of the icons of the style sheet in ui/themes (@icon_dir)
+        self._icon_dir = icon_dir
 
     def activate(self):
         if config.HEADLESS_MODE:
             return  # Skip style activation in headless mode
         if self._qss_filepath is not None:
-            file = QFile(self._qss_filepath)
-            if file.open(QFile.ReadOnly | QFile.Text):
-                stream = QTextStream(file)
-                config.app_context.app.setStyleSheet(stream.readAll())
-            else:
-                print(f"StyleManager:Could not open file {file.errorString()}")
+            qss = read_text_file(self._qss_filepath)
+            if qss is not None:
+                qss = replace_tokens(qss, {**font_tokens(), **self._tokens, "icon_dir": self._icon_dir})
+                qss += self._compact_button_rules()
+                config.app_context.app.setStyleSheet(qss)
+                # The style sheet gives the menus and message boxes the system font back
+                apply_application_font()
+
+    def _compact_button_rules(self):
+        """ Rules giving a compact padding to the small QPushButtons (e.g. ">" or "...").
+
+        The padding of the generic QPushButton rule would clip their text. Each
+        small button also keeps the width of its maximum width, unless a minimum
+        width was set in Qt Designer. "_q_stylesheet_minw" is set by Qt on the
+        widgets whose minimum width comes from the style sheet: it keeps the rule
+        when the widget is polished again.
+        """
+        rules = []
+        for width in range(10, self.COMPACT_BUTTON_MAX_WIDTH + 1):
+            button = f'QPushButton[maximumWidth="{width}"]'
+            rules.append(f'{button} {{ padding-left: 0px; padding-right: 0px; }}')
+            rules.append(f'{button}[minimumWidth="0"], {button}[_q_stylesheet_minw="true"] '
+                f'{{ min-width: {width - 2}px; }}')
+        return "\n" + "\n".join(rules) + "\n"
 
     @property
     def name(self):
@@ -59,6 +153,44 @@ class Style():
     def palette(self):
         return self._palette
 
+    @property
+    def tokens(self):
+        """ The colors of the style, by token name (see tokens.json of the theme). """
+        return self._tokens
+
+
+def read_text_file(filepath):
+    """ Read a text file, from the file system or from the Qt resources (":/..."). """
+    file = QFile(filepath)
+    if not file.open(QFile.ReadOnly | QFile.Text):
+        print(f"StyleManager:Could not open file {filepath}: {file.errorString()}")
+        return None
+    text = QTextStream(file).readAll()
+    file.close()
+    return text
+
+
+def load_tokens(filepath):
+    """ Load the color tokens of a theme from a json file. """
+    text = read_text_file(filepath)
+    if text is None:
+        return {}
+    return json.loads(text)
+
+
+def replace_tokens(qss, tokens):
+    """ Replace each @token of the style sheet by its value. """
+    def replace(match):
+        name = match.group(1)
+        if name not in tokens:
+            print(f"StyleManager:Unknown style sheet token @{name}")
+            return match.group(0)
+        return tokens[name]
+    return _TOKEN_RE.sub(replace, qss)
+
+
+_TOKEN_RE = re.compile(r"@([A-Za-z_][A-Za-z0-9_]*)")
+
 class StyleManager(Manager):
     def __init__(self, managers):
         super().__init__(managers)
@@ -67,7 +199,8 @@ class StyleManager(Manager):
 
         # Set Fusion as the base style for all others (only in GUI mode)
         if not config.HEADLESS_MODE:
-            config.app_context.app.setStyle("Fusion")
+            from commons.theme_helpers import SnoozStyle
+            config.app_context.app.setStyle(SnoozStyle())
 
     def initialize(self):
         pass
@@ -81,21 +214,28 @@ class StyleManager(Manager):
         self._styles[style.name] = style
 
     def get_current_style(self):
-        current_style_name = config.app_settings.value(config.settings.style)
-        return self._styles[current_style_name]
+        """ The style Snooz is shown in: the one of the settings when it started. """
+        name = session_theme()
+        return self._styles[name if name in self._styles else self._default_style]
 
     def set_default_style(self, style_name):
         self._default_style = style_name
 
     def load_user_style(self):
-        current_style = config.app_settings.value(config.settings.style)
-        if current_style is not None:
-            self._set_style(current_style)
-        else:
-            self._set_style(self._default_style)
+        name = session_theme()
+        self._set_style(name if name in self._styles else self._default_style)
+
+    def user_style_name(self):
+        """ The style chosen in the settings (shown the next time Snooz starts). """
+        name = config.app_settings.value(config.settings.style)
+        return name if name in self._styles else session_theme()
+
+    def set_user_style_name(self, style_name):
+        """ Choose the style of the next start of Snooz. """
+        if style_name in self._styles:
+            config.app_settings.setValue(config.settings.style, style_name)
 
     # Private functions
     def _set_style(self, style_name):
         if style_name in self._styles:
             self._styles[style_name].activate()
-            config.app_settings.setValue(config.settings.style, style_name)

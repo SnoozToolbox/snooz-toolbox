@@ -7,6 +7,23 @@
     <file>light/icons/settings_icon.png</file>
     <file alias="settings_wheel_icon">light/icons/settings_wheel_icon.png</file>
     <file>light/stylesheet.qss</file>
-    <file>Roboto-Regular.ttf</file>
+    <file>light/tokens.json</file>
+    <file>light/icons/chevron_down.png</file>
+    <file>light/icons/chevron_up.png</file>
+    <file>light/icons/chevron_down_disabled.png</file>
+    <file>light/icons/chevron_up_disabled.png</file>
+    <file>light/icons/check.png</file>
+    <file>light/icons/dash.png</file>
+    <file>light/icons/radio_dot.png</file>
+    <file>light/icons/play.png</file>
+    <file>dark/tokens.json</file>
+    <file>dark/icons/chevron_down.png</file>
+    <file>dark/icons/chevron_up.png</file>
+    <file>dark/icons/chevron_down_disabled.png</file>
+    <file>dark/icons/chevron_up_disabled.png</file>
+    <file>dark/icons/check.png</file>
+    <file>dark/icons/dash.png</file>
+    <file>dark/icons/radio_dot.png</file>
+    <file>dark/icons/play.png</file>
   </qresource>
 </RCC>

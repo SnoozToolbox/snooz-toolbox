@@ -10,61 +10,79 @@ from qtpy import QtGui
 from qtpy.QtGui import QDesktopServices
 from qtpy.QtCore import QUrl
 
-from config import C
 from commons.BaseSettingsView import BaseSettingsView
+from commons.theme_helpers import frame_pictures
 from commons.tooltip_help_decorator import decorate_tooltip_help_marks
+from Managers.StyleManager import is_dark_theme
 from ui.Ui_StepsWidget import Ui_StepsWidget
 from ToolUI.ContextManager import ContextManager
+from ToolUI.RunCheckMessages import RunCheckMessages
+
+# Object names of the sub-step (config) title and links in the left panel (see the style sheet)
+CONFIG_TITLE_NAME = "step_config_title"
+CONFIG_LINK_NAME = "step_config_link"
+# Written before the name of a sub-step in its link
+CONFIG_LINK_PREFIX = "›  "
+# Message when Run finds settings to fix (the step is also opened and shown in red)
+FIX_ERRORS_MESSAGE = "Please fix all errors before running"
+# Widest column of the steps, in pixels: longer texts wrap
+STEPS_COLUMN_MAX_WIDTH = 360
 
 class SidebarStep(QtWidgets.QWidget):
+    """ Details of a step, shown under its name in the column of the steps when it is
+    the current step: the links to its sub-steps (configs) and its description. It
+    also creates the pages of the step and of its sub-steps.
+    """
 
     def __init__(self, step_widget, step, process_description):
         super().__init__(None)
         self.setObjectName("SidebarStep")
         self.setAccessibleName("SidebarStep")
         layout = QtWidgets.QVBoxLayout()
+        # Inside the card of the step, aligned with its name
+        layout.setContentsMargins(0, 2, 0, 6)
         self._step_content_index = step_widget._add_step_content(step, process_description)
+        # Pages of the sub-steps (configs)
+        self._config_content_indexes = []
         # Add configs if any
         if 'configs' in step:
-            
+
             # Add the configs label
             settings_label = QtWidgets.QLabel(f"{step['configs']['label']}")
+            settings_label.setObjectName(CONFIG_TITLE_NAME)
+            settings_label.setWordWrap(True)
             layout.addWidget(settings_label)
-
-            # Add a line
-            line = QtWidgets.QFrame()
-            line.setFrameShape(QtWidgets.QFrame.HLine)
-            line.setObjectName("line")
-            layout.addWidget(line)
 
             # Add all config links
             for idx, config in enumerate(step['configs']['list']):
-                label = QtWidgets.QLabel(f"   {config['name']}")
+                label = QtWidgets.QLabel(f"{CONFIG_LINK_PREFIX}{config['name']}")
+                # In the link color of the theme (style sheet)
+                label.setObjectName(CONFIG_LINK_NAME)
+                label.setWordWrap(True)
                 label.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                label.setStyleSheet(f"color: {C.clickable_link_color};")
 
                 step_content_index = step_widget._add_step_content(config, process_description, self._step_content_index, step["name"])
+                self._config_content_indexes.append(step_content_index)
                 label.mousePressEvent = lambda e, step_content_index=step_content_index: step_widget._on_open_config(step_content_index)
                 layout.addWidget(label)
-
-            # Add a line
-            line = QtWidgets.QFrame()
-            line.setFrameShape(QtWidgets.QFrame.HLine)
-            line.setObjectName("line")
-            layout.addWidget(line)
+            layout.addSpacing(4)
 
         # Add a description
         label = QtWidgets.QLabel(f"{step['description']}")
         label.setWordWrap(True)
         label.setAlignment(QtCore.Qt.AlignTop)
         layout.addWidget(label)
-        layout.addStretch()
 
         self.setLayout(layout)
 
     @property
     def step_content_index(self):
         return self._step_content_index
+
+    @property
+    def config_content_indexes(self):
+        """ The pages of the sub-steps of the step. """
+        return self._config_content_indexes
 
 
 class _ReadOnlyTextWheelForwarder(QtCore.QObject):
@@ -100,30 +118,45 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         self._context_manager = ContextManager(self._pub_sub_manager)
         self._tool_filepath = tool_filepath
         self._read_only_text_wheel_forwarder = _ReadOnlyTextWheelForwarder(self)
+        self._steps_column_fitted = False
 
         self.setupUi(self)
         self.splitter.setStretchFactor(0, 0)
         self.splitter.setStretchFactor(1, 1)
        
         # Load steps
-        self.steps_toolbox.removeItem(0)
         self.steps_tabwidget.removeTab(0)
 
         next_label_index = 1
-        
+        # The step of the column of each page (its own page and the pages of its sub-steps)
+        self._page_steps = {}
+        # Names of the steps and sub-steps as the column wrote them before the circles
+        # ("1 - Input Files", sub-steps indented): they give its width, _fit_steps_column
+        self._step_labels = []
+        self._config_labels = []
+
         # Verofy if there is 'tool_params' as a key in the description file
         if "tool_params" in self._process_description:
             for idx, step in enumerate(self._process_description['tool_params']['steps']):
                 sidebar_step = SidebarStep(self, step, self._process_description)
-                
+
                 if 'show_index' not in step or \
                     'show_index' in step and step['show_index']:
-                    step_name = f"{next_label_index} - {step['name']}"
+                    number = next_label_index
+                    self._step_labels.append(f"{next_label_index} - {step['name']}")
                     next_label_index = next_label_index + 1
                 else:
-                    step_name = f"{step['name']}"
+                    # The page of the tool: "i" instead of a number
+                    number = None
+                    self._step_labels.append(f"{step['name']}")
 
-                self.steps_toolbox.addItem(sidebar_step, step_name)
+                step_index = self.steps_column.add_step(step['name'], sidebar_step, number)
+                for page_index in [sidebar_step.step_content_index] + sidebar_step.config_content_indexes:
+                    if page_index is not None:
+                        self._page_steps[page_index] = step_index
+                if 'configs' in step:
+                    self._config_labels.append(f"{step['configs']['label']}")
+                    self._config_labels.extend(f"   {config['name']}" for config in step['configs']['list'])
 
             # Hide all tab's tab
             for i in range(self.steps_tabwidget.count()):
@@ -147,7 +180,42 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
             # important to do it after everything to avoid triggering it when
             # things are being setup.
-            self.steps_toolbox.currentChanged.connect(self.on_step_changed) 
+            self.steps_column.currentChanged.connect(self.on_step_changed)
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        if not self._steps_column_fitted:
+            self._steps_column_fitted = True
+            self._fit_steps_column()
+
+    def _fit_steps_column(self):
+        """ Widen the column of the steps, up to a limit, so the names of the steps and of
+        their sub-steps hold on one line (longer ones wrap).
+
+        The width is the one the column had before the circles, measured on the names
+        as it wrote them then ("1 - Input Files" in bold, sub-steps indented in the page
+        of their step), so the pages of the steps keep their size and place.
+        """
+        font = QtGui.QFont(self.steps_column.font())
+        font.setBold(True)
+        metrics = QtGui.QFontMetrics(font)
+        text_width = max((metrics.horizontalAdvance(label) for label in self._step_labels), default=0)
+        margins = self.verticalLayout_4.contentsMargins()
+        # 42px of margins in each name button, plus a few pixels to spare.
+        width = text_width + 50 + margins.left() + margins.right()
+        # The sub-steps were listed in the page of their step, inside the margins the
+        # style gives to a layout.
+        style = self.steps_column.style()
+        page_margins = style.pixelMetric(QtWidgets.QStyle.PixelMetric.PM_LayoutLeftMargin, None, self.steps_column) \
+            + style.pixelMetric(QtWidgets.QStyle.PixelMetric.PM_LayoutRightMargin, None, self.steps_column)
+        label_metrics = QtGui.QFontMetrics(self.steps_column.font())
+        for label in self._config_labels:
+            width = max(width, label_metrics.horizontalAdvance(label) + page_margins
+                        + margins.left() + margins.right() + 4)
+        width = min(width, STEPS_COLUMN_MAX_WIDTH)
+        sizes = self.splitter.sizes()
+        if len(sizes) == 2 and width > sizes[0]:
+            self.splitter.setSizes([width, sizes[0] + sizes[1] - width])
 
     # Slots
     @QtCore.Slot()
@@ -220,6 +288,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 page = module.create_settings_view(self._activation_params)
                 self._normalize_read_only_text_widgets(page)
                 decorate_tooltip_help_marks(page)
+                frame_pictures(page)
                 page.setMinimumSize(0, 0)
                 page_scroll_area = QtWidgets.QScrollArea(top_widget)
                 page_scroll_area.setObjectName("step_scroll_area")
@@ -250,6 +319,7 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 #node_manager = self._node_manager, asset_manager=self._asset_manager)
             self._normalize_read_only_text_widgets(page)
             decorate_tooltip_help_marks(page)
+            frame_pictures(page)
             page.setMinimumSize(0, 0)
             page_scroll_area = QtWidgets.QScrollArea(top_widget)
             page_scroll_area.setObjectName("step_scroll_area")
@@ -263,21 +333,46 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         return self.steps_tabwidget.addTab(top_widget, QtGui.QIcon(),"")
 
     def run_clicked(self):
-        success = self._validate_all_settings()
-        if success:
+        self.steps_column.clear_errors()
+        # The messages of the steps with only an OK button are held back during the
+        # check: they are written in the general error, a single pop-up
+        with RunCheckMessages() as messages:
+            invalid_page = self._first_invalid_page(messages)
+        if invalid_page is None:
             self._apply_all_settings()
             self._managers.process_manager.run_current_process()
-        else:
-            self._managers.pub_sub_manager.publish(self, "show_error_message", "Please fix all errors before running")  
-    
+            return
+        # Open the step and show it in red: the user sees where to fix it
+        self._show_invalid_page(invalid_page)
+        texts = messages.texts
+        if texts:
+            # The general error, then what the step says is wrong
+            message = "\n\n".join([FIX_ERRORS_MESSAGE] + texts)
+            self._managers.pub_sub_manager.publish(self, "show_error_message", message)
+        elif not messages.dialog_shown:
+            self._managers.pub_sub_manager.publish(self, "show_error_message", FIX_ERRORS_MESSAGE)
+        # Otherwise the step has shown a dialog of its own (a question the user
+        # canceled, a table of files): the step in red is enough
+
+    def _show_invalid_page(self, page_index):
+        """ Open the page whose settings have to be fixed and show its step in red. """
+        step_index = self._page_steps.get(page_index)
+        if step_index is None:
+            return
+        self.steps_column.set_error(step_index)
+        self.steps_column.setCurrentIndex(step_index)
+        if self.steps_tabwidget.currentIndex() != page_index:
+            # The page of a sub-step of the step
+            self._on_open_config(page_index)
+
     def on_next(self):
-        self.steps_toolbox.setCurrentIndex(
-            min(self.steps_toolbox.currentIndex() + 1, 
-                self.steps_toolbox.count() - 1))
-    
+        self.steps_column.setCurrentIndex(
+            min(self.steps_column.currentIndex() + 1,
+                self.steps_column.count() - 1))
+
     def on_previous(self):
-        self.steps_toolbox.setCurrentIndex(
-            max(0, self.steps_toolbox.currentIndex() - 1))
+        self.steps_column.setCurrentIndex(
+            max(0, self.steps_column.currentIndex() - 1))
         
     def _load_all_settings(self):
         for i in range(self.steps_tabwidget.count()):
@@ -294,24 +389,42 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
                 base_setting_view.on_apply_settings()
 
     def _validate_all_settings(self):
+        return self._first_invalid_page() is None
+
+    def _first_invalid_page(self, messages=None):
+        """ The index of the first page whose settings are not valid, None if all of
+        them are valid.
+
+        messages (RunCheckMessages, Run): holds the messages of the page checked, those
+        of a valid page are shown as before. Without it, the page shows why itself.
+        """
         for i in range(self.steps_tabwidget.count()):
             page = self.steps_tabwidget.widget(i)
             base_settings_views = page.findChildren(BaseSettingsView)
             for base_setting_view in base_settings_views:
+                if messages is not None:
+                    messages.begin_view()
                 success = base_setting_view.on_validate_settings()
                 if not success:
-                    return False
-        return True
+                    return i
+                if messages is not None:
+                    messages.show_held()
+        return None
 
     def on_step_changed(self):
-        current_widget = self.steps_toolbox.currentWidget()
+        current_widget = self.steps_column.currentWidget()
         if current_widget is not None:
-            step_content_index = self.steps_toolbox.currentWidget().step_content_index
+            step_content_index = current_widget.step_content_index
             if step_content_index is not None:
                 self.steps_tabwidget.setCurrentIndex(step_content_index)
                 self.next_pushbutton.setVisible(not self._is_last_step())
                 current_page = self.steps_tabwidget.currentWidget()
                 if current_page is not None:
+                    # The pictures of a page get their card when it is built
+                    # (_add_step_content). Dark theme: a picture shown with the settings
+                    # (sleep cycles, transparent background) gets its card here.
+                    if is_dark_theme():
+                        frame_pictures(current_page)
                     current_page.setMinimumSize(0, 0)
                     self._refresh_read_only_text_widget_heights(current_page)
                     current_page.updateGeometry()
@@ -326,15 +439,27 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
         """
         Return if the current step is the last step.
         """
-        return self.steps_toolbox.currentIndex() == self.steps_toolbox.count() - 1
+        return self.steps_column.currentIndex() == self.steps_column.count() - 1
 
     def _normalize_read_only_text_widgets(self, page):
-        """Avoid nested scrollbars by letting step-level scrolling handle read-only text blocks."""
+        """Avoid nested scrollbars by letting step-level scrolling handle read-only text blocks.
+
+        A read-only text written in the form (a description, a formula) is part of the
+        page: it has no frame, so it is on the page background like the other texts
+        (a frame makes it a white field). A box still empty here is filled with
+        messages later: it keeps its frame.
+        """
         read_only_text_widgets = page.findChildren(QtWidgets.QTextEdit)
         read_only_text_widgets.extend(page.findChildren(QtWidgets.QPlainTextEdit))
         for widget in read_only_text_widgets:
             if not widget.isReadOnly():
                 continue
+
+            if widget.frameShape() != QtWidgets.QFrame.NoFrame and not widget.document().isEmpty():
+                widget.setFrameShape(QtWidgets.QFrame.NoFrame)
+                # The style sheet rules depend on the frame shape
+                widget.style().unpolish(widget)
+                widget.style().polish(widget)
 
             widget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
             widget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -428,3 +553,9 @@ class StepsWidget(QtWidgets.QWidget, Ui_StepsWidget):
 
     def _on_open_config(self, step_content_index):
         self.steps_tabwidget.setCurrentIndex(step_content_index)
+        # Dark theme: its pictures get their card when it is shown, like a step page
+        # (on_step_changed). A picture with a transparent background (sleep cycles)
+        # needs it to be read on the dark page.
+        page = self.steps_tabwidget.widget(step_content_index)
+        if page is not None and is_dark_theme():
+            frame_pictures(page)

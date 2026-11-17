@@ -144,9 +144,10 @@ Then you can run the installer
 #### DontUseNativeDialog
     The option 'QFileDialog.DontUseNativeDialog' must be off otherwise the linked folder are not well managed in Snooz.
 
-#### Roboto-Regular
-missing font family "Roboto-Regular", on macOS, the font family has to be used and it's : Roboto
-The famility name "Roboto" also works on windows and linux.
+#### Fonts
+Snooz uses the Inter font, bundled in src/main/resources/base/fonts/Inter and loaded by
+commons/fonts.py when Snooz starts: no font has to be installed on the computer. Forms that
+still name another font (Roboto, Segoe UI...) are shown in Inter.
 
 ### On linux
 #### fpm missing

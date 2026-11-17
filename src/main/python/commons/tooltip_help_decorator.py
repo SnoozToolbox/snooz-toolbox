@@ -10,11 +10,18 @@ Placement strategy (content-aware, not full-width):
    row (e.g. alias ">" + channel name), put the cue after that label text.
 3. Else if the control is compact/small, put the cue outside above/left of it
    so the control and neighboring text stay visible.
-4. Else if it is a checkbox/radio with text, put the cue just after that text.
+4. Else if it is a label, checkbox or radio with text, put the cue just after
+   that text.
 5. Else put the cue on the control using a content-sized width anchor so
    expanding fields do not push it to the far end of the line.
+
+A cue after a text gets room of its own: the widget is made wider (a
+right-aligned label gets an indent instead), so the cue never covers the
+text, whatever the font.
 """
 from qtpy import QtCore, QtGui, QtWidgets
+
+from commons.fonts import text_style_rules
 
 try:
     import shiboken6
@@ -22,6 +29,8 @@ except ImportError:  # pragma: no cover - non-PySide6 runtimes
     shiboken6 = None
 
 _OPT_OUT_PROPERTY = "snoozNoHelpIcon"
+# Set on push buttons showing the cue, the style sheet keeps their text clear of it.
+_HAS_MARK_PROPERTY = "snoozHasHelpMark"
 _MARK_OBJECT_NAME = "snoozTooltipHelpMark"
 _MARK_ATTR = "_snooz_help_mark"
 _WATCHED_ATTR = "_snooz_help_watch"
@@ -31,18 +40,15 @@ _COMPACT_THRESHOLD = 28
 # Expanding editors: keep the cue near the usable field area, not line-end.
 _MAX_FIELD_ANCHOR = 220
 
-_MARK_STYLE = """
-QLabel#snoozTooltipHelpMark {
-    color: #b0b0b0;
-    background-color: #f7f7f7;
-    border: 1px solid #c8c8c8;
+# The colors of the mark are in the style sheet of the theme (same rule)
+_MARK_STYLE = f"""
+QLabel#snoozTooltipHelpMark {{
     border-radius: 7px;
-    font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
-    font-size: 10pt;
+    {text_style_rules("small")}
     font-weight: 700;
     font-style: normal;
-    padding: 0px;
-}
+    padding: 1px 0px 0px 0px; /* centers the "?" of the Snooz font in the circle */
+}}
 """
 
 # Prefer concrete slider type: QAbstractSlider also matches transient QScrollBars.
@@ -243,16 +249,6 @@ def _attach_help_mark(widget, filter_obj):
     mark.setCursor(QtGui.QCursor(QtCore.Qt.WhatsThisCursor))
     mark.setFocusPolicy(QtCore.Qt.NoFocus)
     mark.setStyleSheet(_MARK_STYLE)
-    mark_font = QtGui.QFont("Segoe UI", 10)
-    if not mark_font.exactMatch():
-        mark_font = QtGui.QFont("Trebuchet MS", 10)
-    if not mark_font.exactMatch():
-        mark_font = QtGui.QFont("Arial", 10)
-    mark_font.setBold(True)
-    mark_font.setItalic(False)
-    mark_font.setStyle(QtGui.QFont.Style.StyleNormal)
-    mark_font.setStyleHint(QtGui.QFont.StyleHint.SansSerif)
-    mark.setFont(mark_font)
     mark._snooz_target = widget
     mark._snooz_host = host
     mark._snooz_outside = outside
@@ -266,6 +262,14 @@ def _attach_help_mark(widget, filter_obj):
             max(margins.right(), _MARK_SIZE + 2),
             margins.bottom(),
         )
+
+    if isinstance(widget, QtWidgets.QPushButton) and host is widget and not outside:
+        # The style sheet gives these buttons room for the cue; polish again
+        # so the new property is taken into account.
+        widget.setProperty(_HAS_MARK_PROPERTY, True)
+        widget.style().unpolish(widget)
+        widget.style().polish(widget)
+        widget.updateGeometry()
 
     setattr(widget, _MARK_ATTR, mark)
     filter_obj._marks[id(widget)] = mark
@@ -400,25 +404,23 @@ def _content_anchor(widget, host, outside):
             y = top_left.y() + max(0, (widget.height() - _MARK_SIZE) // 2)
         return x, y
 
-    if host is not widget and isinstance(host, QtWidgets.QLabel):
-        text_width = host.fontMetrics().horizontalAdvance(host.text())
-        needed = text_width + _MARK_GAP + _MARK_SIZE
-        if host.minimumWidth() < needed:
-            host.setMinimumWidth(needed)
-        x = text_width + _MARK_GAP
-        y = max(0, (host.height() - _MARK_SIZE) // 2)
-        return x, y
+    if isinstance(host, QtWidgets.QLabel) and host.text().strip():
+        # The label of a field, or the label carrying the tooltip: the cue goes
+        # right after its text (a label showing a picture has no text).
+        return _after_label_text(host)
 
     if isinstance(widget, (QtWidgets.QCheckBox, QtWidgets.QRadioButton)) and widget.text():
-        style = widget.style()
-        indicator = style.pixelMetric(
-            QtWidgets.QStyle.PixelMetric.PM_IndicatorWidth, None, widget
-        )
-        spacing = style.pixelMetric(
-            QtWidgets.QStyle.PixelMetric.PM_CheckBoxLabelSpacing, None, widget
-        )
-        text_width = widget.fontMetrics().horizontalAdvance(widget.text())
-        x = indicator + spacing + text_width + _MARK_GAP
+        option = QtWidgets.QStyleOptionButton()
+        option.initFrom(widget)
+        option.text = widget.text()
+        if isinstance(widget, QtWidgets.QCheckBox):
+            element = QtWidgets.QStyle.SubElement.SE_CheckBoxContents
+        else:
+            element = QtWidgets.QStyle.SubElement.SE_RadioButtonContents
+        contents = widget.style().subElementRect(element, option, widget)
+        text = widget.text().split("\n")[0].rstrip()
+        x = contents.left() + widget.fontMetrics().horizontalAdvance(text) + _MARK_GAP
+        _make_room(widget, x + _MARK_SIZE)
         y = max(0, (widget.height() - _MARK_SIZE) // 2)
         return x, y
 
@@ -433,3 +435,93 @@ def _content_anchor(widget, host, outside):
     x = max(0, anchor_width - _MARK_SIZE - 2)
     y = 2
     return x, y
+
+
+def _make_room(widget, width):
+    """Make the widget at least ``width`` wide, beyond a maximum set in Qt Designer if needed."""
+    if widget.minimumWidth() < width:
+        widget.setMinimumWidth(width)
+    if widget.maximumWidth() < width:
+        widget.setMaximumWidth(width)
+
+
+def _after_label_text(label):
+    """Cue position right after the text of a label (first line), with room made for it."""
+    needed = _MARK_GAP + _MARK_SIZE
+    end, middle, room = _label_text_end(label)
+    if room < needed and not label.wordWrap():
+        alignment = QtWidgets.QStyle.visualAlignment(label.layoutDirection(), label.alignment())
+        if alignment & QtCore.Qt.AlignRight:
+            # The text stays against the right edge: indent it from there.
+            label.setIndent(_effective_indent(label) + needed - room)
+        else:
+            missing = needed - room
+            if alignment & QtCore.Qt.AlignHCenter:
+                missing *= 2
+            _make_room(label, label.width() + missing)
+        end, middle, room = _label_text_end(label)
+    x = round(end) + _MARK_GAP
+    y = round(middle - _MARK_SIZE / 2)
+    return x, y
+
+
+def _effective_indent(label):
+    """Indent of the text of a label, as QLabel computes it when none is set."""
+    if label.indent() >= 0:
+        return label.indent()
+    if label.frameWidth() > 0:
+        return max(0, label.fontMetrics().horizontalAdvance("x") // 2 - label.margin())
+    return 0
+
+
+def _label_text_end(label):
+    """Where the visible text of a label ends on its first line.
+
+    Returns the x after the last character (trailing spaces excluded), the middle
+    of the line and the room left between that x and the right edge of the text area.
+    """
+    margin = label.margin()
+    rect = label.contentsRect().adjusted(margin, margin, -margin, -margin)
+    text = label.text()
+    rich = label.textFormat() == QtCore.Qt.RichText or (
+        label.textFormat() == QtCore.Qt.AutoText and QtCore.Qt.mightBeRichText(text)
+    )
+    if rich or label.wordWrap():
+        document = QtGui.QTextDocument()
+        document.setDefaultFont(label.font())
+        document.setDocumentMargin(0)
+        if rich:
+            document.setHtml(text)
+        else:
+            document.setPlainText(text)
+        if label.wordWrap():
+            document.setTextWidth(rect.width())
+        text_height = document.size().height()  # lays the text out
+        line = document.firstBlock().layout().lineAt(0)
+        width = visible = line.naturalTextWidth()
+        line_height = line.height()
+    else:
+        lines = text.split("\n")
+        metrics = label.fontMetrics()
+        width = metrics.horizontalAdvance(lines[0])
+        visible = metrics.horizontalAdvance(lines[0].rstrip())
+        line_height = metrics.height()
+        text_height = metrics.lineSpacing() * (len(lines) - 1) + metrics.height()
+
+    alignment = QtWidgets.QStyle.visualAlignment(label.layoutDirection(), label.alignment())
+    indent = _effective_indent(label)
+    right = rect.right() + 1
+    if alignment & QtCore.Qt.AlignRight:
+        left = right - indent - width
+    elif alignment & QtCore.Qt.AlignHCenter:
+        left = rect.left() + (rect.width() - width) / 2
+    else:
+        left = rect.left() + indent
+    if alignment & QtCore.Qt.AlignTop:
+        top = rect.top()
+    elif alignment & QtCore.Qt.AlignBottom:
+        top = rect.bottom() + 1 - text_height
+    else:
+        top = rect.top() + (rect.height() - text_height) / 2
+    end = left + visible
+    return end, top + line_height / 2, right - end

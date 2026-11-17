@@ -92,6 +92,10 @@ class ProcessWorkerMixin:
         self._set_run_result([], passed=False, was_interrupted=False)
         is_master_done = False
         iteration_interruption = []
+        # Name of each module as written on its box in the process, to tell the user
+        # which module stopped an iteration
+        module_labels = {node.get("identifier"): node.get("module_label", "")
+            for node in self._graph_json["process_params"]["nodes"]}
         try:
             total_start_time = time.time()
             self._managers.log_manager.log("process", "*****************************")
@@ -116,6 +120,7 @@ class ProcessWorkerMixin:
                         # iteration of the master node.
                         iteration_interruption.append({
                             "identifier":master_node.iteration_identifier,
+                            "module":module_labels.get(err.node_identifier, ""),
                             "type":err.param_name,
                             "message":err
                         })

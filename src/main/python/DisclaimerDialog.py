@@ -1,6 +1,7 @@
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QDialog, QLabel, QVBoxLayout, QCheckBox, QPushButton, QHBoxLayout
 
+from commons.fonts import text_label
 from config import settings
 
 class DisclaimerDialog(QDialog):
@@ -16,10 +17,7 @@ class DisclaimerDialog(QDialog):
 
         self.layout = QVBoxLayout()
 
-        self.label = QLabel("Disclaimer: This Application is in Beta Testing")
-        font = self.label.font()
-        font.setBold(True)
-        self.label.setFont(font)
+        self.label = text_label("Disclaimer: This Application is in Beta Testing", "h3")
         self.layout.addWidget(self.label)
 
         self.label2 = QLabel("The software is still undergoing development and may contain bugs or issues that could affect its performance. By using this application, you acknowledge and accept the potential risks associated with beta testing. Feedback and bug reports are welcomed for improvement.")
