@@ -290,21 +290,32 @@ QPushButton[accessibleName="documentation_pushbutton"]:pressed {
 	color: @on_primary;
 }
 
-/* Save Workspace: secondary action, outlined. */
-QPushButton[accessibleName="save_pushbutton"] {
+/* Secondary actions of the tools, outlined so they stand out from the page
+   background: Save Workspace, Previous, and the feedback and documentation buttons. */
+QPushButton[accessibleName="save_pushbutton"],
+QPushButton[accessibleName="previous_pushbutton"],
+QPushButton[accessibleName="feedback_pushbutton"],
+QPushButton[accessibleName="documentation_pushbutton"] {
    color: @primary;
    background-color: @surface;
    border: 1px solid @primary;
 }
 
-/* Next: the way forward in the steps of a tool. */
+/* Next: the way forward in the steps of a tool. Its border, in its own color, keeps
+   it the height of the outlined Previous button next to it. */
 QPushButton[accessibleName="next_pushbutton"] {
    color: @on_primary;
    background-color: @primary;
+   border: 1px solid @primary;
 }
 
 QPushButton[accessibleName="next_pushbutton"]:hover:!pressed {
    background-color: @primary_hover;
+   border-color: @primary_hover;
+}
+
+QPushButton[accessibleName="next_pushbutton"]:pressed {
+   border-color: @primary_pressed;
 }
 
 /* Navigation buttons (home, tool, app, process). Their icons are set by
