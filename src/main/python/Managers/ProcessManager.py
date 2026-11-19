@@ -30,6 +30,7 @@ from ProcessWorker import ProcessWorker
 if not config.HEADLESS_MODE:
     from ProcessUI.ProcessView import ProcessView
     from ProcessUI.ProgressDialog import ProgressDialog
+    from qtpy.QtWidgets import QApplication
     from widgets.TableDialog import TableDialog
     from widgets.MissingPackagesDialog import MissingPackagesDialog
 else:
@@ -455,9 +456,14 @@ class ProcessManager(Manager):
             # Name of each module that runs, as written on its box in the process
             module_labels = {node.get("identifier"): node.get("module_label", "")
                 for node in graph_json["process_params"]["nodes"]}
-            self._progress_dialog = ProgressDialog(module_labels, self._managers.pub_sub_manager)
+            if self._progress_dialog is not None:
+                # The window of the previous run, closed
+                self._progress_dialog.deleteLater()
+            # Over the main window, which keeps its size: the messages shown at the end
+            # of the run are seen at once
+            self._progress_dialog = ProgressDialog(module_labels, self._managers.pub_sub_manager,
+                                                   QApplication.activeWindow())
             self._progress_dialog.show()
-            self._managers.pub_sub_manager.publish(self, "minimize", None)
         else:
             self._progress_dialog = None
 
@@ -478,8 +484,6 @@ class ProcessManager(Manager):
                 self.worker.run()
         else:
             self.worker.run()
-
-        self._managers.pub_sub_manager.publish(self, "maximize", None)
 
     def run_console(self, graph_json):
         """Execute process in console/headless mode without Qt dependencies.
