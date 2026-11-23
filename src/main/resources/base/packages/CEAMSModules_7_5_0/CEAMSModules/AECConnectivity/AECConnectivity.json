@@ -1,0 +1,41 @@
+{   
+    "item_name": "AECConnectivity",
+    "item_type": "module",
+    "item_api_version": "3.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"AECConnectivity",
+        "name":"AECConnectivity",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.AECConnectivity",
+        "module_label": "AEC Connectivity",
+        "module_category":"Connectivity Analysis",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "epochs": {
+                "name": "epochs",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "aec_results": {
+                "name": "aec_results",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

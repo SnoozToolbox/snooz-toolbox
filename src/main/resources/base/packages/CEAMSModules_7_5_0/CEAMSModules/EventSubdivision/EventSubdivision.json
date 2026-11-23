@@ -1,0 +1,59 @@
+{
+    "item_name": "EventSubdivision",
+    "item_type": "module",
+    "item_api_version": "3.0.0",
+    "item_url": "",
+    "item_author": "Samuel Poulin",
+    "item_description": "",
+    "dependencies": [],
+    "module_params": {
+        "cls": "EventSubdivision",
+        "name": "EventSubdivision",
+        "metadata": {},
+        "file_location": "",
+        "module_label": "Event Subdivision",
+        "module_category": "Events Utilities",
+        "module_options": {},
+        "inputs": {
+            "events": {
+                "name": "events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "events_names": {
+                "name": "events_names",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "window_sec": {
+                "name": "window_sec",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "n_window": {
+                "name": "n_window",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "new_events": {
+                "name": "new_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "module": "CEAMSModules.EventSubdivision"
+    }
+}

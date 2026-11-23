@@ -1,0 +1,56 @@
+{   
+    "item_name": "NetworkProperties",
+    "item_type": "module",
+    "item_api_version": "3.0.0",
+    "dependencies": [
+    ],
+    "module_params":{
+        "cls":"NetworkProperties",
+        "name":"NetworkProperties",
+        "metadata":{},
+        "file_location":null,
+        "module":"CEAMSModules.NetworkProperties",
+        "module_label": "Network Properties",
+        "module_category":"Connectivity Analysis",
+        "module_author":"",
+        "module_url":"",
+        "module_description":"",
+        "module_options":{},
+        "inputs": {
+            "recording_path": {
+                "name": "recording_path",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"subject_info": {
+                "name": "subject_info",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"con_dict": {
+                "name": "con_dict",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"threshold_mode": {
+                "name": "threshold_mode",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"threshold_value": {
+                "name": "threshold_value",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },"output_path": {
+                "name": "output_path",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "item_name": "REMsEventsToMiniEpochs",
+    "item_type": "module",
+    "item_api_version": "3.0.0",
+    "dependencies": [],
+    "module_params": {
+        "cls": "REMsEventsToMiniEpochs",
+        "name": "REMsEventsToMiniEpochs",
+        "metadata": {},
+        "file_location": null,
+        "module": "CEAMSModules.REMsEventsToMiniEpochs",
+        "module_label": "REMs to mini-epochs",
+        "module_category": "Events Utilities",
+        "module_author": "",
+        "module_url": "",
+        "module_description": "",
+        "module_options": {},
+        "inputs": {
+            "filename": {
+                "name": "filename",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "REMs_events": {
+                "name": "REMs_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "epochs_to_proceed": {
+                "name": "epochs_to_proceed",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            },
+            "parameters": {
+                "name": "parameters",
+                "value": "{'mini_epoch_group': 'DET_MOR', 'mini_epoch_name_Phasic': 'Snooz_MOR_Phasic', 'mini_epoch_name_Tonic': 'Snooz_MOR_Tonic'}",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        },
+        "outputs": {
+            "mini_epochs_events": {
+                "name": "mini_epochs_events",
+                "value": "",
+                "connections": {},
+                "sub_plugs": {}
+            }
+        }
+    }
+}

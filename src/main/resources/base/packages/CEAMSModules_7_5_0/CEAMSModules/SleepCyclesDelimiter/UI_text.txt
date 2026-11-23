@@ -1,0 +1,16 @@
+REM Period (REMP):
+The REMP ends when there are 15 min without an R stage (except at the last cycle).
+The end is defined as the last R stage of the REMP or the beginning of the next NREMP.
+The REMP begins at the first stage R.
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head><meta name="qrichtext" content="1" /><style type="text/css">
+p, li { white-space: pre-wrap; }
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;">
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:12pt; color:#000000;">REM Period (REMP):</span></p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"><li style=" font-size:12pt; color:#000000;" style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The REMP ends when there are 15 min without an R stage (except at the last cycle).</li>
+<li style=" font-size:12pt; color:#000000;" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The end is defined as the last R stage of the REMP or the beginning of the next NREMP.</li>
+<li style=" font-size:12pt; color:#000000;" style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The REMP begins at the first stage R.</li></ul></body></html>
+
+
+from . import SleepCycleDelimiter_rs
