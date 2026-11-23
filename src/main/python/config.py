@@ -75,6 +75,9 @@ if HEADLESS_MODE:
         
         # Add __getattr__ to handle any attribute access (Python 3.7+)
         def module_getattr(attr):
+            # Introspection must not mistake a stub class for module metadata.
+            if attr.startswith('__') and attr.endswith('__'):
+                raise AttributeError(f"module {name!r} has no attribute {attr!r}")
             # If it's a known submodule, return a stub for it
             submodules = ['QtCore', 'QtGui', 'QtWidgets', 'QtWebEngineWidgets']
             if attr in submodules:

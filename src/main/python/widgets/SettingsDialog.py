@@ -3,13 +3,115 @@
 See the file LICENCE for full license details.
 """
 from qtpy import QtCore
+from qtpy import QtGui
 from qtpy import QtWidgets
-from qtpy.QtWidgets import QMessageBox
+from qtpy.QtWidgets import QMessageBox, QHeaderView
 from pathlib import Path
 
 from config import settings
 from Managers.EndpointManager import MenuEndpointHandler
 from ui.Ui_SettingsDialog import Ui_SettingsDialog
+
+class PathItemDelegate(QtWidgets.QStyledItemDelegate):
+    """Render package paths with wrapping based on the current column width."""
+
+    _break_chars = "\\/-"
+
+    @classmethod
+    def _wrap_path_text(cls, text, font_metrics, width):
+        if not text or width <= 0:
+            return text
+
+        tokens = []
+        token_start = 0
+        for index, character in enumerate(text):
+            if character in cls._break_chars:
+                tokens.append(text[token_start:index + 1])
+                token_start = index + 1
+        if token_start < len(text):
+            tokens.append(text[token_start:])
+
+        lines = []
+        current_line = ""
+        for token in tokens:
+            candidate = current_line + token
+            if current_line and font_metrics.horizontalAdvance(candidate) > width:
+                lines.append(current_line)
+                current_line = token
+            else:
+                current_line = candidate
+
+            while current_line and font_metrics.horizontalAdvance(current_line) > width:
+                split_index = len(current_line)
+                while split_index > 1 and font_metrics.horizontalAdvance(current_line[:split_index]) > width:
+                    split_index -= 1
+                lines.append(current_line[:split_index])
+                current_line = current_line[split_index:]
+
+        if current_line:
+            lines.append(current_line)
+
+        return "\n".join(lines)
+
+    def paint(self, painter, option, index):
+        if index.column() != 3:
+            super().paint(painter, option, index)
+            return
+
+        path_option = QtWidgets.QStyleOptionViewItem(option)
+        self.initStyleOption(path_option, index)
+        text = path_option.text
+        path_option.text = ""
+        path_option.textElideMode = QtCore.Qt.ElideNone
+
+        style = path_option.widget.style() if path_option.widget else QtWidgets.QApplication.style()
+        style.drawControl(QtWidgets.QStyle.CE_ItemViewItem, path_option, painter, path_option.widget)
+
+        text_rect = path_option.rect.adjusted(4, 2, -4, -2)
+        text_option = QtGui.QTextOption()
+        text_option.setWrapMode(QtGui.QTextOption.NoWrap)
+        wrapped_text = self._wrap_path_text(text, path_option.fontMetrics, text_rect.width())
+
+        document = QtGui.QTextDocument()
+        document.setDefaultFont(path_option.font)
+        document.setDefaultTextOption(text_option)
+        document.setPlainText(wrapped_text)
+        document.setTextWidth(text_rect.width())
+
+        if path_option.state & QtWidgets.QStyle.State_Selected:
+            painter.setPen(path_option.palette.highlightedText().color())
+        else:
+            painter.setPen(path_option.palette.text().color())
+
+        painter.save()
+        painter.translate(text_rect.topLeft())
+        document.drawContents(painter, QtCore.QRectF(0, 0, text_rect.width(), text_rect.height()))
+        painter.restore()
+
+    def sizeHint(self, option, index):
+        size = super().sizeHint(option, index)
+        if index.column() != 3:
+            return size
+
+        tree = self.parent()
+        width = tree.columnWidth(3) - 8 if tree is not None else option.rect.width()
+        width = max(width, 120)
+        text = index.data(QtCore.Qt.DisplayRole)
+        if not text:
+            return size
+
+        font_metrics = QtGui.QFontMetrics(option.font)
+        text_option = QtGui.QTextOption()
+        text_option.setWrapMode(QtGui.QTextOption.NoWrap)
+        wrapped_text = self._wrap_path_text(str(text), font_metrics, width)
+        document = QtGui.QTextDocument()
+        document.setDefaultFont(option.font)
+        document.setDefaultTextOption(text_option)
+        document.setPlainText(wrapped_text)
+        document.setTextWidth(width)
+
+        size.setHeight(max(size.height(), int(document.size().height()) + 6))
+        return size
 
 class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
     """
@@ -27,8 +129,10 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         self._main_window = main_window
 
         self.setupUi(self)
+        self.resize(1100, 600)
+        self.setMinimumWidth(1000)
         self._add_theme_setting()
-        self.packages_treewidget.setHeaderLabels(["Name", "Version", "Type", "Path"])
+        self._configure_package_tree()
         self._load_package_list()
 
     def _add_theme_setting(self):
@@ -60,6 +164,52 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
                 blocked = self.theme_comboBox.blockSignals(True)
                 self.theme_comboBox.setCurrentText(current)
                 self.theme_comboBox.blockSignals(blocked)
+
+    def _configure_package_tree(self):
+        """Use a wider package panel so long paths can be read without Qt shortening them."""
+        self.splitter.setSizes([200, 900])
+        self.settings_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+
+        self.packages_treewidget.setColumnCount(4)
+        self.packages_treewidget.setHeaderLabels(["Name", "Version", "Type", "Path"])
+        self.packages_treewidget.setWordWrap(True)
+        self.packages_treewidget.setTextElideMode(QtCore.Qt.ElideNone)
+        self.packages_treewidget.setUniformRowHeights(False)
+        self.packages_treewidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.packages_treewidget.setAlternatingRowColors(True)
+        self._path_item_delegate = PathItemDelegate(self.packages_treewidget)
+        self.packages_treewidget.setItemDelegateForColumn(3, self._path_item_delegate)
+
+        header = self.packages_treewidget.header()
+        header.setStretchLastSection(False)
+        header.setMinimumSectionSize(80)
+        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.Interactive)
+
+        self._update_package_tree_column_widths()
+
+    def _update_package_tree_column_widths(self):
+        """Keep the path column wide enough to show the full path in the available space."""
+        tree_width = max(self.packages_treewidget.viewport().width(), 500)
+        header = self.packages_treewidget.header()
+
+        name_width = max(180, min(260, int(tree_width * 0.30)))
+        version_width = max(90, min(120, int(tree_width * 0.12)))
+        type_width = max(90, min(120, int(tree_width * 0.12)))
+        remaining = max(260, tree_width - name_width - version_width - type_width - 20)
+
+        header.resizeSection(0, name_width)
+        header.resizeSection(1, version_width)
+        header.resizeSection(2, type_width)
+        header.resizeSection(3, max(remaining, 300))
+        self.packages_treewidget.scheduleDelayedItemsLayout()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        if self.packages_treewidget is not None:
+            self._update_package_tree_column_widths()
 
     def _load_package_list(self):
         activated_package_items = self._settings_manager.get_setting(settings.activated_package_items, None)
@@ -256,6 +406,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_SettingsDialog):
         else:
             package_item = QtWidgets.QTreeWidgetItem([package_name, package_version_number, None, package_path])
             package_item.setFlags(package_item.flags() | QtCore.Qt.ItemIsAutoTristate | QtCore.Qt.ItemIsUserCheckable)
+
+        package_item.setToolTip(3, package_path)
 
         # Add each of its module as children.
         for item in package_version.items:

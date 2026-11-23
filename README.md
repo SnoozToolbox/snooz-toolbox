@@ -9,7 +9,7 @@ GPL-3.0 license
 
 Snooz is an analysis platform for sleep studies recordings (Polysomnography). It is a highly flexible and extensible software. However, this flexibility comes with the trade-off of increased complexity for software developers tasked with creating new features. The purpose of this documentation is to assist you in installing and setting up the development environment.
 
-For developer installation instructions, please refer to the Developer Installation Guide in the documentation : https://snooz-toolbox-documentation.readthedocs.io/dev_guide/installation/installation.html
+For developer installation instructions, please refer to the Developer Installation Guide in the documentation : https://snooz-toolbox-documentation.readthedocs.io/latest/dev_guide/installation/installation.html
 
 First, let's take a moment to understand how and why it functions the way it does.
 
@@ -164,6 +164,17 @@ In the terminal, type:
 
 ### Run Snooz
 Press F5 to run Snooz. If everything is properly set up, the application should start. Congratulations, you are now ready to start doing some development!
+
+### Run a process without the GUI
+With the Snooz Python environment activated, run from the repository root:
+
+```powershell
+python .\src\main\python\main.py --f "C:\path\process.json"
+```
+
+`--f` automatically enables headless mode; `--headless` is optional when using
+`--f`. No separate headless Python environment is required. The process log is
+written beside the JSON as `process_YYYYMMDD_HHMMSS.log` after execution.
 
 <a id="whats-next"></a>
 ## What's next?
